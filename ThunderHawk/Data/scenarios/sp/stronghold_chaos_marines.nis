@@ -1,0 +1,2578 @@
+
+
+-- -----------------------------------------------------------------
+-- Mission Name - NISLets and Intel Events
+--
+-- (c) 2005 Relic Entertainment
+-- -----------------------------------------------------------------
+
+EVENTS = {}
+
+-------------------------------------------------
+--[[ INTEL EVENTS ]]
+-------------------------------------------------
+--generic events--------------------------------
+
+
+EVENTS.IE_Intro = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300114 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Dreadnought_FirstKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300132 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Defiler_FirstKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300133 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Shrine_FirstKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300134 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Shrine_ThirdKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300135 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Shrine_FourthKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300136 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Shrine_FifthKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300137 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_EnterMainBaseEarly = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300138 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_SorcererAmbush = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Sorcerer, 5300155 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_LordAmbush = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.ChaosSpaceMarine, 5300156 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_RelicAttack = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.ChaosSpaceMarine, 5300157 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_FinalFight = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300158 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.ChaosSpaceMarine, 5300159 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300160 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+--------------------------------------------------
+-------------------------------------------------
+--[[ Race Specific Chatter ]]
+-------------------------------------------------
+-------------------------------------------------
+
+-------------------------------------------------
+--[[Eldar ]]
+-------------------------------------------------
+EVENTS.IE_Eldar_EnterCity = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300119  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Eldar_Muses = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300127  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Eldar_SeeFirstShrine = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300142 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Eldar_CornerAmbush = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300150 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Eldar_FirstAirKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300533 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Eldar_DontEnterCityEarly = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300568 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+-------------------------------------------------
+--[[Imperial Guard ]]
+-------------------------------------------------
+
+EVENTS.IE_IG_EnterCity = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5300116  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_IG_Muses = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5300124  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_IG_SeeFirstShrine = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5300139 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_IG_CornerAmbush = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Guardsman1, 5300147 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_IG_FirstAirKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5300530 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_IG_DontEnterCityEarly = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5300565 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+-------------------------------------------------
+--[[Orks ]]
+-------------------------------------------------
+EVENTS.IE_Ork_EnterCity = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300121  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Ork_Muses = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300129  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Ork_SeeFirstShrine = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300144 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Ork_CornerAmbush = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.SluggaBoy, 5300152 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Ork_FirstAirKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300535 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Ork_DontEnterCityEarly = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300570 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+-------------------------------------------------
+--[[Tau ]]
+-------------------------------------------------
+EVENTS.IE_Tau_EnterCity = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Shas, 5300122  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Tau_Muses = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Shas, 5300130  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Tau_SeeFirstShrine = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Shas, 5300145 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Tau_CornerAmbush = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Fire_Warrior, 5300153 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Tau_FirstAirKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Shas, 5300536 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Tau_DontEnterCityEarly = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Shas, 5300571 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+-------------------------------------------------
+--[[Necron ]]
+-------------------------------------------------
+EVENTS.IE_Necron_EnterCity = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300123  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Necron_Muses = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300131  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Necron_SeeFirstShrine = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300146 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Necron_CornerAmbush = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300154 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Necron_FirstAirKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300537 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Necron_DontEnterCityEarly = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300572 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+-------------------------------------------------
+--[[Space Marine ]]
+-------------------------------------------------
+EVENTS.IE_SM_Intro = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Boreale, 5300115  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_SM_EnterCity = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Boreale, 5300117  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_SM_Muses = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Boreale, 5300125  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_SM_SeeFirstShrine = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Boreale, 5300140 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_SM_CornerAmbush = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.TacticalMarine, 5300148 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_SM_FirstAirKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.TacticalMarine, 5300531 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_SM_DontEnterCityEarly = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Boreale, 5300566 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+-------------------------------------------------
+--[[Sisters of Battle ]]
+-------------------------------------------------
+EVENTS.IE_Sisters_EnterCity = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300118  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Sisters_Muses = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300126  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Sisters_SeeFirstShrine = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300141 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Sisters_CornerAmbush = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300149 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_Sisters_FirstAirKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300532 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Sisters_DontEnterCityEarly = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300567 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+-------------------------------------------------
+--[[Dark Eldar ]]
+-------------------------------------------------
+
+EVENTS.IE_DE_EnterCity = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300120  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_DE_Muses = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300128  )	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_DE_SeeFirstShrine = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300143 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_DE_CornerAmbush = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300151 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_DE_FirstAirKill = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300534 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+EVENTS.IE_DE_DontEnterCityEarly = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300569 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+--[[***********************************************************************************************************
+
+																									INTRO/OPENING
+																									
+***********************************************************************************************************]]--																									
+EVENTS.NIS_Opening = function()
+
+	--[[setting up race specific items for the nis
+	local humanplayer = MetaMap_GetPlayerRaceName()	
+ 
+	if humanplayer == "chaos_marine_race" then
+	
+		g_Nis_Blueprint = "chaos_marine_squad"
+		
+	elseif humanplayer == "eldar_race" then
+	
+		g_Nis_Blueprint = "eldar_squad_banshees"
+	
+	elseif humanplayer == "guard_race" then
+	
+		g_Nis_Blueprint = "guard_squad_guardsmen"
+	
+	elseif humanplayer == "ork_race" then
+	
+		g_Nis_Blueprint = "ork_squad_nob"	
+	
+	elseif humanplayer =="space_marine_race" then
+	
+		g_Nis_Blueprint = "space_marine_squad_tactical"
+	
+	elseif humanplayer == "tau_race" then
+	
+		g_Nis_Blueprint = "tau_fire_warrior_squad"
+	
+	elseif humanplayer == "necron_race" then
+ 
+		g_Nis_Blueprint = "necron_pariah_squad"
+		
+	end]]
+	
+	--[[turn off events]]
+	--Util_NIS_ToggleModifierEvents(g_Player1, false)
+	Util_NIS_ToggleModifierEvents(g_Player2, false)
+	Util_NIS_ToggleModifierEvents(g_Player3, false)
+	Util_NIS_ToggleModifierEvents(g_Player4, false)
+	Util_NIS_ToggleModifierEvents(g_Player5, false)
+
+	
+	--[[ go into letterbox mode ]]
+	W40k_Letterbox( true, 0 )
+
+	--[[Removing all the rules]]
+
+	CTRL.Event_Delay( 1 )
+	CTRL.WAIT()
+	
+	--Rule_RemoveAll()
+
+	--Silvey Polish (10/16/07):  Add some music
+	--set the music		
+	t_chaos_music = {"MU_IG_STR_Chaos"}
+	
+	Sound_PlaylistClear(PC_Music)
+	Playlist_Manager( PC_Music, t_chaos_music, true, true , {2, 4})
+	
+	--Silvey Polish (11/28/07):  Chanting!
+	t_soundid = Sound_Play("Races/Shared_ALL/ChaosIntroChantFinal")
+	
+	--Silvey Polish (10/16/07):  Fixed title
+	Util_MissionTitle("$3900034")
+	
+	CTRL.Event_Delay( 4 )
+		Fade_Start( 0, false )
+	CTRL.WAIT()
+	
+	
+	CTRL.Event_Delay( 1 )
+	CTRL.WAIT()
+	
+	--[[hide the bonus unit effect]]
+	Player_RestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	
+	--[[ reveals all of the map ]]
+	FOW_RevealAll()
+	
+	-------------------------------------
+	--Spawns For Seq1
+	-------------------------------------
+	
+	for i = 1,17 do
+	
+	--Cultist
+	Util_CreateSquadsAtMarkerEx(g_Player3, "sg_opening_chaospriest"..i, "chaos_squad_cultist", "nis_opening_chaospriest"..i, 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_chaospriest"..i))
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_priestgroup"), SGroup_FromName("sg_opening_chaospriest"..i))
+	SGroup_SetHealthInvulnerable("sg_opening_chaospriest"..i, true)
+	SGroup_FaceMarker("sg_opening_chaospriest"..i, "nis_opening_priestface")
+
+	end
+	
+	--Lord
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_lord", "chaos_squad_lord", "nis_opening_chaossorceror_spawn1", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_lord"))
+	SGroup_FaceMarker("sg_opening_lord", "nis_opening_priestface")
+	
+	--MarineScreamer
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_screamer", "chaos_marine_squad", "nis_opening_marinescreamer", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_screamer"))
+	SGroup_FaceMarker("sg_opening_screamer", "nis_opening_marines_face")
+	
+	for i = 1,14 do
+	
+	--runners
+	Util_CreateSquadsAtMarkerEx(g_Player3, "sg_opening_marines"..i, "chaos_marine_squad", "nis_opening_marines"..i, 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_marines"..i))
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_runners_group"), SGroup_FromName("sg_opening_marines"..i))
+	SGroup_SetHealthInvulnerable("sg_opening_runners_group", true)
+	SGroup_FaceMarker("sg_opening_runners_group", "nis_opening_marines_face")
+		
+	end
+	
+	--Heretic
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_heretic", "chaos_squad_slave", "nis_opening_heretic_spawn", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_heretic"))
+	SGroup_FaceMarker("sg_opening_heretic", "mkr_relicarea")
+
+	Entity_CreateBuildingMarker(g_Player2, "eg_ChaosStorm", "chaos_warp_storm_source", "mkr_nis_storm_anchor", 1)
+	
+	-------------------------------------
+	--BLOCKS 1&2
+	-------------------------------------
+
+	CPath_Start("canim_starter", "start", "start")
+	
+	for i = 1, 16 do
+		SPath_Start( "manim_priest"..i,  "1", "2", "sg_opening_chaospriest"..i )
+	end
+	
+	SPath_Start( "manim_lord1",  "1", "2", "sg_opening_lord")
+	
+	CPath_CutToPath("canim_shot1", "start","end")
+	Fade_Start( 2, true )
+	--Anim_EnableInfantryOffset( "sg_opening_priestgroup", false )
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_priestgroup"), "sp_ritual" )
+	--Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_cultist"), "sp_talk" )
+	--Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_sorcerer"), "sp_talk" )
+	
+	CTRL.Event_Delay(3)
+	CTRL.WAIT()
+	
+	--Command_EntityAbilityPos(g_Player2,EGroup_GetSpawnedEntityAt(EGroup_FromName("eg_ChaosStorm"), 1), g_ChaosStormLevel,
+	--Marker_GetPosition(Marker_FromName("nis_opening_warpstorm", "basic_marker")))
+	
+	CTRL.Event_Delay(3)
+	CTRL.WAIT()
+	
+	Fade_Start( 1, false )
+	
+	Command_EntityAbilityPos(g_Player2,EGroup_GetSpawnedEntityAt(EGroup_FromName("eg_ChaosStorm"), 1), g_ChaosStormLevel,
+	Marker_GetPosition(Marker_FromName("nis_opening_warpstorm", "basic_marker")))
+	
+	CPath_CutToPath("canim_shot2", "start","end")
+	
+	SPath_Start( "manim_cultist",  "1", "2", "sg_opening_chaospriest17")
+	
+	Fade_Start( .5, true )
+	
+	Anim_PlaySGroupAnim("sg_opening_chaospriest17", "default")
+		
+	CTRL.Event_Delay(7)
+	CTRL.WAIT()
+	
+	Anim_PlaySGroupAnim("sg_opening_chaospriest17", "sp_talk")
+	CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200089) --Cultist:  They come.
+	CTRL.WAIT()
+	
+	SPath_Start( "manim_marinescream",  "1", "2", "sg_opening_marines13")
+	
+	CTRL.Event_Delay(1)
+	CTRL.WAIT()
+	
+	Fade_Start( 1, false )
+
+	SPath_Finish( "manim_marinescream")
+	
+	CPath_CutToPath("canim_shot4", "start","end")
+	--Cmd_MoveToMarker("sg_opening_runners_group", "nis_opening_marinerunners_goto")
+	
+	Fade_Start( .5, true )
+	
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_marines13"), "idle_excited_sp" )
+	CTRL.Actor_PlaySpeech(  ACT.ChaosSpaceMarine , 5200088) --Chaos Space Marine:  They come!!!
+	CTRL.WAIT()
+	
+	--Heretic Talker
+	for i = 1, 2 do
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_cultist_talker"..i, "chaos_squad_slave", "nis_opening_cultist_talker"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_cultist_talker"..i))
+		SGroup_FaceMarker("sg_opening_cultist_talker"..i, "mkr_detector9")
+	end
+	
+	SPath_Start( "manim_cultist2",  "1", "2", "sg_opening_cultist_talker1")
+	SPath_Start( "manim_cultist3",  "1", "2", "sg_opening_cultist_talker2")
+	
+	CTRL.Event_Delay(1)
+	CTRL.WAIT()
+
+	-------------------------
+	--BLOCK 3
+	-------------------------
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest4"), "sp_talk" )
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest11"), "sp_talk" )
+	CPath_CutToPath("canim_shot8", "start","end")
+	--Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest8"), "sp_ritual" )
+	CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200090) --Heretic:  Yes, we feel them. They approach
+	CTRL.WAIT()
+	
+	--[[
+	CPath_CutToPath("canim_shot6", "start","end")
+	CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200091) --Cultist:  They come. 
+	CTRL.WAIT()
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest13"), "sp_ritual" )]]
+	
+	CPath_CutToPath("canim_shot10", "start","end")
+	--Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest8"), "sp_ritual" )
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest4"), "sp_talk" )
+	CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200092) --Heretic:  Their blood shall flow at our feet. 
+	CTRL.WAIT()
+
+	CPath_CutToPath("canim_shot8a", "start", "end")
+	CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200093) -- Cultist:  Blood for the Blood God! 
+	CTRL.WAIT()
+	--Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest11"), "sp_ritual" )
+	
+	--[[
+	CPath_CutToPath("canim_shot9", "start","end")
+	--Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest10"), "sp_talk" )
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest4"), "sp_talk" )
+	CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200094) --Heretic:  They shall writhe with our blades in their gut. They shall know pain as they have never known pain. They shall taste fear like cold flames upon their flesh. 
+	CTRL.WAIT()]]	
+	
+	--CPath_CutToPoint("canim_shot10", "start")
+	--Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest12"), "sp_ritual" )
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest4"), "sp_talk" )
+	CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200096) --Heretic:  Yes, we shall slake our thirsts for death, for chaos, for terror. Yes!
+	CTRL.WAIT()
+	
+	--CPath_CutToPath("canim_shot8", "start","end")
+	--CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200095) --Cultist:  We shall slake our thirsts.
+	--CTRL.WAIT()
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_chaospriest4"), "sp_ritual" )
+		
+	--[[
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_cultist_talker1"), "build" )
+	CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200097) --Cultist:  Blood for the Blood God! 
+	CTRL.WAIT()]]
+	
+	Fade_Start( 1, false )
+
+	Anim_PlaySGroupAnim("sg_opening_chaospriest17", "default")
+	
+	CPath_CutToPath("canim_shot11", "start","end")
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_lord"), "sp_talk" )
+	Fade_Start( .5, true )
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5200098) --Sorcerer:  They draw near. Let them come.
+	CTRL.WAIT()
+	
+	Actor_PlaySpeech(  ACT.FirraeveusCarron , 5200099) --Sorcerer:  The very ground will poison you. Demons will appear from the Warp when your back is turned. We shall lash out from every direction and yours shall be the cries of death and horror. (He laughs cruelly).
+	
+	CTRL.Event_Delay(4)
+	CTRL.WAIT()
+	
+	Fade_Start( 1.5, false )
+	
+	
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()
+	
+	Sound_Stop(t_soundid)
+	
+	
+	Command_EntityAbilityPos(g_Player2,EGroup_GetSpawnedEntityAt(EGroup_FromName("eg_ChaosStorm"), 1), g_ChaosStormLevel,
+	Marker_GetPosition(Marker_FromName("nis_opening_warpstorm", "basic_marker")))
+	
+	--Thirster
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_thirster", "chaos_squad_bloodthirster", "nis_opening_thirster", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_thirster"))
+	SGroup_FaceMarker("sg_opening_thirster", "nis_opening_pinkiesgoto")
+	
+	for i = 1, 4 do
+		--pinkies
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_pinkies"..i, "chaos_squad_horror", "nis_opening_pinkies"..i, 4, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_pinkies"..i))
+		SGroup_FaceMarker("sg_opening_pinkies"..i, "nis_opening_pinkiesgoto")
+	end
+	
+	CPath_CutToPath("canim_shot12", "start","end")
+	
+	Fade_Start( 1.5, true )
+	
+	for i = 1,4 do
+		Cmd_MoveToMarker("sg_opening_pinkies"..i, "nis_opening_pinkiesgoto")
+	end
+	
+	CTRL.SPath_Start( "manim_thirster",  "1", "2", "sg_opening_thirster")
+	CTRL.WAIT()
+	
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_thirster"), "special_attack_1" )
+	
+	CTRL.Event_Delay(2.5)
+	CTRL.WAIT()
+	
+	SPath_Finish( "manim_lord1")
+	
+	Fade_Start( 1, false )
+	
+	CTRL.Event_Delay(1)
+	CTRL.WAIT()
+
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_lord"), "sp_talk" )
+	
+	CPath_CutToPath("canim_shot11", "start","end")
+	
+	Fade_Start( .5, true )	
+	
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()
+	
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_lord"), "idle_cackle_bolter_manreaper_sp" )
+	
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()
+	
+	for i = 1,4 do
+	
+	--Chaos Tanks
+	Util_CreateSquadsAtMarkerEx(g_Player3, "sg_opening_tanks"..i, "chaos_squad_predator", "nis_opening_tank"..i, 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_tanks"..i))
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_tanks_group"), SGroup_FromName("sg_opening_tanks"..i))
+	SGroup_SetHealthInvulnerable("sg_opening_tanks_group", true)
+	--SGroup_FaceMarker("sg_opening_tanks"..i, "nis_opening_tank_goto"..i)
+	
+	end
+	
+	for i = 1,4 do
+	
+	--air units
+	Util_CreateSquadsAtMarkerEx(g_Player3, "sg_opening_air"..i, "chaos_squad_hell_talon", "nis_opening_planes"..i, 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_air"..i))
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_air_group"), SGroup_FromName("sg_opening_air"..i))
+	SGroup_SetHealthInvulnerable("sg_opening_air_group", true)
+	SGroup_FaceMarker("sg_opening_air_group", "nis_opening_planesgoto"..i)
+	Squad_TurnOffVehiclePhysics(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_opening_air"..i), 1))
+	Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_opening_air"..i), 1), true, 9)
+	
+	end
+	
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_marines13"), "default" )
+	
+	SPath_Start( "manim_opening_marine14",  "1", "2", "sg_opening_marines14" )
+	SPath_Start( "manim_marinescream2",  "1", "2", "sg_opening_marines13" )
+	
+	for i = 1,12 do
+		SPath_Start( "manim_opening_marine"..i,  "1", "2", "sg_opening_marines"..i )
+	end
+	
+	for i = 1,4 do
+		SPath_Start( "manim_opening_tank"..i,  "1", "2", "sg_opening_tanks"..i )
+	end
+	
+	CPath_CutToPath("canim_shot3", "start","end")
+	
+	t_ig_ambience = {"AM_IG_Guard_Intro_Tanks"}
+	
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron , 5200100) -- Sorcerer:  	The sound of your doom will ring in your skull, in your soul… you shall tremble. And your blood shall be a gift to the Blood God.
+	CTRL.SUB()
+		CTRL.Event_Delay(9)
+		CTRL.WAIT()
+		Cmd_MoveToMarker("sg_opening_air1", "nis_opening_planesgoto1")
+		Cmd_MoveToMarker("sg_opening_air2", "nis_opening_planesgoto2")
+		Cmd_MoveToMarker("sg_opening_air3", "nis_opening_planesgoto3")
+		Cmd_MoveToMarker("sg_opening_air4", "nis_opening_planesgoto4")
+	CTRL.END()
+	CTRL.WAIT()
+	
+	Fade_Start( 1, false )
+	--CPath_CutToPath("canim_shot11", "start","end")
+	
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron , 5200101) -- Sorcerer: 	(voice over) Let them come. We are ready.
+	CTRL.WAIT()
+	
+	CPath_CutToPoint( "canim_starter", "Start" )
+	Fade_Start( 1, true )
+	
+	--Actor_PlaySpeech(  ACT.Cultist, 5200101)
+	
+	SGroup_DeSpawn("sg_opening_actors")
+	SGroup_DestroyAllSquads("sg_opening_actors")
+	SGroup_Destroy(SGroup_FromName("sg_opening_actors"))
+	
+	CTRL.W40k_Letterbox( false, 2)
+		
+		FOW_Reset()
+		CPath_Blendout( 1 )
+		
+	CTRL.WAIT()
+
+end
+
+
+-------------------------------------------------------------------
+--[[ Mid Nis ]]
+-------------------------------------------------------------------
+
+EVENTS.NIS_Bloodthirster = function()		
+	
+		--[[player 1 units and buildings set to invulnerable health and moral]]
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_Player1_Units"), Player_GetSquads(g_Player1))
+		EGroup_AddGroup(EGroup_CreateIfNotFound("eg_Player1_Units"), Player_GetEntities(g_Player1))
+		
+		SGroup_SetHealthInvulnerable("sg_Player1_Units", true)
+		EGroup_SetHealthInvulnerable("eg_Player1_Units", true)
+		
+		SGroup_SetMoraleInvulnerable("sg_Player1_Units", true)
+		
+		--[[player 1 units and buildings set to invulnerable]]
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_Player2_Units"), Player_GetSquads(g_Player2))
+		EGroup_AddGroup(EGroup_CreateIfNotFound("eg_Player2_Units"), Player_GetEntities(g_Player2))
+		
+		SGroup_SetHealthInvulnerable("sg_Player2_Units", true)
+		EGroup_SetHealthInvulnerable("eg_Player2_Units", true)
+		
+		SGroup_SetMoraleInvulnerable("sg_Player2_Units", true)
+		
+		--[[player 3 units and buildings set to invulnerable]]
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_Player3_Units"), Player_GetSquads(g_Player3))
+		EGroup_AddGroup(EGroup_CreateIfNotFound("eg_Player3_Units"), Player_GetEntities(g_Player3))
+		
+		SGroup_SetHealthInvulnerable("sg_Player3_Units", true)
+		EGroup_SetHealthInvulnerable("eg_Player3_Units", true)
+		
+		SGroup_SetMoraleInvulnerable("sg_Player3_Units", true)
+		
+		--[[player 4 units and buildings set to invulnerable]]
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_Player4_Units"), Player_GetSquads(g_Player4))
+		EGroup_AddGroup(EGroup_CreateIfNotFound("eg_Player4_Units"), Player_GetEntities(g_Player4))
+		
+		SGroup_SetHealthInvulnerable("sg_Player4_Units", true)
+		EGroup_SetHealthInvulnerable("eg_Player4_Units", true)
+		
+		SGroup_SetMoraleInvulnerable("sg_Player4_Units", true)
+	
+	CTRL.W40k_Letterbox( true, 1)
+	
+		FOW_RevealAll()
+	
+	CTRL.WAIT()
+	
+
+		--the research grant than restrict is to prevent the AI from pumping out its own Bloodthirsters.
+		Player_GrantResearch(g_Player2, "chaos_bloodthirster_research")
+		Cmd_Possesion("sg_BloodThirster")
+		Rule_AddOneShot(Rule_Transfer_Ownership, 10)
+		Rule_Remove(Rule_Sorcerer_Transformation)
+		Player_RestrictResearch(g_Player2, "chaos_bloodthirster_research")
+	
+
+	CTRL.CPath_Start("canim_Mid1", "start", "start")	
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay( 2 )			
+	CTRL.WAIT()
+	
+	CTRL.CPath_CutToPath("canim_Mid1", "start", "end")
+		
+		Actor_PlaySpeech( ACT.FirraeveusCarron, 401231)	--None can stand against the coming darkness.
+	
+	CTRL.WAIT()	
+	
+	CTRL.Event_Delay( 4 )			
+	CTRL.WAIT()	
+	
+	CTRL.CPath_CutToPath("canim_player_HQ", "start", "start")
+	CTRL.WAIT()
+		
+		
+
+		
+	--[[Making everything vulnerable again]]
+		SGroup_SetHealthInvulnerable("sg_Player1_Units", false)
+		EGroup_SetHealthInvulnerable("eg_Player1_Units", false)
+		SGroup_SetMoraleInvulnerable("sg_Player1_Units", false)
+		
+		SGroup_SetHealthInvulnerable("sg_Player2_Units", false)
+		EGroup_SetHealthInvulnerable("eg_Player2_Units", false)
+		SGroup_SetMoraleInvulnerable("sg_Player1_Units", false)
+		
+		SGroup_SetHealthInvulnerable("sg_Player3_Units", false)
+		EGroup_SetHealthInvulnerable("eg_Player3_Units", false)
+		SGroup_SetMoraleInvulnerable("sg_Player1_Units", false)
+	
+		SGroup_SetHealthInvulnerable("sg_Player4_Units", false)
+		EGroup_SetHealthInvulnerable("eg_Player4_Units", false)
+		SGroup_SetMoraleInvulnerable("sg_Player1_Units", false)
+		
+		
+		g_BT_First = false
+		
+		
+		
+	CTRL.W40k_Letterbox( false, 2)
+	
+		FOW_Reset()
+		CPath_Blendout( 1 )
+	CTRL.WAIT()
+ 
+	
+end
+
+
+--[[***********************************************************************************************************
+
+																									OUTRO/CLOSING
+																									
+***********************************************************************************************************]]--																									
+EVENTS.NIS_Closing = function()
+
+	
+	--	
+		
+	--------------------------------------------------------
+    -- Silvey Polish (11/5/07):  Organizing the attackers
+	-- g_Nis_Blueprint = Melee Squad
+	-- g_Nis_Blueprint2 = Ranged Squad
+	-- g_Nis_Blueprint3 = Basic Vehicle
+	-- g_Nis_Blueprint4 = Flyer (except for Necron race!)
+	-- g_Nis_Blueprint5 = Commander Unit
+	-- g_Nis_Blueprint6 = Commander's Council (if he/she/it has any, intended to fit IP)
+	-- g_Nis_Blueprint7 = Special Council
+	-------------------------------------------------------- 	
+	local humanplayer = MetaMap_GetPlayerRaceName()	
+ 
+	if humanplayer == "chaos_marine_race" then
+		
+		--[[  Duh, this is the chaos stronghold!  
+				If you're the chaos race, then we've got ourselves an error anyway ]]--
+				
+	elseif humanplayer == "eldar_race" then
+		
+		g_Nis_Blueprint = "eldar_squad_banshees"
+		g_Nis_Blueprint2 = "eldar_guardian_squad"
+		g_Nis_Blueprint3 = "eldar_squad_wraithlord"
+		g_Nis_Blueprint4 = "eldar_squad_nightwing"
+		g_Nis_Blueprint5 = "eldar_squad_farseer"
+		g_Nis_Blueprint6 = "eldar_squad_seer_council"
+		g_Nis_Blueprint7 = "eldar_squad_seer_council"
+		
+	elseif humanplayer == "guard_race" then
+		
+		-- NOTE:  The guard has a Commissar visible in the council just to make it more guard-ish
+		g_Nis_Blueprint = "guard_squad_ogryns"
+		g_Nis_Blueprint2 = "guard_squad_guardsmen"
+		g_Nis_Blueprint3 = "guard_squad_sentinel"
+		g_Nis_Blueprint4 = "guard_squad_marauder"
+		g_Nis_Blueprint5 = "guard_squad_command_squad"
+		g_Nis_Blueprint6 = "guard_squad_kasrkin"
+		g_Nis_Blueprint7 = "guard_squad_commissar"
+		
+	elseif humanplayer == "ork_race" then
+		
+		-- NOTE:  Nuddyfist makes an appearance here. :)
+		g_Nis_Blueprint = "ork_squad_nob"	
+		g_Nis_Blueprint2 = "ork_squad_shoota_boy"
+		g_Nis_Blueprint3 = "ork_squad_armored_nob"
+		g_Nis_Blueprint4 = "ork_squad_fighta_bomba"
+		g_Nis_Blueprint5 = "ork_squad_warboss"	
+		g_Nis_Blueprint6 = "ork_squad_nob"
+		g_Nis_Blueprint7 = "ork_squad_nob_advance_sp"	
+	
+	elseif humanplayer =="space_marine_race" then
+		
+		g_Nis_Blueprint = "space_marine_squad_assault"
+		g_Nis_Blueprint2 = "space_marine_squad_tactical"
+		g_Nis_Blueprint3 = "space_marine_squad_dreadnought"
+		g_Nis_Blueprint4 = "space_marine_squad_tempest"
+		g_Nis_Blueprint5 = "space_marine_squad_force_commander"
+		g_Nis_Blueprint6 = "space_marine_squad_grey_knights"
+		g_Nis_Blueprint7 = "space_marine_squad_chaplain"
+		
+		-- Get that annoying aura off from the chaplain
+		Player_RestrictAbility(g_Player1, "sp_dxp_unit_glow")
+		Player_RestrictAbility(g_Player1, "marines_chaplain_healing_aura")
+		Player_RestrictAbility(g_Player1, "marines_healing_aura2")
+	
+	elseif humanplayer == "tau_race" then
+		
+		g_Nis_Blueprint = "tau_kroot_carnivore_squad"
+		g_Nis_Blueprint2 = "tau_fire_warrior_squad"
+		g_Nis_Blueprint3 = "tau_crisis_suit_squad"
+		g_Nis_Blueprint4 = "tau_barracuda_squad"
+		g_Nis_Blueprint5 = "tau_commander_squad"
+		g_Nis_Blueprint6 = "tau_fire_warrior_squad"
+		
+		--Silvey note
+		--I'd put an Ethereal, but it really wouldn't make much fictional sense
+		g_Nis_Blueprint7 = "tau_fire_warrior_squad"	
+	
+	elseif humanplayer == "necron_race" then
+		
+		g_Nis_Blueprint = "necron_flayed_one_squad"
+		g_Nis_Blueprint2 = "necron_basic_warrior_squad"
+		g_Nis_Blueprint3 = "necron_tomb_spyder_squad"
+		g_Nis_Blueprint4 = "necron_scarab_squad"
+		g_Nis_Blueprint5 = "necron_lord_squad"
+		g_Nis_Blueprint6 = "necron_basic_warrior_squad"
+		g_Nis_Blueprint7 = "necron_basic_warrior_squad"
+		
+	elseif humanplayer =="dark_eldar_race" then
+		
+		g_Nis_Blueprint = "dark_eldar_squad_scourge_sp_dxp3"
+		g_Nis_Blueprint2 = "dark_eldar_squad_warrior"
+		g_Nis_Blueprint3 = "dark_eldar_squad_talos"
+		g_Nis_Blueprint4 = "dark_eldar_squad_raven"
+		g_Nis_Blueprint5 = "dark_eldar_squad_archon"
+		g_Nis_Blueprint6 = "dark_eldar_squad_warrior"
+		g_Nis_Blueprint7 = "dark_eldar_squad_haemonculus"
+		
+				
+	elseif humanplayer == "sisters_race" then
+		
+		g_Nis_Blueprint = "sisters_squad_repentia"
+		g_Nis_Blueprint2 = "sisters_squad_battle_sister"
+		g_Nis_Blueprint3 = "sisters_squad_immolator_tank"
+		g_Nis_Blueprint4 = "sisters_squad_lightning"
+		g_Nis_Blueprint5 = "sisters_squad_canoness"		
+		g_Nis_Blueprint6 = "sisters_squad_battle_sister"
+		g_Nis_Blueprint7 = "sisters_squad_battle_sister"
+		
+	end
+	
+	--Rule_RemoveAll()
+
+	--turn off events
+	Util_NIS_ToggleModifierEvents(g_Player1, false)
+	
+	--[[hide the bonus unit effect]]
+	Player_RestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	
+	
+	--Toggle modifiers 
+	Util_NIS_ToggleModifierEvents(g_Player2, false)
+	Util_NIS_ToggleModifierEvents(g_Player3, false)
+	Util_NIS_ToggleModifierEvents(g_Player4, false)
+	Util_NIS_ToggleModifierEvents(g_Player5, false)
+	Util_NIS_ToggleModifierEvents(g_Player6, false)
+	Util_NIS_ToggleModifierEvents(g_Player7, false)
+	Util_NIS_ToggleModifierEvents(g_Player8, false)
+	
+	--[[ go into letterbox mode ]]
+	W40k_Letterbox( true, 2 )		
+	
+	--[[ reveals all of the map ]]
+	FOW_RevealAll()
+	
+	CTRL.Event_Delay( 1 )
+			Fade_Start( 1, false )
+	CTRL.WAIT()
+	
+	--Remove all the buildings and units to clear the Nis scenes
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_All_Units"), Player_GetSquads(g_Player1))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player2))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player3))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player4))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player5))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player6))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player7))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player8))
+	
+	EGroup_AddGroup(EGroup_CreateIfNotFound("eg_All_Buildings"), Player_GetEntities(g_Player1))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player2))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player3))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player4))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player5))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player6))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player7))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player8))
+	
+	
+	SGroup_DeSpawn("sg_All_Units")
+	EGroup_SelfDestroy("eg_All_Buildings", false)
+	EGroup_DeSpawn("eg_All_Buildings")
+	
+	-----------------------------------------------------------------
+	-----Spawn Closing Units
+	-----------------------------------------------------------------
+	--[[  Council   ]]--
+	--Commander's Council
+	for i = 1, 6 do
+		if i ~= 4 then
+			Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_council"..i, g_Nis_Blueprint6, "nis_outro_council"..i, 1, 1)
+		else
+			Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_council"..i, g_Nis_Blueprint7, "nis_outro_council"..i, 1, 1)
+		end
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_council"..i))					
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_councils"), SGroup_FromName("sg_closing_council"..i))					
+		SGroup_FaceMarker("sg_closing_council"..i, "nis_outro_lord_goto")
+			
+	end
+	
+	Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_commander", g_Nis_Blueprint5, "nis_outro_commander", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_commander"))					
+	SGroup_FaceMarker("sg_closing_commander", "nis_outro_lord_goto")
+	----
+	
+	
+	--Ranged attackers
+	for i = 1, 4 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_attackers"..i, g_Nis_Blueprint2, "nis_outro_attackers"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_attackers"..i))					
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_atk_army"), SGroup_FromName("sg_closing_attackers"..i))							
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_atk_move"), SGroup_FromName("sg_closing_attackers"..i))					
+	end
+	
+	--Ranged attackers (set 2)
+	for i = 5, 10 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_attackers"..i, g_Nis_Blueprint2, "nis_outro_attackers"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_attackers"..i))					
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_atk_army"), SGroup_FromName("sg_closing_attackers"..i))							
+	end
+	
+	--Melee attackers
+	for i = 11, 12 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_attackers"..i, g_Nis_Blueprint, "nis_outro_attackers"..i, 6, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_attackers"..i))					
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_atk_army"), SGroup_FromName("sg_closing_attackers"..i))					
+	end
+	
+	--Vehicle attackers
+	for i = 1, 2 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_t2_attackers"..i, g_Nis_Blueprint3, "nis_outro_t2_attackers"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_t2_attackers"..i))				
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_atk_army"), SGroup_FromName("sg_closing_t2_attackers"..i))							
+	end
+	
+	--Flyer attackers
+	for i = 1, 5,2 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_flyer"..i, g_Nis_Blueprint4, "nis_outro_flyer"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_flyer"..i))							
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_flyers"), SGroup_FromName("sg_closing_flyer"..i))							
+		Anim_EnableInfantryOffset("sg_closing_flyer"..i, false)			
+		
+		Squad_TurnOffVehiclePhysics(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer"..i), 1))
+		Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer"..i), 1), true, World_GetRand(12,17))		
+	end
+	
+	--chaos lord
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_lord", "chaos_squad_lord", "nis_outro_lord1", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_lord"))					
+	SGroup_FaceMarker("sg_closing_lord", "nis_outro_facing1")
+	
+	--Cultists
+	for i = 1, 6 do
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_cultists"..i, "chaos_squad_cultist", "nis_outro_cultists"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_cultists"..i))					
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_cultist_group"), SGroup_FromName("sg_closing_cultists"..i))					
+		SGroup_FaceMarker("sg_closing_cultists"..i, "nis_outro_facing1")
+		Anim_EnableInfantryOffset("sg_closing_cultists"..i, false)			
+	end
+	
+	--Talking Cultists
+	for i = 7, 7 do
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_cultists"..i, "chaos_squad_cultist", "nis_outro_cultists"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_cultists"..i))							
+		SGroup_FaceMarker("sg_closing_cultists"..i, "nis_outro_facing1")
+		Anim_EnableInfantryOffset("sg_closing_cultists"..i, false)			
+	end
+	
+	--Cultists
+	for i = 8, 10 do
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_cultists"..i, "chaos_squad_cultist", "nis_outro_cultists"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_cultists"..i))					
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_cultist_group2"), SGroup_FromName("sg_closing_cultists"..i))					
+		SGroup_FaceMarker("sg_closing_cultists"..i, "nis_outro_facing1")
+		Anim_EnableInfantryOffset("sg_closing_cultists"..i, false)			
+	end
+	
+	--Death
+	for i = 1, 25 do
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_death"..i, "chaos_marine_squad", "nis_outro_death"..i, 3, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_death"..i))					
+		SGroup_SelfDestroy("sg_closing_death"..i, false)		
+	end
+	
+		
+	--Buildings
+	g_BuildingNames = "eg_closing_buildings" -- doesn't matter much here
+	
+	-- Always builds the building (prevents crashes and speeds things up)
+	function user_CreateBuilding(p_PlayerID, p_EGroupID, p_MarkerName, p_Blueprint)
+		l_EntityID = Entity_Create(p_Blueprint, p_PlayerID, Marker_GetPosition(Marker_FromName(p_MarkerName, "basic_marker" )))
+		
+		EGroup_Add(EGroup_CreateIfNotFound(p_EGroupID), l_EntityID)
+		EGroup_AddGroup(EGroup_CreateIfNotFound(g_BuildingNames), EGroup_FromName(p_EGroupID))
+		Entity_Spawn(l_EntityID)		
+		
+	end
+
+	--[[   Dead bodies!!!   ]]--
+	for i = 1, 25 do
+		-- I want the DE players to see the soul, the soul also covers up the splatting action.
+		if humanplayer =="dark_eldar_race" then
+			user_CreateBuilding(g_Player1, "eg_outro_death"..i, "nis_outro_death"..i, "blood_splat")
+		end
+		if World_GetRand(1, 100) > 50 then
+			user_CreateBuilding(g_Player2, "eg_outro_death"..i, "nis_outro_death"..i, "carnage_chaos_cultist_01")
+		else
+			user_CreateBuilding(g_Player2, "eg_outro_death"..i, "nis_outro_death"..i, "carnage_chaos_cultist_02")
+		end
+	end
+	
+	
+	for i = 1, 12 do
+		user_CreateBuilding(g_Player2, "eg_outro_fire"..i, "nis_outro_fire"..i, "fire_large_01")
+	end
+	
+	--[[  Generic Buildings ]]--
+	for i = 1, 5 do
+		user_CreateBuilding(g_Player2, "eg_outro_powergen"..i, "nis_outro_powergen"..i, "chaos_plasma_generator")
+	end
+	user_CreateBuilding(g_Player2, "eg_outro_daemonpit", "nis_outro_daemonpit", "chaos_greater_sacrificial_circle")
+	user_CreateBuilding(g_Player2, "eg_outro_machinepit", "nis_outro_machinepit", "chaos_machine_pit")
+	user_CreateBuilding(g_Player2, "eg_outro_barracks", "nis_outro_barracks", "chaos_temple")
+	user_CreateBuilding(g_Player2, "eg_outro_sacrificialcircle", "nis_outro_sacrificialcircle", "chaos_sacrificial_circle")
+	user_CreateBuilding(g_Player2, "eg_outro_armory", "nis_outro_armory", "chaos_armoury")
+	user_CreateBuilding(g_Player2, "eg_outro_turret1", "nis_outro_turret1", "chaos_turret_bolter")
+	user_CreateBuilding(g_Player2, "eg_outro_turret2", "nis_outro_turret2", "chaos_turret_bolter")
+	
+	
+	-- Globalized settings
+	Anim_EnableInfantryOffset("sg_closing_actors", false)			
+	Cmd_SetStance("sg_closing_actors", STANCE_CeaseFire)			
+	SGroup_SetHealthInvulnerable("sg_closing_actors", true)				
+	EGroup_SetHealthInvulnerable("eg_closing_buildings", true)
+
+	-----------------------------------------------------------------
+	-----End Spawn Closing Units
+	-----------------------------------------------------------------
+	
+	CPath_Start("canim_starter", "start", "end")
+	
+	--[[ Get units into proper stances and send guys out accordingly ]]--
+	
+	Cmd_SetStance("sg_closing_atk_army", STANCE_Attack)
+	Cmd_AttackMoveMarker("sg_closing_atk_army", "nis_outro_attackers_goto2")
+	Cmd_MoveToMarker("sg_closing_atk_move", "nis_outro_attackers_goto1")	
+	
+	Cmd_SetStance("sg_closing_cultist_group", STANCE_CeaseFire)
+	Cmd_SetStance("sg_closing_flyers", STANCE_CeaseFire)
+	
+	--Shot 1
+	Fade_Start( 2.0, true )
+	CTRL.CPath_CutToPath("canim_outro1a", "start", "end")
+		CTRL.SUB()
+		
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			EGroup_SelfDestroy("eg_outro_turret1", false)
+			
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			EGroup_SelfDestroy("eg_outro_turret2", false)
+			
+			Anim_PlaySGroupAnim("sg_closing_lord", "idle_in_cover")
+			CTRL.Event_Delay(7)
+			CTRL.WAIT()
+			EGroup_SelfDestroy("eg_outro_daemonpit", false)
+			
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()
+			
+			EGroup_SetHealthInvulnerable("eg_outro_armory", false)
+			EGroup_SetHealthInvulnerable("eg_outro_machinepit", false)
+			
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			Cmd_SetStance("sg_closing_cultist_group", STANCE_Hold)
+			Cmd_SetMeleeStance("sg_closing_cultist_group", MSTANCE_Ranged)
+	
+			
+			
+			--Lord:  No! No! We cannot lose… we cannot die… how can we?!
+			CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5200102) 
+			CTRL.WAIT()
+			Anim_StopSGroupAnim("sg_closing_lord", "idle_in_cover")
+			
+			Cmd_MoveToMarker("sg_closing_lord", "nis_outro_lord_goto")
+			
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()
+			
+			EGroup_SelfDestroy("eg_closing_buildings", false)
+			
+			SGroup_SetHealthInvulnerable("sg_closing_cultist_group", false)
+			
+			Anim_PlaySGroupAnim("sg_closing_cultists7", "sp_talk")
+			--Cultist:  Without our devotion.			
+			CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200103) 
+			CTRL.WAIT()
+			Anim_StopSGroupAnim("sg_closing_cultists7", "sp_talk")		
+			
+			Cmd_MoveToMarker("sg_closing_flyers", "nis_outro_flyer_goto")
+			
+			Cmd_SetStance("sg_closing_cultist_group2", STANCE_Hold)
+			Cmd_SetMeleeStance("sg_closing_cultist_group2", MSTANCE_Ranged)			
+			SGroup_SetHealthInvulnerable("sg_closing_cultist_group2", false)			
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()			
+			
+			Anim_PlaySGroupAnim("sg_closing_cultists7", "sp_talk")
+			--Cultist:  Without our sacrifice.
+			CTRL.Actor_PlaySpeech(  ACT.Cultist, 5200104) 
+			CTRL.WAIT()	
+			Anim_StopSGroupAnim("sg_closing_cultists7", "sp_talk")		
+			
+			Cmd_SetStance("sg_closing_cultists7", STANCE_Hold)
+			Cmd_SetMeleeStance("sg_closing_cultists7", MSTANCE_Ranged)			
+			SGroup_SetHealthInvulnerable("sg_closing_cultists7", false)
+			
+			CTRL.Event_Delay(3.2)
+			CTRL.WAIT()			
+			
+			
+		CTRL.END()
+	CTRL.WAIT()
+	--
+	
+	-----------------------[[  Preparation for next shots   ]]---------------------------------------
+	--Cmd_SetStance("sg_closing_actors", STANCE_CeaseFire)	
+	SGroup_DeSpawn("sg_closing_lord")
+	
+	--chaos lord
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_lord2", "chaos_squad_lord", "nis_outro_lord2", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_lord2"))					
+	SGroup_FaceMarker("sg_closing_lord2", "nis_outro_lord_goto")
+	Cmd_MoveToMarker("sg_closing_lord2", "nis_outro_lord_goto")
+	Cmd_SetStance("sg_closing_lord2", STANCE_CeaseFire)
+	
+	user_CreateBuilding(g_Player2, "eg_outro_daemonpit", "nis_outro_daemonpit", "chaos_greater_sacrificial_circle")
+	user_CreateBuilding(g_Player2, "eg_outro_machinepit", "nis_outro_machinepit", "chaos_machine_pit")
+	user_CreateBuilding(g_Player2, "eg_outro_barracks", "nis_outro_barracks", "chaos_temple")
+	user_CreateBuilding(g_Player2, "eg_outro_sacrificialcircle", "nis_outro_sacrificialcircle", "chaos_sacrificial_circle")
+	user_CreateBuilding(g_Player2, "eg_outro_armory", "nis_outro_armory", "chaos_armoury")
+	user_CreateBuilding(g_Player2, "eg_outro_turret1", "nis_outro_turret1", "chaos_turret_bolter")
+	user_CreateBuilding(g_Player2, "eg_outro_turret2", "nis_outro_turret2", "chaos_turret_bolter")
+	
+	Cmd_MoveToMarker("sg_closing_atk_army", "nis_outro_attackers_goto1")	
+	Cmd_SetStance("sg_closing_atk_army", STANCE_Attack)	
+	
+	Cmd_MoveToMarker("sg_closing_councils", "nis_outro_council_goto2")	
+	Cmd_MoveToMarker("sg_closing_commander", "nis_outro_council_goto")
+	---------------------------------------------------------------------------------------------------	
+	
+	--[[  Shot2  ]]--
+		CPath_CutToPath("canim_outro2a", "start", "end")
+		-- Lord:  <screaming, chanting> The horrid blossom of chaos will wither, will die!
+		CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5200105) 				
+		CTRL.WAIT()
+		SGroup_FaceMarker("sg_closing_lord2", "nis_outro_lord_facing")
+	-----------------------
+	
+	--Create a single flyer
+	for i = 1, 1 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_flyer"..i, g_Nis_Blueprint4, "nis_outro_flyer"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_flyer"..i))							
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_flyers2"), SGroup_FromName("sg_closing_flyer"..i))							
+		Anim_EnableInfantryOffset("sg_closing_flyer"..i, false)			
+		
+		Squad_TurnOffVehiclePhysics(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer"..i), 1))
+		Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer"..i), 1), true, World_GetRand(12,17))		
+	end
+	
+	Cmd_SetStance("sg_closing_flyers2", STANCE_CeaseFire)
+	Cmd_MoveToMarker("sg_closing_flyers2", "nis_outro_flyer_goto")
+	CTRL.Event_Delay(1.0)
+	CTRL.WAIT()			
+	
+	
+		
+	--[[  Shot3  ]]--
+		CPath_CutToPath("canim_outro3a", "start", "end")
+		-- Lord:  This world… is slipping… from our grasp…
+		CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5200106) 				
+			CTRL.SUB()		
+			
+				
+				CTRL.Event_Delay(1.5)
+				CTRL.WAIT()			
+				--Explosion fx!!
+				Util_MarkerFX( "nis_outro_explosion1", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+		
+				CTRL.Event_Delay(4.5)
+				CTRL.WAIT()			
+				--Explosion fx!!
+				Util_MarkerFX( "nis_outro_explosion2", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+		
+			CTRL.END()
+		CTRL.WAIT()
+		CTRL.Event_Delay(0.5)
+		CTRL.WAIT()			
+	------------------------
+	
+	--[[  Shot4  ]]--
+		CPath_CutToPath("canim_outro4a", "start", "end")
+		SGroup_FaceMarker("sg_closing_lord2", "nis_outro_council_goto")
+		Cmd_MoveToMarker("sg_closing_commander", "nis_outro_lord_goto")
+		
+		--CTRL.Event_Delay(0.5)
+		--CTRL.WAIT()			
+		
+		Cmd_SetStance("sg_closing_commander", STANCE_Attack)
+		Cmd_SetStance("sg_closing_lord2", STANCE_Attack)
+		SGroup_SetHealthInvulnerable("sg_closing_lord2", false)
+		
+		-- Silvey
+		--[[ NOTE:  The following is a little bit ugly, but each race needs a little special attention 
+							when it comes to appropriate cinematic sync kills, unfortunately.  The Dark
+							Eldar still doesn't come off as nice as I'd like, but it will do.
+		]]--
+		if  humanplayer =="guard_race" then			
+			Cmd_SetStance("sg_closing_lord2", STANCE_CeaseFire)
+			SGroup_SetAvgHealth("sg_closing_lord2", 0.15)			
+		elseif humanplayer =="dark_eldar_race" then
+			Cmd_SetStance("sg_closing_lord2", STANCE_CeaseFire)
+			SGroup_SetAvgHealth("sg_closing_lord2", 0.45)		
+		elseif humanplayer =="space_marine_race" or 			 
+				  humanplayer =="tau_race" then
+				  
+			Cmd_SetStance("sg_closing_lord2", STANCE_CeaseFire)
+			
+			SGroup_SetAvgHealth("sg_closing_lord2", 0.50)
+			CTRL.Event_Delay(1.0)
+			CTRL.WAIT()				
+			Anim_PlaySGroupAnim("sg_closing_commander", "synckill_2")
+			Anim_PlaySGroupAnim("sg_closing_lord2", "syncdeath_2")
+			
+		else
+			--Silvey Polish (11/26/07):  Mute voices
+			Sound_SetVolumeModifierVoice(0.0)
+			SGroup_SetAvgHealth("sg_closing_lord2", 0.35)	
+		end
+		-------------------------------------------------------------------------------------------------------------------------------------------
+		
+		CTRL.Event_Delay(7.5)
+		CTRL.WAIT()			
+		
+		--Anim_PlaySyncAnim("sg_closing_commander", "sg_closing_lord2", "synckill_2", "syncdeath_2", 0.01) 		
+		
+				
+		CTRL.Event_Delay(1.5)
+		CTRL.WAIT()			
+		
+		
+	------------------------
+	
+	
+	
+	
+	CTRL.Event_Delay(6)
+	Fade_Start(4, false)
+	CTRL.WAIT()
+	
+	--Silvey Polish (11/26/07):  Unmute voices
+	Sound_SetVolumeModifierVoice(1.0)
+	
+	CTRL.W40k_Letterbox( false, 2)	
+	CTRL.WAIT()
+	
+	
+	
+	
+	
+	--Silvey Polish (11/5/07):  See following
+	--[[NOTE: 	Below was the original outro that I implemented for the Chaos outro.  It was one of my 
+						firsts and after watching it (and the general feedback), I decided to scrap it.  I'm leaving 
+						it commented out in case of emergency and it needs to be re-implemented!
+	]]--
+	--[[local humanplayer = MetaMap_GetPlayerRaceName()	
+ 
+	if humanplayer == "eldar_race" then
+	
+		g_Nis_Blueprint = "eldar_squad_farseer"
+		g_Nis_Blueprint2 = "eldar_squad_dark_reapers"
+		g_Nis_Blueprint3 = "eldar_squad_wraithlord"
+		
+	elseif humanplayer == "guard_race" then
+	
+		g_Nis_Blueprint = "guard_squad_command_squad"
+		g_Nis_Blueprint2 = "guard_squad_guardsmen"
+		g_Nis_Blueprint3 = "guard_squad_sentinel"		
+	
+	elseif humanplayer == "ork_race" then
+	
+		g_Nis_Blueprint = "ork_squad_warboss"	
+		g_Nis_Blueprint2 = "ork_squad_nob"
+		g_Nis_Blueprint3 = "ork_squad_armored_nob"		
+	
+	elseif humanplayer =="space_marine_race" then
+	
+		g_Nis_Blueprint = "space_marine_squad_force_commander"
+		g_Nis_Blueprint2 = "space_marine_squad_tactical"
+		g_Nis_Blueprint3 = "space_marine_squad_dreadnought"		
+	
+	elseif humanplayer == "tau_race" then
+	
+		g_Nis_Blueprint = "tau_commander_squad"
+		g_Nis_Blueprint2 = "tau_fire_warrior_squad"
+		g_Nis_Blueprint3 = "tau_crisis_suit_squad"		
+	
+	elseif humanplayer == "necron_race" then
+ 
+		g_Nis_Blueprint = "necron_lord_squad"
+		g_Nis_Blueprint2 = "necron_basic_warrior_squad"
+		g_Nis_Blueprint3 = "necron_tomb_spyder_squad"		
+		
+	elseif humanplayer == "chaos_marine_race" then
+		
+		g_Nis_Blueprint = "chaos_squad_lord"
+		g_Nis_Blueprint2 = "chaos_marine_squad"
+		g_Nis_Blueprint3 = "chaos_squad_obliterator"				
+		
+	elseif humanplayer =="dark_eldar_race" then
+		
+		g_Nis_Blueprint = "dark_eldar_squad_archon"
+		g_Nis_Blueprint2 = "dark_eldar_squad_warrior"
+		g_Nis_Blueprint3 = "dark_eldar_squad_dais_of_destruction"
+				
+	elseif humanplayer == "sisters_race" then
+		
+		g_Nis_Blueprint = "sisters_squad_battle_sister"
+		g_Nis_Blueprint2 = "sisters_squad_battle_sister"
+		g_Nis_Blueprint3 = "sisters_squad_battle_sister"		
+		
+	end
+
+
+
+	--Rule_RemoveAll()	
+	Fade_Start( 0, false )
+	
+		
+	--[[ reveals all of the map ]]
+	FOW_RevealAll()
+
+	
+		
+	--[[Cpu_Enable(g_Player2, false)	
+	Cpu_Enable(g_Player3, false)
+	Cpu_Enable(g_Player4, false)
+	Cpu_Enable(g_Player5, false)]]--
+	
+	--[[turn off events]]
+	Util_NIS_ToggleModifierEvents(g_Player1, false)
+	Util_NIS_ToggleModifierEvents(g_Player2, false)
+	Util_NIS_ToggleModifierEvents(g_Player3, false)
+	Util_NIS_ToggleModifierEvents(g_Player4, false)
+	Util_NIS_ToggleModifierEvents(g_Player5, false)
+	
+	--[[hide the bonus unit effect]]
+	Player_RestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	
+	--[[ go into letterbox mode ]]
+	W40k_Letterbox( true, 0 )
+
+	--[[Removing all the rules]]
+
+	CTRL.Event_Delay( 1 )
+	CTRL.WAIT()
+	
+	--Rule_RemoveAll()
+
+		
+	--[[Remove all the buildings and units to clear the Nis scenes]]
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_All_Units"), Player_GetSquads(g_Player1))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player2))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player3))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player4))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player5))
+	
+	EGroup_AddGroup(EGroup_CreateIfNotFound("eg_All_Buildings"), Player_GetEntities(g_Player1))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player2))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player3))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player4))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player5))
+	
+	
+	SGroup_DeSpawn("sg_All_Units")
+	EGroup_DeSpawn("eg_All_Buildings")
+	
+	Fade_Start( 2.0, true )
+	--CPath_Start("canim_starter", "start", "end")
+	
+	--****************************************************     SCENE 1 (Pre-Block)      ************************************************************--
+	--[[ 	AUTHOR:  Steven Silvey
+			DATE:  07/09/07
+			DESCRIPTION:
+				Cultists are praying to a Chaos statue, hidden in the shadows as the opposing commander gives orders to
+			loyal men, showing the opposing force has control of the area.
+			MODIFICATIONS:  --
+	--]]	
+	-------------------------------------------------------------------
+	--[[ START Spawing Units ]]
+	-------------------------------------------------------------------
+	----Chaos Marines
+	--Quick cutscene praying cultists (Extras)
+	for i = 1,3 do
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_pray"..i, "chaos_squad_cultist", "nis_outro_praying_cultist"..i, 3, 1)	
+		SGroup_FaceMarker("sg_closing_pray"..i, "mkr_shrine3")
+		Cmd_SetStance("sg_closing_pray"..i, STANCE_CeaseFire)	
+	end
+	
+	----Attackers (Variable)
+	--Commander Unit (Supporting Role)
+	Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_commander", g_Nis_Blueprint, "nis_outro_atk_commander", 1, 1)	
+	SGroup_FaceMarker("sg_closing_commander", "nis_outro_atk_quick1")
+	Cmd_SetStance("sg_closing_commander", STANCE_CeaseFire)
+	
+	--Quick cutscene attackers (Extras)
+	for i = 1,3 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_quick"..i, g_Nis_Blueprint2, "nis_outro_atk_quick"..i, 5, 1)	
+		SGroup_FaceMarker("sg_closing_quick"..i, "nis_outro_atk_commander")
+		Cmd_SetStance("sg_closing_quick"..i, STANCE_CeaseFire)	
+	end
+	-------------------------------------------------------------------
+	--[[ END Spawing Units ]]
+	-------------------------------------------------------------------
+	
+	-- Always builds the building (prevents crashes and speeds things up)
+	g_BuildingNames = "eg_chaos_buildings"
+	function user_CreateBuilding(p_PlayerID, p_EGroupID, p_MarkerName, p_Blueprint)
+		l_EntityID = Entity_Create(p_Blueprint, p_PlayerID, Marker_GetPosition(Marker_FromName(p_MarkerName, "basic_marker" )))
+		
+		EGroup_Add(EGroup_CreateIfNotFound(p_EGroupID), l_EntityID)
+		EGroup_AddGroup(EGroup_CreateIfNotFound(g_BuildingNames), EGroup_FromName(p_EGroupID))
+		Entity_Spawn(l_EntityID)
+	end
+	
+	user_CreateBuilding(g_Player1, "eg_chaos_statue", "nis_outro_shrine", "chaos_statue")
+
+	
+
+	-------------------------------------------------------------------
+	--[[ START Scene Control ]]
+	-------------------------------------------------------------------
+	CPath_Start("canim_starter", "start", "end")
+	
+	CTRL.CPath_CutToPath("canim_outro_dying_cultists", "start", "end")
+		CTRL.SUB()
+			--Get extras to act part
+			Anim_PlaySGroupAnim(SGroup_FromName("sg_closing_pray1"), "capture_strategic_point" )
+			Anim_PlaySGroupAnim(SGroup_FromName("sg_closing_pray2"), "sp_ritual" )
+			Anim_PlaySGroupAnim(SGroup_FromName("sg_closing_pray3"), "sp_ritual" )
+			
+			CTRL.Event_Delay(3.0)
+			CTRL.WAIT()
+			
+			Cmd_MoveToMarker("sg_closing_quick1", "nis_outro_praying_cultist1")
+			Cmd_SetStance("sg_closing_quick1", STANCE_Attack)		
+			
+			SGroup_FaceEachOther("sg_closing_commander", "sg_closing_quick3")
+			CTRL.Event_Delay(2.0)
+			CTRL.WAIT()
+			
+			Cmd_MoveToMarker("sg_closing_quick3", "nis_outro_atk_quick_dst3")
+			SGroup_FaceEachOther("sg_closing_commander", "sg_closing_quick2")
+			CTRL.Event_Delay(2.0)
+			CTRL.WAIT()
+			
+			Cmd_MoveToMarker("sg_closing_commander", "nis_outro_atk_quick_dst2")
+			Cmd_MoveToMarker("sg_closing_quick2", "nis_outro_atk_quick_dst2")
+			
+			CTRL.Event_Delay(2.0)
+			CTRL.WAIT()
+			
+			Fade_Start( 2, false )
+			CTRL.Event_Delay(2.0)
+			CTRL.WAIT()
+			
+			CPath_Blendout(0.0)
+			
+		CTRL.END()
+	CTRL.WAIT()
+	-------------------------------------------------------------------
+	--[[ END Scene Control ]]
+	-------------------------------------------------------------------
+	
+	
+	
+	-------------------------------------------------------------------
+	--[[ START Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_All_Units"), Player_GetSquads(g_Player1))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player2))
+	EGroup_AddGroup(EGroup_CreateIfNotFound("eg_All_Buildings"), Player_GetEntities(g_Player1))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player2))
+	
+	SGroup_DeSpawn("sg_All_Units")	
+	EGroup_DeSpawn("eg_All_Buildings")
+	-------------------------------------------------------------------
+	--[[ END Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	
+	--****************************************************     SCENE 2 (Pre-Block)      ************************************************************--
+	--[[ 	AUTHOR:  Steven Silvey
+			DATE:  07/10/07
+			DESCRIPTION:
+				A Sorcerer runs through the barren city in hopes of finding any remains of Chaos legions, a supporting squad 
+			assisting him along the path.
+			MODIFICATIONS:  --
+	--]]
+	-------------------------------------------------------------------
+	--[[ START Spawing Units ]]
+	-------------------------------------------------------------------
+	--Sorcerer (Main Actor)
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_sorcerer", "chaos_squad_sorcerer", "nis_outro_sorcerer", 1, 1)	
+	SGroup_FaceMarker("sg_closing_sorcerer", "nis_outro_cultist1")
+	Cmd_SetStance("sg_closing_sorcerer", STANCE_CeaseFire)
+	
+	--Chaos Marine (Extra)
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_chaosmarine", "chaos_marine_squad", "nis_outro_chaosmarine", 5, 1)	
+	SGroup_FaceMarker("sg_closing_chaosmarine", "nis_outro_cultist1")
+	Cmd_SetStance("sg_closing_chaosmarine", STANCE_CeaseFire)
+	-------------------------------------------------------------------
+	--[[ END Spawing Units ]]
+	-------------------------------------------------------------------
+
+	
+
+	-------------------------------------------------------------------
+	--[[ START Scene Control ]]
+	-------------------------------------------------------------------
+	CPath_Start("canim_starter", "start", "end")
+	CTRL.CPath_CutToPath("canim_outro_sorcerer_scan", "start", "end")
+		CTRL.SUB()		
+			Fade_Start( 2, true )
+			
+			Cmd_MoveToMarker("sg_closing_sorcerer", "nis_outro_destination1")
+			Cmd_MoveToMarker("sg_closing_chaosmarine", "nis_outro_destination1")
+			
+			CTRL.Event_Delay(4.0)
+			CTRL.WAIT()				
+			
+			--Sorcerer:  No! No! We cannot lose… we cannot die… how can we?!
+			Actor_PlaySpeech(  ACT.Sindri, 5200102) 
+			
+			CTRL.Event_Delay(5.0)
+			CTRL.WAIT()	
+			
+			CTRL.Fade_Start(2, false)
+			CTRL.WAIT()	
+			CPath_Blendout(0.0)	
+			
+		CTRL.END()
+	CTRL.WAIT()		
+	-------------------------------------------------------------------
+	--[[ END Scene Control ]]
+	-------------------------------------------------------------------
+	
+	
+	
+	-------------------------------------------------------------------
+	--[[ START Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_All_Units"), Player_GetSquads(g_Player1))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player2))
+	EGroup_AddGroup(EGroup_CreateIfNotFound("eg_All_Buildings"), Player_GetEntities(g_Player1))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player2))
+	
+	SGroup_DeSpawn("sg_All_Units")	
+	EGroup_DeSpawn("eg_All_Buildings")
+	-------------------------------------------------------------------
+	--[[ END Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	
+	--****************************************************     SCENE 3 (Block 1-2)      ********************************************************************--
+	--[[ 	AUTHOR:  Steven Silvey
+			DATE:  07/10/07
+			DESCRIPTION:
+				Cultist firing at opposing force (off screen), attempting to hold ground.  Sorcerer and Chaos squad appear from the
+			side street.  Cultist force start to die and Sorcerer (along with his faithful marines) head towards the destroyed central base.
+			MODIFICATIONS:  --
+	--]]
+	-------------------------------------------------------------------
+	--[[ START Spawing Units ]]
+	-------------------------------------------------------------------
+	----Chaos
+	--Sorcerer (Main Actor)
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_sorcerer", "chaos_squad_sorcerer", "nis_outro_sorcerer2", 1, 1)	
+	SGroup_FaceMarker("sg_closing_sorcerer", "nis_outro_cultist1")
+	Cmd_SetStance("sg_closing_sorcerer", STANCE_CeaseFire)
+	
+	--Chaos Marine (Extra)
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_chaosmarine", "chaos_marine_squad", "nis_outro_chaosmarine2", 5, 1)	
+	SGroup_FaceMarker("sg_closing_chaosmarine", "nis_outro_cultist1")
+	Cmd_SetStance("sg_closing_chaosmarine", STANCE_CeaseFire)
+	
+	--Cultists (Extras)
+	for i = 1,3 do
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_cultist"..i, "chaos_squad_cultist", "nis_outro_cultist"..i, 5, 1)	
+		SGroup_FaceMarker("sg_closing_cultist"..i, "nis_outro_attacker1")
+		Cmd_SetStance("sg_closing_cultist"..i, STANCE_CeaseFire)	
+		--Squad_ForceUpgradeWeapons( "sg_closing_cultist"..i, "chaos_laspistol", 3 )
+	end
+	
+	----Attackers (Variable)
+	-- Frontline
+	for i = 1,5 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_attacker"..i, g_Nis_Blueprint2, "nis_outro_attacker"..i, 5, 1)	
+		SGroup_FaceMarker("sg_closing_attacker"..i, "nis_outro_cultist2")
+		Cmd_SetStance("sg_closing_attacker"..i, STANCE_CeaseFire)	
+	end		
+	
+	--Heavy backup
+	for i = 1,3 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_heavy"..i, g_Nis_Blueprint3, "nis_outro_heavy"..i, 2, 1)	
+		SGroup_FaceMarker("sg_closing_heavy"..i, "nis_outro_cultist2")
+		Cmd_SetStance("sg_closing_heavy"..i, STANCE_CeaseFire)	
+	end	
+	
+	-------------------------------------------------------------------
+	--[[ END Spawing Units ]]
+	-------------------------------------------------------------------
+
+	
+
+	-------------------------------------------------------------------
+	--[[ START Scene Control ]]
+	-------------------------------------------------------------------
+	--Show Cultists fighting, scan to sorcerer
+	CPath_Start("canim_starter", "start", "end")
+	CTRL.CPath_CutToPath("canim_outro_cultist_scan", "start", "mid")
+		CTRL.SUB()		
+			Fade_Start( 2, true )
+			
+			--Start Battle
+			for i = 1,3 do
+				Cmd_AttackGroundMarker("sg_closing_cultist"..i, "nis_outro_attacker1" )				
+				Cmd_SetStance("sg_closing_cultist"..i, STANCE_Attack)	
+			end
+			
+			Cmd_MoveToMarker("sg_closing_sorcerer", "nis_outro_destination1")
+			Cmd_MoveToMarker("sg_closing_chaosmarine", "nis_outro_destination1")
+			
+			CTRL.Event_Delay(2.0)
+			CTRL.WAIT()
+			
+			--Cultist:  Without our devotion.
+			Actor_PlaySpeech(  ACT.Cultist, 5200103) 
+			
+			
+			Cmd_MoveToMarker("sg_closing_sorcerer", "nis_outro_destination2")
+			Cmd_MoveToMarker("sg_closing_chaosmarine", "nis_outro_destination2")
+			
+			CTRL.Event_Delay(3.0)
+			CTRL.WAIT()
+			
+		CTRL.END()
+	CTRL.WAIT()		
+	
+	
+	--Cultist:  Without our sacrifice.
+	Actor_PlaySpeech(  ACT.Cultist, 5200104) 
+			
+	--Follow sorcerer
+	CTRL.CPath_CutToPath("canim_outro_cultist_scan", "mid", "end")		
+	CTRL.WAIT()			
+	
+	--See attackers winning
+	CTRL.CPath_CutToPath("canim_outro_battle_view", "start", "end")
+		CTRL.SUB()
+		
+			for i = 1,5 do
+				Cmd_AttackGroundMarker("sg_closing_attacker"..i, "nis_outro_cultist2" )
+				Cmd_SetStance("sg_closing_attacker"..i, STANCE_Attack)	
+			end
+			
+			for i = 1,3 do
+				Cmd_MoveToMarker("sg_closing_heavy"..i, "nis_outro_destination2" )
+				Cmd_SetStance("sg_closing_heavy"..i, STANCE_Attack)	
+			end
+			
+			
+			--Sorcerer:  <screaming, chanting> The horrid blossom of chaos will wither, will die!
+			Actor_PlaySpeech(  ACT.Sindri, 5200105) 
+			
+			CTRL.Event_Delay(5.0)
+			CTRL.WAIT()			
+			
+			Cmd_MoveToMarker("sg_closing_sorcerer", "nis_outro_destination3")
+			
+			CTRL.Event_Delay(1.5)
+			CTRL.WAIT()
+			
+			Cmd_MoveToMarker("sg_closing_chaosmarine", "nis_outro_destination3")						
+			
+			CTRL.Fade_Start(2, false)			
+			CTRL.WAIT()			
+			CPath_Blendout(0.0)
+			
+		CTRL.END()
+	CTRL.WAIT()	
+	-------------------------------------------------------------------
+	--[[ END Scene Control ]]
+	-------------------------------------------------------------------
+	
+	
+	
+	-------------------------------------------------------------------
+	--[[ START Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_All_Units"), Player_GetSquads(g_Player1))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player2))
+	EGroup_AddGroup(EGroup_CreateIfNotFound("eg_All_Buildings"), Player_GetEntities(g_Player1))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player2))
+	
+	SGroup_DeSpawn("sg_All_Units")	
+	EGroup_DeSpawn("eg_All_Buildings")
+	-------------------------------------------------------------------
+	--[[ END Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	
+	--****************************************************     SCENE 4 (Mid-Blocks)      ********************************************************************--
+	--[[ 	AUTHOR:  Steven Silvey
+			DATE:  07/10/07
+			DESCRIPTION:
+				Commander squad cuts off Sorcerer, but the faithful Chaos Squad allow the Sorcerer to escape by directly fighting the
+			Commander's forces.
+			MODIFICATIONS:  --
+	--]]
+	-------------------------------------------------------------------
+	--[[ START Spawing Units ]]
+	-------------------------------------------------------------------
+	----Chaos
+	--Sorcerer (Main Actor)
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_sorcerer", "chaos_squad_sorcerer", "nis_outro_sorcerer3", 1, 1)	
+	SGroup_FaceMarker("sg_closing_sorcerer", "nis_outro_destination4")
+	Cmd_SetStance("sg_closing_sorcerer", STANCE_CeaseFire)
+	
+	--Chaos Marine (Extra)
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_chaosmarine", "chaos_marine_squad", "nis_outro_chaosmarine3", 5, 1)	
+	SGroup_FaceMarker("sg_closing_chaosmarine", "nis_outro_destination4")
+	Cmd_SetStance("sg_closing_chaosmarine", STANCE_CeaseFire)
+	
+	--Weak Cultists (Extra)
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_weak", "chaos_squad_cultist", "nis_outro_cultist4", 4, 1)	
+	SGroup_FaceMarker("sg_closing_weak", "nis_outro_atk_supporting2")
+	Cmd_SetStance("sg_closing_weak", STANCE_CeaseFire)	
+	
+	----Attacking Units (Variable)
+	--Commander Unit (Supporting Role)
+	Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_commander", g_Nis_Blueprint, "nis_outro_atk_commander2", 1, 1)	
+	SGroup_FaceMarker("sg_closing_commander", "nis_outro_atk_supporting2")
+	Cmd_SetStance("sg_closing_commander", STANCE_CeaseFire)
+	
+	--Supporting force (Extras)
+	for i = 1,2 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_supporting"..i, g_Nis_Blueprint2, "nis_outro_atk_supporting"..i, 5, 1)	
+		SGroup_FaceMarker("sg_closing_supporting"..i, "nis_outro_atk_supporting2")
+		Cmd_SetStance("sg_closing_supporting"..i, STANCE_CeaseFire)		
+	end	
+	-------------------------------------------------------------------
+	--[[ END Spawing Units ]]
+	-------------------------------------------------------------------
+
+
+	
+	-------------------------------------------------------------------
+	--[[ START Scene Control ]]
+	-------------------------------------------------------------------
+	CPath_Start("canim_starter", "start", "end")
+	Cmd_MoveToMarker("sg_closing_sorcerer", "nis_outro_destination3")
+	Cmd_MoveToMarker("sg_closing_chaosmarine", "nis_outro_destination3")
+			
+			
+	CTRL.CPath_CutToPath("canim_outro_cross_paths", "start", "end")
+		CTRL.SUB()		
+			Fade_Start(2, true)
+			
+			--Start Battle
+			Cmd_AttackGroundMarker("sg_closing_weak", "nis_outro_atk_supporting2" )
+			Cmd_AttackGroundMarker("sg_closing_supporting2", "nis_outro_cultist4" )
+			Cmd_SetStance("sg_closing_supporting2", STANCE_Attack)	
+			Cmd_SetStance("sg_closing_weak", STANCE_Attack)	
+				
+			CTRL.Event_Delay(5.0)
+			CTRL.WAIT()
+			
+			SGroup_FaceMarker("sg_closing_sorcerer", "nis_outro_atk_commander2")
+			SGroup_FaceMarker("sg_closing_commander", "nis_outro_destination3")
+			
+			CTRL.Event_Delay(1.0)
+			CTRL.WAIT()
+			
+			Cmd_MoveToMarker("sg_closing_sorcerer", "nis_outro_destination4")
+			Cmd_SetStance("sg_closing_supporting1", STANCE_Attack)	
+			Cmd_SetStance("sg_closing_chaosmarine", STANCE_Attack)	
+			
+			CTRL.Event_Delay(2.0)
+			CTRL.WAIT()
+			
+			Cmd_MoveToMarker("sg_closing_commander", "nis_outro_destination4")
+			
+			
+		CTRL.END()
+	CTRL.WAIT()	
+	
+	CTRL.Fade_Start(2, false)
+	CTRL.WAIT()
+			
+	-------------------------------------------------------------------
+	--[[ END Scene Control ]]
+	-------------------------------------------------------------------
+	
+	
+	
+	-------------------------------------------------------------------
+	--[[ START Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_All_Units"), Player_GetSquads(g_Player1))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player2))
+	EGroup_AddGroup(EGroup_CreateIfNotFound("eg_All_Buildings"), Player_GetEntities(g_Player1))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player2))
+	
+	SGroup_DeSpawn("sg_All_Units")	
+	EGroup_DeSpawn("eg_All_Buildings")
+	-------------------------------------------------------------------
+	--[[ END Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	
+	--****************************************************     SCENE 5 (Mid-Block)      ********************************************************************--
+	--[[ 	AUTHOR:  Steven Silvey
+			DATE:  07/10/07
+			DESCRIPTION:
+				The Sorcerer enters the destroyed main base and finds himself trapped and without any support.
+			MODIFICATIONS:  --
+	--]]
+	-------------------------------------------------------------------
+	--[[ START Spawing Units ]]
+	-------------------------------------------------------------------
+	----Chaos
+	--Sorcerer (Main Actor)
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_sorcerer", "chaos_squad_sorcerer", "nis_outro_sorcerer4", 1, 1)	
+	SGroup_FaceMarker("sg_closing_sorcerer", "nis_outro_destination4")
+	Cmd_SetStance("sg_closing_sorcerer", STANCE_CeaseFire)
+	
+	----Attacking Units (Variable)
+	--Commander Unit (Supporting Role)
+	Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_commander", g_Nis_Blueprint, "nis_outro_atk_commander3", 1, 1)	
+	SGroup_FaceMarker("sg_closing_commander", "nis_outro_destination4")
+	Cmd_SetStance("sg_closing_commander", STANCE_CeaseFire)
+	
+	--Supporting force (Extras)
+	for i = 1,3 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_trapper"..i, g_Nis_Blueprint2, "nis_outro_trapper"..i, 8, 1)	
+		SGroup_FaceMarker("sg_closing_trapper"..i, "nis_outro_destination4")
+		Cmd_SetStance("sg_closing_trapper"..i, STANCE_CeaseFire)	
+	end		
+	-------------------------------------------------------------------
+	--[[ END Spawing Units ]]
+	-------------------------------------------------------------------
+
+	
+
+	-------------------------------------------------------------------
+	--[[ START Scene Control ]]
+	-------------------------------------------------------------------
+	
+	Cmd_MoveToMarker("sg_closing_sorcerer", "nis_outro_destination4")			
+			
+	CTRL.CPath_CutToPath("canim_outro_trapped", "start", "end")
+		CTRL.SUB()		
+									
+			Fade_Start(2, true)
+			Cmd_MoveToMarker("sg_closing_trapper3", "nis_outro_trapper_dst3")
+			Cmd_MoveToMarker("sg_closing_trapper2", "nis_outro_trapper_dst2")
+			Cmd_MoveToMarker("sg_closing_trapper1", "nis_outro_trapper_dst1")
+			CTRL.Event_Delay(10.0)
+			CTRL.WAIT()
+			
+			
+			SGroup_FaceMarker("sg_closing_sorcerer", "nis_outro_trapper3")
+			CTRL.Event_Delay(3.0)
+			CTRL.WAIT()
+	--	CTRL.END()
+	--CTRL.WAIT()		
+	
+	--CTRL.CPath_CutToPath("canim_outro_trapped", "pause1", "pause2")
+--		CTRL.SUB()				
+			SGroup_FaceMarker("sg_closing_sorcerer", "nis_outro_trapper2")
+			CTRL.Event_Delay(1.5)
+			CTRL.WAIT()			
+			
+			Cmd_MoveToMarker("sg_closing_commander", "nis_outro_atk_commander4")
+			SGroup_FaceMarker("sg_closing_sorcerer", "nis_outro_trapper1")
+			
+		--CTRL.END()
+	--CTRL.WAIT()		
+	
+			
+	--CTRL.CPath_CutToPath("canim_outro_trapped", "pause2", "end")
+--		CTRL.SUB()			
+			
+			SGroup_FaceMarker("sg_closing_sorcerer", "nis_outro_sorcerer4")
+			CTRL.Event_Delay(6.5)
+			CTRL.WAIT()						
+			
+			Fade_Start(2, false)
+			CTRL.Event_Delay(2.0)
+			CTRL.WAIT()			
+			
+		CTRL.END()
+	CTRL.WAIT()		
+	-------------------------------------------------------------------
+	--[[ END Scene Control ]]
+	-------------------------------------------------------------------
+	
+	
+	
+	-------------------------------------------------------------------
+	--[[ START Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	--Not despawing!  The same characters are used in the same places for the next two scenes (test them all together)...
+	-------------------------------------------------------------------
+	--[[ END Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	
+	--****************************************************     SCENE 6 (Block 3)     ********************************************************************--
+	--[[ 	AUTHOR:  Steven Silvey
+			DATE:  07/10/07
+			DESCRIPTION:
+				Close up of Sorcerer who realizes his fate and says a one-liner.
+			MODIFICATIONS:  --
+	--]]
+	-------------------------------------------------------------------
+	--[[ START Spawing Units ]]
+	-------------------------------------------------------------------
+	-- Units already spawned!
+	-------------------------------------------------------------------
+	--[[ END Spawing Units ]]
+	-------------------------------------------------------------------
+
+	
+
+	-------------------------------------------------------------------
+	--[[ START Scene Control ]]
+	-------------------------------------------------------------------
+	CTRL.CPath_CutToPath("canim_outro_sorcerer_closeup", "start", "end")
+		CTRL.SUB()		
+			Fade_Start(2, true)
+			CTRL.Event_Delay(3.0)
+			CTRL.WAIT()									
+			
+			
+			--Sorcerer:  This world… is slipping… from our grasp…
+			Actor_PlaySpeech(  ACT.Sindri, 5200106) 
+			CTRL.Event_Delay(5.0)
+			CTRL.WAIT()									
+			
+			CTRL.Fade_Start(1, false)			
+			CTRL.WAIT()
+			CPath_Blendout(0.0)
+			
+		CTRL.END()
+	CTRL.WAIT()		
+	
+	-------------------------------------------------------------------
+	--[[ END Scene Control ]]
+	-------------------------------------------------------------------
+	
+	
+	
+	-------------------------------------------------------------------
+	--[[ START Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	--Not despawing!  The same characters are used in the same places for the next two scenes (test them all together)...
+	-------------------------------------------------------------------
+	--[[ END Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	
+	--****************************************************     SCENE 7 (Post-Block)      ********************************************************************--
+	--[[ 	AUTHOR:  Steven Silvey
+			DATE:  07/10/07
+			DESCRIPTION:
+				The Sorcerer is killed by the Commander.
+			MODIFICATIONS:  --
+	--]]
+	-------------------------------------------------------------------
+	--[[ START Spawing Units ]]
+	-------------------------------------------------------------------
+	-- Units already spawned!
+	-------------------------------------------------------------------
+	--[[ END Spawing Units ]]
+	-------------------------------------------------------------------
+
+	
+
+	-------------------------------------------------------------------
+	--[[ START Scene Control ]]
+	-------------------------------------------------------------------
+	CPath_Start("canim_starter", "start", "end")
+	CTRL.CPath_CutToPath("canim_outro_finale1", "start", "end")
+		CTRL.SUB()		
+			Fade_Start(1, true)
+			CTRL.Event_Delay(1.0)
+			CTRL.WAIT()			
+			
+			Cmd_MoveToMarker("sg_closing_sorcerer", "nis_outro_atk_commander4")
+			CTRL.Event_Delay(1.5)
+			CTRL.WAIT()			
+			
+			Anim_PlaySGroupAnim(SGroup_FromName("sg_closing_sorcerer"), "melee_attack" )
+			CTRL.Event_Delay(1.5)
+			CTRL.WAIT()						
+			
+			Anim_PlaySGroupAnim(SGroup_FromName("sg_closing_sorcerer"), "syncdeath_8" )						
+			--Animation's don't exist
+			if humanplayer ~="dark_eldar_race" and humanplayer ~= "sisters_race" then   
+				Anim_PlaySGroupAnim(SGroup_FromName("sg_closing_commander"), "synckill_2" )					
+			end	
+			
+		CTRL.END()
+	CTRL.WAIT()				
+	
+	
+			
+	
+	--[[CTRL.CPath_CutToPath("canim_outro_finale2", "start", "end")
+	CTRL.WAIT()	
+			
+	CTRL.CPath_CutToPath("canim_outro_finale3", "start", "end")
+	CTRL.WAIT()		
+	
+	CTRL.CPath_CutToPath("canim_outro_finale4", "start", "end")
+	CTRL.WAIT()	]]--
+	
+	
+	CTRL.Fade_Start(2, false)	
+	CTRL.WAIT()			
+			
+	-------------------------------------------------------------------
+	--[[ END Scene Control ]]
+	-------------------------------------------------------------------
+	
+	
+	
+	-------------------------------------------------------------------
+	--[[ START Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_All_Units"), Player_GetSquads(g_Player1))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player2))
+	EGroup_AddGroup(EGroup_CreateIfNotFound("eg_All_Buildings"), Player_GetEntities(g_Player1))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player2))
+	
+	SGroup_DeSpawn("sg_All_Units")	
+	EGroup_DeSpawn("eg_All_Buildings")
+	-------------------------------------------------------------------
+	--[[ END Despawing Units and Buildings ]]
+	-------------------------------------------------------------------
+	
+	
+	
+	
+	CTRL.W40k_Letterbox( false, 2)	
+	CTRL.WAIT()]]--
+	
+	
+	
+	--[[
+	--[[turn on events]]
+	Util_NIS_ToggleModifierEvents(g_Player1, true)
+	Util_NIS_ToggleModifierEvents(g_Player2, true)
+	Util_NIS_ToggleModifierEvents(g_Player3, true)
+	Util_NIS_ToggleModifierEvents(g_Player4, true)
+
+	
+		--[[game is won]]
+		Fade_Start(4, false)
+		World_SetTeamWin( g_Player1, "" )
+		Rule_AddIntervalEx( Rule_GameOver,5,1 )
+	CTRL.WAIT()
+	]]--
+	
+	
+end

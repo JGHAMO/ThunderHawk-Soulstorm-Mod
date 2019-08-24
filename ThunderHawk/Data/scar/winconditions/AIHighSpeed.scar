@@ -1,0 +1,23 @@
+--Set AI variable 
+--Created by LarkinVB
+
+
+import("ScarUtil.scar");
+	
+function HighSpeedRule()
+
+	-- Set AI Highspeed global variable for all AI players
+	local num_player = World_GetPlayerCount() 	
+	for i = 0, num_player - 1 do
+		local playerID = World_GetPlayerAt( i )
+		if Cpu_IsCpuPlayer( playerID ) then
+			Cpu_DoString( playerID, "g_bHighSpeedAI = true" )
+		end
+	end	
+end
+
+function SetUpAISpeed()
+	Rule_AddOneShot( HighSpeedRule, 0.0 )
+end
+
+Scar_AddInit( SetUpAISpeed )

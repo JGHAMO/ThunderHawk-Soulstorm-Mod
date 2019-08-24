@@ -1,0 +1,14 @@
+-- Set up heroes mod
+-- Created by Cuttershane
+-- Edited by Arkhan
+
+import("Heroes/Core/heroes_manager.scar");
+
+
+-- Init hero rule system
+function Hero_Setup()
+	Rule_AddOneShot(Hero_InitRule, 1.0)
+end
+
+-- Init SCAR
+Scar_AddInit(Hero_Setup)

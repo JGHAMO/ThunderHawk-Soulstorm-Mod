@@ -1,0 +1,98 @@
+Model = "Parmenian_Steppe"
+Planet = "Kaurava_IV"
+
+Name = "$3900040"
+Description = "$3900366"
+TerrainType = "$2851402"
+TerrainDescription = "$3900367"
+History = 
+{
+"$3900368",
+"$3900369",
+}
+
+
+MissionFileAttacking = "6P_Parmenian_Heath"
+MissionFileAttackingConquered = "6P_Parmenian_Heath"
+MissionFileDefending = "6P_Parmenian_Heath"
+
+CinematicIntro = "cinematic"
+ZoomOutDuration = 1
+
+ArmyModelScaleZoomedIn = 1
+ArmyModelScaleZoomedOut = 1
+
+NeighborTerritories = 
+{
+	-- "Gurmuns_Pass",
+	"Tristram_Plains",
+	"Parmenie",
+	"Lacunae", 
+}
+
+VictoryBonusSquads =
+{
+	{
+		Race = "chaos_marine_race",
+		Blueprint = "chaos_squad_khorne_berserker_advance_sp",
+		Count = 1,
+	},
+
+	{
+		Race = "space_marine_race",
+		Blueprint = "space_marine_squad_assault_veteran_sp",
+		Count = 1,
+	},
+
+	{
+		Race = "ork_race",
+		Blueprint = "ork_squad_tankbusta_advance_sp",
+		Count = 1,
+	},
+	
+	{
+		Race = "guard_race",
+		Blueprint = "guard_squad_psyker_advance_sp",
+		Count = 1,
+	},
+
+	{
+		Race = "eldar_race",
+		Blueprint = "eldar_squad_seer_council_advance_sp",
+		Count = 1,
+	},
+	
+	{
+		Race = "tau_race",
+		Blueprint = "tau_honor_guard_stealth_suit_squad_advance_sp",
+		Count = 1,
+	},
+	
+	{
+		Race = "necron_race",
+		Blueprint = "necron_immortal_squad_advance_sp",
+		Count = 1,
+	},
+	{
+		Race = "sisters_race",
+		Blueprint = "sisters_squad_immolator_tank_hg_dxp3",
+		Count = 1,
+	},
+	{
+		Race = "dark_eldar_race",
+		Blueprint = "dark_eldar_squad_warrior_leader_hg_dxp3",
+		Count = 1,
+	},
+}
+
+Stronghold = false
+WarpGate = false
+ScriptedMission = false
+
+PlanetaryRequisition = 50
+StartingMilitaryStrength = 2
+
+OwnerPrimary = "dark_eldar_race"
+OwnerSecondary = "chaos_marine_race"
+
+StartingResourceBonus = 0.0

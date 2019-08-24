@@ -1,0 +1,1964 @@
+-- -----------------------------------------------------------------
+-- Mission Name - NISLets and Intel Events
+--
+-- (c) 2003 Relic Entertainment
+-- -----------------------------------------------------------------
+
+
+EVENTS = {}
+
+-------------------------------------------------
+--[[ INTEL EVENTS ]]
+-------------------------------------------------
+--generic events--------------------------------
+EVENTS.IE_Intro = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5300404 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_EarlyTaunt = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300405 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5300406 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_GotTheRelic = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5300407 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300408 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5300409 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300410 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_EnterSmallBase1or2Taunt = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300435 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5300436 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300437 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5300438 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_LateCampTaunt = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5300439 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.SluggaBoy, 5300440 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_EnterSmallBase3Taunt = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300441 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5300442 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_DestroyFirstGiantWaaghBanner = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.SluggaBoy, 5300451 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300452 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_EnterMainBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.SluggaBoy, 5300453 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300454 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Boom = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.MadDok, 5300455 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_MoreSluggaBoys = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300456 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_EliteCamp = function()
+	
+	Util_SetIE( true )
+	
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300457 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5300458 )
+	CTRL.WAIT()
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300459 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_PushingUpMiddle = function()
+	
+	Util_SetIE( true )
+	
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5300576 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+--------------------------------------------------
+-------------------------------------------------
+--[[ Race Specific Chatter ]]
+-------------------------------------------------
+-------------------------------------------------
+
+-------------------------------------------------
+--[[Imperial Guard -- Stubbs ]]
+-------------------------------------------------
+EVENTS.IE_IG_NobBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5300411 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_IG_TankBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5300419 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_IG_SquiggBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5300427 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_IG_SeeGiantWaaghBanner = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5300443 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_IG_MiddlePass = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5300557 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+-------------------------------------------------
+--[[Space Marine -- Boreale]]
+-------------------------------------------------
+EVENTS.IE_SM_NobBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Boreale, 5300412 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_SM_TankBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Boreale, 5300420 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_SM_SquiggBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Boreale, 5300428 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_SM_SeeGiantWaaghBanner = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Boreale, 5300444 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_SM_MiddlePass = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Boreale, 5300558 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+-------------------------------------------------
+--[[Sisters of Battle -- Avatar ]]
+-------------------------------------------------
+EVENTS.IE_Sisters_NobBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300413 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Sisters_TankBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300421)
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_Sisters_SquiggBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300429 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_Sisters_SeeGiantWaaghBanner = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300445 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Sisters_MiddlePass = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Canoness, 5300559 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+-------------------------------------------------
+--[[Chaos -- FirraeveusCarron ]]
+-------------------------------------------------
+EVENTS.IE_Chaos_NobBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300414 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Chaos_TankBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300422 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_Chaos_SquiggBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300430 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_Chaos_SeeGiantWaaghBanner = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300446 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Chaos_MiddlePass = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.FirraeveusCarron, 5300560 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+-------------------------------------------------
+--[[Eldar -- Gabriel ]]
+-------------------------------------------------
+EVENTS.IE_Eldar_NobBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300415 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Eldar_TankBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300423 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_Eldar_SquiggBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300431 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_Eldar_SeeGiantWaaghBanner = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300447 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Eldar_MiddlePass = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Taldeer, 5300561 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+-------------------------------------------------
+--[[Dark Eldar -- Dark_Reaper_Exarch]]
+-------------------------------------------------
+EVENTS.IE_DE_NobBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300416 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_DE_TankBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300424 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_DE_SquiggBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300432 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_DE_SeeGiantWaaghBanner = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300448 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_DE_MiddlePass = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Archon, 5300562 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+-------------------------------------------------
+--[[Tau -- Shas ]]
+-------------------------------------------------
+EVENTS.IE_Tau_NobBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Shas, 5300417 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Tau_TankBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Shas, 5300425 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_Tau_SquiggBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Shas, 5300433 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_Tau_SeeGiantWaaghBanner = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Shas, 5300449 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Tau_MiddlePass = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Fire_Warrior, 5300563 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+-------------------------------------------------
+--[[Necron -- Macabee]]
+-------------------------------------------------
+EVENTS.IE_Necron_NobBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300418 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Necron_TankBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300426 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_Necron_SquiggBase = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300434 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+
+EVENTS.IE_Necron_SeeGiantWaaghBanner = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300450 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+EVENTS.IE_Necron_MiddlePass = function()
+
+	Util_SetIE( true )
+
+	CTRL.Actor_PlaySpeech(  ACT.Necron_Lord, 5300564 )
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+
+end
+
+-----------------------------------------
+-----------[OPENING NIS]------------
+-----------------------------------------
+EVENTS.NIS_Opening = function()		
+
+		--[[--set the music	
+	t_ambient_sound = {"ambient_wind"}
+	
+	--Sound_PlaylistClear(PC_Music)
+	Playlist_Manager( PC_Ambient, t_ambient_sound, true, true , {2, 4})]]--
+	
+	
+	
+	Player_RestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	
+	--Silvey Polish 10/15/07:  Remove the aura of the MadDok
+	Player_RestrictAbility(g_Player2, "ork_docstools2")
+	Player_RestrictAbility(g_Player2, "ork_docstools")
+	
+	
+	
+	--Util_NIS_ToggleModifierEvents(g_Player1, false)
+	Util_NIS_ToggleModifierEvents(g_Player2, false)
+	--Util_NIS_ToggleModifierEvents(g_Player2, false)
+	--Util_NIS_ToggleModifierEvents(g_Player8, false)
+	
+	
+	
+	
+	
+	
+	--[[Group_Exists("eg_opening_nis_off") and (EGroup_IsEmpty("eg_opening_nis_off") == false) then
+	
+		EGroup_ResetPlayerOwner("eg_opening_nis_off")
+	
+	end
+	
+		
+	if EGroup_Exists("eg_burnaboyz_base_deactivate") and (EGroup_IsEmpty("eg_burnaboyz_base_deactivate") == false) then
+	
+		EGroup_ResetPlayerOwner("eg_burnaboyz_base_deactivate")
+	
+	end
+	
+	EGroup_DeSpawn("eg_bomb")
+	EGroup_DeSpawn("eg_end_smoke")]]
+	
+	--[[ go into letterbox mode ]]
+	W40k_Letterbox( true, 0 )	
+	
+	--[[ reveals all of the map ]]
+	FOW_RevealAll()
+
+	t_Ork_ambient = {"Ambience_Paradise_Lost"}	
+	Playlist_Manager( PC_Ambient, t_Ork_ambient, true, true , {5, 15})
+	
+	Util_MissionTitle("$3900019")
+	
+	CTRL.Event_Delay( 4 )
+		
+		Fade_Start( 0, false )
+		
+	CTRL.WAIT()
+	
+	Fade_Start( 2.0, true )
+	
+	-----------------------------------
+	--Spawn First Shot Orksies
+	-----------------------------------
+	--actor gorgutz
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_gorgutz", "ork_squad_warboss_stronghold_sp", "mkr_gorgutz_opening_NIS_spawn", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_gorgutz"))
+	SGroup_FaceMarker("sg_opening_gorgutz", "mkr_waagh10")
+	
+	--actor nuddyfist
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_nuddyfist", "ork_squad_nob_advance_sp", "mkr_nuddyfist_opening_NIS_spawn", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_nuddyfist"))
+	SGroup_FaceMarker("sg_opening_nuddyfist", "mkr_waagh10")
+
+	for i = 1, 9 do
+		--opening squig wranglers
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_ork_wranglers"..i, "ork_squad_slugga", "mkr_opening_NIS_squigswrangle_spawn"..i, 1, 2)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_wranglers"), SGroup_FromName("sg_opening_ork_wranglers"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_ork_wranglers"..i))
+		SGroup_FaceMarker("sg_opening1_wranglers", "mkr_waagh10")
+		Anim_PlaySGroupAnim("sg_opening1_wranglers", "capture_strategic_point")		
+	end
+	
+	--opening random ork troops
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_ork_runners", "ork_squad_slugga", "mkr_opening_NIS_ork_spawn", 1,8)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_ork_runners"))
+	SGroup_FaceMarker("sg_opening_ork_runners", "mkr_waagh10")
+	
+	--actor waagh leaders
+	for i = 1, 2 do
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_waghleader"..i, "ork_squad_nob_advance_sp", "mkr_opening_waghleader"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_waghleadgroup"), SGroup_FromName("sg_opening_waghleader"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_waghleader"..i))
+		SGroup_FaceMarker("sg_opening_waghleadgroup", "mkr_opening_facemarker")
+	end
+	
+	for i = 1, 12 do
+		--waaghers
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_waghers"..i, "ork_squad_slugga", "mkr_opening_wager"..i, 1, 2)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_waghgroup"), SGroup_FromName("sg_opening_waghers"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_waghers"..i))
+		-- I commented this next line out because it was using a marker that I removed from the level... - Chooch
+		--SGroup_FaceMarker("sg_opening_waghgroup", "mkr_waaghwall9")
+		Anim_PlaySGroupAnim("sg_opening_waghgroup", "capture_strategic_point")
+	end
+	
+	for i = 1, 4 do
+		--parade orks
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_paradenobs"..i, "ork_squad_nob", "nis_opening_nobspawn0"..i, 1, 7)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_paradegroup"), SGroup_FromName("sg_opening_paradenobs"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_paradenobs"..i))
+		SGroup_FaceMarker("sg_opening_paradegroup", "nis_opening_nobspawnlook")
+		Anim_PlaySGroupAnim("sg_opening_paradegroup", "capture_strategic_point")
+	end
+	
+	
+	-----------------------------------------
+	--Spawn Parade and Squig Party
+	-----------------------------------------
+	--[[
+	for i = 1, 2 do
+		--parade orks
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_squigparty"..i, "ork_squad_nob", "nis_opening_squigsdanceparty0"..i, 1, 10)
+		--SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_paradegroup"), SGroup_FromName("sg_opening_paradenobs"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_squigparty"..i))
+		SGroup_FaceMarker("sg_opening_squigparty"..i, "nis_opening_squigpounce")
+		Anim_PlaySGroupAnim("sg_opening_squigparty"..i, "capture_strategic_point")
+	end
+	]]--
+		
+	Cmd_SetStance("sg_opening1_actors", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening1_actors", true)	
+	Anim_EnableInfantryOffset("sg_opening1_actors", false)						
+	---------------------------------------------
+	--End Spawning Shiz
+	---------------------------------------------
+	
+	
+	
+	Cmd_SetStance("sg_opening1_actors", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening1_actors", true)	
+	Anim_EnableInfantryOffset("sg_opening1_actors", false)						
+	
+	
+	-- Always builds the building (prevents crashes and speeds things up)
+	g_BuildingNames = "eg_ork_buildings"
+	function user_CreateBuilding(p_PlayerID, p_EGroupID, p_MarkerName, p_Blueprint)
+		l_EntityID = Entity_Create(p_Blueprint, p_PlayerID, Marker_GetPosition(Marker_FromName(p_MarkerName, "basic_marker" )))
+		
+		EGroup_Add(EGroup_CreateIfNotFound(p_EGroupID), l_EntityID)
+		EGroup_AddGroup(EGroup_CreateIfNotFound(g_BuildingNames), EGroup_FromName(p_EGroupID))
+		Entity_Spawn(l_EntityID)
+	end
+	
+	------------------------------------
+	--Opening Sequence
+	------------------------------------
+	CPath_Start("starter", "start", "end")
+	
+	--focus on nuddyfist dialogue	
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5200012) --Nuddyfist:  Ya see, Big Boss Gorgutz? Dis 'erez da strongest an' bestest Ork'old as ever 'eld a Ork.
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "sp_talk" )
+		--Silvey Polish 08/16/2007
+		--CPath_CutToPoint("canim_shot1", "start")
+		CPath_CutToPoint("canim_nis_opening_shot1a", "start")
+	CTRL.WAIT()
+	
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "garrison_strategic_point" )
+	
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5200013) --Gorgutz:  Oi’s that so, then?
+		CPath_CutToPoint("canim_shot1", "hold")	
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_gorgutz"), "sp_talk" )
+	CTRL.WAIT()
+	
+	--make sweeping shot and gorguts dialogue	
+	CTRL.Event_Delay(5.0)
+		Actor_PlaySpeech(  ACT.Nuddyfist, 5200014) --Nuddyfist:  Ain’t no ‘umies got in ‘ere – eva! . Wif da Rokclaw Mountins all ‘round us, deyz only one way in.
+		Cmd_MoveToMarker("sg_opening_ork_runners", "mkr_moveto01_NIS")
+		CPath_CutToPath("canim_shot1", "hold","end")
+		
+		--Silvey Polish 08/16/07  (idle_in_cover --> sp_default)
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_gorgutz"), "sp_default" )	
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "sp_talk" )
+	CTRL.WAIT()
+	
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "garrison_strategic_point" )
+	
+	CTRL.Event_Delay( 1 )
+		Fade_Start( 1, false )
+	CTRL.WAIT()
+	
+	--set the music	
+	t_ork_music = {"MU_IG_STR_Ork_perc_str"}
+		
+	Sound_PlaylistClear(PC_Music)
+	Playlist_Manager( PC_Music, t_ork_music, true, true , {2, 4})
+	Sound_PlaylistClear(PC_Ambient)
+	
+	CTRL.Event_Delay( 7 )
+	--CPath_CutToPath("canim_nis_opening_watershot", "start", "end")
+	CPath_CutToPath("canim_nis_opening_openpath", "start", "end")	
+		Fade_Start(0.5, true )
+		--Silvey Polish 08/16/07
+		-- Do something to make this a little more...interesting
+		--CTRL.Event_Delay(2)
+		--CPath_CutToPoint("NIS_CAM_Block02Alt", "start")
+		
+	CTRL.WAIT()
+	
+	
+
+	CTRL.Event_Delay( 1 )
+		Fade_Start( 1, false )
+	CTRL.WAIT()
+	
+	-----------------------BLOCK 3-------------------------------	
+	--Silvey Polish (11/09/07):  Spawn here instead of at the beginning
+	--[[  Spawning units ]]--	
+	--parade war trakks
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_paradewartraks", "ork_squad_wartrak", "nis_opening_wartraks", 1, 2)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_parademechgroup"), SGroup_FromName("sg_opening_paradewartraks"))
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_paradewartraks"))
+	--Silvey Polish 08/17/07 (change facing)
+	SGroup_FaceMarker("sg_opening_paradewartraks", "nis_opening_trukks_goto")
+	--Anim_PlaySGroupAnim("sg_opening_paradewartraks", "capture_strategic_point")
+	
+	--parade trukks
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_paradetruks", "ork_squad_trukk", "nis_opening_trukks", 1, 2)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_parademechgroup"), SGroup_FromName("sg_opening_paradetruks"))
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_paradetruks"))
+	--Silvey Polish 08/17/07 (change facing)
+	SGroup_FaceMarker("sg_opening_paradetruks", "nis_opening_trukks_goto")
+	
+	
+	--parade trukks
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_paradetanks", "ork_squad_looted_tank", "nis_opening_tanks", 1, 2)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_parademechgroup"), SGroup_FromName("sg_opening_paradetanks"))
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_paradetanks"))
+	--Silvey Polish 08/17/07 (change facing)
+	SGroup_FaceMarker("sg_opening_paradetanks", "nis_opening_tanks_goto")
+		
+	--extra squigs middle
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_MidSquigs", "ork_squad_squiggoth", "nis_opening_squigpounce", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_MidSquigs"))
+	SGroup_FaceMarker("sg_opening_MidSquigs", "nis_opening_squigface")
+	--[[  End Spawning units ]]--
+	
+	
+	
+	Fade_Start( .5, true )
+	--Silvey Polish (11/09/07):  Timing based on speech instead of camera.
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5200015) --Nuddyfist:  Even if they wuz ta get in, they’d have all da boyz to face. Oh, an’ da Nobz. An’ da tanks – then dere’s da Squigoffs. 	
+		CTRL.SUB()		
+			CPath_CutToPath("canim_mebestboys", "start","end")
+			Cmd_MoveToMarker("sg_opening_parademechgroup", "nis_opening_paradego01")
+			
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			--Silvey Polish 08/17/07
+			Cmd_MoveToMarker("sg_opening_paradetruks", "nis_opening_trukks_goto")
+			Cmd_MoveToMarker("sg_opening_paradetanks", "nis_opening_tanks_goto")
+		CTRL.END()
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay( 1 )
+		Fade_Start( 1, false )
+	CTRL.WAIT()
+	Fade_Start( .5, true )
+		
+	CTRL.Event_Delay(4)
+		--Silvey Polish 08/16/07
+		--CPath_CutToPath("canim_squigparty01", "start","end")
+		CPath_CutToPoint("canim_nis_opening_squig", "start")
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_MidSquigs"), "special_attack_1" )
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay( 1 )
+		Fade_Start( 1, false )
+	CTRL.WAIT()
+	Fade_Start( .5, true )
+
+	--[[CTRL.CPath_CutToPath("NIS_CAM_Block02Alt", "start","end")
+	Cmd_MoveToMarker("sg_opening_MidSquigs", "mkr_moveto02_NIS")
+	
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_MidSquigs"), "special_attack_stompy_1" )
+	CTRL.WAIT()]]
+	
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5200016) --Gorgutz:  Say they beat all that.  
+		CPath_CutToPoint("canim_shot1", "hold")		
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_gorgutz"), "sp_talk" )
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay(1)		
+		--Silvey Polish 08/16/07  (idle_in_cover --> sp_default)
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_gorgutz"), "sp_default" )			
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "sp_talk" )		
+	CTRL.WAIT()
+	
+	-----------------------BLOCK 4-------------------------------	
+	--Silvey Polish (11/09/07):  Spawn here instead of at the beginning
+	--[[ Spawn units  ]]--
+	--Fighta Bommaz
+	for i = 1, 7,2 do
+		--parade orks
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_fighta"..i, "ork_squad_fighta_bomba", "nis_opening_fighta"..i, 1, 1)
+		Squad_TurnOffVehiclePhysics(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_opening_fighta"..i), 1))
+		if i < 5 then
+			SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_fightas"), SGroup_FromName("sg_opening_fighta"..i))
+			Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_opening_fighta"..i), 1), true, 25.0)
+		else
+			Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_opening_fighta"..i), 1), true, 17.0)		
+		end
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_fighta"..i))				
+		
+				
+
+	end	
+	SGroup_FaceMarker("sg_opening_fightas", "nis_opening_fighta_facing")		
+
+	
+	--Nobz
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_nobz", "ork_squad_nob", "nis_opening_nobz", 1, 6)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_nobz"))
+	SGroup_FaceMarker("sg_opening_nobz", "nis_opening_watchershot_goto")
+	
+	--Killakan	
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_killakan", "ork_squad_killa_kan", "nis_opening_killakan", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_killakan"))
+	SGroup_FaceMarker("sg_opening_killakan", "mkr_nuddyfist_opening_NIS_spawn")
+	
+	--grots	
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_grots", "ork_squad_grot", "nis_opening_grots", 1, 3)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_grots"))
+	SGroup_FaceMarker("sg_opening_grots", "mkr_nuddyfist_opening_NIS_spawn")
+	
+	--Looted tank
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_lootedtank1", "ork_squad_looted_tank", "nis_opening_lootedtank1", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_lootedtank1"))
+	SGroup_FaceMarker("sg_opening_lootedtank1", "nis_opening_lootedtank1_goto")
+	
+	--[[ End spawning units  ]]--
+	
+	
+	
+	Actor_PlaySpeech(  ACT.Nuddyfist, 5200017) --Nuddyfist:  Datz when we git ‘em wit da Fighta-Bombaz. We’d squash ‘em to a pulp! 
+	
+	CTRL.Event_Delay( 1 )
+		Fade_Start( 1, false )
+	CTRL.WAIT()
+	Fade_Start( 2.0, true )
+	
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "garrison_strategic_point" )
+	
+	--Silvey Polish 08/17/07  (Deleted Scene)
+	--??????????????
+	--[[CTRL.Event_Delay(5)
+		CPath_CutToPoint("canim_artillery_shot1", "start")
+	CTRL.WAIT()]]--
+		
+	--SPath_StartEx("manim_opening_fighta", "start", "end", "sg_opening_fightas", 0.7, false)
+	Cmd_MoveToMarker("sg_opening_fightas", "nis_opening_fighta_facing")
+	CTRL.CPath_CutToPath("canim_nis_opening_fighta", "start", "end")
+	CTRL.WAIT()
+	
+	--Silvey Polish 08/28/07
+	--??????
+	--CTRL.Event_Delay(6)
+		--CPath_CutToPath("canim_explosions_shot1a", "start", "end")
+		CPath_CutToPath("canim_explosions_shot1b", "start", "end")
+		for i = 5,7,2 do
+			Cmd_MoveToMarker("sg_opening_fighta"..i, "nis_opening_fighta"..i.."_goto")
+		end
+		--Silvey Polish 08/28/07 (Removed, didn't seem to do anything)
+		--Util_MarkerFX( "nis_closing_explosion1", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+		--Util_MarkerFX( "nis_opening_explosions", "root:W40K/Data/Art/Events/Guard/Battlecannon_hit_water")
+		--Util_MarkerFX( "nis_opening_explosions1","data:Art/Events/Chaos/Blood_Pulse")
+		--Util_MarkerFX( "nis_opening_explosions2", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+		Actor_PlaySpeech(  ACT.Gorgutz, 5200018) --Hmmph.
+		CTRL.Event_Delay(2.0)
+		CTRL.WAIT()
+		Util_MarkerFX( "nis_opening_explosions", "data:Art/Events/Guard/Battlecannon_hit_water")
+		CTRL.Event_Delay(1.4)
+		CTRL.WAIT()		
+		Util_MarkerFX( "nis_opening_explosions1", "data:Art/Events/Guard/Battlecannon_hit_water")
+		CTRL.Event_Delay(0.3)
+		CTRL.WAIT()		
+		Util_MarkerFX( "nis_opening_explosions2", "data:Art/Events/Guard/Battlecannon_hit_water")
+		CTRL.Event_Delay(3.0)
+		
+	CTRL.WAIT()
+	
+	Cmd_MoveToMarker("sg_opening_killakan", "nis_opening_killakan_goto")
+	Cmd_MoveToMarker("sg_opening_nobz", "nis_opening_watchershot_goto")
+	Cmd_MoveToMarker("sg_opening_grots", "nis_opening_grots_goto")
+	
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5200019) --Nuddyfist:  We gots wochaz wochin’ day an night. Nobody but a Ork gets close to us wiffout we see ‘em and crush ‘em ta smivvereenz.
+		--Silvey Polish 08/17/06
+		--CPath_CutToPoint("canim_watcher_shot1", "start")
+		CPath_CutToPath("canim_nis_opening_watcher", "start", "end")
+	CTRL.WAIT()
+	CTRL.Event_Delay(1.0)
+	CTRL.WAIT()
+	
+	
+	Sound_PlaylistStop(PC_Music)
+	
+	
+	-----------------------BLOCK 6-------------------------------	
+	
+	--Silvey Polish (11/09/07):  Spawn here instead of at the beginning
+	--[[ Spawn Units ]]--	
+	--actor messenger
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_messenger", "ork_squad_bad_dok", "mkr_messenger_opening", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_messenger"))
+	SGroup_FaceMarker("sg_opening_messenger", "mkr_nuddyfist_opening_NIS_spawn")
+	
+	for i = 1, 2 do
+		--Stormboys (runners)
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_stormboy"..i, "ork_squad_stormboy", "nis_opening_stormboy"..i, 4, 1)		
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_stormboy"..i))				
+	end	
+	
+	--Silvey Polish (11/09/07):  Added drummers to a group (so I can later ensure they are facing the correct way)
+	for i = 1, 7 do
+		--Nobs waaghers (around relic)
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_nobz"..i, "ork_squad_nob", "nis_opening_nobz"..i, 1, 3)		
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_nobz"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_drummers"), SGroup_FromName("sg_opening_nobz"..i))
+		SGroup_FaceMarker("sg_opening_nobz"..i, "nis_opening_relic")
+		--Anim_PlaySGroupAnim("sg_opening_nobz"..i, "capture_strategic_point")
+	end
+	
+	for i = 1, 12 do
+		--Sluggas waaghers (around relic)
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_waghers"..i, "ork_squad_slugga", "nis_opening_slugga"..i, 1, 3)		
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_waghers"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_drummers"), SGroup_FromName("sg_opening_waghers"..i))
+		World_ScatterSquadsMarker("nis_opening_slugga"..i)		
+		Anim_PlaySGroupAnim("sg_opening_waghers"..i, "capture_strategic_point")
+	end
+	
+	--Silvey Polish 08/20/07
+	for i = 1, 20 do
+		--Sluggas runners (around relic)
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_fodder"..i, "ork_squad_slugga", "nis_opening_fodder"..i, 1, 1)		
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_fodder"..i))
+		SGroup_FaceMarker("sg_opening_fodder"..i, "nis_opening_relic")		
+	end
+	
+	--waagh army01
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_wagharmy01", "ork_squad_slugga", "mkr_opening_wagharmy01", 1, 12)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_wagharmy01"))
+	SGroup_FaceMarker("sg_opening_wagharmy01", "mkr_opening_waghersgo01")
+	
+	--waagh army02
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_wagharmy02", "ork_squad_slugga", "mkr_opening_wagharmy02", 1, 12)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_wagharmy02"))
+	SGroup_FaceMarker("sg_opening_wagharmy02", "mkr_opening_waghersgo01")
+	
+	--waagh flyers01
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_flyers01", "ork_squad_stormboy", "mkr_opening_waghflyers01", 1, 12)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening1_actors"), SGroup_FromName("sg_opening_flyers01"))
+	SGroup_FaceMarker("sg_opening_flyers01", "mkr_opening_waghersgo01")	
+	--[[  End Spawn Units  ]]--
+	
+	
+	
+	Cmd_MoveToMarker("sg_opening_lootedtank1", "nis_opening_lootedtank1_goto")
+	CTRL.Actor_PlaySpeech(  ACT.MadDok, 5200020) --MadDok:  Boss! Boss! Deyz enemies in da camp!
+		CPath_CutToPoint("canim_news_shot1", "start")
+		Cmd_MoveToMarker("sg_opening_messenger", "mkr_moveto_messenger_opening")		
+	CTRL.WAIT()
+		
+	
+	CTRL.Actor_PlaySpeech(  ACT.Nuddyfist, 5200021) --Nuddyfist:  Wot? In da camp? We gotta stop ‘em afore dey getz to da Killy Spot! Da drums – beat da drums! Get deeem!
+		--Silvey Polish 08/16/07
+		--CPath_CutToPoint("canim_shot1", "start")
+		SGroup_FaceMarker("sg_opening_nuddyfist", "mkr_moveto_messenger_opening")
+		CPath_CutToPath("canim_nis_opening_shot1b", "start","end")		
+		
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "sp_talk" )
+		
+	CTRL.WAIT()	
+	
+	
+	SGroup_FaceMarker("sg_opening_nuddyfist", "nis_opening_nuddyfist_facing")
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "capture_strategic_point" )
+	t_nuddyfistdrums = Sound_Play("Races/Shared_ALL/OrkSingleDrumNISSFX")			
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()	
+	
+	--set the music	
+	t_ork_music = {"MU_IG_STR_Ork"}
+	
+	Sound_PlaylistClear(PC_Music)
+	Playlist_Manager( PC_Music, t_ork_music, true, true , {2, 4})
+	
+	
+	CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 5200022) --Gorgutz:  Wotz dis ‘ere Killy Spot?
+		CPath_CutToPoint("canim_shot1", "hold")
+		
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_gorgutz"), "sp_talk" )
+		
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay(1)
+	CTRL.WAIT()	
+	
+
+	
+	for i = 1,20 do
+		Cmd_MoveToMarker("sg_opening_fodder"..i, "nis_opening_fodder_goto"..World_GetRand(1,3))
+	end
+	
+	
+	CPath_CutToPath("canim_sidebase", "start","end")
+	Sound_Stop(t_nuddyfistdrums)
+	Sound_Play("Races/Shared_ALL/OrkGroupDrumNISSFX")			
+	Actor_PlaySpeech(  ACT.Nuddyfist, 5200024) --Nuddyfist:  Waaagh!
+	
+	-- Randomize our drummers
+	for i = 1, 7 do
+		Anim_PlaySGroupAnim("sg_opening_nobz"..i, "capture_strategic_point")
+		CTRL.Event_Delay(World_GetRand(2,4)/10)
+		CTRL.WAIT()		
+	end
+	
+	CTRL.Event_Delay(4)
+	CTRL.WAIT()	
+	
+	--[[  Miscellaneous updates  ]]--
+	SGroup_FaceMarker("sg_opening_drummers", "nis_opening_relic")
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_messenger"), "default" )	
+	
+	--CTRL.CPath_CutToPath("canim_runners01", "start","end")		
+	CTRL.CPath_CutToPath("canim_runners01a", "start","end")		
+		--Silvey Polish 08/16/07
+		Anim_PlaySGroupAnim("sg_opening_waghgroup", "default")
+		Cmd_MoveToMarker("sg_opening_wagharmy01", "mkr_opening_waghersgo01")
+		Cmd_MoveToMarker("sg_opening_wagharmy02", "mkr_opening_waghersgo01")
+		Cmd_MoveToMarker("sg_opening_flyers01", "mkr_opening_waghersgo01")
+		Cmd_MoveToMarker("sg_opening_waghleadgroup", "mkr_opening_waghersgo01")
+		Cmd_MoveToMarker("sg_opening_waghgroup", "mkr_opening_waghersgo01")
+		
+	CTRL.WAIT()
+	
+	for i = 1, 12 do
+		SGroup_FaceMarker("sg_opening_waghers"..i, "nis_opening_relic")
+	end
+	Cmd_MoveToMarker("sg_opening_stormboy1", "nis_opening_stormboy_goto")
+	Cmd_MoveToMarker("sg_opening_stormboy2", "nis_opening_stormboy_goto")	
+	SGroup_FaceMarker("sg_opening_nuddyfist", "mkr_moveto_messenger_opening")
+	CTRL.CPath_CutToPath("canim_nis_opening_killyspot", "start","end")
+		Actor_PlaySpeech(  ACT.Nuddyfist, 5200023) --Nuddyfist:  Beat da drums!
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay(2.2)
+		CPath_CutToPoint("canim_shot1", "start")
+		Actor_PlaySpeech(  ACT.Nuddyfist, 5200025) --Nuddyfist:  We gotz ta hold da Killy Spot! 
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "synckill_3" )
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay(0.8)
+		--Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "sp_talk" )		
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_messenger"), "thrown_getup" )		
+	CTRL.WAIT()
+	
+	--Cmd_MoveToMarker("sg_opening_nuddyfist", "mkr_messenger_opening")
+	SPath_Start("manim_nis_opening_nuddyfist", "start", "end", "sg_opening_nuddyfist")
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_nuddyfist"), "sp_default" )
+	
+	CTRL.Event_Delay(2)
+		CPath_CutToPoint("canim_shot1", "hold")	
+		Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_gorgutz"), "sp_talk" )
+		Actor_PlaySpeech(  ACT.Gorgutz, 5200026) --Gorgutz:  Humph! Bestest Ork’old ever, huh?		
+	CTRL.WAIT()
+	
+	Cmd_MoveToMarker("sg_opening_gorgutz", "mkr_moveto_messenger_opening")
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()
+	
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_gorgutz"), "special_attack_1" )
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_messenger"), "melee_damage" )		
+	CTRL.Event_Delay(1.2)
+	CTRL.WAIT()	
+	SGroup_FaceMarker("sg_opening_messenger", "nis_opening_messenger_facing")
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_messenger"), "die_thrown" )		
+	SPath_Start("manim_opening_baddok", "start", "end", "sg_opening_messenger")	
+	
+	CTRL.Event_Delay(0.4)
+	CTRL.WAIT()		
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_opening_gorgutz"), "default" )
+	Cmd_MoveToMarker("sg_opening_gorgutz", "nis_opening_bosses_goto")	
+	
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()
+	
+		
+	--Event_Delay( 3 )
+	--Fade Music out
+	Fade_Start( 3, false )
+	for i = 1,10 do
+		Sound_SetVolumeModifierMusic( (10-i) / 10)
+		CTRL.Event_Delay( 0.5 )
+		CTRL.WAIT()
+	end
+	
+	Sound_PlaylistStop(PC_Music)
+	
+	Sound_SetVolumeModifierMusic(1.0)
+	
+	CTRL.WAIT()
+	Fade_Start( 1, true )
+	
+	SGroup_DeSpawn("sg_opening1_actors")
+	SGroup_DestroyAllSquads("sg_opening1_actors")
+	SGroup_Destroy(SGroup_FromName("sg_opening1_actors"))
+	
+	Util_NIS_ToggleModifierEvents(g_Player2, true)
+	
+	Player_UnRestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	--Silvey Polish 10/15/07:  Remove the aura of the MadDok
+	Player_UnRestrictAbility(g_Player2, "ork_docstools2")
+	Player_UnRestrictAbility(g_Player2, "ork_docstools")
+	
+	
+	
+	CPath_CutToPoint("canim_end", "start")
+	
+	CTRL.W40k_Letterbox( false, 2)
+	
+		FOW_Reset()
+		CPath_Blendout( 1 )
+		
+	CTRL.WAIT()
+		
+end
+
+--------------------------------
+--[[CLOSING NIS]]
+--------------------------------
+EVENTS.NIS_Closing = function()
+
+
+	local humanplayer = MetaMap_GetPlayerRaceName()	
+ 
+	if humanplayer == "chaos_marine_race" then
+		
+		g_Nis_Blueprint = "chaos_marine_squad"
+		g_Nis_Blueprint2 = "chaos_marine_squad"
+		g_Nis_Blueprint3 = "chaos_squad_obliterator"
+		g_Nis_Blueprint4 = "chaos_squad_hell_talon"
+		
+	elseif humanplayer == "eldar_race" then
+		
+		g_Nis_Blueprint = "eldar_guardian_squad"
+		g_Nis_Blueprint2 = "eldar_squad_dark_reapers"
+		g_Nis_Blueprint3 = "eldar_squad_wraithlord"
+		g_Nis_Blueprint4 = "eldar_squad_nightwing"
+		
+	elseif humanplayer == "guard_race" then
+		
+		g_Nis_Blueprint = "guard_squad_guardsmen"
+		g_Nis_Blueprint2 = "guard_squad_guardsmen"
+		g_Nis_Blueprint3 = "guard_squad_sentinel"
+		g_Nis_Blueprint4 = "guard_squad_marauder"
+		
+	elseif humanplayer == "ork_race" then
+		
+		g_Nis_Blueprint = "ork_squad_nob"	
+		g_Nis_Blueprint2 = "ork_squad_nob"
+		g_Nis_Blueprint3 = "ork_squad_armored_nob"
+		g_Nis_Blueprint4 = "ork_squad_fighta_bomba"
+	
+	elseif humanplayer =="space_marine_race" then
+		
+		g_Nis_Blueprint = "space_marine_squad_tactical"
+		g_Nis_Blueprint2 = "space_marine_squad_tactical"
+		g_Nis_Blueprint3 = "space_marine_squad_dreadnought"
+		g_Nis_Blueprint4 = "space_marine_squad_tempest"
+	
+	elseif humanplayer == "tau_race" then
+		
+		g_Nis_Blueprint = "tau_fire_warrior_squad"
+		g_Nis_Blueprint2 = "tau_fire_warrior_squad"
+		g_Nis_Blueprint3 = "tau_crisis_suit_squad"
+		g_Nis_Blueprint4 = "tau_barracuda_squad"
+	
+	elseif humanplayer == "necron_race" then
+		
+		g_Nis_Blueprint = "necron_basic_warrior_squad"
+		g_Nis_Blueprint2 = "necron_basic_warrior_squad"
+		g_Nis_Blueprint3 = "necron_tomb_spyder_squad"
+		g_Nis_Blueprint4 = "necron_scarab_squad"
+		
+	elseif humanplayer =="dark_eldar_race" then
+		
+		g_Nis_Blueprint = "dark_eldar_squad_warrior"
+		g_Nis_Blueprint2 = "dark_eldar_squad_warrior"
+		g_Nis_Blueprint3 = "dark_eldar_squad_talos"
+		g_Nis_Blueprint4 = "dark_eldar_squad_raven"
+				
+	elseif humanplayer == "sisters_race" then
+		
+		g_Nis_Blueprint = "sisters_squad_battle_sister"
+		g_Nis_Blueprint2 = "sisters_squad_battle_sister"
+		g_Nis_Blueprint3 = "sisters_squad_immolator_tank"
+		g_Nis_Blueprint4 = "sisters_squad_lightning"
+		
+	end
+	
+	--Rule_RemoveAll()
+
+	--turn off events
+	Util_NIS_ToggleModifierEvents(g_Player1, false)
+	
+	--[[hide the bonus unit effect]]
+	Player_RestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	
+	
+	--Silvey Polish (10/15/07):  Changed to true, which seems to remedy the curse of the war-gear glowing gorgutz  *shrugs*
+	Util_NIS_ToggleModifierEvents(g_Player2, false)
+	Util_NIS_ToggleModifierEvents(g_Player3, false)
+	Util_NIS_ToggleModifierEvents(g_Player4, false)
+	--Util_NIS_ToggleModifierEvents(g_Player5, false)
+	--Util_NIS_ToggleModifierEvents(g_Player6, false)
+	--Util_NIS_ToggleModifierEvents(g_Player7, false)
+	--Util_NIS_ToggleModifierEvents(g_Player8, false)
+	
+		
+	--[[ go into letterbox mode ]]
+	W40k_Letterbox( true, 2 )	
+	
+	
+	--[[ reveals all of the map ]]
+	FOW_RevealAll()
+	
+	CTRL.Event_Delay( 1 )
+			Fade_Start( 1, false )
+	CTRL.WAIT()
+	
+	
+
+	--Remove all the buildings and units to clear the Nis scenes
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_All_Units"), Player_GetSquads(g_Player1))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player2))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player3))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player4))
+	--SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player5))
+	
+	EGroup_AddGroup(EGroup_CreateIfNotFound("eg_All_Buildings"), Player_GetEntities(g_Player1))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player2))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player3))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player4))
+	--EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player5))
+	
+	
+	SGroup_DeSpawn("sg_All_Units")
+	EGroup_DeSpawn("eg_All_Buildings")
+	
+	-----------------------------------------------------------------
+	-----Spawn Closing Units
+	-----------------------------------------------------------------
+	--Silvey Polish 10/15/07:  g_Player3 -> g_Player2 for below
+	--Closing Set Generators
+	for i = 1, 3 do
+		Entity_CreateBuildingMarker(g_Player2, "eg_closing_generators"..i, "ork_generator", "nis_closing_generator_spawn"..i, 1)
+		EGroup_SetHealthInvulnerable("eg_closing_generators"..i, true)
+	end
+	
+	--Closing Set HQ
+	Entity_CreateBuildingMarker(g_Player2, "eg_closing_orkbase", "ork_hq", "nis_closing_orkhq_spawn", 1)
+	EGroup_ForceAddOn("eg_closing_orkbase", "ork_hq_addon")
+	EGroup_SetHealthInvulnerable("eg_closing_orkbase", true)
+	
+	--Closing Set Mek Shop
+	Entity_CreateBuildingMarker(g_Player2, "eg_closing_mechbase", "ork_mek_shop", "nis_closing_mechbuilding_spawn", 1)
+	EGroup_SetHealthInvulnerable("eg_closing_mechbase", true)
+	
+	--Closing Ork Defenses
+	for i = 1, 3 do
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_orkdefenders"..i, "ork_squad_shoota_boy", "nis_closing_orks_spawn"..i, 10, 1)
+		--SGroup_FaceMarker("sg_closing_finalelord", "nis_opening_nobspawnlook")
+		Cmd_SetStance("sg_closing_orkdefenders"..i, STANCE_Hold)
+		
+	end
+	
+	for i = 1, 2 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_planes"..i, g_Nis_Blueprint4, "nis_closing_plane_spawn"..i, 1, 1)
+		--SGroup_FaceMarker("sg_closing_finalelord", "nis_opening_nobspawnlook")
+		--Cmd_SetStance("sg_closing_planes"..i, STANCE_Hold)
+	end
+	
+	--Closing Actor Attackers
+	for i = 1, 3 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_attackers"..i, g_Nis_Blueprint2, "nis_closing_attackers_spawn"..i, 8, 1)
+		--SGroup_FaceMarker("sg_closing_finalelord", "nis_opening_nobspawnlook")
+		Cmd_SetStance("sg_closing_attackers"..i, STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_closing_attackers"..i, true)
+	end
+	
+	--Closing Actor Vehicle
+	for i = 1, 3 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_vehicle"..i, g_Nis_Blueprint3, "nis_closing_attackingvechicle_spawn"..i, 1, 1)
+		--SGroup_FaceMarker("sg_closing_finalelord", "nis_opening_nobspawnlook")
+		Cmd_SetStance("sg_closing_vehicle"..i, STANCE_CeaseFire)
+	end
+		
+	--Closing Actor Ork Runners
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_orkrunners", "ork_squad_shoota_boy", "nis_closing_runners_spawn", 5, 1)
+	--SGroup_FaceMarker("sg_closing_finalelord", "nis_opening_nobspawnlook")
+	Cmd_SetStance("sg_closing_orkrunners", STANCE_Attack)
+	
+	--Closing Actor Gorgutz
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_gorgutz", "ork_squad_warboss_stronghold_sp", "nis_closing_warboss_spawn", 1, 1)
+	--SGroup_FaceMarker("sg_closing_finalelord", "nis_opening_nobspawnlook")
+	Cmd_SetStance("sg_closing_gorgutz", STANCE_CeaseFire)
+	
+	--Closing Actor NuddyFist
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_nuddyfist", "ork_squad_nob_sp", "nis_closing_nuddyfist_spawn", 1, 1)
+	SGroup_FaceMarker("sg_closing_nuddyfist", "nis_closing_orkhq_spawn")
+	Cmd_SetStance("sg_closing_nuddyfist", STANCE_CeaseFire)
+
+	--Silvey Polish (10/15/07):  Add some death/carnage!
+	--Buildings
+	g_BuildingNames = "eg_whatever" -- doesn't matter much here
+	
+	-- Always builds the building (prevents crashes and speeds things up)
+	function user_CreateBuilding(p_PlayerID, p_EGroupID, p_MarkerName, p_Blueprint)
+		l_EntityID = Entity_Create(p_Blueprint, p_PlayerID, Marker_GetPosition(Marker_FromName(p_MarkerName, "basic_marker" )))
+		
+		EGroup_Add(EGroup_CreateIfNotFound(p_EGroupID), l_EntityID)
+		EGroup_AddGroup(EGroup_CreateIfNotFound(g_BuildingNames), EGroup_FromName(p_EGroupID))
+		Entity_Spawn(l_EntityID)		
+		
+	end
+
+	for i = 1, 15 do
+		-- I want the DE players to see the soul, the soul also covers up the splatting action.
+		if humanplayer =="dark_eldar_race" then
+			user_CreateBuilding(g_Player1, "eg_closing_death"..i, "nis_closing_death"..i, "blood_splat")
+		end
+		if World_GetRand(1, 100) > 50 then
+			user_CreateBuilding(g_Player1, "eg_closing_death"..i, "nis_closing_death"..i, "carnage_ork_boyz_01")
+		else
+			user_CreateBuilding(g_Player1, "eg_closing_death"..i, "nis_closing_death"..i, "carnage_ork_boyz_02")
+		end
+	end
+	
+	
+	-----------------------------------------------------------------
+	-----End Spawn Closing Units
+	-----------------------------------------------------------------
+	
+	CPath_Start("starter", "start", "end")
+	
+	CPath_CutToPath("canim_out_shot1", "start","end")
+	Fade_Start( 2.0, true )
+	--Cmd_MoveToMarker("sg_closing_orkrunners", "nis_closing_runners_goto")
+	SPath_Start("manim_out_runners", "1", "4", "sg_closing_orkrunners")
+	
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()
+	
+	
+	for i = 1, 3 do
+		Cmd_SetStance("sg_closing_attackers"..i, STANCE_Hold)
+		Cmd_SetStance("sg_closing_vehicle"..i, STANCE_Hold)
+	end
+	
+	CTRL.Event_Delay(4)
+	CTRL.WAIT()
+	
+	--SPath_Start("manim_out_runners", "1", "4", "sg_closing_planes1")
+	Cmd_MoveToMarker("sg_closing_planes1", "nis_closing_planes_goto1")
+	
+	for i = 1, 3 do
+		Cmd_SetStance("sg_closing_attackers"..i, STANCE_Hold)
+		Cmd_SetStance("sg_closing_vehicle"..i, STANCE_Hold)
+	end
+	
+	CTRL.Event_Delay(1)
+	CTRL.WAIT()
+	
+	--SPath_Start("manim_out_runners", "1", "3", "sg_closing_planes2")
+	Cmd_MoveToMarker("sg_closing_planes2", "nis_closing_planes_goto2")
+	
+	Cmd_MoveToMarker("sg_closing_orkrunners", "nis_closing_runners_goto1")
+	
+	
+	CTRL.Event_Delay(10)
+	CTRL.WAIT()
+	
+	
+	
+	CPath_CutToPath("canim_out_warboss1", "start","end")
+
+	-- Silvey Polish (10/15/07):  Correct Face
+	Anim_PlaySGroupAnim(SGroup_FromName("sg_closing_nuddyfist"), "sp_talk" )
+	Actor_PlaySpeech(ACT.Nuddyfist, 5200108) --Nuddyfist:  My Ork’old! My bootiful Ork’old!
+	EGroup_SelfDestroy("eg_closing_generators3", true)
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()
+	EGroup_SelfDestroy("eg_closing_generators2", true)
+	
+	CTRL.Event_Delay(4)
+	CTRL.WAIT()
+	
+	CPath_CutToPath("canim_out_hqgodow", "start","end")
+
+	CTRL.Event_Delay(3)
+	CTRL.WAIT()
+	
+	EGroup_SelfDestroy("eg_closing_orkbase", true)
+	
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()
+	
+	EGroup_SelfDestroy("eg_closing_mechbase", true)
+	
+	CTRL.Event_Delay(3)
+	CTRL.WAIT()
+	
+	Cmd_MoveToMarker("sg_closing_gorgutz", "nis_closing_warboss_goto")
+	
+	CPath_CutToPath("canim_out_warboss2", "start","end")
+
+	Actor_PlaySpeech(ACT.Gorgutz, 5200109)  --Gorgutz:  Oi’ve ‘ad enuff a dis! 
+	
+	CTRL.Event_Delay(1)
+	CTRL.WAIT()
+	
+	CTRL.Anim_PlaySyncAnim(SGroup_FromName("sg_closing_gorgutz"), SGroup_FromName("sg_closing_nuddyfist"), "sp_synckill_4", "syncdeath_4", 3)
+	CTRL.WAIT()
+
+	--Anim_PlaySGroupAnim(SGroup_FromName("sg_closing_gorgutz"), "special_attack_4" )
+	
+	Cmd_MoveToMarker("sg_closing_gorgutz", "nis_closing_warboss_goto1")
+	
+	CPath_CutToPath("canim_out_warboss3", "start","end")
+	CTRL.Actor_PlaySpeech(ACT.Gorgutz, 5200110)  --Gorgutz:  C’mon boyz, let’s get outta ‘ere!
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay(6)
+	Fade_Start(4, false)
+	CTRL.WAIT()
+	
+	CTRL.W40k_Letterbox( false, 2)	
+	CTRL.WAIT()
+		
+	--[[game is won]]
+	--World_SetTeamWin( g_Player1, "" )
+	--Rule_AddIntervalEx( Rule_GameOver,5,1 )
+
+end
+
+
+---------------------------------
+--[[MID NIS]]
+----------------------------------
+
+EVENTS.NIS_Mid = function()
+
+--[[ go into letterbox mode ]]
+	W40k_Letterbox( true, 0 )	
+	
+	--[[ reveals all of the map ]]
+	--FOW_RevealAll()
+
+	FOW_RevealMarker("mkr_mid_nis_reveal",80)
+	
+	
+	CTRL.Event_Delay( 2 )
+		
+		Fade_Start( 0, false )
+		
+	CTRL.WAIT()
+
+	t_players = {g_Player1, g_Player2, g_Player3, g_Player4, g_Player5, g_Player6, g_Player7, g_Player8}
+	
+	Player_RestrictAbility(g_Player1, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player3, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player4, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player5, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player6, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player7, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player8, "sp_dxp_unit_glow")
+	
+	Util_NIS_ToggleModifierEvents(g_Player1, false)
+	Util_NIS_ToggleModifierEvents(g_Player2, false)
+	Util_NIS_ToggleModifierEvents(g_Player3, false)
+	Util_NIS_ToggleModifierEvents(g_Player4, false)
+	Util_NIS_ToggleModifierEvents(g_Player5, false)
+	Util_NIS_ToggleModifierEvents(g_Player6, false)
+	Util_NIS_ToggleModifierEvents(g_Player7, false)
+	Util_NIS_ToggleModifierEvents(g_Player8, false)
+	
+	
+	
+	local sgroupID = SGroup_CreateIfNotFound("sg_existing_nis_squads")
+	local entrenched_sgroupID = SGroup_CreateIfNotFound("sg_entrenched_nis_squads")
+	local count = World_GetPlayerCount()
+
+	for i = 0, count - 1 do
+		local player = World_GetPlayerAt(i)
+		SGroup_AddGroup(sgroupID, Player_GetSquads(player))
+	end
+	
+	
+	SGroup_SetHealthInvulnerable("sg_existing_nis_squads", true)
+	
+	
+	Player_GetAllSquadsNearMarker(g_Player1, "sg_nis_despawn_squads", "mkr_mid_nis_despawn")
+	Player_GetAllSquadsNearMarker(g_Player2, "sg_nis_despawn_squads", "mkr_mid_nis_despawn")
+	Player_GetAllSquadsNearMarker(g_Player3, "sg_nis_despawn_squads", "mkr_mid_nis_despawn")
+	Player_GetAllSquadsNearMarker(g_Player4, "sg_nis_despawn_squads", "mkr_mid_nis_despawn")
+	Player_GetAllSquadsNearMarker(g_Player5, "sg_nis_despawn_squads", "mkr_mid_nis_despawn")
+	Player_GetAllSquadsNearMarker(g_Player6, "sg_nis_despawn_squads", "mkr_mid_nis_despawn")
+	Player_GetAllSquadsNearMarker(g_Player7, "sg_nis_despawn_squads", "mkr_mid_nis_despawn")
+	Player_GetAllSquadsNearMarker(g_Player8, "sg_nis_despawn_squads", "mkr_mid_nis_despawn")
+	
+	local Remove_Despawned = function(despawn_sgroupid, despawn_itemindex, despawn_itemid)
+		
+		print(Squad_GetBlueprintName(despawn_itemid))
+		
+		if ((Squad_GetBlueprintName(despawn_itemid) == "tau_broadside_battlesuit_squad") == false) and  ((Squad_GetBlueprintName(despawn_itemid) == "guard_heavy_weapons_team_squad") == false) 
+			and  ((Squad_GetBlueprintName(despawn_itemid) == "guard_heavy_weapon_team_entrenched_squad_sp") == false) then
+			
+			print("nothing happened")
+			
+		elseif Squad_GetBlueprintName(despawn_itemid) == "tau_broadside_battlesuit_squad" or  Squad_GetBlueprintName(despawn_itemid) == "guard_heavy_weapons_team_squad" 
+			or  Squad_GetBlueprintName(despawn_itemid) == "guard_heavy_weapon_team_entrenched_squad_sp" then 
+		
+			print("something happened, hopefully added broadside or hwt to proper squad, and removed from despawned squad")
+			
+			SGroup_Add(entrenched_sgroupID, despawn_itemid)
+			SGroup_Remove(despawn_sgroupid, despawn_itemid)
+		
+		end
+		
+		
+		
+	end
+	
+	
+	if SGroup_Exists("sg_nis_despawn_squads") and (SGroup_IsEmpty("sg_nis_despawn_squads") == false or SGroup_Count(SGroup_FromName("sg_nis_despawn_squads")) ~= nil) then
+		
+		SGroup_ForEach(SGroup_FromName("sg_nis_despawn_squads"), Remove_Despawned)
+		SGroup_DeSpawn("sg_nis_despawn_squads")
+		
+	end
+
+	
+	if SGroup_Exists("sg_entrenched_nis_squads") and (SGroup_IsEmpty("sg_entrenched_nis_squads") == false or SGroup_Count(SGroup_FromName("sg_entrenched_nis_squads")) ~= nil) then
+		
+		SGroup_SetHealthInvulnerable("sg_entrenched_nis_squads", true)
+		Cmd_SetStance("sg_entrenched_nis_squads", STANCE_CeaseFire)
+		
+	end
+	
+	if g_nis_rebels == 1 then
+	
+		g_rebelgroup = g_Player3
+	
+	elseif g_nis_rebels == 2 then
+	
+		g_rebelgroup = g_Player4
+	
+	elseif g_nis_rebels == 3 then
+	
+		g_rebelgroup = g_Player5
+	
+	elseif g_nis_rebels == 4 then
+	
+		g_rebelgroup = g_Player6
+	
+	elseif g_nis_rebels == 5 then
+	
+		g_rebelgroup = g_Player7
+	
+	end
+	
+	
+	
+	
+	Fade_Start( 2, true )
+	
+	CTRL.CPath_Start("canim_mid1", "start", "end")
+		
+		CTRL.SUB()
+			
+			--RebelPlayer = --to be determined
+			
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_mid_door_orks", "ork_squad_shoota_boy", "mkr_mid_nis_defender_spawn1", 2,8)
+			SGroup_AddGroup(SGroup_CreateIfNotFound("sg_mid_actors"), SGroup_FromName("sg_mid_door_orks"))
+			
+			Util_CreateSquadsAtMarkerEx(g_rebelgroup, "sg_mid_rebel_orks", "ork_squad_slugga", "mkr_mid_nis_rebel_spawn", 3, 12)
+			SGroup_AddGroup(SGroup_CreateIfNotFound("sg_mid_actors"), SGroup_FromName("sg_mid_rebel_orks"))
+			
+			Cmd_SetStance("sg_mid_door_orks", STANCE_StandGround)	
+			
+		
+		
+			CTRL.Event_Delay(4)
+			CTRL.WAIT()
+			
+		CTRL.END()		
+		
+		
+	CTRL.WAIT()
+	
+	CTRL.CPath_CutToPath("canim_mid2", "start", "end")
+	
+		Cmd_MoveToMarker("sg_mid_rebel_orks", "mkr_rebel_charge")
+		
+		CTRL.Actor_PlaySpeech(  ACT.NobSP, 2743000 )
+		CTRL.WAIT()
+			
+		
+	
+	CTRL.WAIT()
+	
+	
+	
+	CTRL.CPath_CutToPath("canim_mid3", "start", "end")
+		
+		CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 2743001 )
+			
+			SGroup_DeSpawn("sg_mid_rebel_orks")	
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_mid_loyalist_orks", "ork_squad_slugga", "mkr_mid_nis_loyalist_spawn",1, 16)
+			SGroup_AddGroup(SGroup_CreateIfNotFound("sg_mid_actors"), SGroup_FromName("sg_mid_loyalist_orks"))
+			
+			Cmd_MoveToMarker("sg_mid_loyalist_orks", "mkr_mid_nis_battle")
+			SGroup_DeSpawn("sg_mid_door_orks")
+			
+		CTRL.WAIT()	
+		
+	CTRL.WAIT()
+	
+		SGroup_ReSpawnMarker("sg_mid_rebel_orks", "mkr_rebel_respawn")
+	CTRL.CPath_CutToPath("canim_mid4", "start", "end")
+	
+		CTRL.SUB()
+			Cmd_MoveToMarker("sg_mid_rebel_orks", "mkr_mid_nis_battle")
+			
+			
+				if g_nis_rebels == 1 then
+				
+					CTRL.Actor_PlaySpeech(  ACT.NobSP, 2743004 )
+					CTRL.WAIT()
+				
+				
+				elseif g_nis_rebels == 2 then
+				
+					CTRL.Actor_PlaySpeech(  ACT.NobSP, 2743006 )
+					CTRL.WAIT()
+				
+				
+				elseif g_nis_rebels == 3 then
+				
+					CTRL.Actor_PlaySpeech(  ACT.NobSP, 2743002 )
+					CTRL.WAIT()
+				
+				
+				elseif g_nis_rebels == 4 then
+				
+					CTRL.Actor_PlaySpeech(  ACT.NobSP, 2743005 )
+					CTRL.WAIT()
+				
+				
+				elseif g_nis_rebels == 5 then
+				
+					CTRL.Actor_PlaySpeech(  ACT.NobSP, 2743003 )
+					CTRL.WAIT()
+					
+				end
+			
+			
+		CTRL.END()
+		
+	
+	CTRL.WAIT()
+	
+	--[[
+	CTRL.CPath_Start("canim_mid5", "start", "end")
+	
+	
+	CTRL.WAIT()]]
+	
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_mid_gorgutz", "ork_squad_warboss_stronghold_sp", "mkr_mid_gorgutz_spawn",1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_mid_actors"), SGroup_FromName("sg_mid_gorgutz"))
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_mid_nob", "ork_squad_slugga", "mkr_mid_nob_spawn",1,1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_mid_actors"), SGroup_FromName("sg_mid_nob"))
+	Cmd_SetStance("sg_mid_gorgutz", STANCE_StandGround)	
+	Cmd_SetStance("sg_mid_nob", STANCE_StandGround)	
+	SGroup_SetHealthInvulnerable("sg_mid_gorgutz", true)	
+	SGroup_SetHealthInvulnerable("sg_mid_nob", true)
+	
+	CTRL.CPath_CutToPath("canim_mid6", "start", "end")
+	
+		CTRL.SUB()
+		
+		
+
+			
+			
+			
+			CTRL.Actor_PlaySpeech(  ACT.Gorgutz, 2743007 )
+				CTRL.WAIT()
+		
+		CTRL.END()
+	CTRL.WAIT()
+	
+	CTRL.CPath_CutToPath("canim_mid7", "start", "end")
+	
+	
+	
+	CTRL.Actor_PlaySpeech(  ACT.NobSP, 2743008 )
+		CTRL.WAIT()
+	
+	CTRL.WAIT()
+	
+	Fade_Start( 2, false )
+	
+	
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()
+	
+	SGroup_DeSpawn("sg_mid_actors")
+	SGroup_DestroyAllSquads("sg_mid_actors")
+	SGroup_Destroy(SGroup_FromName("sg_mid_actors"))
+	
+	
+	SGroup_SetHealthInvulnerable("sg_existing_nis_squads", false)
+		
+	if SGroup_Exists("sg_nis_despawn_squads") and (SGroup_IsEmpty("sg_nis_despawn_squads") == false or SGroup_Count(SGroup_FromName("sg_nis_despawn_squads")) ~= nil) then
+		
+		SGroup_ReSpawn("sg_nis_despawn_squads")
+		SGroup_SetHealthInvulnerable("sg_nis_despawn_squads", false)
+		
+	end
+		
+		
+	if SGroup_Exists("sg_entrenched_nis_squads") and (SGroup_IsEmpty("sg_entrenched_nis_squads") == false or SGroup_Count(SGroup_FromName("sg_entrenched_nis_squads")) ~= nil) then
+		
+		SGroup_SetHealthInvulnerable("sg_entrenched_nis_squads", false)
+		Cmd_SetStance("sg_entrenched_nis_squads", STANCE_Hold)
+		
+	end
+		
+	
+	--SGroup_ReSpawn(SGroup_GetName(Player1Squads))
+	--[[
+	SGroup_ReSpawn(SGroup_GetName(Player2Squads))
+	SGroup_ReSpawn(SGroup_GetName(Player3Squads))
+	SGroup_ReSpawn(SGroup_GetName(Player4Squads))
+	SGroup_ReSpawn(SGroup_GetName(Player5Squads))
+	SGroup_ReSpawn(SGroup_GetName(Player6Squads))
+	SGroup_ReSpawn(SGroup_GetName(Player7Squads))
+	SGroup_ReSpawn(SGroup_GetName(Player8Squads))]]
+	
+	CTRL.W40k_Letterbox( false, 2)
+	
+		--FOW_Reset()
+		
+		FOW_UnRevealMarker("mkr_mid_nis_reveal")
+		CPath_Blendout( 1 )
+		
+	CTRL.WAIT()
+		
+	Fade_Start( 2, true )
+	
+	--[[
+	SGroup_SetHealthInvulnerable(SGroup_GetName(Player1Squads), false)
+	SGroup_SetHealthInvulnerable(SGroup_GetName(Player2Squads), false)
+	SGroup_SetHealthInvulnerable(SGroup_GetName(Player3Squads), false)
+	SGroup_SetHealthInvulnerable(SGroup_GetName(Player4Squads), false)
+	SGroup_SetHealthInvulnerable(SGroup_GetName(Player5Squads), false)
+	SGroup_SetHealthInvulnerable(SGroup_GetName(Player6Squads), false)
+	SGroup_SetHealthInvulnerable(SGroup_GetName(Player7Squads), false)
+	SGroup_SetHealthInvulnerable(SGroup_GetName(Player8Squads), false)]]
+	
+	Player_UnRestrictAbility(g_Player1, "sp_dxp_unit_glow")
+	Player_UnRestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	Player_UnRestrictAbility(g_Player3, "sp_dxp_unit_glow")
+	Player_UnRestrictAbility(g_Player4, "sp_dxp_unit_glow")
+	Player_UnRestrictAbility(g_Player5, "sp_dxp_unit_glow")
+	Player_UnRestrictAbility(g_Player6, "sp_dxp_unit_glow")
+	Player_UnRestrictAbility(g_Player7, "sp_dxp_unit_glow")
+	Player_UnRestrictAbility(g_Player8, "sp_dxp_unit_glow")
+	
+	Util_NIS_ToggleModifierEvents(g_Player1, true)
+	Util_NIS_ToggleModifierEvents(g_Player2, true)
+	Util_NIS_ToggleModifierEvents(g_Player3, true)
+	Util_NIS_ToggleModifierEvents(g_Player4, true)
+	Util_NIS_ToggleModifierEvents(g_Player5, true)
+	Util_NIS_ToggleModifierEvents(g_Player6, true)
+	Util_NIS_ToggleModifierEvents(g_Player7, true)
+	Util_NIS_ToggleModifierEvents(g_Player8, true)
+	
+	
+end

@@ -1,0 +1,281 @@
+--####################################################################################################
+--#
+--#     Heroes Special Modder Info Document
+--#
+--#     Original Heroes idea and implementation by CutterShane 2006
+--#     Heroes Special rework by Arkhan 2007
+--#		Additional improvements by Cultist 2008
+--#		Testing and support by the rest of the Dawn of Skirmish AI Team
+--#
+--####################################################################################################
+
+Introduction:
+-------------
+Heroes Special is intended to be incorporated by other mods, just like the skirmish AI mod. You're to
+modify the mod to your wishes as long as you give credits to Cuttershane as the creater of the original
+Heroes, me as the developer of the Heroes Special rework and the rest of the skirmish AI team for their
+support and quality control.
+
+The basic structure is very similar to the one of the skirmish AI mod. There's a core folder which you
+shouldn't touch, except you really know what you do, and a race folder with an info script file for
+every race. In addition there's a settings script file in the root folder of the mod which contains
+basic settings like the different XP gathering rates and the training time requirement which can also be
+set to 0 if you want immediate unit upgrades. Further, all upgrade functions for the different unit types
+are located here. If you want to incorporate Heroes Special into a balancing mod, you should have a closer
+look on the various stat buffs and change them if you think they might be too heavy or too light.
+
+
+Race Info Script Files:
+-----------------------
+They are located in the races folder. Each file contains two big info structs which define the experience
+level system for that race. If a race has no info script file, the mod will work, but the units of the race
+won't gain any levels.
+
+UnitTypes Info Struct:
+----------------------
+The first info struct of the file is the UnitTypes struct which should have an entry for every unit of the
+race. If a unit has no entry, the unit won't upgrade, but the mod will work without problems. A unit entry
+looks like:
+
+chaos_squad_lord =
+{
+	Title = "Chaos Lord",
+	Type = "Commander",
+	UpgradeFunction = UpgradeCommander,
+	FXType = "Squad",
+},
+
+The title is shown at the level upgrade message for the unit.
+Type defines which XP table the unit uses. Usually, there are only the types Commander, Regular Forces,
+Special Forces and Commando Forces. But you can also define your own types if you want. You only have to add
+the type to the UnitRanks info struct, which is explained later.
+The upgrade function defines the function name which is called when the unit gains a new level. All upgrade
+functions are located in the settings.scar script in the root folder of the mod. You can modify the old ones
+or even add new ones if you like.
+The FXType can be "Squad" or "Vehicle" and defines which FX setting is used for the unit. Bigger units should
+use the "Vehicle" type even if they aren't a vehicle.
+
+
+UnitRanks Info Struct:
+----------------------
+The second info struct is the UnitRanks struct which has an entry for every level a unit can gain. The first
+entry is defined as level 1, the second as level 2, and so on. A unit rank entry looks like:
+
+{
+	Name = "Regular",
+	XPRequirements =
+	{
+		Commander = 0,
+		RegularForces = 0,
+		SpecialForces = 0,
+		CommandoForces = 0,
+	},
+	UpgradeFX =
+	{
+		Squad = nil,
+		Vehicle = nil,
+	},
+	AuraFX =
+	{
+		Squad = nil,
+		Vehicle = nil,
+	},
+	MessageFX =
+	{
+		Icon = nil,
+		Sound = nil,
+	},
+},
+
+The name is shown in the message which appears if a unit reaches the next level. For example
+"Chaos Lord achieved Experienced status". XPRequirements contains the XP requirement for this level. Each unit
+type has its own entry here. If you've defined a new unit type like explained before, you have to add an entry
+for it here. UpgradeFX, AuraFX and MessageFX contain the info which upgrade effects are used and the aura of
+the unit if this level offers one. In the appendix is a list of FX file names which you can use for UpgradeFX and
+AuraFX. You can also use a different custom icon/sound for the message. If you are a graphics and FX maniac, you
+can really find a challenge here. Making each unit rank of each race unique could keep you busy for a long time.
+
+
+CommandLevel Info Struct:
+-------------------------
+The CommandLevel struct defines the required level for a general to get a command level bonus. The basic command
+level is always 1 which has neither positive nor negative effects. The first entry defines the required level for
+command level 2, the second command level 3, etc. You're also free to let the list empty if you don't want command
+level boni.
+
+
+Ingame unit rank info:
+----------------------
+You also have to update the heroes.ucs text files in the localized language folders with each rank to see the ingame
+unit rank information. Make sure that all level ranks get consecutive string ID's.
+
+
+
+--####################################################################################################
+--#
+--# Appendix: FX Library
+--#
+--####################################################################################################
+
+
+Energy:
+-------
+"eldar_unit_fx/warp_fx",
+"guard/lascannon_hit_all",
+"guard/weapons/lascannon_hit_flesh",
+"guard/weapons/lascannon_hit_hvy_metal",
+"guard/weapons/lascannon_hit_light_metal",
+"guard/weapons/lascannon_hit_stone",
+"unit_ability_fx/eldar_warp_in",
+"unit_ability_fx/eldar_warp_out",
+"unit_ability_fx/eldritch_storm_hit",
+"unit_ability_fx/embolden",
+"unit_ability_fx/haywire_explosion",
+"unit_ability_fx/haywire_explosion2",
+"unit_ability_fx/haywire_hit",
+"unit_ability_fx/plasma_grenade",
+"unit_ability_fx/psychic_storm_hit",
+"unit_ability_fx/rally_fx",
+"unit_impact_events/chaos_impact_plasma_hit_hvy",
+"unit_impact_events/chaos_impact_plasma_hit_s",
+"unit_impact_events/chaos_lascannon_hit",
+"unit_impact_events/chaos_lascannon_hit_hvy",
+"unit_impact_events/eldar_brightlance_hit_flesh",
+"unit_impact_events/eldar_brightlance_hit_hvy_metal",
+"unit_impact_events/lascannon_hit",
+"unit_impact_events/lascannon_hit_hvy",
+"unit_impact_events/lascannon_miss",
+"unit_upgrade_morale_fx/reinforce_chaos_trooper",
+"unit_upgrade_morale_fx/reinforce_marine_trooper",
+"unit_upgrade_morale_fx/reinforce_ork_trooper",
+"unit_upgrade_morale_fx/reinforce_trooper",
+
+Weird:
+------
+"chaos/chaos_autocannon_impact_imp",
+"ground_impact/impact_mega_blasta_all",
+"ground_impact/impact_stick_bom",
+"ground_impact/tank_zappa_impact",
+"necron/appear_fx",
+"ork_weapon_fx/rokkit_launcha_fx",
+"ork_weapon_fx/zzap_gun_fx",
+"unit_ability_fx/chaos_frag_grenade_explosion",
+"unit_ability_fx/doombolt_impact",
+"unit_ability_fx/ork_fightin_juice_hvy",
+"unit_ability_fx/ork_healing_aura",
+"unit_impact_events/eldar_missile_launcher_hit_flesh",
+"unit_impact_events/eldar_missile_launcher_hit_heavy_metal",
+"unit_impact_events/eldar_missile_launcher_hit_light_metal",
+"unit_impact_events/fire_prism_hit_heavy_metal",
+"unit_impact_events/impact_autocannon_all",
+"unit_impact_events/impact_autocannon_hvy",
+"unit_impact_events/zzap_gun_hit",
+"unit_impact_events/zzap_gun_hit_hvy",
+
+Vertical:
+---------
+"unit_ability_fx/battlecry_god_light",
+"unit_ability_fx/chaos_deep_strike_unit",
+"unit_ability_fx/deep_strike_unit",
+"unit_ability_fx/smite_anticipation_fx",
+
+Matter:
+-------
+"ground_impact/artillery_impact_water",
+"ground_impact/impact_artillery_l_all",
+"ground_impact/impact_artillery_l_dirt",
+"ground_impact/impact_chaos_battlecannon_dirt",
+"ground_impact/impact_explosion_s_dirt",
+"ground_impact/impact_super_stikkbom",
+"guard/weapons/grenade_impact",
+"impact_artillery_burst_ground_l",
+"unit_ability_fx/melta_bomb_explosion",
+"unit_ability_fx/tankbusta_bom_explosion",
+"unit_death_events/death_listening_post",
+"projectile_fx/krak_missile_impact",
+"projectile_fx/krak_missile_impact_hvy",
+"projectile_fx/turret_missile_impact",
+
+Huge:
+-----
+"chaos_fx/possession_fx",
+"ground_impact/d_cannon_area_explosion",
+"ground_impact/fire_prism_area_explosion",
+"guard/abilities/earthshaker_hit_dirtsand",
+"guard/abilities/kasrkin_grenade_impact",
+"guard/abilities/strafe_hit",
+"guard/weapons/inferno_cannon_area_flame",
+"guard/weapons/demolisher_cannon_dirtsand",
+"guard/weapons/demolisher_cannon_grass",
+"guard/weapons/demolisher_cannon_rock",
+"impact_artillery_l_all",
+"marine_weapon_fx/orbital_bombardment_explosion",
+"marine_weapon_fx/orbital_bombardment_pre_explosion",
+"ork_weapon_fx/boyz_hut_ball_fx",
+"ork_weapon_fx/trukk_detonate_fx",
+"unit_ability_fx/corruption",
+"unit_ability_fx/eldritch_storm_anticipation",
+
+Small:
+------
+"unit_ability_fx/kustom_force_field_unit",
+"marine_vehicle_fx/vehicle_spark_fx",
+"necron/monolith_events",
+"unit_impact_events/death_spinner_hit_hvy",
+"unit_impact_events/eldar_shurican_hit_flesh",
+"unit_impact_events/eldar_shurican_hit_hvy_metal",
+"unit_impact_events/impact_bolter_sml",
+"unit_impact_events/impact_shuriken",
+"unit_ability_fx/docs_tools_unit",
+"unit_ability_fx/narthicium_unit",
+
+Pulse:
+------
+"flag_plant_flash/flag_plant_flash",
+"guard/abilities/fanatacism",
+"unit_ability_fx/rally_unit_fx",
+"unit_ability_fx/sabotage_caster",
+"unit_upgrade_morale_fx/chaos_weapon_upgrade",
+"unit_upgrade_morale_fx/ork_weapon_upgrade",
+"unit_upgrade_morale_fx/weapon_upgrade",
+
+FX_Aura:
+--------
+"guard/abilities/fanatacism_area_fx_no_sound",
+"guard/abilities/fanatacism_hvy",
+"projectile_fx/impact_smoke_launcher",
+"unit_ability_fx/doombolt_impact_unit",
+"unit_ability_fx/inspiring",
+"unit_ability_fx/rally_hvy_unit_fx",
+"unit_ability_fx/warshout",
+"unit_ability_fx/word_of_emperor",
+"unit_impact_events/wailing_doom_hit",
+"unit_impact_events/wailing_doom_hvy_hit",
+
+Personal_Boom:
+--------------
+"marine_weapon_fx/daemon_hammer_fx",
+"melee_fx/daemon_hammer_fx",
+"unit_ability_fx/narthicium",
+"unit_ability_fx/sabotage_hit",
+"unit_impact_events/eldar_starcannon_hit",
+"unit_impact_events/eldar_starcannon_hit_hvy",
+"unit_impact_events/fire_prism_hit_flesh",
+"unit_impact_events/fire_prism_hit_light_metal",
+"unit_impact_events/impact_lascannon_sml",
+"unit_impact_events/impact_plasma_hvy",
+"unit_impact_events/impact_plasma_sml",
+"unit_impact_events/plasma_unit_impact_fx",
+
+Ring:
+-----
+"aura_fx/objective_ping_no_loop_dxp",
+"ground_impact/impact_frag_grenade",
+"projectile_fx/chaos_missile_impact",
+"projectile_fx/chaos_missile_impact_hvy",
+"projectile_fx/chaos_turret_missile_impact",
+"unit_ability_fx/kustom_force_field_unit_hvy",
+"unit_ability_fx/marine_frag_grenade_explosion",
+"unit_ability_fx/power_of_waagh",
+"unit_ability_fx/smite_impact_fx",
+"unit_ability_fx/spawn_explosion",

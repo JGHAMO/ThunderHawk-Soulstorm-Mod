@@ -1,0 +1,2528 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Stronghold_Imperial_Guard.nis
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- need to change aides to ACT.AiddeCampe (was using  ACT.Assassin)
+
+-- Declares an Event Table
+EVENTS = {}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Initial : Enemy has a base, order attacks, etc...
+	-- * EVENTS.IE_Initial : ACT.AiddeCampe, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Initial = function()
+	Util_SetIE( true )
+
+	-- Guard_Initial_1_Aide : General, they approach.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300063)	
+	CTRL.WAIT()
+	
+	-- Guard_Initial_2_Stubbs : Hmph! Let them. When will we have our Baneblades?
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300064)	
+	CTRL.WAIT()
+	
+	-- Guard_Initial_3_Aide : Crew and munitions are arriving by convoy. It… it will be several convoys before we have one operational, sir.
+	CTRL.Actor_PlaySpeech(ACT.AiddeCampe, 5300065)	
+	CTRL.WAIT()
+	
+	-- Guard_Initial_4_Stubbs : So we just have to keep them busy until then.
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300066)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Convoy_FirstMechanized : 1st Convoy has arrived on screen at Mechanized Command
+	-- * EVENTS.IE_Convoy_FirstMechanized : ACT.Guardsman1, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Convoy_FirstMechanized = function()
+	Util_SetIE( true )
+
+	-- Guard_FirstConvoySent_1_Guardsman : Eastern Annex to Central Command. Baneblade convoy has been dispatched and is currently en route.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman1, 5300727)	
+	CTRL.WAIT()
+	
+	-- Guard_FirstConvoySent_2_Stubbs : With the enemy in the area, I want those convoys well guarded. Safe delivery of those convoyes is *critical*!
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300728)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Convoy_FirstMarsPattern : 1st Convoy has arrived at Mars Pattern Command
+	-- * EVENTS.IE_Convoy_FirstMarsPattern : ACT.AiddeCampe, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Convoy_FirstMarsPattern = function()
+	Util_SetIE( true )
+
+	-- Guard_Convoy_FirstMarsPattern_1_Aide : General, the first convoy shipment has arrived.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300068)	
+	CTRL.WAIT()
+	
+	-- Guard_Convoy_FirstMarsPattern_2_Stubbs : Good. Are we ready to dispatch a Baneblade?
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300069)	
+	CTRL.WAIT()
+	
+	-- Guard_Convoy_FirstMarsPattern_3_Aide2 : No, Sir. Several more convoys will be required.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300104)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Convoy_MarsPattern (Repeatable) : Convoy has arrived at Mars Pattern Command
+	-- * EVENTS.IE_Convoy_MarsPattern_Short : ACT.AiddeCampe
+	-- * EVENTS.IE_Convoy_MarsPattern_Long : ACT.AiddeCampe, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Convoy_MarsPattern_Short = function()
+	Util_SetIE( true )
+
+	-- Guard_Convoy_MarsPattern_1_Aide : General, another convoy shipment has arrived.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300729)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Convoy_MarsPattern_Long = function()
+	Util_SetIE( true )
+
+	-- Guard_Convoy_MarsPattern_1_Aide : General, another convoy shipment has arrived.
+	CTRL.Actor_PlaySpeech(ACT.AiddeCampe, 5300729)	
+	CTRL.WAIT()
+	
+	-- Guard_Convoy_MarsPattern_2_Stubbs : Excellent!
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300730)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Convoy_Mechanized (Repeatable) : Another Convoy has arrived on screen at Mechanized Command
+	-- * EVENTS.IE_Convoy_Mechanized : ACT.Techpriest
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Convoy_Mechanized = function()
+	Util_SetIE( true )
+
+	-- Guard_Convoy_Mechanized_Techpriest : Baneblade convoy dispatched and en route.
+	CTRL.Actor_PlaySpeech( ACT.Techpriest, 5300067)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Artillary_ReadyToFire : First Spotter for Mega-Basilisk Produced
+	-- * EVENTS.IE_Artillary_ReadyToFire : ACT.AiddeCampe, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Artillary_ReadyToFire = function()
+	Util_SetIE( true )
+
+	-- Guard_Artillary_ReadyToFire_1_Aide : The Basilisk Magnus is cleared for action, General. It can now fire at any acquired coordinates.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300076)	
+	CTRL.WAIT()
+	
+	-- Guard_Artillary_ReadyToFire_2_Stubbs : And our spotters?
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300077)	
+	CTRL.WAIT()
+	
+	-- Guard_Artillary_ReadyToFire_3_Aide : Awaiting orders, sir.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300078)	
+	CTRL.WAIT()
+	
+	-- Guard_Artillary_ReadyToFire_4_Stubbs : Get them on the field! In the Emperor’s name, we don’t have time to lose!
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300079)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Artillary_SpotterProduced : Spotter for Mega-Basilisk Produced
+	-- * EVENTS.IE_Artillary_SpotterProduced : ACT.Guardsman6
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Artillary_SpotterProduced = function()
+	Util_SetIE( true )
+	
+	-- IG_SpotterProduced_Spotter : Spotter ready.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman6, 5300784)
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end	
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Artillary_FirstSpotter_Found (Race Based) : First time player detects a Spotter for the Mega Basilisk
+	-- * EVENTS.IE_Artillary_FirstSpotter_Found_Chaos : ACT.FirraeveusCarron
+	-- * EVENTS.IE_Artillary_FirstSpotter_Found_DarkEldar : ACT.Archon
+	-- * EVENTS.IE_Artillary_FirstSpotter_Found_Eldar : ACT.Warlock
+	-- * EVENTS.IE_Artillary_FirstSpotter_Found_Guard : not used since this is guard mission
+	-- * EVENTS.IE_Artillary_FirstSpotter_Found_Necron : ACT.Macabee
+	-- * EVENTS.IE_Artillary_FirstSpotter_Found_Ork : ACT.Gorgutz
+	-- * EVENTS.IE_Artillary_FirstSpotter_Found_Sisters : ACT.Canoness
+	-- * EVENTS.IE_Artillary_FirstSpotter_Found_Space : ACT.TacticalMarine
+	-- * EVENTS.IE_Artillary_FirstSpotter_Found_Tau : ACT.Fire_Warrior
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+EVENTS.IE_Artillary_FirstSpotter_Found_Chaos = function()
+	Util_SetIE( true )
+	
+	-- Guard_Artillary_FirstSpotter_Found_Chaos_Commander : A sneak? A sneak! With a mortal shell tied to his tail! Well! Well – we’ll cut it off. And feed the tailless sniveling little rat to our gods! <laughs>
+	CTRL.Actor_PlaySpeech( ACT.FirraeveusCarron, 5300082)
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Artillary_FirstSpotter_Found_DarkEldar = function()
+	Util_SetIE( true )
+	
+	-- Guard_Artillary_FirstSpotter_Found_DarkEldar_Commander : Haha! What have we here? Thought they could slip a cloaked scout in and aim their artillery on us, did they? <deep rage> We’ll put a stop to that.
+	CTRL.Actor_PlaySpeech( ACT.Archon, 5300084)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Artillary_FirstSpotter_Found_Eldar = function()
+	Util_SetIE( true )
+	
+	-- Guard_Artillary_FirstSpotter_Found_Eldar_Warlock : Farseer, a cloaked scout has been intercepted. No doubt, he was acting a spotter to direct their artillery fire.
+	CTRL.Actor_PlaySpeech( ACT.Warlock, 5300083)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Artillary_FirstSpotter_Found_Guard = function()
+	-- not used since this is guard mission
+end
+
+EVENTS.IE_Artillary_FirstSpotter_Found_Necron = function()
+	Util_SetIE( true )
+
+	-- Guard_Artillary_FirstSpotter_Found_Necron_Commander : I see… you… little spotter. Do not… aim… your guns… at me.
+	CTRL.Actor_PlaySpeech( ACT.Macabee, 5300087)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Artillary_FirstSpotter_Found_Ork = function()
+	Util_SetIE( true )
+
+	-- Guard_Artillary_FirstSpotter_Found_Ork_Commander : Wot’s dis? Why it’s a hidy-humie, tryin’ to sneak in and get us all blowed up. Thought you could send yer big gunz our way, eh? Har har.
+	CTRL.Actor_PlaySpeech( ACT.Gorgutz, 5300085)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Artillary_FirstSpotter_Found_Sisters = function()
+	Util_SetIE( true )
+
+	-- Guard_Artillary_FirstSpotter_Found_Sisters_Commander : An infiltrated spotter has been discovered. It seems they are using these spotters to aim their artillery fire.
+	CTRL.Actor_PlaySpeech( ACT.Canoness, 5300081)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Artillary_FirstSpotter_Found_Space = function()
+	Util_SetIE( true )
+
+	-- Guard_Artillary_FirstSpotter_Found_Space_Marine : We’ve uncloaked a spotter, Sir. This is how they’re firing their artillery – with infiltrated spotters.
+	CTRL.Actor_PlaySpeech( ACT.TacticalMarine, 5300080)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Artillary_FirstSpotter_Found_Tau = function()
+	Util_SetIE( true )
+
+	-- Guard_Artillary_FirstSpotter_Found_Tau_FireWarrior : Commander, a cloaked spotter has been uncovered. We believe he was directing the aim of their giant artillery. We should take measures to prevent such spotters.
+	CTRL.Actor_PlaySpeech( ACT.Fire_Warrior, 5300086)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Spotter_ReadyToFire (5 Variations) : Spotter has reached target and is ready for basilisk attack
+	-- * EVENTS.IE_Spotter_ReadyToFire_One : ACT.Guardsman6
+	-- * EVENTS.IE_Spotter_ReadyToFire_Two : ACT.Guardsman6
+	-- * EVENTS.IE_Spotter_ReadyToFire_Three : ACT.Guardsman6
+	-- * EVENTS.IE_Spotter_ReadyToFire_Four : ACT.Guardsman6
+	-- * EVENTS.IE_Spotter_ReadyToFire_Five : ACT.Guardsman6
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Spotter_ReadyToFire_One = function()
+	Util_SetIE( true )
+
+	-- Guard_Spotter_ReadyToFire_One_Guardsman : Locked on target. Fire when ready.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman6, 5300088)
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Spotter_ReadyToFire_Two = function()
+	Util_SetIE( true )
+
+	-- Guard_Spotter_ReadyToFire_Two_Guardsman : Locked on target.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman6, 5300089)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Spotter_ReadyToFire_Three = function()
+	Util_SetIE( true )
+
+	-- Guard_Spotter_ReadyToFire_Three_Guardsman : Target locked.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman6, 5300090)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Spotter_ReadyToFire_Four = function()
+	Util_SetIE( true )
+
+	-- Guard_Spotter_ReadyToFire_Four_Guardsman : Fire when ready.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman6, 5300091)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Spotter_ReadyToFire_Five = function()
+	Util_SetIE( true )
+
+	-- Guard_Spotter_ReadyToFire_Five_Guardsman : Artillery, fire when ready.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman6, 5300092)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Spotter_Caught (4 Variations) : Spotter discovered before reaching target & calls in basilisk attack
+	-- * EVENTS.IE_Spotter_Caught_One : ACT.Guardsman6
+	-- * EVENTS.IE_Spotter_Caught_Two : ACT.Guardsman6
+	-- * EVENTS.IE_Spotter_Caught_Three : ACT.Guardsman6
+	-- * EVENTS.IE_Spotter_Caught_Four : ACT.Guardsman6
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Spotter_Caught_One = function()
+	Util_SetIE( true )
+
+	-- Guard_Spotter_Caught_One_Guardsman : They’ve caught me. (growing frantic) Fire! Fire now!
+	CTRL.Actor_PlaySpeech( ACT.Guardsman6, 5300093)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Spotter_Caught_Two = function()
+	Util_SetIE( true )
+
+	-- Guard_Spotter_Caught_Two_Guardsman : I’ve been caught! Fire!
+	CTRL.Actor_PlaySpeech( ACT.Guardsman6, 5300094)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Spotter_Caught_Three = function()
+	Util_SetIE( true )
+
+	-- Guard_Spotter_Caught_Three_Guardsman : They got me. Quickly… fire!
+	CTRL.Actor_PlaySpeech( ACT.Guardsman6, 5300095)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Spotter_Caught_Four = function()
+	Util_SetIE( true )
+
+	-- Guard_Spotter_Caught_Four_Guardsman : <dying> Fire… now.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman6, 5300096)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- DefendMegaArtillery : First Time Player Attacks the MegaArtillary
+	-- * EVENTS.IE_DefendMegaArtillery : ACT.Guardsman2
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_DefendMegaArtillery = function()
+	Util_SetIE( true )
+
+	-- Guard_DefendMegaArtillery_Guardsman : <shouting to his comrades> To arms! To arms, men! They're attacking the Basalisk Magnus! Defend it with your lives!
+	CTRL.Actor_PlaySpeech( ACT.Guardsman2, 5300742)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- MegaArtilleryDestroyed : Artillery Building Destroyed
+	-- * EVENTS.IE_MegaArtilleryDestroyed : ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_MegaArtilleryDestroyed = function()
+	Util_SetIE( true )
+
+	-- Guard_MegaArtilleryDestroyed_Stubbs : Curse these fiends! They've taken out our Basilisk Magnus!
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300743)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- MegaArtillerySpottersKilled : Spotters HQ Destroyed
+	-- * EVENTS.IE_MegaArtillerySpottersKilled : ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_MegaArtillerySpottersKilled = function()
+	Util_SetIE( true )
+
+	-- Guard_MegaArtillerySpottersKilled_Stubbs : <disbelief> *All* our artillery spotters were killed? How can that be?
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300744)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- AlertLevels (1-4) : Alert Level has been increased
+	-- * EVENTS.IE_AlertLevel_One : ACT.Announcer
+	-- * EVENTS.IE_AlertLevel_Two : ACT.Announcer
+	-- * EVENTS.IE_AlertLevel_Three : ACT.Announcer
+	-- * EVENTS.IE_AlertLevel_Four : ACT.Announcer
+	-- * EVENTS.IE_AlertLevel_Five : ACT.Announcer
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_AlertLevel_One = function()
+	Util_SetIE( true )
+
+	-- Guard_AlertLevel_One_Announcer : Entering Alert Level One.
+	CTRL.Actor_PlaySpeech( ACT.Announcer, 5300097)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_AlertLevel_Two = function()
+	Util_SetIE( true )
+
+	-- Guard_AlertLevel_Two_Announcer : Entering Alert Level Two.
+	CTRL.Actor_PlaySpeech( ACT.Announcer, 5300098)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_AlertLevel_Three = function()
+	Util_SetIE( true )
+
+	-- Guard_AlertLevel_Three_Announcer : Entering Alert Level Three.
+	CTRL.Actor_PlaySpeech( ACT.Announcer, 5300099)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_AlertLevel_Four = function()
+	Util_SetIE( true )
+
+	-- Guard_AlertLevel_Four_Announcer : Entering Alert Level Four.
+	CTRL.Actor_PlaySpeech( ACT.Announcer, 5300100)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_AlertLevel_Five = function()
+	Util_SetIE( true )
+
+	-- Guard_AlertLevel_Five_Announcer : Entering Alert Level Five.
+	CTRL.Actor_PlaySpeech( ACT.Announcer, 5300726)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- RouteChange_Convoy : Change Routes due to convoys being destroyed (NOT USED)
+	-- EVENTS.IE_RouteChange_Convoy : ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_RouteChange_Convoy = function()
+	Util_SetIE( true )
+	
+	-- Guard_RouteChange_Convoy_Stubbs : Dammit! We’ve lost too many convoys that way. Send them on another route.
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300101)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- RouteChange_MechCommands : Change Routes due to mech commands  being destroyed
+	-- EVENTS.IE_RouteChange_MechCommands : ACT.Stubbs, ACT.AiddeCampe
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_RouteChange_MechCommands = function()
+	Util_SetIE( true )
+	
+	-- Guard_RouteChange_MechCommands_Aide : General, the Mechanized Command that the convoys were being dispatched from has been taken out.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300102)	
+	CTRL.WAIT()
+	
+	-- Guard_RouteChange_MechCommands_Stubbs : Well, use a different one, then. And quickly!
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300103)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- MarsPatterns_AllDestroyed : All Mars Pattern Commands  have been destroyed
+	-- * EVENTS.IE_MarsPatterns_AllDestroyed : ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_MarsPatterns_AllDestroyed = function()
+	Util_SetIE( true )
+	
+	-- Guard_MarsPatternsDestroyed_Stubbs : <shaken, surprised> Our Mars Pattern buildings! <still tough, but crestfallen> Well… the convoys are usless to us now.
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300738)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- MechCommand_AllDestroyed : All Convoy Mech commands  have been destroyed
+	-- * EVENTS.IE_MechCommand_AllDestroyed : ACT.Stubbs, ACT.AiddeCampe
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_MechCommand_AllDestroyed = function()
+	Util_SetIE( true )
+	
+	-- Guard_MechCommand_AllDestroyed_1_Aide : General, the Mechanized Command that the convoys were being dispatched from has been taken out.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300102)	
+	CTRL.WAIT()
+	
+	-- Guard_MechCommand_AllDestroyed_2_Stubbs : Well –
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300105)	
+	CTRL.WAIT()
+	
+	-- Guard_MechCommand_AllDestroyed_3_Aide : Sir, there *are* no more Mechanized Commands. There will be no more convoys.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300106)	
+	CTRL.WAIT()
+	
+	-- Guard_MechCommand_AllDestroyed_4_Stubbs :<muttered darkly under his breath> Golden Throne protect us now...
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300107)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- BanebladesHalted : Baneblade Production Has been halted (either due to mars commands or mech commands destruction)
+	-- * EVENTS.IE_BanebladesHalted : ACT.Stubbs, ACT.AiddeCampe
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_BanebladesHalted = function()
+	Util_SetIE( true )
+	
+	-- Guard_BanebladesHalted_1_Stubbs : They've thrown a wrench in our Baneblade production… We're just going to have to do without them! If they think that's all we've got up our sleeves… Officer, we fight unto the last, do you understeand me?
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300739)	
+	CTRL.WAIT()
+	
+	-- Guard_BanebladesHalted_2_Aide : Yes, sir.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300740)	
+	CTRL.WAIT()
+	
+	-- Guard_BanebladesHalted_3_Stubbs : Any soldier caught abandoning his post is to be shot without further questioning. We can still win this!
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300741)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- HalfConvoysNotice : First Baneblade is halfway to produced
+	--* EVENTS.IE_HalfConvoysNotice : ACT.AiddeCampe, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_HalfConvoysNotice = function()
+	Util_SetIE( true )
+	
+	-- Guard_HalfConvoysNotice_1_Stubbs : <irritated, demanding> Someone tell me why we don't have a Baneblade out in the field, yet?
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300732)	
+	CTRL.WAIT()
+	
+	-- Guard_HalfConvoysNotice_2_Aide : Sir, none are fuly operational. We have about half the number of convoy shipments required.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300733)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- FirstBanebladeReady : First Baneblade Ready
+	--* EVENTS.IE_FirstBanebladeReady : ACT.AiddeCampe, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_FirstBanebladeReady = function()
+	Util_SetIE( true )
+
+	-- Guard_FirstBanebladeReady_1_Aide : General, one Baneblade is fully prepared and combat-ready.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300734)	
+	CTRL.WAIT()
+	
+	-- Guard_FirstBanebladeReady_2_Stubbs : At last! Get it onto the field as soon as possible. Keep the convoys coming. We'll take as much firepower as we can against these bastards.
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300735)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- BanebladeReady : Another Baneblade has been produced
+	--* EVENTS.IE_BanebladeReady : ACT.AiddeCampe, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_BanebladeReady = function()
+	Util_SetIE( true )
+
+	-- Guard_BanebladeReady_1_Aide : <proud/excited> General, we have a Baneblade ready for combat.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300736)	
+	CTRL.WAIT()
+	
+	-- Guard_BanebladeReady_2_Stubbs : Finally! Its orders are to engage immediately.
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300737)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Enemy_Attacks_Idle_Base : Enemy has attacked an idle base -- troops get to the idle vehicles
+	--* EVENTS.IE_Enemy_Attacks_Idle_Sentinel_Base : ACT.Guardsman2
+	--* EVENTS.IE_Enemy_Attacks_Idle_Chimera_Base : ACT.Guardsman3
+	--* EVENTS.IE_Enemy_Attacks_Idle_Tank_Base : ACT.Guardsman5
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Enemy_Attacks_Idle_Sentinel_Base = function()
+	Util_SetIE( true )
+
+	-- Guard_Enemy_Attacks_Idle_Sentinel_Base_Officer : We’re under attack! Quick, man the Sentinels! <troops shouting>
+	CTRL.Actor_PlaySpeech( ACT.Guardsman2, 5300108)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Enemy_Attacks_Idle_Chimera_Base = function()
+	Util_SetIE( true )
+
+	-- Guard_Enemy_Attacks_Idle_Chimera_Base_Officer : Here they come. Get those Chimera tanks up and running. On the double! <troops shouting>
+	CTRL.Actor_PlaySpeech( ACT.Guardsman3, 5300110)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Enemy_Attacks_Idle_Tank_Base = function()
+	Util_SetIE( true )
+
+	-- Guard_Enemy_Attacks_Idle_Tank_Base_Officer : 94th Heavy Armored Regiment! To your tanks! 
+	CTRL.Actor_PlaySpeech( ACT.Guardsman5, 5300112)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Idle_Base_Out_Of_Units : Idle Bases are out of idle Vehicles
+	--* EVENTS.IE_Idle_Sentinel_Base_Out_Of_Units : ACT.Guardsman2
+	--* EVENTS.IE_Idle_Chimera_Base_Out_Of_Units : ACT.Guardsman3
+	--* EVENTS.IE_Idle_Tank_Base_Out_Of_Units : ACT.Guardsman5
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Idle_Sentinel_Base_Out_Of_Units = function()
+	Util_SetIE( true )
+
+	-- Guard_Idle_Sentinel_Base_Out_Of_Units_Officer : That’s our last Sentinel. <through gritted teeth> Build more. Quickly! <to his men> Load your lasguns, men! For the Imperium!
+	CTRL.Actor_PlaySpeech( ACT.Guardsman2, 5300109)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Idle_Chimera_Base_Out_Of_Units = function()
+	Util_SetIE( true )
+
+	-- Guard_Idle_Chimera_Base_Out_Of_Units_Officer : <dejected> These Chimeras are useless! Hold them off until we can build more of them!
+	CTRL.Actor_PlaySpeech( ACT.Guardsman3, 5300111)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Idle_Tank_Base_Out_Of_Units = function()
+	Util_SetIE( true )
+
+	-- Guard_Idle_Tank_Base_Out_Of_Units_Officer : <in a fury> *Our* tanks! <gives a shout> To the death, men! For the Imperium, and for glory!
+	CTRL.Actor_PlaySpeech( ACT.Guardsman5, 5300113)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- ActivateAirfield : Start producting Bombers
+	-- * EVENTS.IE_ActivateAirfield : ACT.AiddeCampe, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_ActivateAirfield = function()
+	Util_SetIE( true )
+
+	-- Guard_ActivateAirfield_1_Stubbs : Get the airfield up and running. We need to hit them with everything we've got.
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300745)	
+	CTRL.WAIT()
+	
+	-- Guard_ActivateAirfield_2_Aide : Airfield has confirmed their orders, Sir. Our bombers are closing in for close-range assault maneuvers.
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300746)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- AirfieldAttacked : Airfield is Under Attack
+	-- * EVENTS.IE_AirfieldAttacked : ACT.AiddeCampe, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_AirfieldAttacked = function()
+	Util_SetIE( true )
+
+	-- Guard_AirfieldAttacked_1_Aide : General, the airfield is being attacked!
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300747)	
+	CTRL.WAIT()
+	
+	-- Guard_AirfieldAttacked_2_Stubbs : Put some firepower on it. Drive them back!
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300748)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- AirfieldDestroyed : Airfield has been destroyed (TEXT NEEDED)
+	-- * EVENTS.IE_AirfieldDestroyed : ACT.Kasrkin, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_AirfieldDestroyed = function()
+	-- Guard_AirfieldDestroyed_Aide : General, our Marauder factories have been destroyed! They've taken out our air support!
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300795)	
+	CTRL.WAIT()
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- LastStand : Drivers get to your crappy baneblades (Guard is desperate)
+	-- EVENTS.IE_LastStand : ACT.AiddeCampe, ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_LastStand = function()
+	Util_SetIE( true )
+	
+	-- Guard_LastStand_1_Stubbs : Can any of these inactive Blanebades run at all?
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300756)	
+	CTRL.WAIT()
+	
+	-- Guard_LastStand_2_Aide : Somewhat, General, but they -- 
+	CTRL.Actor_PlaySpeech( ACT.AiddeCampe, 5300757)	
+	CTRL.WAIT()
+	
+	-- Guard_LastStand_3_Stubbs : I don't care. Put men in them. They can least fire... *some* of the guns!
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300758)	
+	CTRL.WAIT()
+	
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- ValkyrieDrop_One-Three : For Random Valkyrie Drops of Troops
+	-- * EVENTS.IE_ValkyrieDrop_One : ACT.Guardsman2, ACT.Stubbs
+	-- * EVENTS.IE_ValkyrieDrop_Two : ACT.Guardsman2
+	-- * EVENTS.IE_ValkyrieDrop_Three : ACT.Guardsman2
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_ValkyrieDrop_One = function()
+	Util_SetIE( true )
+	
+	-- Guard_ValkyrieDrop_1_Guardsman : Valkyrie drop commencing.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman2, 5300749)	
+	CTRL.WAIT()
+	
+	-- Guard_ValkyrieDrop_1_Stubbs : Good! Good!
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300750)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_ValkyrieDrop_Two = function()
+	Util_SetIE( true )
+	
+	-- Guard_ValkyrieDrop_2_Guardsman : Prepare for Valkyrie Transport landing...
+	CTRL.Actor_PlaySpeech( ACT.Guardsman2, 5300751)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_ValkyrieDrop_Three = function()
+	Util_SetIE( true )
+	
+	-- Guard_ValkyrieDrop_3_Guardsman : Valkyrie, incoming.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman2, 5300752)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- CloakDetectTaunt_One-Three :  Random Taunts used when comsated by IG that occur during level 
+	-- * EVENTS.IE_CloakDetectTaunt_One : ACT.Guardsman4
+	-- * EVENTS.IE_CloakDetectTaunt_Two : ACT.Guardsman4
+	-- * EVENTS.IE_CloakDetectTaunt_Three : ACT.Guardsman4
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_CloakDetectTaunt_One = function()
+	Util_SetIE( true )
+	
+	-- Guard_CloakDetectTaunt_1_Guardsman : Heh heh. I see ya now.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman4, 5300753)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_CloakDetectTaunt_Two = function()
+	Util_SetIE( true )
+	
+	-- Guard_CloakDetectTaunt_2_Guardsman : Look 'ere. They're tryin' to sneak past us.
+	CTRL.Actor_PlaySpeech( ACT.Guardsman4, 5300754)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_CloakDetectTaunt_Three = function()
+	Util_SetIE( true )
+	
+	-- Guard_CloakDetectTaunt_3_Guardsman : Sneaky little... Tryin' to use stealth on the Guard!
+	CTRL.Actor_PlaySpeech( ACT.Guardsman4, 5300755)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- Taunt_One-Three : Taunts by IG that occur during level 
+	-- EVENTS.IE_Taunt_One : ACT.Stubbs
+	-- EVENTS.IE_Taunt_Two : ACT.Guardsman4
+	-- EVENTS.IE_Taunt_Three : ACT.Stubbs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.IE_Taunt_One = function()
+	Util_SetIE( true )
+	
+	-- Guard_Tuant_1_Stubbs : You can't outgun the Imperial Guard.
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300759)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Taunt_Two = function()
+	Util_SetIE( true )
+	
+	-- Guard_Taunt_2_Guardsman : 252nd Conservator Regiment, for the glory of the Imperium!
+	CTRL.Actor_PlaySpeech( ACT.Guardsman4, 5300760)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+EVENTS.IE_Taunt_Three = function()
+	Util_SetIE( true )
+	
+	-- Guard_Tuant_3_Stubbs : Fight for all you're worth, soldiers! We've got to win this!
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5300761)	
+	CTRL.WAIT()
+
+	Util_SetIE( false )
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- END OF INTEL EVENTS
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- EVENTS.NIS_DEVictory : 
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.NIS_DEVictory = function()
+
+	W40k_Letterbox( true, 0 )	
+	FOW_RevealAll()
+
+	Util_MissionTitle("Dark Eldar Intor Shot1")
+
+	CTRL.Event_Delay( 1 )
+	Fade_Start( 0, false )
+	CTRL.WAIT()
+	Fade_Start( 2.0, true )
+	
+	CPath_Start("canim_starter", "start", "end")
+
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- EVENTS.NIS_Intro : 
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.NIS_Intro = function()
+
+	--Util_NIS_ToggleModifierEvents(g_Player1, false)
+	--Util_NIS_ToggleModifierEvents(g_Player2, false)
+	--Util_NIS_ToggleModifierEvents(g_Player3, false)
+	--Player_RestrictAbility(g_Player3, "sp_dxp_unit_glow")
+	--Player_RestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	--Player_RestrictAbility(g_Player1, "sp_dxp_unit_glow")
+	
+	W40k_Letterbox( true, 0 )	
+	FOW_RevealAll()
+
+	--Silvey Polish 10/10/07:  Adding music
+	--set the music		
+	t_ig_ambience = {"MU_IG_STR_ImpGd_perc_str"}
+	
+	
+	Sound_PlaylistClear(PC_Music)
+	Playlist_Manager( PC_Music, t_ig_ambience, true, true , {1, 2})
+	--
+	W40k_CacheSpeech(5200029, 5200053)
+	Util_MissionTitle("$3900010")
+	
+	CTRL.Event_Delay( 4 )
+
+	Fade_Start( 0, false )
+	CTRL.WAIT()
+	
+	--Fade_Start( 2.0, true )
+	
+	---------------------
+	--Opening Spawns
+	---------------------
+	
+	--actor stubbs block 1
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_commander1", "guard_squad_command_squad", "nis_opening_general_spawn_block1", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_commander1"))
+	Cmd_SetStance("sg_opening_commander1", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_commander1", true)
+	SGroup_FaceMarker("sg_opening_commander1", "nis_opening_guards_face5")
+
+	--actor aide block 1
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_aide1", "guard_squad_commissar", "nis_opening_aide_spawn_block1", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_aide1"))
+	Cmd_SetStance("sg_opening_aide1", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_aide1", true)
+	SGroup_FaceMarker("sg_opening_aide1", "nis_opening_general_goto1")
+	
+	--actor stubbs block 3
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_commander2", "guard_squad_command_squad", "nis_opening_general_spawn_block3", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_commander2"))
+	Cmd_SetStance("sg_opening_commander2", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_commander2", true)
+	SGroup_FaceMarker("sg_opening_commander2", "nis_opening_block3_face")
+
+	--actor aide block 3
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_aide2", "guard_squad_commissar", "nis_opening_aide_spawn_block3", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_aide2"))
+	Cmd_SetStance("sg_opening_aide2", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_aide2", true)
+	SGroup_FaceMarker("sg_opening_aide2", "nis_opening_block3_face")
+	
+	--actor lemanruss
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_russ1", "guard_squad_lemanruss", "nis_opening_russ_spawn1", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_russ1"))
+	Cmd_SetStance("sg_opening_russ1", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_russ1", true)
+	SGroup_FaceMarker("sg_opening_russ1", "nis_opening_parade_goto1")
+
+	--actor lemanruss
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_russ2", "guard_squad_lemanruss", "nis_opening_russ_spawn2", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_russ2"))
+	Cmd_SetStance("sg_opening_russ2", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_russ2", true)
+	SGroup_FaceMarker("sg_opening_russ2", "nis_opening_parade_goto1")
+	
+	--actor basilisk
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_basilisk1", "guard_squad_basilisk", "nis_opening_tank_spawn1", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_basilisk1"))
+	Cmd_SetStance("sg_opening_basilisk1", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_basilisk1", true)
+	SGroup_FaceMarker("sg_opening_basilisk1", "nis_opening_tank_face1")
+	
+	--actor basilisk
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_basilisk2", "guard_squad_basilisk", "nis_opening_tank_spawn2", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_basilisk2"))
+	Cmd_SetStance("sg_opening_basilisk2", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_basilisk2", true)
+	SGroup_FaceMarker("sg_opening_basilisk2", "nis_opening_parade_goto1")
+	
+	--actor sentinel
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_sentinel1", "guard_squad_sentinel", "nis_opening_sentinel_spawn1", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_sentinel1"))
+	Cmd_SetStance("sg_opening_sentinel1", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_sentinel1", true)
+	SGroup_FaceMarker("sg_opening_sentinel1", "nis_opening_tank_face1")
+
+	--actor sentinel
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_sentinel2", "guard_squad_sentinel", "nis_opening_sentinel_spawn2", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_sentinel2"))
+	Cmd_SetStance("sg_opening_sentinel2", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_sentinel2", true)
+	SGroup_FaceMarker("sg_opening_sentinel2", "nis_opening_tank_face2")
+	
+	for i = 1, 8 do
+		
+		--extra guards a
+		--Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_guardsa"..i, "guard_squad_guardsmen", "nis_opening_guards_spawn"..i, 1, 1)
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_guardsa2"..i, "guard_squad_guardsmen", "nis_opening_guards_spawn"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_guardsa2"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_guardsgroupa2"), SGroup_FromName("sg_opening_guardsa2"..i))
+		Cmd_SetStance("sg_opening_guardsgroupa2", STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_opening_guardsgroupa2", true)
+		SGroup_FaceMarker("sg_opening_guardsgroupa2", "nis_opening_guards_face1")
+		Anim_PlaySGroupAnim("sg_opening_guardsgroupa2", "capture_strategic_point")
+		
+	end
+	
+	for i = 9, 16 do
+		
+		--extra guards b
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_guardsb"..i, "guard_squad_guardsmen", "nis_opening_guards_spawn"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_guardsb"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_guardsgroupb"), SGroup_FromName("sg_opening_guardsb"..i))
+		Cmd_SetStance("sg_opening_guardsgroupb", STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_opening_guardsgroupb", true)
+		SGroup_FaceMarker("sg_opening_guardsgroupb", "nis_opening_guards_face2")
+		Anim_PlaySGroupAnim("sg_opening_guardsgroupb", "capture_strategic_point")
+		
+	end
+	
+	for i = 17, 24 do
+		
+		--extra guards c
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_guardsc"..i, "guard_squad_guardsmen", "nis_opening_guards_spawn"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_guardsc"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_guardsgroupc"), SGroup_FromName("sg_opening_guardsc"..i))
+		Cmd_SetStance("sg_opening_guardsgroupc", STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_opening_guardsgroupc", true)
+		SGroup_FaceMarker("sg_opening_guardsgroupc", "nis_opening_guards_face3")
+		Anim_PlaySGroupAnim("sg_opening_guardsgroupc", "capture_strategic_point")
+		
+	end
+	
+	for i = 25, 32 do
+		
+		--extra guards d
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_guardsd"..i, "guard_squad_guardsmen", "nis_opening_guards_spawn"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_guardsd"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_guardsgroupd"), SGroup_FromName("sg_opening_guardsd"..i))
+		Cmd_SetStance("sg_opening_guardsgroupd", STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_opening_guardsgroupd", true)
+		SGroup_FaceMarker("sg_opening_guardsgroupd", "nis_opening_guards_face4")
+		Anim_PlaySGroupAnim("sg_opening_guardsgroupd", "capture_strategic_point")
+		
+	end
+	
+	for i = 33, 47 do
+		
+		--extra guards e
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_guardse"..i, "guard_squad_guardsmen", "nis_opening_guards_spawn"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_guardse"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_guardsgroupe"), SGroup_FromName("sg_opening_guardse"..i))
+		Cmd_SetStance("sg_opening_guardsgroupe", STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_opening_guardsgroupe", true)
+		SGroup_FaceMarker("sg_opening_guardsgroupe", "nis_opening_guards_face5")		
+		
+	end
+	
+	
+	for i = 3, 5 do
+		
+		--sentinels
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_sentinelsa"..i, "guard_squad_sentinel", "nis_opening_sentinel_spawn"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_sentinelsa"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_sentinelsa"), SGroup_FromName("sg_opening_sentinelsa"..i))
+		Cmd_SetStance("sg_opening_sentinelsa", STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_opening_sentinelsa", true)
+		SGroup_FaceMarker("sg_opening_sentinelsa", "nis_opening_parade_goto3")
+		
+		
+	end
+	
+	--Silvey Polish 10/10/07:  Reducing the troops a bit...
+	--[[for i = 6, 8 do
+		
+		--sentinels
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_sentinelsb"..i, "guard_squad_sentinel", "nis_opening_sentinel_spawn"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_sentinelsb"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_sentinelsb"), SGroup_FromName("sg_opening_sentinelsb"..i))
+		Cmd_SetStance("sg_opening_sentinelsb", STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_opening_sentinelsb", true)
+		SGroup_FaceMarker("sg_opening_sentinelsb", "nis_opening_parade_goto3")
+		
+		
+	end]]--
+	
+	for i = 1, 3 do
+		
+		--scouts
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_scouts"..i, "guard_squad_assassin", "nis_opening_scouts_spawn"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_scouts"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_scouts"), SGroup_FromName("sg_opening_scouts"..i))
+		Cmd_SetStance("sg_opening_scouts", STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_opening_scouts", true)
+		SGroup_FaceMarker("sg_opening_scouts", "nis_opening_scouts_goto1")
+		
+		
+	end
+	
+	--Silvey Polish 07/18/07
+	for i = 1,7 do
+		
+		--valkyries (valkyrie4 isn't used any more
+		if i < 4 or i > 4 then
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_valkyrie"..i, "npc_valkyrie", "nis_opening_valkyrie"..i, 1, 1)
+			SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_valkyrie"..i))		
+			Cmd_SetStance("sg_opening_valkyrie"..i, STANCE_CeaseFire)
+			SGroup_SetHealthInvulnerable("sg_opening_valkyrie"..i, true)
+			SGroup_FaceMarker("sg_opening_valkyrie"..i, "nis_opening_valkyrie1_facing")
+		end
+		
+	end
+	
+	for i = 1, 1 do
+		--Ogryn
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_ogryn"..i, "guard_squad_ogryns", "nis_opening_ogryn"..i, 7, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_ogryn"..i))		
+		Cmd_SetStance("sg_opening_ogryn"..i, STANCE_CeaseFire)		
+		--SGroup_FaceMarker("sg_opening_ogryn"..i, "nis_opening_valkyrie1_facing")
+	end
+	
+	for i = 1, 1 do
+		--kasrkin
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_kasrkin"..i, "guard_squad_kasrkin", "nis_opening_kasrkin"..i, 6, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_kasrkin"..i))		
+		Cmd_SetStance("sg_opening_kasrkin"..i, STANCE_CeaseFire)		
+		SGroup_FaceMarker("sg_opening_kasrkin"..i, "nis_opening_mars")
+	end
+	
+	
+	
+	--[[
+	for i = 1, 2 do
+		
+		--extra tanks 
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_basilisk"..i, "guard_squad_basilisk", "nis_opening_tank_spawn"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_basilisk"..i))
+		Cmd_SetStance("sg_opening_basilisk"..i, STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_opening_basilisk"..i, true)
+		SGroup_FaceMarker("sg_opening_basilisk"..i, "nis_opening_tank_face1")
+		
+	end
+	]]
+	
+
+	
+	------------------------------------
+	--Opening Sequence
+	------------------------------------
+	
+	CPath_Start("canim_starter", "start", "end")
+	
+	Fade_Start( 1, true )
+	
+	--shot 1
+	CTRL.CPath_CutToPath("canim_intro1a", "start","end")
+		CTRL.SUB()
+			--Cmd_MoveToMarker("sg_opening_russ1", "nis_opening_parade_goto1")
+			--Cmd_MoveToMarker("sg_opening_russ2", "nis_opening_parade_goto2")
+			--Cmd_MoveToMarker("sg_opening_basilisk1", "nis_opening_parade_goto1")
+			--Cmd_MoveToMarker("sg_opening_basilisk2", "nis_opening_parade_goto1")
+			
+			--Silvey Polish (11/08/07):  Make the tanks sound...better?
+			--Sound_Play("Races/Shared_ALL/IGIntroTanks")			
+			
+			--Silvey Polish (11/12/07):  Sound didn't quite work above, attempting an ambience sound
+			--set the music		
+			t_ig_ambience = {"AM_IG_Guard_Intro_Tanks"}
+			
+			
+			Sound_PlaylistClear(PC_Ambient)
+			Playlist_Manager( PC_Ambient, t_ig_ambience, true, true , {1, 2})
+			
+			--Muffling sound effects to compensate
+			Sound_SetVolumeModifierSfx(0.5)
+			Sound_SetVolumeModifierAmbient(0.8)
+			--
+	
+			--Silvey Polish (11/12/07):  Adjusted their speeds
+			SPath_StartEx("manim_opening_russ_spawn1", "start", "end", "sg_opening_russ1", 0.33, false)
+			SPath_StartEx("manim_opening_russ_spawn2", "start", "end", "sg_opening_russ2", 0.33, false)
+			SPath_StartEx("manim_opening_tank_spawn1", "start", "end", "sg_opening_basilisk1", 0.33, false)
+			SPath_StartEx("manim_opening_tank_spawn2", "start", "end", "sg_opening_basilisk2", 0.33, false)
+			
+			CTRL.Event_Delay(18)
+			CTRL.WAIT()			
+			
+			Anim_PlaySGroupAnim("sg_opening_valkyrie1", "flyby_center")
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			
+			Anim_PlaySGroupAnim("sg_opening_valkyrie2", "flyby_center")
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			
+			Anim_PlaySGroupAnim("sg_opening_valkyrie3", "flyby_center")
+			
+			Anim_PlaySGroupAnim("sg_opening_guardsgroupa2", "capture_strategic_point")
+			
+			CTRL.Event_Delay(4.5)
+			CTRL.WAIT()
+			
+			
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			
+			
+			Anim_PlaySGroupAnim("sg_opening_guardsgroupb", "capture_strategic_point")			
+			Anim_PlaySGroupAnim("sg_opening_guardsgroupc", "capture_strategic_point")		
+			Anim_PlaySGroupAnim("sg_opening_guardsgroupd", "capture_strategic_point")					
+			
+			
+		CTRL.END()
+	CTRL.WAIT()
+	
+	--Silvey Polish (11/13/07):  Slight pause between shots for dramatic effect
+	CTRL.Event_Delay(0.5)
+	CTRL.WAIT()
+	
+	
+	CPath_CutToPath("canim_intro1b", "start","end")
+
+			--CTRL.Event_Delay(4.5)
+			--CTRL.WAIT()
+			
+			--Silvey Polish:  (11/13/07):  Commander moves instead of paths to location
+			--Silvey Polish 07/20/07
+			--SPath_Start("manim_opening_commander_path1", "start", "end", "sg_opening_commander1")
+			
+			
+	
+			
+			SGroup_FaceMarker("sg_opening_aide1", "nis_opening_general_goto1")
+			
+			Anim_PlaySGroupAnim("sg_opening_guardsgroupe", "capture_strategic_point")
+			Anim_PlaySGroupAnim("sg_opening_aide1", "sp_talk")
+			Anim_PlaySGroupAnim("sg_opening_commander1", "sp_talk")
+			
+			CTRL.Event_Delay(0.5)
+			CTRL.WAIT()							
+			
+			--Silvey Polish:  (11/13/07):  Commander moves instead of paths to location
+			Cmd_MoveToMarker("sg_opening_commander1", "nis_opening_general_goto1")
+			Anim_PlaySGroupAnim("sg_opening_commander1", "default")
+			CTRL.Event_Delay(3.5)
+			CTRL.WAIT()							
+			
+			
+			SGroup_FaceMarker("sg_opening_commander1", "nis_opening_aide_spawn_block1")			
+			Anim_PlaySGroupAnim("sg_opening_commander1", "sp_talk")
+			
+			Sound_PlaylistClear(PC_Ambient)
+			Sound_SetVolumeModifierAmbient(1.0)
+			Anim_PlaySGroupAnim("sg_opening_commander1", "sp_talk")
+			CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200029) --how are the men?
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()	
+			
+			Anim_PlaySGroupAnim("sg_opening_commander1", "sp_talk")
+			CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200030) --tolerable, sir
+			CTRL.WAIT()						
+			
+			CTRL.Event_Delay(.9)
+			CTRL.WAIT()	
+			
+			Anim_PlaySGroupAnim("sg_opening_commander1", "sp_talk")
+			CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200031) --morale?
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay(.9)
+			CTRL.WAIT()	
+			
+			CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200032)  --good at central, poor on the front
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay(.4)
+			CTRL.WAIT()	
+			
+			CTRL.Actor_PlaySpeech( ACT.Stubbs, 5200033) --casualties?
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()	
+			
+			CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200034) --the same, sir
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()	
+			
+			CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200035) --firing squads?
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay(.6)
+			CTRL.WAIT()	
+			
+			Cmd_MoveToMarker("sg_opening_sentinelsa", "nis_opening_parade_goto3")						
+			CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200036) --twenty today. twelve for cowardice in the line of duty.
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay(.6)
+			CTRL.WAIT()	
+			
+			--Cmd_MoveToMarker("sg_opening_sentinelsb", "nis_opening_parade_goto3")
+			CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200037) --Baneblade production?
+			CTRL.WAIT()
+
+	CTRL.Event_Delay( 1 )
+	
+	Sound_SetVolumeModifierSfx(1.0)
+	
+	--Silvey Polish 07/24/07	
+	--[[*****************
+		The following is a list of different things I tried to get it to look like
+		the Mars Pattern building was producing a Baneblade.  All failed.
+		See following for the hack that I used in the end.]]--
+	--Anim_PlaySGroupAnim("sg_opening_valkyrie4", "sp_land")
+	--Command_EntityBuild(g_Player2, "eg_mainBase_marsPattern1", "guard_squad_baneblade")
+	--Anim_PlayEntityAnim(EGroup_GetSpawnedEntityAt(EGroup_FromName("eg_opening_mars"), 1), "squad_production_dropoff_5")
+	--local productionTable = { }
+	--Prod_GetProductionList("eg_opening_mars", productionTable)
+	--Prod_AddSquadToList("guard_squad_baneblade", productionTable)
+	--Command_EntityBuild(g_Player2, "eg_opening_mars", "guard_squad_baneblade")
+	--Command_EntitySquad(g_Player2, EGroup_FromName("eg_opening_mars"), CMD_BuildSquad, "sg_opening_baneblade")
+	
+	
+	--[[****************
+		So, what I did instead was create another building all together, 
+		used an animation that doesn't seem to exist, move it along 
+		a path to avoid collision detection and then called the 
+		production animation, which has an invisible building.  I then
+		lined it up so it looks like it is working right.  Proper angle keeps
+		the viewer from seeing that the doors aren't open.  It works,
+		I guess.  :)
+		]]--		
+	Entity_CreateBuildingMarker(g_Player2, "eg_opening_mars", "guard_mars_pattern", "nis_opening_mars", 1)			
+	EPath_Start("oanim_opening_mars", "start", "end", "eg_opening_mars" )
+	Anim_PlayEGroupAnim(EGroup_FromName("eg_opening_mars"), "outer_doors_open_40")
+	
+	Fade_Start( .5, false )
+	CTRL.WAIT()
+	
+	--Stop the tanks
+	SPath_Finish("manim_opening_russ_spawn1")
+	SPath_Finish("manim_opening_russ_spawn2")
+	SPath_Finish("manim_opening_tank_spawn1")
+	SPath_Finish("manim_opening_tank_spawn2")
+	
+	Fade_Start( 1, true )
+
+--shot 2
+	
+	CPath_CutToPath("canim_intro2b", "start","end")
+
+	SPath_Start("manim_opening_ogryn1", "start", "end", "sg_opening_ogryn1")
+
+	Anim_PlayEGroupAnim(EGroup_FromName("eg_opening_mars"), "squad_production_dropoff_5")
+	CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200038) --Trained crews are arriving by convoy on schedule, sir. As you know it takes only the best and highly trained crew to properly operate a-
+	CTRL.WAIT()
+	
+	SPath_Start("manim_opening_kasrkin1", "start", "end", "sg_opening_kasrkin1")
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200039) --I know
+	CTRL.WAIT()			
+	
+	CTRL.Event_Delay(1)
+	CTRL.WAIT()
+	
+	CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200040) --Very good, General
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay(.5)
+	CTRL.WAIT()
+	
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200041) --How many do we have on hand?
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay(.5)
+	CTRL.WAIT()
+	
+	--Anim_PlaySGroupAnim("sg_opening_valkyrie4", "sp_take_off")
+	CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200042) --Unfortunately, sir, a shipment of one hundred Baneblades had just gone out to serve–
+	CTRL.WAIT()
+	
+	--Silvey Pollish (11/26/07):  Moved here so it interrupst comissar above
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200043) --I see.
+	CTRL.WAIT()
+	
+	--CTRL.Event_Delay(.5)
+	--CTRL.WAIT()
+	
+	CTRL.Event_Delay( 1 )
+	Fade_Start( .5, false )
+	CTRL.WAIT()
+	
+	--Remove the invisible building
+	EGroup_DeSpawn("eg_opening_mars")
+	
+	
+	
+--shot 2 add
+	--Silvey Pollish (11/26/07):  Removed
+	--CTRL.CPath_CutToPath("canim_intro2d", "start","end")
+	--	CTRL.SUB()
+			
+--		CTRL.END()
+	--CTRL.WAIT()
+	
+
+	
+--shot 3
+	SGroup_FaceMarker("sg_opening_valkyrie5", "nis_opening_valkyrie2_facing")
+	SGroup_FaceMarker("sg_opening_valkyrie6", "nis_opening_valkyrie2_facing")
+	SGroup_FaceMarker("sg_opening_valkyrie7", "nis_opening_valkyrie2_facing")
+	
+	CPath_CutToPath("canim_intro3a", "start","end")
+	
+	--Silvey Pollish (11/26/07):  Moved for polish
+	CTRL.Fade_Start( 1, true )
+	CTRL.WAIT()
+
+	Anim_PlaySGroupAnim("sg_opening_commander2", "sp_rockstar")
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200044) --Look at this. 					
+	CTRL.WAIT()			
+	
+	CTRL.Event_Delay(1.5)
+	CTRL.WAIT()			
+	
+	
+	--Anim_PlaySGroupAnim("sg_opening_commander2", "sp_talk")
+	
+	CTRL.Event_Delay(.5)
+	CTRL.WAIT()			
+	
+	
+	Actor_PlaySpeech(  ACT.Stubbs, 5200045) --Once this was a fine city. Gleaming white – a center of industry. Now look at it
+	
+	CTRL.Event_Delay(2)
+	CTRL.WAIT()			
+	
+	Anim_PlaySGroupAnim("sg_opening_commander2", "sp_talk")	
+	Anim_PlaySGroupAnim("sg_opening_valkyrie5", "flyby_left")
+	CTRL.Event_Delay(1)
+	CTRL.WAIT()			
+	Anim_PlaySGroupAnim("sg_opening_valkyrie6", "flyby_left")
+	CTRL.Event_Delay(1)
+	CTRL.WAIT()			
+	Anim_PlaySGroupAnim("sg_opening_valkyrie7", "flyby_left")			
+	
+	CTRL.Event_Delay(3)
+	CTRL.WAIT()			
+	
+	CTRL.Event_Delay( 1 )
+	Fade_Start( .5, false )
+	CTRL.WAIT()
+	Fade_Start( 1, true )
+	
+	--Silvey Polish (11/12/07):  Removed sentinels, they appear where they shouldn't later on if not.
+	SGroup_DeSpawn("sg_opening_sentinelsa")
+	SGroup_DestroyAllSquads("sg_opening_sentinelsa")
+	
+	
+	
+--shot 4
+	
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200046) --Corporal, I would like to see this city built up again. I would like to see towers and spires of gleaming white. I would like to see our men on parade routes, not tours of duty. I would like to see every city in this planet, every colony in this besotted, miserable system turned to the service and industry of the Imperium, in the Emperor’s name.
+		CTRL.SUB()
+			CTRL.CPath_CutToPath("canim_intro4a", "start","end")
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay( 1 )
+			Fade_Start( .5, false )
+			CTRL.WAIT()
+			Fade_Start( .5, true )
+			
+			
+			--[[CTRL.CPath_CutToPath("canim_intro4b", "start","end")
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay( 1 )
+			Fade_Start( .5, false )
+			CTRL.WAIT()
+			Fade_Start( .5, true )]]--
+			
+			CTRL.CPath_CutToPath("canim_intro4c", "start","end")
+			CTRL.WAIT()
+			
+		CTRL.END()
+	CTRL.WAIT()
+	
+	
+	CTRL.Event_Delay( 1 )
+	Fade_Start( .5, false )
+	CTRL.WAIT()
+	Fade_Start( .5, true )
+	
+--[[CTRL.CPath_CutToPath("canim_intro4c", "start","end")
+		CTRL.SUB()
+				CTRL.Event_Delay( 3 )
+				CTRL.WAIT()
+				CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200047) --In the Emperor’s name, Sir.
+				CTRL.WAIT()
+		CTRL.END()
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay( 1 )
+	Fade_Start( .5, false )
+	CTRL.WAIT()
+	Fade_Start( 1, true )
+	]]
+	
+
+
+--shot 5	
+	
+	
+	--Goto the appropriate camera angle, have the commander idle beforehand
+	Anim_PlaySGroupAnim("sg_opening_commander2", "sp_default")
+	CPath_CutToPath("canim_intro5a", "start","start")
+	CTRL.Event_Delay(1.0)
+	CTRL.WAIT()
+
+	-- Commisar says a line
+	Anim_PlaySGroupAnim("sg_opening_aide2", "sp_talk")	
+	
+	CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200047) --In the Emperor’s name, Sir.
+		CTRL.SUB()
+			--Fade Music out			
+			for i = 1.0, 0.0, -0.2 do
+				Sound_SetVolumeModifierMusic(i)
+				CTRL.Event_Delay( 0.5 )
+				CTRL.WAIT()
+			end
+		CTRL.END()
+	CTRL.WAIT()
+	
+	
+	--Silvey Polish 10/10/07:  Adding music
+	--set the music		
+
+	t_ig_ambience = {"MU_IG_STR_ImpGd_perc_voice"}
+
+	Sound_PlaylistClear(PC_Music)
+	Playlist_Manager( PC_Music, t_ig_ambience, true, true , {1, 2})
+	
+	--Close up of commander getting angry
+	CPath_CutToPath("canim_intro5a", "start","end")
+
+	--Anim_PlaySGroupAnim("sg_opening_aide2", "sp_default")
+	Anim_StopSGroupAnim("sg_opening_aide2", "sp_talk")
+	Anim_PlaySGroupAnim("sg_opening_commander2", "sp_talk")
+	
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200048) --But to see my dreams fulfilled, first we must wipe the system clean of these blasted xenos and heretics and monsters, and, and zealots.
+	CTRL.WAIT()
+	
+--shot 6
+	
+	CPath_CutToPath("canim_intro6a", "start","end")
+	
+	SGroup_FaceEachOther("sg_opening_commander2","sg_opening_aide2")
+	Sound_SetVolumeModifierMusic(0.3)
+	
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200049) --And to do that, this base, our center of command, must operate free of danger or harassment. 
+	CTRL.WAIT()
+	
+	Sound_SetVolumeModifierMusic(0.5)
+	
+	CTRL.Event_Delay( 1 )
+	Fade_Start( .5, false )
+	CTRL.WAIT()
+	Fade_Start( .5, true )
+	
+	CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200050) --Our troops are ready. Our tanks, our sentinels, and if the Emperor wills it, we will have functioning Baneblades. Tell me, Corporal – are we prepared? Or will we be lambs taken to slaughter?
+		CTRL.SUB()
+			Sound_SetVolumeModifierMusic(0.6)
+			CTRL.CPath_CutToPath("canim_intro6b", "start","end")
+			CTRL.WAIT()
+			Sound_SetVolumeModifierMusic(1.0)
+			
+			CTRL.Event_Delay( 1 )
+			Fade_Start( .5, false )
+			CTRL.WAIT()
+			Fade_Start( .5, true )
+			
+			--Silvey Polish (11/12/07):  Took control off of camera
+			CPath_CutToPath("canim_intro6c", "start","end")			
+			
+			--[[CTRL.CPath_CutToPath("canim_intro6d", "start","end")
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay( 1 )
+			Fade_Start( .5, false )
+			CTRL.WAIT()]]--
+			--Fade_Start( .5, true )
+			
+			--Silvey Polish 07/20/07 (Commented out)
+			--CTRL.CPath_CutToPath("canim_intro6e", "start","end")
+			--CTRL.WAIT()
+			
+		CTRL.END()
+	CTRL.WAIT()
+
+	--Silvey Polish (11/12/07):  Moved fade
+	CTRL.Event_Delay( 1 )
+	Fade_Start( .5, false )
+	CTRL.WAIT()
+	Fade_Start( .5, true )
+	
+	SGroup_FaceMarker("sg_opening_commander2", "nis_opening_block3_face")
+	
+	
+--shot 7
+	
+	--Silvey Polish 07/20/07 (Commented out)
+	--[[CTRL.CPath_CutToPath("canim_intro7b", "start","end")
+		CTRL.SUB()
+			CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200051) --There is no need to fear, General Stubbs. Our techpriests have prepared a modified basilisk cannon, with greatly improved range and power. It – it will surely crush them before they make any headway at all.
+			CTRL.WAIT()
+		CTRL.END()
+	CTRL.WAIT()]]--
+	
+	
+	CPath_CutToPath("canim_intro7b", "start","start")
+	
+	Fade_Start(.5,true)
+	
+	CTRL.Event_Delay(0.5)
+	CTRL.WAIT()	
+	
+	CTRL.CPath_CutToPath("canim_intro7b", "start","end")
+		CTRL.SUB()				
+			CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200051) --There is no need to fear, General Stubbs. Our techpriests have prepared a modified basilisk cannon, with greatly improved range and power. It – it will surely crush them before they make any headway at all.
+			CTRL.WAIT()
+			
+			CTRL.Event_Delay(1.0)
+			CTRL.WAIT()								
+			
+			CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200040) --Very Good, General.
+			CTRL.WAIT()
+	
+		
+			CTRL.Event_Delay(1.0)
+			CTRL.WAIT()					
+			
+		CTRL.END()
+	CTRL.WAIT()	
+	----	
+	
+	CTRL.Event_Delay( 1 )
+	Fade_Start( .5, false )
+	CTRL.WAIT()
+	Fade_Start( 1, true )
+	
+--shot 8
+	
+	CTRL.CPath_CutToPath("canim_intro8a", "start","end")
+		CTRL.SUB()
+			Cmd_MoveToMarker("sg_opening_scouts", "nis_opening_scouts_goto1")
+			CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200052) --It – it only requires a scout as a spotter. We – we shall place our faith in the God-Emperor.
+			CTRL.WAIT()
+			
+			CTRL.Actor_PlaySpeech(  ACT.AiddeCampe, 5200047) --It – it only requires a scout as a spotter. We – we shall place our faith in the God-Emperor.
+			CTRL.WAIT()
+			
+		CTRL.END()
+	CTRL.WAIT()
+
+--shot 9	
+
+	--Silvey Polish (11/12/07):  Commented this out, caused a weird crash
+	--Despawn Old Commander (Silvey Polish 07/23/07)
+	SGroup_DeSpawn("sg_opening_commander1")
+	SGroup_DestroyAllSquads("sg_opening_commander1")
+	--SGroup_Destroy(SGroup_FromName("sg_opening_commander1"))	
+	--Despawn Old Valkyries
+	
+	for i = 1,3 do	
+		SGroup_DeSpawn("sg_opening_valkyrie"..i)
+		SGroup_DestroyAllSquads("sg_opening_valkyrie"..i)
+		--SGroup_Destroy(SGroup_FromName("sg_opening_valkyrie"..i))	
+	end
+
+	--Camera Transition
+	CTRL.Event_Delay( 1 )
+	Fade_Start( .5, false )
+	CTRL.WAIT()
+	Fade_Start( 1, true )	
+	
+	--Silvey Polish (07/23/07)
+	for i = 8,10 do
+		
+		--valkyries
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_valkyrie"..i, "npc_valkyrie", "nis_opening_valkyrie"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_valkyrie"..i))		
+		Cmd_SetStance("sg_opening_valkyrie"..i, STANCE_CeaseFire)
+		SGroup_SetHealthInvulnerable("sg_opening_valkyrie"..i, true)
+		SGroup_FaceMarker("sg_opening_valkyrie"..i, "nis_opening_valkyrie_facing3")
+		
+	end
+		
+	--actor stubbs block 9
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_commander3", "guard_squad_command_squad", "nis_opening_general_spawn_block9", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_commander3"))
+	Cmd_SetStance("sg_opening_commander3", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_commander3", true)
+	SGroup_FaceMarker("sg_opening_commander3", "mkr_turret_missile7")
+	
+	
+	--actor aide block 9
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_opening_aide3", "guard_squad_commissar", "nis_opening_aide_spawn_block9", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_opening_actors"), SGroup_FromName("sg_opening_aide3"))
+	Cmd_SetStance("sg_opening_aide3", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_opening_aide3", true)
+	SGroup_FaceMarker("sg_opening_aide3", "nis_opening_general_spawn_block9")
+	
+	
+	Anim_PlaySGroupAnim("sg_opening_valkyrie8", "flyby_center")
+	
+	CTRL.CPath_CutToPath("canim_intro9b", "start","end")
+		CTRL.SUB()
+			CTRL.Event_Delay(0.5)
+			CTRL.WAIT()
+			Anim_PlaySGroupAnim("sg_opening_valkyrie9", "flyby_left")
+			Anim_PlaySGroupAnim("sg_opening_valkyrie10", "flyby_right")
+			CTRL.Event_Delay(1.0)
+			CTRL.WAIT()
+			
+			--Silvey Polish 07/23/07
+			Anim_PlaySGroupAnim("sg_opening_aide3", "capture_strategic_point")			
+			Anim_PlaySGroupAnim("sg_opening_commander3", "sp_talk")						
+			CTRL.Actor_PlaySpeech(  ACT.Stubbs, 5200053) --That will have to do the job. Yes. Yes, we will place our faith in the Emperor.
+			CTRL.WAIT()			
+			
+			--Silvey Polish (11/08/07):  Make sure his lips aren't moving when he's done speaking, this should really be wrapped in a function :( 
+			Anim_StopSGroupAnim("sg_opening_commander3", "sp_talk")						
+			
+			
+		CTRL.END()
+	CTRL.WAIT()
+	
+	--Fade Music out
+	Fade_Start( 3, false )
+	for i = 1.0, 0.0, -0.1 do
+		Sound_SetVolumeModifierMusic(i)
+		CTRL.Event_Delay( 0.5 )
+		CTRL.WAIT()
+	end
+	----
+	
+	
+	
+	
+	CPath_CutToPath("canim_end", "start","end")
+	
+	SGroup_DeSpawn("sg_opening_actors")
+	SGroup_DestroyAllSquads("sg_opening_actors")
+	SGroup_Destroy(SGroup_FromName("sg_opening_actors"))
+	
+	CTRL.W40k_Letterbox( false, 2)
+		
+		FOW_Reset()
+		CPath_Blendout( 1 )
+		
+	CTRL.WAIT()
+	
+	Fade_Start( 1, true )
+	
+end
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-- EVENTS.NIS_Victory : 
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+EVENTS.NIS_Victory = function()	
+
+	--Rule_RemoveAll()
+	
+	--------------------------------------------------------
+	-- Silvey Polish 11/13/07
+    -- Silvey Polish 10/09/07
+	-- g_Nis_Blueprint = Melee
+	-- g_Nis_Blueprint2 = Range
+	-- g_Nis_Blueprint3 = Range2 (stronger)
+	-- g_Nis_Blueprint4 = Vehicle1
+	-- g_Nis_Blueprint5 = Vehicle2 (stronger)
+	-- g_Nis_Blueprint6 = Flyer (except for Necron race!)
+	-------------------------------------------------------- 
+	local humanplayer = MetaMap_GetPlayerRaceName()	
+	if humanplayer == "chaos_marine_race" then
+	
+		g_Nis_Blueprint = "chaos_squad_raptor"
+		g_Nis_Blueprint2 = "chaos_marine_squad"
+		g_Nis_Blueprint3 = "chaos_squad_khorne_berserker"
+		g_Nis_Blueprint4 = "chaos_squad_defiler"
+		g_Nis_Blueprint5 = "chaos_squad_predator"
+		g_Nis_Blueprint6 = "chaos_squad_hell_talon"		
+		
+	elseif humanplayer == "eldar_race" then
+	
+		g_Nis_Blueprint = "eldar_squad_banshees"
+		g_Nis_Blueprint2 = "eldar_squad_dark_reapers"
+		g_Nis_Blueprint3 = "eldar_squad_fire_dragon"
+		g_Nis_Blueprint4 = "eldar_squad_wraithlord"
+		g_Nis_Blueprint5 = "eldar_squad_fire_prism"
+		g_Nis_Blueprint6 = "eldar_squad_nightwing"
+	
+	elseif humanplayer == "guard_race" then
+	
+		-- This should NEVER happen (code here for the impossible, matrix-style)
+		g_Nis_Blueprint = "guard_squad_guardsmen"
+		g_Nis_Blueprint2 = "guard_squad_guardsmen"
+		g_Nis_Blueprint3 = "guard_squad_guardsmen"
+		g_Nis_Blueprint4 = "guard_squad_guardsmen"
+		g_Nis_Blueprint5 = "guard_squad_guardsmen"
+		g_Nis_Blueprint6 = "guard_squad_guardsmen"
+	
+	elseif humanplayer == "ork_race" then
+	
+		g_Nis_Blueprint = "ork_squad_slugga"	
+		g_Nis_Blueprint2 = "ork_squad_shoota_boy"
+		g_Nis_Blueprint3 = "ork_squad_tankbusta"
+		g_Nis_Blueprint4 = "ork_squad_killa_kan"
+		g_Nis_Blueprint5 = "ork_squad_looted_tank"
+		g_Nis_Blueprint6 = "ork_squad_fighta_bomba_sp_dxp3"
+	
+	elseif humanplayer =="space_marine_race" then
+	
+		g_Nis_Blueprint = "space_marine_squad_assault"
+		g_Nis_Blueprint2 = "space_marine_squad_tactical"
+		g_Nis_Blueprint3 = "space_marine_squad_terminator"
+		g_Nis_Blueprint4 = "space_marine_squad_dreadnought"
+		g_Nis_Blueprint5 = "space_marine_squad_predator"
+		g_Nis_Blueprint6 = "space_marine_squad_tempest"		
+	
+	elseif humanplayer == "tau_race" then
+	
+		g_Nis_Blueprint = "tau_kroot_carnivore_squad"
+		g_Nis_Blueprint2 = "tau_fire_warrior_squad"
+		g_Nis_Blueprint3 = "tau_fire_warrior_squad"
+		g_Nis_Blueprint4 = "tau_skyray_squad"
+		g_Nis_Blueprint5 = "tau_hammerhead_gunship_squad"
+		g_Nis_Blueprint6 = "tau_barracuda_squad"
+	
+	elseif humanplayer == "necron_race" then
+ 
+		g_Nis_Blueprint = "necron_flayed_one_squad"
+		g_Nis_Blueprint2 = "necron_basic_warrior_squad"
+		g_Nis_Blueprint3 = "necron_pariah_squad"
+		g_Nis_Blueprint4 = "necron_heavy_destroyer_squad"		
+		g_Nis_Blueprint5 = "necron_lord_destroyer_squad"		
+		g_Nis_Blueprint6 = "necron_scarab_squad"		
+		
+	elseif humanplayer =="dark_eldar_race" then
+		
+		g_Nis_Blueprint = "dark_eldar_squad_mandrake"
+		g_Nis_Blueprint2 = "dark_eldar_squad_warrior"
+		g_Nis_Blueprint3 = "dark_eldar_squad_scourge_sp_dxp3"
+		g_Nis_Blueprint4 = "dark_eldar_squad_hellion_sp_dxp3"
+		g_Nis_Blueprint5 = "dark_eldar_squad_talos"
+		--g_Nis_Blueprint5 = "dark_eldar_squad_raider_sp_dxp3"
+		g_Nis_Blueprint6 = "dark_eldar_squad_raven"
+		
+	elseif humanplayer == "sisters_race" then
+		
+		g_Nis_Blueprint = "sisters_squad_repentia"
+		g_Nis_Blueprint2 = "sisters_squad_battle_sister"
+		g_Nis_Blueprint3 = "sisters_squad_celestian"
+		g_Nis_Blueprint4 = "sisters_squad_immolator_tank"
+		g_Nis_Blueprint5 = "sisters_squad_penitent_engine"
+		g_Nis_Blueprint6 = "sisters_squad_lightning"
+		
+	end
+	
+	CTRL.Event_Delay( 4.5 )
+
+	Fade_Start( 0, false )
+	CTRL.WAIT()
+	
+	--[[ reveals all of the map ]]
+	FOW_RevealAll()	
+	
+	--[[ go into letterbox mode ]]
+	W40k_Letterbox( true, 0 )
+	
+	
+	--Silvey Polish 10/09/07:  Remove buildings and unnecessary effects
+	Util_NIS_ToggleModifierEvents(g_Player1, false)
+	Util_NIS_ToggleModifierEvents(g_Player2, false)
+	Util_NIS_ToggleModifierEvents(g_Player3, false)
+	Util_NIS_ToggleModifierEvents(g_Player4, false)
+	Util_NIS_ToggleModifierEvents(g_Player5, false)
+	Util_NIS_ToggleModifierEvents(g_Player7, false)
+
+	--hide the bonus unit effect
+	Player_RestrictAbility(g_Player1, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player3, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player4, "sp_dxp_unit_glow")
+	Player_RestrictAbility(g_Player5, "sp_dxp_unit_glow")	
+	Player_RestrictAbility(g_Player7, "sp_dxp_unit_glow")
+	
+	--Remove all the buildings and units to clear the Nis scenes
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_All_Units"), Player_GetSquads(g_Player1))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player2))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player3))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player4))
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player5))	
+	SGroup_AddGroup(SGroup_FromName("sg_All_Units"), Player_GetSquads(g_Player7))
+	
+	EGroup_AddGroup(EGroup_CreateIfNotFound("eg_All_Buildings"), Player_GetEntities(g_Player1))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player2))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player3))
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player4))	
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player5))	
+	
+	EGroup_AddGroup(EGroup_FromName("eg_All_Buildings"), Player_GetEntities(g_Player7))	
+	
+	SGroup_DeSpawn("sg_All_Units")
+	--SGroup_DestroyAllSquads("sg_All_Units")
+	EGroup_DeSpawn("eg_All_Buildings")
+	----	
+		
+		
+	-------------------------------------------------------------------
+	--[[ START Spawing Units ]]
+	-------------------------------------------------------------------
+			
+	--actor stubbs block 1
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_commander1", "guard_squad_command_squad", "nis_closing_commander_spawn", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_commander1"))
+	Cmd_SetStance("sg_closing_commander1", STANCE_CeaseFire)
+	SGroup_SetHealthInvulnerable("sg_closing_commander1", true)
+	SGroup_FaceMarker("sg_closing_commander1", "nis_closing_commander_face")
+	
+	--[[for i = 1, 2 do
+		
+		--Closing Tanks
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_tank"..i, "guard_squad_lemanruss_advance_sp", "nis_closing_tank_spawn"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_tank"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_tanks"), SGroup_FromName("sg_closing_tank"..i))
+		Cmd_SetStance("sg_closing_tanks", STANCE_CeaseFire)
+		--SGroup_SetHealthInvulnerable("sg_closing_tank", true)
+		SGroup_FaceMarker("sg_closing_tanks", "nis_closing_tanks_face")
+		
+	end	]]--
+	
+	--Incoming army
+	for i = 1, 6 do																			
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_army"..i, g_Nis_Blueprint2, "nis_closing_army"..i, 1, 3)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_army"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_army1"), SGroup_FromName("sg_closing_army"..i))
+		SGroup_FaceMarker("sg_closing_army"..i, "nis_closing_commander_spawn")
+	end
+	
+	--[[--Incoming attacker
+	for i = 1, 2 do																			
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_attacker"..i, g_Nis_Blueprint2, "nis_closing_attacker"..i, 1, 3)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_attacker"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_attackers"), SGroup_FromName("sg_closing_attacker"..i))		
+	end]]--
+	
+	--[[for i = 1, 2 do
+		
+		--Closing Bandblades
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_baneblade"..i, "guard_squad_baneblade", "nis_closing_baneblade"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_baneblade"..i))	
+		--SGroup_FaceMarker("sg_closing_baneblade"..i, "nis_closing_baneblade_facing"..i)
+		
+	end	]]--
+	
+	
+	--Incoming melee
+	for i = 3, 4 do																			
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_melee"..i, g_Nis_Blueprint, "nis_closing_melee"..i, 1, 6)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_melee"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_army1"), SGroup_FromName("sg_closing_melee"..i))
+		SGroup_FaceMarker("sg_closing_melee"..i, "nis_closing_commander_spawn")
+	end
+	
+	--Incoming special
+	for i = 1, 1 do																			
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_special"..i, g_Nis_Blueprint3, "nis_closing_special"..i, 4, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_special"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_army1"), SGroup_FromName("sg_closing_special"..i))
+		SGroup_FaceMarker("sg_closing_special"..i, "nis_closing_commander_spawn")
+	end
+	
+	
+	--Incoming army vehicles
+	for i = 7, 9 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_army"..i, g_Nis_Blueprint4, "nis_closing_army"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_army"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_army1"), SGroup_FromName("sg_closing_army"..i))
+		SGroup_FaceMarker("sg_closing_army"..i, "nis_closing_commander_spawn")
+	end
+	
+	--Silvey Polish (11/13/07):  Shadows no longer work  :(
+	--Silvey Polish (10/09/07):  Add some air units (only shadows)
+	if humanplayer ~= "necron_race" then
+		--flyers
+		for i = 1, 6 do
+			Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_flyer"..i, g_Nis_Blueprint6, "nis_closing_flyer"..i, 1, 1)				
+			SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_flyer"..i))						
+			if i ~= 6 then
+				SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_flyers"), SGroup_FromName("sg_closing_flyer"..i))						
+			end
+			SGroup_FaceMarker("sg_closing_flyer"..i, "nis_closing_flyer_goto")
+			
+			Squad_TurnOffVehiclePhysics(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer"..i), 1))
+			Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer"..i), 1), true, 1)
+			
+		end
+	end
+	
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_commander", "guard_squad_command_squad", "nis_closing_commander1", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_commander"))	
+	SGroup_FaceMarker("sg_closing_commander", "nis_closing_commander1_face")
+	Anim_EnableInfantryOffset("sg_closing_commander", false)
+	Anim_PlaySGroupAnim("sg_closing_commander", "sp_talk")	
+	
+	
+	--[[Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_heavyweapons", "guard_heavy_weapons_team_squad", "nis_closing_heavyweapons", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_heavyweapons"))	
+	SGroup_FaceMarker("sg_closing_heavyweapons", "nis_closing_commander_spawn")]]--
+	
+	
+	for i = 1,6 do
+		if i == 1 then
+			Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_runner"..i, g_Nis_Blueprint5, "nis_closing_runner"..i, 1, 1)
+		elseif i > 1 and i < 4 then
+			Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_runner"..i, g_Nis_Blueprint, "nis_closing_runner"..i, 4, 1)
+		else
+			Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_runner"..i, g_Nis_Blueprint3, "nis_closing_runner"..i, 2, 1)
+		end
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_runner"..i))	
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_runners"), SGroup_FromName("sg_closing_runner"..i))	
+		SGroup_FaceMarker("sg_closing_runner"..i, "nis_closing_commander_spawn")
+	end
+	
+	
+	
+	
+	
+	--[[Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_valkyrie", "npc_valkyrie", "nis_closing_valkyrie", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_valkyrie"))	
+	SGroup_FaceMarker("sg_closing_valkyrie", "nis_closing_commander_spawn")
+	
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_commander", "guard_squad_command_squad", "nis_closing_commander", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_commander"))	
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_escapees"), SGroup_FromName("sg_closing_commander"))	
+	SGroup_FaceMarker("sg_closing_commander", "nis_closing_commander_facing")
+	Anim_EnableInfantryOffset("sg_closing_commander", false)
+	Anim_PlaySGroupAnim("sg_closing_commander", "sp_talk")	
+	
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_guard1", "guard_squad_kasrkin", "nis_closing_guard1", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_guard1"))	
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_escapees"), SGroup_FromName("sg_closing_guard1"))	
+	Anim_PlaySGroupAnim("sg_closing_guard1", "capture_strategic_point")
+	SGroup_FaceMarker("sg_closing_guard1", "nis_closing_hostage")
+	
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_guard2", "guard_squad_kasrkin", "nis_closing_guard2", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_guard2"))	
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_escapees"), SGroup_FromName("sg_closing_guard2"))	
+	Anim_PlaySGroupAnim("sg_closing_guard2", "capture_strategic_point")
+	SGroup_FaceMarker("sg_closing_guard2", "nis_closing_hostage")
+	
+	Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_hostage", g_Nis_Blueprint, "nis_closing_hostage", 1, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_hostage"))	
+	SGroup_FaceMarker("sg_closing_hostage", "nis_closing_commander")
+	Anim_EnableInfantryOffset("sg_closing_hostage", false)	
+	--Pick an appropriate animation
+	if humanplayer == "chaos_marine_race" then
+		Anim_PlaySGroupAnim("sg_closing_hostage", "sp_ritual")
+	elseif humanplayer == "necron_race" then
+		Anim_PlaySGroupAnim("sg_closing_hostage", "idle")
+	elseif humanplayer == "ork_race" then
+		Anim_PlaySGroupAnim("sg_closing_hostage", "garrison_strategic_point")
+	else
+		Anim_PlaySGroupAnim("sg_closing_hostage", "capture_strategic_point")
+	end]]--
+	
+	Anim_EnableInfantryOffset("sg_closing_actors", false)			
+	Cmd_SetStance("sg_closing_actors", STANCE_CeaseFire)			
+	SGroup_SetHealthInvulnerable("sg_closing_actors", true)			
+	-------------------------------------------------------------------
+	--[[ END Spawing Units ]]
+	-------------------------------------------------------------------
+	
+	-------------------------------------------------------------------
+	--[[ START Spawing Buildings ]]
+	-------------------------------------------------------------------
+	--Silvey Polish 10/03/07:  Added a scene of carnage!
+	--Buildings
+	g_BuildingNames = "eg_whatever" -- doesn't matter much here
+	
+	-- Always builds the building (prevents crashes and speeds things up)
+	function user_CreateBuilding(p_PlayerID, p_EGroupID, p_MarkerName, p_Blueprint)
+		l_EntityID = Entity_Create(p_Blueprint, p_PlayerID, Marker_GetPosition(Marker_FromName(p_MarkerName, "basic_marker" )))
+		
+		EGroup_Add(EGroup_CreateIfNotFound(p_EGroupID), l_EntityID)
+		EGroup_AddGroup(EGroup_CreateIfNotFound(g_BuildingNames), EGroup_FromName(p_EGroupID))
+		Entity_Spawn(l_EntityID)		
+		
+	end
+	
+	for i = 1, 45 do
+		user_CreateBuilding(g_Player1, "eg_closing_death"..i, "nis_closing_death"..i, "blood_splat")
+		if World_GetRand(1,100) > 50 then
+			user_CreateBuilding(g_Player1, "eg_closing_death"..i, "nis_closing_death"..i, "carnage_guard_men_01")
+		else
+			user_CreateBuilding(g_Player1, "eg_closing_death"..i, "nis_closing_death"..i, "carnage_guard_men_02")
+		end
+	end
+	for i = 1, 7 do
+		user_CreateBuilding(g_Player1, "eg_closing_fire"..i, "nis_closing_fire"..i, "fire_large_01")
+	end		
+	
+	for i = 1, 2 do
+		user_CreateBuilding(g_Player1, "eg_closing_generator"..i, "nis_closing_generator"..i, "guard_plasma_generator")
+	end	
+	
+	for i = 1,6 do
+		user_CreateBuilding(g_Player2, "eg_closing_infantry"..i, "nis_closing_infantry"..i, "guard_infantry")
+	end
+	
+	user_CreateBuilding(g_Player2, "eg_closing_infantry", "nis_closing_infantry", "guard_infantry")
+	user_CreateBuilding(g_Player2, "eg_closing_marsPattern", "nis_closing_marsPattern", "guard_mars_pattern")
+	user_CreateBuilding(g_Player2, "eg_closing_hq", "nis_closing_hq", "guard_hq")
+	user_CreateBuilding(g_Player2, "eg_closing_mechanized1", "nis_closing_mechanized1", "guard_mechanized")
+	user_CreateBuilding(g_Player2, "eg_closing_mechanized2", "nis_closing_mechanized2", "guard_mechanized")
+	user_CreateBuilding(g_Player2, "eg_closing_turret1", "nis_closing_turret1", "guard_turret_heavy_bolter")
+	user_CreateBuilding(g_Player2, "eg_closing_turret2", "nis_closing_turret2", "guard_turret_heavy_bolter")
+	user_CreateBuilding(g_Player2, "eg_closing_turretbolter", "nis_closing_turretbolter", "guard_turret_heavy_bolter")
+	EGroup_SetHealthInvulnerable("eg_whatever", true)
+	
+	if humanplayer == "chaos_marine_race" then
+		user_CreateBuilding(g_Player1, "eg_closing_blasts", "nis_closing_blasts", "nis_artillery_field_chaos")
+		user_CreateBuilding(g_Player1, "eg_closing_blasts2", "nis_closing_blasts2", "nis_artillery_field_chaos")
+		user_CreateBuilding(g_Player1, "eg_closing_shots", "nis_closing_shots", "nis_skirmish_chaos")	
+	elseif humanplayer == "eldar_race"  or humanplayer =="dark_eldar_race" then
+		user_CreateBuilding(g_Player1, "eg_closing_blasts", "nis_closing_blasts", "nis_artillery_field_eldar")
+		user_CreateBuilding(g_Player1, "eg_closing_blasts2", "nis_closing_blasts2", "nis_artillery_field_eldar")
+		user_CreateBuilding(g_Player1, "eg_closing_shots", "nis_closing_shots", "nis_skirmish_eldar")		
+	else
+		user_CreateBuilding(g_Player1, "eg_closing_blasts", "nis_closing_blasts", "nis_artillery_field_marine")
+		user_CreateBuilding(g_Player1, "eg_closing_blasts2", "nis_closing_blasts2", "nis_artillery_field_marine")
+		user_CreateBuilding(g_Player1, "eg_closing_shots", "nis_closing_shots", "nis_skirmish_marine")		
+	end
+	
+	
+	
+	
+	
+	-------------------------------------------------------------------
+	--[[ END Spawing Buildings ]]
+	-------------------------------------------------------------------
+	
+	
+	
+	
+	CPath_Start("canim_starter", "start", "end")
+
+	--Cmd_SetStance("sg_closing_attackers", STANCE_Attack)
+	Fade_Start( 2, true )
+	Cmd_MoveToMarker("sg_closing_runners", "nis_closing_marsPattern")
+	CTRL.CPath_CutToPath("canim_outro1ac", "start","end")
+		CTRL.SUB()
+			CTRL.Event_Delay(2.0)
+			CTRL.WAIT()
+			
+			--SGroup_SelfDestroy("sg_closing_baneblade1", false)
+			
+			Cmd_SetStance("sg_closing_army1", STANCE_Hold)
+			CTRL.Event_Delay(5.0)
+			CTRL.WAIT()
+			Cmd_SetStance("sg_closing_runners", STANCE_Attack)
+			
+			CTRL.Event_Delay(5.0)
+			CTRL.WAIT()
+			
+			Util_MarkerFX( "nis_closing_explosion11", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			
+			EGroup_SelfDestroy("eg_closing_marsPattern", false)
+			
+			--SGroup_SelfDestroy("sg_closing_baneblade2", false)
+		CTRL.END()
+	CTRL.WAIT()
+	
+	CTRL.Event_Delay(1.0)
+	CTRL.WAIT()
+			
+	
+	SGroup_DeSpawn("sg_closing_runners")
+	
+	
+	--All I’ve fought for… all my work! Crushed! Crushed! All the good men who gave their lives for this cursed, this blasted system…
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5200085)	
+		CTRL.SUB()
+			CPath_CutToPath("canim_outro1a", "start","end")
+			EGroup_SelfDestroy("eg_closing_generator1", false)
+			if humanplayer ~= "necron_race" then
+				Cmd_MoveToMarker("sg_closing_flyer1", "nis_closing_flyer_goto")
+				Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer1"), 1), true, 20)
+			end
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()		
+			
+			Util_MarkerFX( "nis_closing_explosion1", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			user_CreateBuilding(g_Player1, "eg_closing_explosion_fire1", "nis_closing_explosion1", "fire_01")
+			for i = 1, 5 do
+				user_CreateBuilding(g_Player3, "eg_closing_smoke"..i, "nis_closing_explosion1", "smoke_01")
+			end	
+			Cmd_SetStance("sg_closing_army1", STANCE_Attack)			
+			Cmd_MoveToMarker("sg_closing_army1", "nis_closing_army_goto1")
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()
+			Util_MarkerFX( "nis_closing_explosion2", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			user_CreateBuilding(g_Player1, "eg_closing_explosion_fire1", "nis_closing_explosion2", "fire_01")
+			for i = 1, 5 do
+				user_CreateBuilding(g_Player3, "eg_closing_smoke"..i, "nis_closing_explosion2", "smoke_01")
+			end	
+			
+			Util_MarkerFX( "nis_closing_explosion3", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			user_CreateBuilding(g_Player1, "eg_closing_explosion_fire1", "nis_closing_explosion3", "fire_01")
+			for i = 1, 5 do
+				user_CreateBuilding(g_Player3, "eg_closing_smoke"..i, "nis_closing_explosion3", "smoke_01")
+			end	
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()
+			if humanplayer ~= "necron_race" then
+				Cmd_MoveToMarker("sg_closing_flyer3", "nis_closing_flyer_goto")
+				Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer3"), 1), true, 20)
+			end
+			
+			Util_MarkerFX( "nis_closing_explosion3", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			if humanplayer ~= "necron_race" then
+				Cmd_MoveToMarker("sg_closing_flyer2", "nis_closing_flyer_goto")
+				Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer2"), 1), true, 20)
+			end
+			Util_MarkerFX( "nis_closing_explosion4", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			user_CreateBuilding(g_Player1, "eg_closing_explosion_fire1", "nis_closing_explosion4", "fire_01")
+			for i = 1, 5 do
+				user_CreateBuilding(g_Player3, "eg_closing_smoke"..i, "nis_closing_explosion4", "smoke_01")
+			end	
+			
+			Util_MarkerFX( "nis_closing_explosion5", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			user_CreateBuilding(g_Player1, "eg_closing_explosion_fire1", "nis_closing_explosion5", "fire_01")
+			for i = 1, 5 do
+				user_CreateBuilding(g_Player3, "eg_closing_smoke"..i, "nis_closing_explosion5", "smoke_01")
+			end	
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()
+			EGroup_SelfDestroy("eg_closing_hq", false)
+			Util_MarkerFX( "nis_closing_explosion14", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			user_CreateBuilding(g_Player1, "eg_closing_explosion_fire1", "nis_closing_explosion14", "fire_01")
+			for i = 1, 5 do
+				user_CreateBuilding(g_Player3, "eg_closing_smoke"..i, "nis_closing_explosion14", "smoke_01")
+			end	
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()
+			if humanplayer ~= "necron_race" then
+				Cmd_MoveToMarker("sg_closing_flyer4", "nis_closing_flyer_goto")
+				Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer4"), 1), true, 20)
+			end
+			Cmd_MoveToMarker("sg_closing_army1", "nis_closing_army_goto2")
+			Util_MarkerFX( "nis_closing_explosion15", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			user_CreateBuilding(g_Player1, "eg_closing_explosion_fire1", "nis_closing_explosion15", "fire_01")
+			for i = 1, 5 do
+				user_CreateBuilding(g_Player3, "eg_closing_smoke"..i, "nis_closing_explosion15", "smoke_01")
+			end	
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()
+			if humanplayer ~= "necron_race" then
+				Cmd_MoveToMarker("sg_closing_flyer5", "nis_closing_flyer_goto")
+				Entity_SetFixedY(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_closing_flyer5"), 1), true, 20)
+			end
+			Util_MarkerFX( "nis_closing_explosion16", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			user_CreateBuilding(g_Player1, "eg_closing_explosion_fire1", "nis_closing_explosion16", "fire_01")
+			for i = 1, 5 do
+				user_CreateBuilding(g_Player3, "eg_closing_smoke"..i, "nis_closing_explosion16", "smoke_01")
+			end	
+			
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()
+			Util_MarkerFX( "nis_closing_explosion17", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			user_CreateBuilding(g_Player1, "eg_closing_explosion_fire1", "nis_closing_explosion17", "fire_01")
+			for i = 1, 5 do
+				user_CreateBuilding(g_Player3, "eg_closing_smoke"..i, "nis_closing_explosion17", "smoke_01")
+			end	
+			
+			Util_MarkerFX( "nis_closing_explosion1", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			Cmd_MoveToMarker("sg_closing_army1", "nis_closing_army_goto3")
+			CTRL.Fade_Start( 2, false )
+			CTRL.WAIT()
+		CTRL.END()
+	CTRL.WAIT()
+	
+	SGroup_DeSpawn("sg_closing_army1")
+	SGroup_DestroyAllSquads("sg_closing_army1")
+	
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_assistant1", "guard_squad_guardsmen", "nis_closing_assistant1", 6, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_assistant1"))			
+	SGroup_FaceMarker("sg_closing_assistant1", "nis_opening_mars")
+	
+	Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_assistant2", "guard_squad_guardsmen", "nis_closing_assistant2", 6, 1)
+	SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_assistant2"))			
+	SGroup_FaceMarker("sg_closing_assistant2", "nis_opening_mars")
+	SGroup_SetAvgHealth("sg_closing_assistant1", 0.1)
+	SGroup_SetAvgHealth("sg_closing_assistant2", 0.1)
+	
+	
+	--Incoming army
+	for i = 10, 15 do																			
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_army"..i, g_Nis_Blueprint2, "nis_closing_army"..i, 3, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_army"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_army1"), SGroup_FromName("sg_closing_army"..i))
+		SGroup_FaceMarker("sg_closing_army"..i, "nis_closing_commander_spawn")
+	end
+	
+	--Incoming melee
+	for i = 3, 4 do																			
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_melee"..i, g_Nis_Blueprint, "nis_closing_melee"..i, 6, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_melee"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_army1"), SGroup_FromName("sg_closing_melee"..i))
+		SGroup_FaceMarker("sg_closing_melee"..i, "nis_closing_commander_spawn")
+	end
+	
+	--Incoming special
+	for i = 2, 2 do																			
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_special"..i, g_Nis_Blueprint3, "nis_closing_special"..i, 4, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_special"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_army1"), SGroup_FromName("sg_closing_special"..i))
+		SGroup_FaceMarker("sg_closing_special"..i, "nis_closing_commander_spawn")
+	end
+	
+	
+	
+	
+	--Incoming army vehicles
+	for i = 16, 18 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_army"..i, g_Nis_Blueprint4, "nis_closing_army"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_army"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_army1"), SGroup_FromName("sg_closing_army"..i))
+		SGroup_FaceMarker("sg_closing_army"..i, "nis_closing_commander_spawn")
+	end
+	
+	--Incoming army vehicles
+	for i = 1, 1 do
+		Util_CreateSquadsAtMarkerEx(g_Player1, "sg_closing_highvehicle"..i, g_Nis_Blueprint5, "nis_closing_highvehicle"..i, 1, 1)
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_highvehicle"..i))
+		SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_army1"), SGroup_FromName("sg_closing_highvehicle"..i))
+		SGroup_FaceMarker("sg_closing_highvehicle"..i, "nis_closing_commander_spawn")
+	end
+	
+	
+	--SGroup_SetAvgHealth("sg_closing_heavyweapons", 0.1)
+	Cmd_SetStance("sg_closing_actors", STANCE_CeaseFire)			
+	
+	
+	
+	
+	Fade_Start( 2, true )	
+	CPath_CutToPath("canim_outro3c", "start", "end")	
+	--Stubbs:  Though my army lies in ruins today… I have *not* done fighting. And I *will* remember who my enemies are…. 
+	CTRL.Actor_PlaySpeech( ACT.Stubbs, 5200086)		
+		CTRL.SUB()
+			
+			
+			CTRL.Event_Delay(1.3)
+			CTRL.WAIT()
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_closing_valkyrie", "npc_valkyrie", "nis_closing_valkyrie2", 1, 1)
+			SGroup_AddGroup(SGroup_CreateIfNotFound("sg_closing_actors"), SGroup_FromName("sg_closing_valkyrie"))	
+			SGroup_FaceMarker("sg_closing_valkyrie", "nis_closing_valkyrie2_facing")
+	
+			Anim_PlaySGroupAnim("sg_closing_valkyrie", "sp_land")
+			
+			CTRL.Event_Delay(3.3)
+			CTRL.WAIT()
+			
+			Cmd_MoveToMarker("sg_closing_army1", "nis_closing_army_move")
+			
+		CTRL.END()
+	CTRL.WAIT()
+	
+	Cmd_SetStance("sg_closing_actors", STANCE_Attack)			
+	
+	Cmd_MoveToMarker("sg_closing_commander", "nis_closing_commander1_goto")
+	CTRL.Event_Delay(2.0)
+	CTRL.WAIT()
+	
+	if SGroup_Exists("sg_closing_flyer6") and SGroup_Count(SGroup_FromName("sg_closing_flyer6")) > 0 then
+		Cmd_MoveToMarker("sg_closing_flyer6", "nis_closing_commander1_goto")
+	end
+	CTRL.Event_Delay(5.0)
+	CTRL.WAIT()
+	SGroup_DeSpawn("sg_closing_commander")
+	
+	
+	Anim_PlaySGroupAnim("sg_closing_valkyrie", "sp_take_off")
+	
+	CTRL.Event_Delay(3.0)
+	CTRL.WAIT()
+	
+	EGroup_SetHealthInvulnerable("eg_whatever", false)
+	
+	CTRL.Event_Delay(2.0)
+	CTRL.WAIT()
+	
+	Cmd_MoveToMarker("sg_closing_army1", "nis_closing_army_move2")
+	EGroup_SelfDestroy("eg_closing_turret1", false)
+	EGroup_SelfDestroy("eg_closing_turret2", false)
+	
+	CTRL.Event_Delay(2.0)
+	CTRL.WAIT()
+	
+	
+	
+	
+	CTRL.Fade_Start(3.0, false)
+	CTRL.WAIT()
+			
+	
+	
+	--Silvey Polish (11/09/07):  Deleted Scene
+	--[[
+	--Silvey Polish 10/09/07:  Cinematic ending of Stubbs and crew leaving planet
+	Fade_Start( 2, true )
+	Anim_PlaySGroupAnim("sg_closing_valkyrie", "sp_land")
+	CTRL.CPath_CutToPath("canim_nis_closing_valkyrie", "start", "end")	
+	CTRL.WAIT()			
+	
+	Actor_PlaySpeech( ACT.Stubbs, 5200086)	
+	CTRL.CPath_CutToPath("canim_nis_closing_watch", "start", "end")	
+	CTRL.WAIT()			
+	
+	Anim_StopSGroupAnim("sg_closing_commander", "sp_talk")	
+	SGroup_FaceMarker("sg_closing_commander", "nis_closing_hostage")
+	Cmd_MoveToMarker("sg_closing_commander", "nis_closing_hostage")
+	
+	CTRL.Event_Delay(1.3)
+	CTRL.WAIT()
+	
+	Anim_PlaySGroupAnim("sg_closing_hostage", "default")
+	CPath_CutToPath("canim_nis_closing_synckill", "start", "end")	
+	CTRL.Anim_PlaySyncAnim("sg_closing_commander", "sg_closing_hostage", "synckill_4", "syncdeath_4", 0.0)
+	CTRL.WAIT()
+	--Cmd_SetStance("sg_closing_commander", STANCE_Attack)
+	--SGroup_SetHealthInvulnerable("sg_closing_hostage", false)
+	--SGroup_SetAvgHealth("sg_closing_hostage", 0.1)
+	CTRL.Event_Delay(1)
+	CTRL.WAIT()
+	
+	Anim_StopSGroupAnim("sg_closing_guard1", "capture_strategic_point")
+	Anim_StopSGroupAnim("sg_closing_guard2", "capture_strategic_point")
+	Cmd_MoveToMarker("sg_closing_escapees", "nis_closing_escapees_goto")
+	CTRL.CPath_CutToPath("canim_nis_closing_takeoff", "start", "end")	
+		CTRL.SUB()
+			CTRL.Event_Delay(7)
+			CTRL.WAIT()
+			
+			Anim_PlaySGroupAnim("sg_closing_valkyrie", "sp_take_off")
+			
+			SGroup_DeSpawn("sg_closing_escapees")
+			
+			
+			CTRL.Event_Delay(5)
+			CTRL.WAIT()
+			Fade_Start(4.0, false)
+		CTRL.END()
+	CTRL.WAIT()			
+	---------
+	]]--
+	
+	--Silvey Polish 10/09/07:  Removed the following scene...
+	--[[CTRL.Actor_PlaySpeech(ACT.Stubbs, 5200086)
+		CTRL.SUB()
+			CPath_CutToPath("canim_outro2a", "start","end")
+			CTRL.Fade_Start( 1, true )
+			CTRL.WAIT()
+			Cmd_MoveToMarker("sg_closing_tank1", "nis_closing_tank_goto1")
+			Cmd_MoveToMarker("sg_closing_tank2", "nis_closing_tank_goto2")
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			Util_MarkerFX( "nis_closing_explosion6", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			CTRL.Event_Delay(2)
+			CTRL.WAIT()
+			Util_MarkerFX( "nis_closing_explosion18", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			Util_MarkerFX( "nis_closing_explosion19", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			CTRL.Event_Delay(3)
+			CTRL.WAIT()
+			Util_MarkerFX( "nis_closing_explosion7", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()
+			Util_MarkerFX( "nis_closing_explosion8", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+			CTRL.Event_Delay(1)
+			CTRL.WAIT()
+			Util_MarkerFX( "nis_closing_explosion9", "data:Art/Events/Guard/Weapons/IGOutroBoom.events")
+		CTRL.END()
+	CTRL.WAIT()
+	
+	CTRL.CPath_CutToPath("canim_outro2b", "start","end")
+		CTRL.SUB()
+		CTRL.Event_Delay(5)
+		CTRL.WAIT()
+		Fade_Start(0, false)
+		CTRL.END()
+	CTRL.WAIT()]]--
+
+	--Rule_AddOneShot(Rule_Stronghold_Conquered, 0)
+	print("game over")
+	
+	CTRL.W40k_Letterbox( false, 2)	
+	CTRL.WAIT()
+	
+	
+	
+	--Util_NIS_ToggleModifierEvents(g_Player1, true)
+	--Util_NIS_ToggleModifierEvents(g_Player2, true)
+	--Player_UnRestrictAbility(g_Player1, "sp_dxp_unit_glow")
+	--Player_UnRestrictAbility(g_Player2, "sp_dxp_unit_glow")
+	
+	--CPath_Blendout( 1 )
+
+end

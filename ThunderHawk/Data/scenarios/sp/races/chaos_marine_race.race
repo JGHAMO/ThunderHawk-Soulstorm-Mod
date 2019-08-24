@@ -1,0 +1,2349 @@
+IntroMovie = ""
+IntroMovieText =
+{	
+}
+
+OutroMovie = "ss_chaos_race_outro"
+OutroMovieText =
+{
+	{
+		Text = "$5200199",
+		Start = 4.190,
+		End = 48.180,
+	},
+	{
+		Text = "$5200200",
+		Start = 53.020,
+		End = 78.130,
+	},
+	{
+		Text = "$5200201",
+		Start = 83.060,
+		End = 114.190,
+	},
+}
+
+NuggetMovie = "chaos_marine_race_nugget"
+
+ForceName = "$3950214"
+TeamColourForceName = "Alpha Legion"
+TeamColour = "default_0"
+CommanderName = "chaos_squad_lord_advance_sp"
+CommanderModel = "Races/chaos/Troops/Chaos_Lord_SP_Wargear"
+
+ArmyModel = "Art/UI/3D_Models/MM_Chaos_Lord"
+ArmyModelScale = 0.15
+ArmyModelBone = "master"
+
+TerritoryColour = { 105, 2, 86 }
+
+-- Delays used for army move fx
+TeleportFXLength = 0.5
+SpacePortTeleportFXLength = 0.5
+
+ApplyTeamColours = true
+
+CommanderScreenModel = "Art/UI/3D_Models/Race_Chaos_Marine"
+CommanderScreenBackgroundImage = "Art/UI/RaceImages/Race_Chaos_Marine"
+CommanderScreenAction = "sp_wargear"
+
+WargearScreenModel = "Art/EBPs/Races/Chaos/Troops/Chaos_Lord_TGD_Wargear"
+WargearScreenBackgroundImage = "Art/UI/Wargear/chaos wargear backdrop"
+WargearScreenAction = "sp_wargear"
+
+RetractedStartingSquads = {}
+
+-- Territory special ability values
+IndustrialProductionRequisitionBonus = 1000
+IndustrialProductionPowerBonus = 0
+
+IncreasedManpowerStartingSquadCapBonus = 4
+IncreasedManpowerMaximumSquadCapBonus = 4
+IncreasedManpowerStartingVehicleCapBonus = 2
+IncreasedManpowerMaximumVehicleCapBonus = 2
+
+RequisitionReducedCostBonus = 0.85
+
+PopulationGrowthTerritoryRate = 3
+PopulationGrowthTerritoryChance = 0.33
+PopulationGrowthArmyRate = 3
+PopulationGrowthMilitaryStrengthIncrement = 1
+PopulationGrowthAIRankIncrement = 1
+
+RessurectionChancePlayer = 0.33
+RessurectionChanceAI = 0.33
+
+TauGunMinDamageAI = 0
+TauGunMaxDamageAI = 1
+TauGunMinDamagePlayer = 0
+TauGunMaxDamagePlayer = 1
+
+RoadwaySeedsMaxDistance = 3
+
+DisconnectedSupplyModifier = 0.0
+
+RaceSelectionScreen =
+{
+	Model = "Race_Chaos_Marine",
+	RaceImage = "Race_Chaos_Marine",
+	ExitAnimationLength = 2,
+	AmbientLight = { 128, 128, 128 }
+}
+
+VictoryScreen =
+{
+	ImageVictory = "ChaosMarineVictory",
+	ImageDefeat = "ChaosMarineDefeat",
+
+	TextVictoryAttacking = "$3000650",
+	TextVictoryDefending = "$3000651",
+
+	TextDefeatAttacking = "$3000652",
+	TextDefeatDefending = "$3000653",
+
+	TextDescription_space_marine_race = "$3900000",
+	TextDescription_eldar_race = "$3900001",
+	TextDescription_guard_race = "$3000656",
+	TextDescription_necron_race = "$3000657",
+	TextDescription_ork_race = "$3900002",
+	TextDescription_tau_race = "$3900003",
+	TextDescription_dark_eldar_race  = "$3900442",
+	TextDescription_sisters_race  = "$3900449",
+}
+
+Messages =
+{
+	-- Bonus Units
+	NewBonusUnit = "$3003010",
+	PreservedBonusUnit = "$3003011",
+	FailedToGainBonusUnit = "$3003013",
+	LostBonusUnit = "$3003012",
+
+	-- Abilities
+	NewAbility = "$3003010",
+	PreservedAbility = "$3003011",
+	FailedToGainAbility = "$3003013",
+	LostAbility = "$3003012",
+
+	-- Race elimination
+	DefeatedRace = "$3003014",
+}
+
+BonusSquadCosts =
+{
+	-- I've doubled all of these. Were 330, 200, 200, 200, 300, 300, 225
+	chaos_squad_cultist_advance_sp = 225,
+	chaos_squad_aspiring_champion_advance_sp = 325,
+	chaos_squad_raptor_champion_advance_sp = 375,
+	chaos_squad_horror_hg_dxp3 = 450,
+	chaos_squad_khorne_berserker_advance_sp = 500,
+	chaos_squad_obliterator_advance_sp = 650,
+	chaos_squad_possessed_marine_advance_sp = 675,
+	chaos_squad_sorcerer_advance_sp = 350,
+	chaos_squad_defiler_advance_sp = 800,
+}
+
+ReinforcementStructures =
+{
+	-- all costs were 135, 135, 300, 275
+	{
+		Blueprint = "chaos_plasma_generator",
+		Cost = 50,
+		Markers =
+		{
+			"MM_Reinforcement0", "MM_Reinforcement1", "MM_Reinforcement2",
+			"MM_Reinforcement3"
+		}
+	},
+	{
+		Blueprint = "chaos_turret_bolter",
+		Cost = 75,
+		Markers =
+		{
+			"MM_Reinforcement6", "MM_Reinforcement7", "MM_Reinforcement8", "MM_Reinforcement9"
+		}
+	},
+	{
+		Blueprint = "chaos_temple",
+		Cost = 200,
+		Markers =
+		{
+			"MM_Reinforcement10"
+		}
+	},
+	{
+		Blueprint = "chaos_armoury",
+		Cost = 150,
+		Markers =
+		{
+			"MM_Reinforcement11"
+		}
+	},
+}
+
+ReinforcementSquads = 
+{
+	-- all costs were 60, 190, 240, 330
+	{
+		Blueprint = "chaos_squad_slave",
+		Cost = 25,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "chaos_marine_squad",
+		Cost = 85,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "chaos_squad_raptor",
+		Cost = 110,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "chaos_squad_defiler",
+		Cost = 225,
+		Markers =
+		{
+			"MM_Reinforcement12"
+		}
+	},
+}
+
+DeepStrikeSquads = 
+{
+	-- all costs doubled. were 60, 190, 240, 330
+	{
+		Blueprint = "chaos_squad_slave",
+		Cost = 125,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "chaos_marine_squad",
+		Cost = 350,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "chaos_squad_raptor",
+		Cost = 400,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "chaos_squad_defiler",
+		Cost = 875,
+		Markers =
+		{
+			"MM_Reinforcement12"
+		}
+	},
+}
+
+TechLevel2Structures =
+{
+	"chaos_hq_addon_1"
+}
+
+TechLevel3Structures =
+{
+	"chaos_hq_addon_2"
+}
+
+WarGear =
+{
+	{
+	Research = "chaos_wargear_upgrade_03_plasma_pistol_research",
+	WeaponName = "chaos_plasma_pistol",
+	WeaponNameDefault = "chaos_bolt_pistol",
+	ClauseKey = "Weapon_Range_Upgrade_Main",
+	ClauseValueOn = "Chaos_Plasma_Pistol",
+	ClauseValueDefault = "Chaos_Bolt_Pistol",
+	Name = "$3001300",
+	Icon = 03,
+	Description  = "$3001301",
+	Specification  = "$3001302",
+  AIVictoriesRequired = 1,
+	},
+	{
+	Research = "chaos_wargear_upgrade_04_melta_gun_research",
+	WeaponName = "chaos_melta_gun_lord",
+	WeaponNameDefault = "chaos_bolt_pistol",
+	ClauseKey = "Weapon_Range_Upgrade_Main",
+	ClauseValueOn = "Chaos_Melta_Gun",
+	ClauseValueDefault = "Chaos_Bolt_Pistol",
+	Name = "$3001310",
+	Icon = 04,
+	Description  = "$3001311",
+	Specification  = "$3001312",
+  AIVictoriesRequired = 2,
+	},
+	{
+	Research = "chaos_wargear_upgrade_01_manreaper_research",
+	WeaponName = "chaos_manreaper",
+	WeaponNameDefault = "Chaos_Power_Sword",
+	ClauseKey = "Weapon_melee_upgrade_main",
+	ClauseValueOn = "Chaos_Manreaper",
+	ClauseValueDefault = "Chaos_Power_Sword",
+	Name = "$3001320",
+	Icon = 01,
+	Description  = "$3001321",
+	Specification  = "$3001322",
+  AIVictoriesRequired = 3,
+	},
+	{
+	Research = "chaos_wargear_upgrade_02",
+	WeaponName = "chaos_khornate_chainaxe_lord",
+	WeaponNameDefault = "Chaos_Power_Sword",
+	ClauseKey = "Weapon_melee_upgrade_main",
+	ClauseValueOn = "Chaos_Khornate_Chainaxe",
+	ClauseValueDefault = "Chaos_Power_Sword",
+	Name = "$4000061",
+	Icon = 02,
+	Description  = "$4000062",
+	Specification  = "$4000063",
+  AIVictoriesRequired = 4,
+	},
+	{
+	Research = "chaos_wargear_upgrade_05",
+	WeaponName = "chaos_wargear_05",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_05",
+	ClauseValueOn = "Wargear_05",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$4000064",
+	Icon = 12,
+	Description  = "$4000065",
+	Specification  = "$4000066",
+  AIVictoriesRequired = 5,
+	},
+	{
+	Research = "chaos_wargear_upgrade_06",
+	WeaponName = "Wargear_06",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_06",
+	ClauseValueOn = "Wargear_06",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$4000067",
+	Icon = 13,
+	Description  = "$4000068",
+	Specification  = "$4000069",
+  AIVictoriesRequired = 6,
+	},
+	{
+	Research = "chaos_wargear_upgrade_08",
+	WeaponName = "Wargear_08",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_08",
+	ClauseValueOn = "Wargear_08",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$4000073",
+	Icon = 15,
+	Description  = "$4000074",
+	Specification  = "$4000075",
+  AIVictoriesRequired = 7,
+	},
+	{
+	Research = "chaos_wargear_upgrade_07",
+	WeaponName = "chaos_wargear_07",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_07",
+	ClauseValueOn = "Wargear_07",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$4000070",
+	Icon = 14,
+	Description  = "$4000071",
+	Specification  = "$4000072",
+  AIVictoriesRequired = 8,
+	},
+	{
+	Research = "chaos_wargear_upgrade_09_banner_research",
+	WeaponName = "Wargear_09",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_09",
+	ClauseValueOn = "Wargear_09",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$3001390",
+	Icon = 09,
+	Description  = "$3001391",
+	Specification  = "$3001392",
+  AIVictoriesRequired = 9,
+	},
+	{
+	Research = "chaos_wargear_upgrade_10_daemonic_ascension_research",
+	WeaponName = "Wargear_10",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_10",
+	ClauseValueOn = "Wargear_10",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$3001375",
+	Icon = 10,
+	Description  = "$3001376",
+	Specification  = "$3001377",
+	InGameCommanderName = "chaos_squad_daemon_prince_advance_sp",
+  AIVictoriesRequired = 10,
+	},
+}
+
+
+Promotions =
+{
+	{
+		Name = "$3002000",
+		Description = "$3003001",
+		Conditions = 
+		{
+			ConqueredTerritories = 1
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003002",
+		Conditions = 
+		{
+			ConqueredTerritories = 5
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003003",
+		Conditions = 
+		{
+			ConqueredTerritories = 15
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003004",
+		Conditions = 
+		{
+			UnitKillsLifetime = 2000
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003005",
+		Conditions = 
+		{
+			UnitKillsLifetime = 5000
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003006",
+		Conditions = 
+		{
+			ConqueredStrongholds = 3
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003000",
+		Conditions = 
+		{
+			UnitKillsMission = 200,
+			KillRatioMission = 3
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003007",
+		Conditions = 
+		{
+			DefensiveMissionsWon = 1,
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003008",
+		Conditions = 
+		{
+			DefensiveMissionsWon = 3,
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003009",
+		Conditions = 
+		{
+			DefensiveMissionsWon = 5,
+		}
+	},
+}
+
+AIStartingStructuresAttacking =
+{
+
+	{
+		MilitaryStrength = 1,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 2,
+		Structures =
+		{
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},	
+	
+	{
+		MilitaryStrength = 3,
+		Structures =
+		{
+
+
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		
+		},
+	},
+	
+	{
+
+		MilitaryStrength = 4,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},
+
+	{
+
+		MilitaryStrength = 5,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+				{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 6,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+
+		
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 7,
+		Structures =
+		{
+	
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start7_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},	
+
+	
+	{
+
+		MilitaryStrength = 8,
+		Structures =
+		{
+	
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start7_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+	
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 9,
+		Structures =
+		{
+	
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+	
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start7_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},	
+	
+	
+	{
+
+		MilitaryStrength = 10,
+		Structures =
+		{
+
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+	
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start7_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},	
+}
+
+AIStartingStructuresDefending =
+{
+
+	{
+		MilitaryStrength = 1,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+		},
+	},
+
+	{
+		MilitaryStrength = 2,
+		Structures =
+		{
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+		},
+	},
+	
+	{
+
+		MilitaryStrength = 3,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+		},
+	},
+
+	{
+
+		MilitaryStrength = 4,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 5,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 6,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 7,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+		},
+	},	
+
+	
+	{
+
+		MilitaryStrength = 8,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start17_",
+				},
+			},
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 9,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start17_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},	
+	
+	
+	{
+
+		MilitaryStrength = 10,
+		Structures =
+		{
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_temple",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_bolter",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "chaos_armoury",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+
+			{
+				Blueprint = "chaos_turret_missile_launcher",
+				Markers =
+				{
+					"start17_",
+				},
+			},
+			{
+				Blueprint = "chaos_machine_pit",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+			{
+				Blueprint = "chaos_sacrificial_circle",
+				Markers =
+				{
+					"start9_",
+				},
+			},
+		},
+	},	
+}
+
+AIStartingSquadsAttacking =
+{
+	{
+
+		MilitaryStrength = 2,
+		Squads =
+		{
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 3,
+		Squads =
+		{
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 4,
+		Squads =
+		{
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 5,
+		Squads =
+		{
+	
+
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 6,
+		Squads =
+		{
+		
+
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 7,
+		Squads =
+		{
+	
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+	
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 8,
+		Squads =
+		{
+	
+
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+	
+		},
+	},		
+
+	{
+
+		MilitaryStrength = 9,
+		Squads =
+		{
+
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+
+	
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 10,
+		Squads =
+		{
+
+
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+	
+
+		},
+	},	
+}
+
+AIStartingSquadsDefending =
+{
+	{
+
+		MilitaryStrength = 4,
+		Squads =
+		{
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 5,
+		Squads =
+		{
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 6,
+		Squads =
+		{
+	
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 7,
+		Squads =
+		{
+
+
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 8,
+		Squads =
+		{
+
+
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 9,
+		Squads =
+		{
+
+
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 10,
+		Squads =
+		{
+
+
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+
+		},
+	},	
+}
+
+ArmyRanks =
+{
+	-- Rank 1
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "chaos_squad_lord_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},	
+			
+		},
+	},
+	-- Rank 2
+	{
+		Difficulty = "hard",
+		Squads =
+		{
+			{
+				Blueprint = "chaos_squad_lord_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_cultist",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 3
+	{
+		Difficulty = "hard",
+		Squads =
+		{
+			{
+				Blueprint = "chaos_squad_lord_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_cultist",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+				{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 4
+	{
+		Difficulty = "hard",
+		Squads =
+		{	
+			{
+				Blueprint = "chaos_squad_lord_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_cultist",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 5
+	{
+		Difficulty = "hard",
+		Squads =
+		{
+			{
+				Blueprint = "chaos_squad_lord_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_cultist",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 6
+	{
+		Difficulty = "hard",
+		Squads =
+		{
+			{
+				Blueprint = "chaos_squad_lord_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_cultist",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{	
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_horror",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 7
+	{
+		Difficulty = "advanced",
+		Squads =
+		{
+			{
+				Blueprint = "chaos_squad_lord_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_cultist",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_horror",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_sorcerer",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 8
+	{
+		Difficulty = "advanced",
+		Squads =
+		{
+			{
+				Blueprint = "chaos_squad_lord_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_cultist",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_horror",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_sorcerer",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_defiler",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 9
+	{
+		Difficulty = "advanced",
+		Squads =
+		{
+			{
+				Blueprint = "chaos_squad_lord_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_cultist",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_horror",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_sorcerer",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_defiler",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_obliterator",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 10
+	{
+		Difficulty = "advanced",
+		Squads =
+		{
+			{
+				Blueprint = "chaos_squad_lord_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_cultist",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_marine_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_raptor",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_horror",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_sorcerer",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_defiler",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_obliterator",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "chaos_squad_predator",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		
+		},
+	},
+}

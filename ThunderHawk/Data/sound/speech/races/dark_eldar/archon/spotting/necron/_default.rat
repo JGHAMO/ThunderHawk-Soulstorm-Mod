@@ -1,0 +1,13 @@
+-- This file is generated automatically by the Relic Audio Tool
+
+version = 9
+
+patch = 0
+numChannels = 1
+coneMin = 0.000000
+coneMax = 0.000000
+containerType = 3
+loopingContainer = 0
+loadAllContainer = 0
+silenceBreak = 0.000000
+silenceRandom = 0.000000

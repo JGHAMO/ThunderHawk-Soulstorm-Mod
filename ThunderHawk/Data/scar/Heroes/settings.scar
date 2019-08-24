@@ -1,0 +1,367 @@
+--####################################################################################################
+--#
+--#     Heroes Special Settings
+--#
+--#     Original Heroes idea and implementation by CutterShane 2006
+--#     Heroes Special rework by Arkhan 2007
+--#
+--####################################################################################################
+
+-- Arkhan 01.2007: XP gain settings
+
+
+XPPerSecondUnderAttack = 40
+XPPerSecondAttacking = 20
+XPPerSecondConstruction = 10
+XPPerSecondIdle = 0
+RequiredTrainingTime = 20
+UnitModifiers =
+{
+	ModAbilityDuration			= { "MAT_Entity",	"ability_duration_modifier" },
+	ModAbilityRange				= { "MAT_Entity",	"ability_range_modifier" },
+	ModAbilityRecharge			= { "MAT_Entity",	"ability_recharge_modifier" },
+	ModArmour				= { "MAT_Entity",	"armour_modifier" },
+	ModArmourMin				= { "MAT_Entity",	"armour_minimum_modifier" },
+	ModChargeRange				= { "MAT_Entity",	"melee_charge_range_modifier" },
+	ModConstructionSpeed			= { "MAT_Entity",	"construction_speed_modifier" },
+	ModHealthMax				= { "MAT_Entity",	"health_maximum_modifier" },
+	ModHealthMeleeDamReceived		= { "MAT_Entity",	"health_meleedamage_received_modifier" },
+	ModHealthRangedDamReceived		= { "MAT_Entity",	"health_rangedamage_received_1_modifier" },
+	ModHealthRegeneration			= { "MAT_Entity",	"health_regeneration_modifier" },
+	ModMoraleMeleeDamReceived		= { "MAT_Entity",	"morale_meleedamage_received_modifier" },
+	ModMoraleOtherDamReceived		= { "MAT_Entity",	"morale_otherdamage_received_modifier" },
+	ModMoraleRangedDamReceived		= { "MAT_Entity",	"morale_rangeddamage_received_modifier" },
+	ModRepairRate				= { "MAT_Entity",	"repair_rate_modifier" },
+	ModSightRange				= { "MAT_Entity",	"sight_radius_modifier" },
+	ModSpeedAccelerationTime		= { "MAT_Entity",	"speed_acceleration_time_modifier" },
+	ModSpeedMax				= { "MAT_Entity",	"speed_maximum_modifier" },
+	ModSpeedRotationTime			= { "MAT_Entity",	"speed_rotation_time_modifier" },
+	
+	ModAccuracyMovingReduction		= { "MAT_Weapon",	"accuracy_moving_reduction_weapon_modifier" },
+	ModAccuracyRanged			= { "MAT_Weapon",	"accuracy_ranged_weapon_modifier" },
+	ModAccuracyWeapon			= { "MAT_Weapon",	"accuracy_weapon_modifier" },
+	ModWeaponMaxDamage			= { "MAT_Weapon",	"max_damage_weapon_modifier" },
+	ModWeaponMaxRange			= { "MAT_Weapon",	"max_range_weapon_modifier" },
+	ModWeaponMinDamage			= { "MAT_Weapon",	"min_damage_weapon_modifier" },
+	ModWeaponReloadTime			= { "MAT_Weapon",	"reload_time_weapon_modifier" },
+	ModWeaponSetupTime			= { "MAT_Weapon",	"setup_time_weapon_modifier" },
+	ModArmourPiercing			= { "MAT_Weapon",	"armour_piercing_weapon_modifier" },
+	
+	ModCaptureRate				= { "MAT_Squad",	"capture_rate_squad_modifier" },
+	ModMoraleMax				= { "MAT_Squad",	"morale_maximum_squad_modifier" },
+	ModMoraleRate				= { "MAT_Squad",	"morale_rate_squad_modifier" },
+}
+
+-- Arkhan 01.2007: Apply the typical upgrade modifications
+function ModifyBaseUpgradeStats(eSquadID, iUnitIndex, iLevel, fHealthIncrease, fDamageIncrease, fAccuracyIncrease, iMoraleBonus)
+
+	-- Check for health increase
+	local sUnitName = Squad_GetBlueprintName(eSquadID)
+	if	fHealthIncrease > 0.0 and not UnitTypes[g_sCurrentPlayerRace][sUnitName].Immortal then
+		
+		-- Increase hitpoints by a certain percentage of the base value
+		local fHealthModifier = 1.0 + (iLevel - 1) * fHealthIncrease
+		UnitStatAddBaseFactor("ModHealthMax", eSquadID, iUnitIndex, fHealthModifier)
+	end
+	
+	-- Check for weapon damage increase
+	if (fDamageIncrease > 0.0) then
+		
+		-- Increase weapon damage by a certain percentage of the base value
+		local fWeaponDamageModifier	= 1.0 + (iLevel - 1) * fDamageIncrease
+		UnitStatAddBaseFactor("ModWeaponMinDamage", eSquadID, iUnitIndex, fWeaponDamageModifier)
+		UnitStatAddBaseFactor("ModWeaponMaxDamage", eSquadID, iUnitIndex, fWeaponDamageModifier)
+	end
+
+	-- Check for weapon accuracy increase
+	if (fAccuracyIncrease > 0.0) then
+		
+		-- Increase weapon accuracy by a certain percentage of the base value
+		local fWeaponAccuracyModifier = 1.0 + (iLevel - 1) * fAccuracyIncrease
+		UnitStatAddBaseFactor("ModAccuracyWeapon", eSquadID, iUnitIndex, fWeaponAccuracyModifier)
+		UnitStatAddBaseFactor("ModAccuracyRanged", eSquadID, iUnitIndex, fWeaponAccuracyModifier)
+	end
+	
+	-- Check for morale increase
+	if (iMoraleBonus > 0) then
+		
+		-- Increase morale by a certain value
+		local iMoraleModifier = (iLevel - 1) * iMoraleBonus
+		UnitStatAddValue("ModMoraleMax", eSquadID, iUnitIndex, iMoraleModifier)
+	end
+end
+
+-- Arkhan 01.2007: Upgrade commanders
+function UpgradeCommander(eSquadID, iLevel, iUnitIndex)
+
+	-- Increase base stats
+	ModifyBaseUpgradeStats(eSquadID, iUnitIndex, iLevel, 0.2, 0.2, 0.1, 50)
+	
+	local sUnitName = Squad_GetBlueprintName(eSquadID)
+	if	UnitTypes[g_sCurrentPlayerRace][sUnitName].CanRepair then
+		local fBuildRate = 1.0 + (iLevel - 1) * 0.2
+		UnitStatAddBaseFactor("ModRepairRate", eSquadID, iUnitIndex, fBuildRate)
+	end
+
+	-- Special boni for level 4, 7, 8 and 9
+	if (iLevel == 4) then
+
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 1.5)
+		
+		-- Increase sight range
+		UnitStatAddBaseFactor("ModSightRange", eSquadID, iUnitIndex, 1.2)
+		
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.2)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.8)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.2)
+		
+	elseif (iLevel == 7) then
+		
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 2.0)
+		
+		-- Increase sight range
+		UnitStatAddBaseFactor("ModSightRange", eSquadID, iUnitIndex, 1.4)
+		
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.4)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.6)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.4)
+		
+	elseif (iLevel == 8) then
+	
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 2.5)
+		
+		-- Increase sight range
+		UnitStatAddBaseFactor("ModSightRange", eSquadID, iUnitIndex, 1.5)
+		
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.5)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.5)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.5)	
+	
+	elseif (iLevel == 9) then
+
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 3.0)
+		
+		-- Increase sight range
+		UnitStatAddBaseFactor("ModSightRange", eSquadID, iUnitIndex, 1.6)
+		
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.6)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.4)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.6)
+	end
+end
+
+-- Arkhan 01.2007: Upgrade builders
+function UpgradeBuilder(eSquadID, iLevel, iUnitIndex)
+
+	-- Increase base stats
+	ModifyBaseUpgradeStats(eSquadID, iUnitIndex, iLevel, 0.1, 0.0, 0.0, 50)
+	
+	-- Increase building and repair rate by 10%
+	local fBuildRate = 1.0 + (iLevel - 1) * 0.1
+	UnitStatAddBaseFactor("ModConstructionSpeed", eSquadID, iUnitIndex, fBuildRate)
+	UnitStatAddBaseFactor("ModRepairRate", eSquadID, iUnitIndex, fBuildRate)
+	
+	-- Special boni for level 4 and 7
+	if (iLevel == 4) then
+	
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 1.5)
+	
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.2)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.8)
+	
+	elseif (iLevel == 7) then
+	
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 2.0)
+	
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.4)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.6)
+	end
+end
+
+-- Arkhan 01.2007: Upgrade scout squads
+function UpgradeScoutSquad(eSquadID, iLevel, iUnitIndex)
+
+	-- Increase base stats
+	ModifyBaseUpgradeStats(eSquadID, iUnitIndex, iLevel, 0.1, 0.1, 0.05, 50)
+	
+	-- Special boni for level 4 and 7
+	if (iLevel == 4) then
+	
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 1.5)
+		
+		-- Increase sight range
+		UnitStatAddBaseFactor("ModSightRange", eSquadID, iUnitIndex, 1.2)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.2)
+		
+	elseif (iLevel == 7) then	
+
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 2.0)
+		
+		-- Increase sight range
+		UnitStatAddBaseFactor("ModSightRange", eSquadID, iUnitIndex, 1.4)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.4)
+	end
+end
+
+-- Arkhan 01.2007: Upgrade melee squads
+function UpgradeMeleeSquad(eSquadID, iLevel, iUnitIndex)
+
+	-- Increase base stats
+	ModifyBaseUpgradeStats(eSquadID, iUnitIndex, iLevel, 0.15, 0.1, 0.05, 50)
+	
+	-- Special boni for level 4 and 7
+	if (iLevel == 4) then
+	
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 1.5)
+		
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.2)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.8)
+		
+	elseif (iLevel == 7) then
+	
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 2.0)
+		
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.4)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.6)
+	end
+end
+
+-- Arkhan 01.2007: Upgrade ranged squads
+function UpgradeRangedSquad(eSquadID, iLevel, iUnitIndex)
+
+	-- Increase base stats
+	ModifyBaseUpgradeStats(eSquadID, iUnitIndex, iLevel, 0.1, 0.1, 0.05, 50)
+	
+	-- Special boni for level 4 and 7
+	if (iLevel == 4) then
+	
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 1.5)
+		
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.1)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.9)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.2)
+		
+	elseif (iLevel == 7) then
+	
+		-- Increase hitpoint regeneration
+		UnitStatAddBaseFactor("ModHealthRegeneration", eSquadID, iUnitIndex, 2.0)
+		
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.2)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.8)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.4)
+	end
+end
+
+-- Arkhan 01.2007: Upgrade walker vehicles
+function UpgradeWalker(eSquadID, iLevel, iUnitIndex)
+
+	-- Increase base stats
+	ModifyBaseUpgradeStats(eSquadID, iUnitIndex, iLevel, 0.15, 0.1, 0.05, 0)
+	
+	-- Special boni for level 4 and 7
+	if (iLevel == 4) then
+	
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.2)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.8)
+		UnitStatAddBaseFactor("ModSpeedRotationTime", eSquadID, iUnitIndex, 0.8)
+		
+	elseif (iLevel == 7) then
+	
+		-- Increase speed
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.4)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.6)
+		UnitStatAddBaseFactor("ModSpeedRotationTime", eSquadID, iUnitIndex, 0.6)
+	end
+end
+
+-- Arkhan 01.2007: Upgrade artillery vehicles
+function UpgradeArtillery(eSquadID, iLevel, iUnitIndex)
+
+	-- Increase base stats
+	ModifyBaseUpgradeStats(eSquadID, iUnitIndex, iLevel, 0.05, 0.05, 0.05, 0)
+	
+	-- Special boni for level 4 and 7
+	if (iLevel == 4) then
+	
+		-- Increase sight range
+		UnitStatAddBaseFactor("ModSightRange", eSquadID, iUnitIndex, 1.1)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.1)
+		
+	elseif (iLevel == 7) then
+	
+		-- Increase sight range
+		UnitStatAddBaseFactor("ModSightRange", eSquadID, iUnitIndex, 1.2)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.2)
+	end
+end
+
+-- Arkhan 01.2007: Upgrade tanks
+function UpgradeTank(eSquadID, iLevel, iUnitIndex)
+
+	-- Increase base stats
+	ModifyBaseUpgradeStats(eSquadID, iUnitIndex, iLevel, 0.1, 0.1, 0.05, 0)
+	
+	-- Special boni for level 4 and 7
+	if (iLevel == 4) then
+	
+		-- Increase speed by 5%
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.1)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.9)
+		UnitStatAddBaseFactor("ModSpeedRotationTime", eSquadID, iUnitIndex, 0.9)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.2)
+		
+	elseif (iLevel == 7) then
+	
+		-- Increase speed by 5%
+		UnitStatAddBaseFactor("ModSpeedMax", eSquadID, iUnitIndex, 1.1)
+		UnitStatAddBaseFactor("ModSpeedAccelerationTime", eSquadID, iUnitIndex, 0.9)
+		UnitStatAddBaseFactor("ModSpeedRotationTime", eSquadID, iUnitIndex, 0.9)
+		
+		-- Increase weapon range
+		UnitStatAddBaseFactor("ModWeaponMaxRange", eSquadID, iUnitIndex, 1.4)
+	end
+end

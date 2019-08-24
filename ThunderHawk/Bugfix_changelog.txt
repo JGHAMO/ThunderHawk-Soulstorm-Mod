@@ -1,0 +1,1107 @@
+Soulstorm may be a wonderfully balanced game compared to its predecessor, but it is sadly a buggy game as well. As we wait for an official patch from Relic to address the bugs, a large list of fixable (and some unfixable) bugs have been compiled at http://forums.relicnews.com/showthread.php?p=2899273. I've fixed every bug on the list that I could and compiled them into this mod so people who aren't dependent on competitive online play can at least get closer to the game Iron Lore and Relic designed. I'm not including any balance changes in this mod, it's exclusively for bug fixes.
+
+Obviously, since people using this mod won't be able to play against most other players online, they'll be reliant on AI opponents for more of the game. Towards that end, I got in touch with Thudmeizer and got permission to bundle in the Dawn of Skirmish team's excellent AI mod. If you've never used it before, don't feel bad when you get whooped in a few matches.
+
+Tyre was also kind enough to let me include his beautifully fixed textures for several Dark Eldar and Sisters of Battle units. The fixed units are the Archon, Mandrake, Living Saint, Immolator, and Penitent Engine. mdcertainty has done the same for the Sisters of Battle flag and the Haemonculus, also graciously offering to include them in the mod.
+
+This version of the Bugfix mod now includes Soul Reaver's armour piercing addon as standard, so it does not need to be installed separately.
+
+***Addendum by CornCobMan***
+The crash in the single player campaign Eldar stronghold mission should now be fixed since I've updated the AI to the Dawn of Skirmish 3.2 version.
+
+If you want to have the campaign videos play while using the mod, you will need to copy the DXP2\movies directory to Bugfix\movies. These files will not be deleted if you uninstall the mod, you'll have to delete them manually in that case.
+
+Because the only version of the game I have is English, using this mod with a different language version will cause the game to become bilingual, using English for the fixed sounds and your version's language for everything else. If this is an issue, go to the Soulstorm install directory and navigate to bugfix\data. Delete the sound and soundscripts directories. This will remove the sound files, disabling most sound-related fixes but putting everything back to your language again.
+
+Much thanks:
+* Slow_Runner for starting up the no-brainer list for Soulstorm.
+* Cold_Crusader, Merker, War-Reborn, Jaimas, dreddnott, Varsis, Sir_Suckalot, RexOmniaLupus, durruti, corncobman, White_Pointer, Mosh4Life, Ifitmovesnukeit, Delixe, Wichesta, DeadlyFred, Blackwatch, Agoniser, Wraith_Lord, Creslyn, Makenshi, misterslack, mlai, Hawillis, Gore 'n' Guts, kitekaze, and anyone else I missed who posted bugs in the no-brainer fix list or elsewhere on the forums that were put into this mod.
+* corncobman again for fixing my broken fix to the Grey-Knights-in-a-Land-Raider issue and for providing the original, functional Tau Commander and Broadside Battlesuit model files included in the mod. He also modified the Barracuda's Ion Cannon to use the probably-Ion-Cannon visual effects from the Tau Listening Post instead of the totally wrong Pulse Rifle effects.
+* Thudo, ArkhanTheBlack, LarkinVB, Corsix, Inquisitor, Zenoth, Smokeskin, Dreddnott, Malkor, and Troubadour for their work on the fantastic Dawn of Skirmish mod.
+* Tyre and mdcertainty for creating and allowing the inclusion of their fixed unit textures.
+* Agoniser for creating the fixed file structure for all of the sound fixes and packaging them up for distribution, as well as numerous tooltip fixes.
+* Wraith_Lord for a big batch of fixes, and putting up with my stubbornness on several occasions.
+* fuggles for creating the fixed maps and allowing their inclusion in the mod.
+The bugs and how I fixed them are all listed below. Mostly this is just a copy paste from the original list, but there are greater specifics on some of the vaguer entries.
+
+* Hollow for fixing the volume of in combat speech voices that were too loud.
+* Reaper_R66 for his footfall effect fixes for the Dark Eldar and Sisters of Battle for units lacking in them, his Sisters of Battle Canoness and Dark Eldar Haemonculus speech animation fixes and for his FX fix for the SoB Adepta Sororitas Convent and removing the Necron Warriors on Sama District (sp and mp versions) which interfered with aircraft pathfinding. 
+* Kasrkin84 for his footfall effect fixes for some maps which didn't display any footfall effects at all, fixed Imperial Guard Basilisk Magnus textures, campaign stronghold mission playlist fixes and map icon fixes
+* Anubis6 for fixes to various tooltip errors.
+
+Most if not all of the Dawn of Skirmish AI mod has been included with this version including the updated Heroes mod, Fortress winconditions and extended camera view.
+
+General
+* The archive for the Parmenian Heath says "I opened my eyes and saw what a fool all of us were" (text line $3900369).
+Fix: Change "what a fool" to "what fools".
+
+* Tau, Sisters of Battle, and Dark Eldar do not play their race spotted or under fire sound clips.
+Fix: http://forums.relicnews.com/showthread.php?p=3116977#post3116977.
+
+* Some races have race-specific enemy spotted sounds that are not used.
+Fix: http://forums.relicnews.com/showthread.php?p=3129722#post3129722.
+
+* The multi_select_priority is not set for any races since Winter Assault, and even Imperial Guard are only partially set. It is also inconsistently set for the original four races. This prevents consistent sorting when selecting multiple units of different types
+Fix: http://forums.relicnews.com/showthread.php?p=3139455#post3139455.
+
+* Rokclaw Foothills and Shakun Coast both have improperly set impass maps. Buildings and units can thus be created in inaccessible locations, and the AI is particularly vulnerable to this problem.
+Fix: Add to the impass maps on these maps, filling in holes and ensuring all cliffs are completely covered.
+
+* Invisible units, particularly Stealth Suits, can decap a Strategic Point or Relic and remain invisible if they approach from just the right angle.
+Fix: In ebps\environments\gameplay, open strategic_point_flag and relic_struct. Under sight_ext, change keen_sight_radius to 8.
+
+* The minimap image for Tranquility's End is rotated 90 degrees to the right.
+Fix: Correct the minimap image.
+
+* The Broken Lands' single-player description is set up incorrectly.
+Fix: Under scenarios\sp\broken_lands.ter, change TerrainDescription to Description in line 5 and Description to TerrainDescription in line 6.
+
+***Addendum by CornCobMan - Thanks to Kasrkin84***
+* The pathfinding on various maps cause units to constantly get stuck in some parts of the maps.
+Fix: Replace 5p_vyasastan.sgb, 8p_dussala_precinct.sgb, 8p_dussala_precinct_attack_skirmish.sgb and stronghold_imperial_guard.sgb file inside the scenarios\sp folder as well as 8p_daturias_pits.sgb and 5p_vyasastan.sgb inside the scenarios\mp folder with the fixed ones by Kasrkin84.
+
+***Addendum by CornCobMan ***
+* The Sisters of Battle Chainsword sounds play too often, annoyingly so.
+Fix: lower the priority of the sound inside the _default.rat file and add some blank sounds to the folder so the sounds play less often.
+
+***Addendum by CornCobMan - Thanks to Reaper_R66***
+* The Imperial Guard stronghold convoy tracks do not animate.
+Fix: Copy /art/ebps/races/space_marines/troops/rhino.lua to /art/ebps/races/space_marines/troops/ig_stronghold.lua
+
+***Addendum by CornCobMan - thanks to Kasrkin84***
+* The minimap for the skirmish/multiplayer map Totmacher's Prison is named incorrectly as "5p_totamchers_prison_mm_custom.tga". This means that the lower quality "5p_totmachers_prison_mm.tga" is used instead.
+Fix: Rename "5p_totamchers_prison_mm_custom.tga" to "5p_totmachers_prison_mm_custom.tga". 
+
+* The minimap and icon for Coastal Imossa and its skirmish equivalents do not reflect the actual terrain. In particular, the four causeways with the Necron monoliths are shown as sand-coloured, when in fact they are of a similar colour to the Necron buildings (dark, nearly black) and have glowing green tubes running along the side of them.
+Fix: Use the icons created by Kasrkin84.
+
+***Addendum by CornCobMan - thanks to Kasrkin84***
+*For every single map that was introduced with the Soulstorm expansion, for both single player and skirmish/multiplayer versions, the zoom, rotation and/or perspective of the minimap/icon was often wrong, textures and objects were often missing or out of place, sometimes even whole areas of the map were structured differently in some way. Also the same minimap/icon was always used for both the single player and multiplayer versions of a map, when there would actually often be distinct differences between the two (e.g. the Ancient Gate maps in the campaign don't actually have them in skirmish/multiplayer)
+Fix: Replace all of the minimaps and map icons for every single map that was introduced with the Soulstorm expansion, for both single player and skirmish/multiplayer versions with ones by Kasrkin84
+
+***Addendum by CornCobMan - thanks to Kasrkin84***
+*The SCAR files for ambient tracks for the "Abandon All Hope" and "Absolute Zero" multiplayer/skirmish maps, and for both the single and multiplayer versions of Irridene, are missing from Soulstorm. Both these maps had ambient tracks to reflect the weather conditions in Dark Crusade. 
+Fix: Use the files created by Kasrkin84 so that they have an ambient track like all other maps with snow FX. 
+
+* The colours and iconography of the Basilisk Magnus on the Dussala Precinct mission are incorrect (they are 412th Cadian instead of 252nd Kauravan).
+Fix: Replace the following files 
+Data/Art/ebps/races/imperial_guard/texture_share/ig_basilisk_dude.rsh, Data/Art/ebps/environment/sp_dxp3/texture_share/ig_basiliskmagnus_guns_src.rsh, Data/Art/ebps/environment/sp_dxp3/texture_share/ig_basiliskmagnus_metal_src.rsh and Data/Art/ebps/environment/sp_dxp3/texture_share/ig_basiliskmagnus_src.rsh with fixed versions by Kasrkin84
+
+* On the Dark Eldar, Eldar, Imperial Guard and Tau strongholds, the SCAR code loads up the ambient tracks but doesn't actually start playing them.
+Fix: Add the following lines to the bottom of Rule_SetupMusicPlaylist() in the relevant SCAR files:
+
+Sound_SetVolumeModifierAmbient(1.0)
+Sound_PlaylistStart(PC_Ambient)
+
+* Or'es'Ka's shield drone has the T'au rather than Fal'shia colour scheme.
+Fix: replace "Data\art\ebps\races\tau\texture_share\commander_shield_drone.rsh" with Kasrkin84's fixed version that has the correct colour scheme. 
+
+* Some of the loading screens for the single player campaign are named incorrectly, resulting in the wrong ones being used.
+Fix: Make copies of the following files in data/scenarios/sp/loading, and rename them like so:
+
+stronghold_chaos_marine_attack_skirmish.dds --> 8p_peninsula of iseult.dds (note the use of spaces rather than underscores)
+stronghold_chaos_marine_attack_skirmish.dds --> 8p_peninsula of iseult_attack_skirmish.dds (note the use of spaces rather than underscores)
+stronghold_dark_eldar_attack_skirmish.dds --> 8p_lacunae.dds
+stronghold_dark_eldar_attack_skirmish.dds --> 8p_lacunae_attack_skirmish.dds
+stronghold_eldar_attack_skirmish.dds --> 8p_upper_wastes.dds
+stronghold_eldar_attack_skirmish.dds --> 8p_upper_wastes_attack_skirmish.dds
+stronghold_imperial_guard_attack_skirmish.dds --> 8p_dussala_precinct.dds
+stronghold_imperial_guard_attack_skirmish.dds --> 8p_dussala_precinct_attack_skirmish.dds
+stronghold_necron_attack_skirmish.dds --> 8p_coastal_imossa.dds
+stronghold_necron_attack_skirmish.dds --> 8p_coastal_imossa_attack_skirmish.dds
+stronghold_ork_attack_skirmish.dds --> 8p_rokclaw_mountains.dds
+stronghold_ork_attack_skirmish.dds --> 8p_rokclaw_mountains_attack_skirmish.dds
+stronghold_sisters_attack_skirmish.dds --> 8p_sama_desert.dds
+stronghold_sisters_attack_skirmish.dds --> 8p_sama_desert_attack_skirmish.dds
+stronghold_space_marines_attack_skirmish.dds --> 8p_lands_of_solitude.dds
+stronghold_space_marines_attack_skirmish.dds --> 8p_lands_of_solitude_attack_skirmish.dds
+stronghold_tau_attack_skirmish.dds --> 8p_nan_yanoi.dds
+stronghold_tau_attack_skirmish.dds --> 8p_nan_yanoi_attack_skirmish.dds
+	
+* When playing as Necrons with the "Assassinate" win condition activated, transforming the Necron Lord into the Deceiver will result in an instant loss.
+Fix: replace data/scar/winconditions/assassinate.scar with Kasrkin84's fixed version.
+	
+* When playing with certain mods, the line that is shown when researches are limited to a building will always refer to the Necron Forbidden Archive.
+Fix: change the line to be more generic.
+
+***Addendum by Kasrkin84***
+* A number of maps have issues with their impass and pathing maps being set incorrectly.
+Fix: Replace these with fixed versions.
+
+Space Marines
+* Smite STILL lists vehicle_high as a valid target type twice but does not list monster_high. It appears that monster_high was accidentally replaced with a second vehicle_high on Smite's target filter.
+Fix: under area_effect\area_effect_information\target_filter, change the second tp_vehicle_high.lua entry to tp_monster_high.lua
+
+* Servitors have a set of broken cover modifiers outside the regular set of cover modifiers. These extra modifiers disable both the movement speed penalty and ranged damage reduction/boost that they should receive from all three types of cover.
+Fix: Remove the six extra modifiers listed under the main section of cover_ext in the servitor's ebps file.
+
+* The Force Commander's charging animation when equipped with the Daemonhammer is broken.
+Fix: Make him use the campaign Force Commander model, which has a correct version of the animation.
+
+* The Deep Strike Beacon does not have its icon set although one was created for it.
+Fix: Under ebps\environment\sm_stronghold_dxp3\sm_beacon\ui_e xt\ui_info, set icon_name to space_marine_icons/deep_strike_beacon_icon.
+
+* The Dreadnought permanent close-combat fist is doing higher morale damage (32.5 DPS) than the replaceable close-combat fist (21.7 DPS), but they are the same weapon.
+Fix: Reduce the morale damage of space_marine_dreadnought_fist_twin to 37.5, the same reduction as the physical damage from the main fist.
+
+* Indrick Boreale's chainsword has AP entries for vehicle_high and building_high, but no corresponding values assigned to them.
+Fix: Assign proper AP values to entry_08 and entry_14 in weapon\space_marine_chainsword_force_commander.
+
+* Scout Marine Sniper Rifles have the same hotkey as detach leader "T". The problem is that the weapon upgrade has the same ui_hotkey_name as the research, which ends up overriding the hotkey set for the weapon. Also, the original hotkey overlaps with Skull Probe's Sabotage.
+Fix: Under the research marine_sniper_rifle, change ui_hotkey_name to marine_sniper_rifle_research. In KEYDEFAULTS.LUA, change the entry for the marine_sniper_rifle research to the same name. Change the hotkey for marine_sniper_rifle (the weapon upgarde) to "I".
+
+* Force Commander Boreale's build icon disappears when he is built.
+Fix: Under ebps\races\space_marines\troops\force_commander_advance_sp, set ui_ext\ui_hide_button_when_unable_to_build to false.
+
+* Wargear: Power Fist has no display requirement, so the research icon doesn't appear until the Monastery add-on is complete.
+Fix: Duplicate the either/or requirement for the prerequisite researches (see other Power Fist fix above) at requirement_10, and set is_display_requirement to True.
+
+* Boreale's Melta Gun wargear reduces the morale DPS. In addition, the weapon is an AV gun but does negligible damage to building and vehicle_high.
+Fix: Set the morale damage of space_marine_bolt_pistol_combi_chaingun_forcecomma nder to 10, same as the Plasma Pistol. Increase the piercing for the two armor types to be more in line with an AV weapon.
+
+* Space Marine Missile Turrets have two sets of entries for infantry low to high, but no building entries. The first set is misnamed.
+Fix: In space_marine_missile_turret, under area_effect\weapon_damage\armour_damage\armour_pie rcing_types, change the armor types for entry_04 through 06 to tp_building_low through tp_building_high.
+
+* Although visibly impeded from firing while teleporting, Indrick Boreale can still do so.
+Fix: In space_marine_force_commander_advance_sp, under squad_jump_ext, change combat_enabled to False.
+
+* If the Force Commander uses Battlecry immediately after targeting Orbital Bombardment, he will bypass the busy time for both, firing both abilities as fast as the player can perform the actions and being instantly free to continue attacking on his own.
+Fix: In marines_orbital_bombardment, change entity_busy_time to 5.
+
+* Honor Guard Terminator Heavy Flamers have no FotM penalty.
+Fix: In weapons/space_marine_heavy_flamer_veteran, change accuracy_reduction_when_moving from 0 to 0.30.
+
+* Honor Guard Assault Marine Veterans have a max jump charge of only 90, but regular Assault Marines have a max jump charge of 110.
+Fix: In sbps/races/space_marines/space_marine_squad_assault_veteran_sp, change jump charge_max from 90 to 110.
+
+* Targeting Optics' tooltip uses the incorrect verb tense. Text line 701652 (in DXP2.ucs) says "Dramatically increased the damage done by all Space Marine ranged weapons."
+Fix: Change "increased" to "increases".
+
+***Addendum by CornCobMan - Thanks to Anubis6***
+* A lot of tooltips have various grammatical mistakes and typos.
+Fix: Use his DXP2.ucs and W40K.ucs files.
+
+***Addendum by CornCobMan - Thanks to Wraith_Lord***
+
+* The stun effect from Frag Grenades applies to the entire squad, not just the units actually hit by the ability.
+Fix: In marines_frag_grenades_2, set the modifier\application_type of modifier_01 to _03 to tp_mod_apply_to_enitity.
+
+***Addendum by CornCobMan - Thanks to Soul_Reaver***
+
+* After researching Wargear: Power Weapons, the (disabled) Wargear: Power Fists button does not appear. It only appears after the Monastery upgrade is completed.
+Fix: For marine_sergeant_melee_upgrade_2 for requirements/required_11, set is_display_requirement to True.
+
+* The Honour Guard Chaplain’s melee weapon changes to a Power Sword when the Power Swords research is completed. This weapon overall seems to be a downgrade form the Crozius Arcanum. Furthermore, when the Power Fists research is completed, it upgrades the Crozius Arcanaum damage but not the Power Sword damage, thus preventing the Honour Guard Chaplain from getting this upgrade.
+Fix: For marine_sergeant_melee_upgrade_1_advance_sp, clear the values in modifiers/modifier_03
+
+
+Chaos
+* Chaos Rhinos and Chaos Predators take 80% ranged damage in heavy cover, but all other vehicles take 75% damage, including Chaos's own Defiler.
+Fix: Change their ranged damage reduction for heavy cover to 0.75. Do the same for the campaign variants.
+
+* The Daemonic Ascension wargear still lists Eliphas as the one ascending.
+Fix: Change Eliphas to Firaeveus Carron (text line $3001376).
+
+* Honor Guard Cultist Squads STILL do not receive detection from Unholy Sight, now due to an incorrect application type.
+Fix: In chaos_cultist_sight_research, under modifiers 3 and 4, change the application_type to tp_mod_apply_to_entity_type.
+
+* Firaeveus Carron is called Firraveus Carron in the race selection screen of the campaign. He is referred to as Firaeveus in his tooltip and all campaign voiceover lines. There are no other instances of the Firraveus spelling.
+Fix: Change his name's spelling in DXP2.ucs line number 3900377.
+
+* Firaeveus Carron's tooltip describes him as a Dark Apostle of Chaos Undivided. Only Word Bearers have Dark Apostles, and Carron is from the Alpha Legion.
+Fix: Remove the tooltip line from the unit and squad entries.
+
+* The Chaos Lord's Daemon Strength speech files do not play due to a typo in the speech_directory.
+Fix: Under abilities\chaos_daemon_strength\speech_directory and abilities\chaos_daemon_strength_daemon_prince, change ability/deamon_strength to ability/daemon_strength.
+
+* The Chaos Sorcerer's ability speech files do not play; Chains of Torment and Corruption lack .con files, and there is no Doombolt folder or .con file.
+Fix: In sound\speech\races\chaos_marines\sorceror\ability, make 3 new .con files: chains_of_torment.con, corruption.con and doombolt.con. Extract the corruption/chains_of_torment folder (doesn't matter which, they both use the same sounds) and rename it to doombolt. Don't make or extract any more folders - the three .con files and the new doombolt folder are all you need.
+
+* The Daemon Prince and Bloodthirster researches have the same ui_index_hint, so while the Bloodthirster research is in progress the Daemon Prince research's icon will shift over to fill its slot, then shift back to the right when the research completes and is replaced by the inactive Bloodthirster research icon.
+Fix: Under research\chaos_bloodthirster_research, change ui_index_hint to 3.
+
+* Line $4450134 is missing a period at the end of the sentence.
+Fix: Add the period.
+
+* Text line 5300114 (in DXP2_VO.ucs) says "Ah, they are preparing their march to their doom." The actual line spoken by Carron is slightly different.
+Fix: Change the line to read "Ah, they are preparing to march to their doom."
+
+* The metamap-view tooltip (squad file) for the Chosen Champion refers to them as Word Bearers. The in-game tooltip (unit file) has the correct line.
+Fix: Change the second tooltip line for chaos_squad_aspiring_champion_advance_sp to $4450072.
+
+* Tainted Auspex's tooltip says "Left-click to place a ward at your location." This is a holdover from DC 1.0, and should be corrected.
+Fix: Change the tooltip line to read "Left-click and target a location to place a ward."
+
+* Text line 3950023 (in DXP2.ucs) says "Destroy the Desecreated Fortress HQ."
+Fix: Change "Desecreated" to "Desecrated".
+
+* When attacking the Chaos stronghold as Eldar, the incorrect voiceover is played upon entering the city.
+Fix: Under scenarios\sp\stronghold_chaos_marines.nis, in line 156, change 5300116 to 5300119.
+
+* Firaeveus' Khornate Chainaxe suffers from a significant downgrade in damage against vehicle_high and monster_high when upgrading from his Manreaper.
+Fix: Assign an AP value to entry_08 and entry_10 in weapons\chaos_khornate_chainaxe_lord so that the damage against those armor types is actually an upgrade from the Manreaper.
+
+* "Daemons" is spelt "demons" several times in the Chaos stronghold.
+Fix: Change "demons" to "daemons" in lines 5200099, 5300139, 5300140, and 5300146 (in DXP2_VO.ucs).
+
+* Text line 5300115 (in DXP2_VO.ucs) says "I’m looking forward hacking the heads of these traitors from their useless bodies."
+Fix: Change "forward hacking" to "forward to hacking".
+
+* Text line 5300133 (in DXP2_VO.ucs) says "Send them – send them against the fools who dare attack us." The actual line spoken by Carron is slightly different.
+Fix: Change the line to read "Send them – send them against the fools who would dare attack us!"
+
+* The Hell Talon has a death explosion, but both the Marauder Bomber and Barracuda do not, whose races had all other vehicles granted death explosions in SS 1.10. The Land Speeder Tempest and Fighta-Bomma also do not have death explosions. Air units having death explosions is apparently the aberration, not the other way around.
+Fix: Remove the Hell Talon's death explosion.
+
+* The Chaos Sorcerer can fire his weapons while teleporting, but his animation should preclude that ability.
+Fix: In chaos_squad_sorcerer and all campaign variants, under squad_jump_ext, change combat_enabled to False.
+
+* Chaos has a 1/100 the kill count requirement to get the 3:1 Kill Ratio Wargear achievement as all other races.
+Fix: In scenarios\sp\races\chaos_marine_race.race, on line 459, change UnitKillsMission to 200.
+
+* Chains of Torment does not disable jumping like all other infantry stunning/locking abilities.
+Fix: In chaos_chains_of_torment, under area_effect\weapon_damage\modifiers, duplicate modifier_01 at modifier_02, and change the modifier to modifiers\enable_squad_jump.lua.
+
+* Chaos Tactical Marines' plasma gun has an invalid armor type reference for entry_12, so it doesn't use the correct AP value assigned to it for building_low.
+Fix: In weapons/chaos_plasma_gun_tactical, change the armor type reference for entry_12 from type_armour\tp_armour.lua to type_armour\tp_building_low.lua.
+
+* Chains of Torment tends to fizzle out against a fleeing target, counting as cast but with no effect on the target.
+Fix: In chaos_chain_of_torment and the campaign variant, change entity_busy_time to 2.
+
+* Cultists' knife has an AP entry defined for infantry_heavy_high, but no corresponding value assigned to it. Damage to this armor type does not scale with Furious Charge Research.
+Fix: In weapons/chaos_knife_cultist, assign a proper AP value for entry_05.
+
+* Honor Guard Possessed Marines move slower at 20 speed compared to regular Possessed Marines, which move at 24 speed.
+Fix: In ebps/races/chaos/troops/chaos_possessed_marine_advance_sp, change speed_max from 20 to 24.
+
+* Honor Guard Raptor Aspiring Champions take 3 seconds to make a jump, while regular Raptors take 2.5 seconds to make a jump.
+Fix: In sbps/races/chaos/chaos_squad_raptor_champion_advance_sp, change jump_time_max from 3 to 2.5.
+
+***Addendum by CornCobMan - Thanks to Wraith_Lord***
+
+* The stun effect from Frag Grenades applies to the entire squad, not just the units actually hit by the ability.
+Fix: In marines_frag_grenades_2, set the modifier\application_type of modifier_01 to _03 to tp_mod_apply_to_enitity.
+
+* Horrors use Chaos Marines voice clips when entering the Sacrificial Circle.
+Fix: Make copies of any of the existing Horror voice clip directories (they all use the same 3 sounds) and rename the copies loadtransport and unloadtransport. Also copy a loadtransport.con and unloadtransport.con file from any chaos space marine voice clip directory and place it in the horror directory. 
+
+* All Aspiring Champion weapon upgrade tooltips make no mention that Cultist ACs are not affected. Purge the Weak also does not mention that they do not receive the health bonus, only the Fear Aura.
+Fix: On lines $95622, $95632, $95642, $670505, after all Aspiring Champions add and Raptor Aspiring Champions (I removed the all because it's redundant grammar), thus excluding Cultist Aspiring Champions from the lists.
+
+***Addendum by CornCobMan - Thanks to Soul_Reaver**
+
+* Furious Charge tries to boost the speed of Chaos Raptor Aspiring Champions – this normally would have no effect, but if the Champion is the only unit left he would actually see a speed increase.
+Fix: For chaos_furious_charge_research, clear the values in modifiers/modifier_09
+
+
+Eldar
+* Relic did not properly implement the fix to let Warlocks keep Entanglement instead of Embolden when a Farseer is attached, causing the Seer Council to have Entanglement instead of Embolden as well.
+Fix: In eldar_warlock_seer, under ability_ext, change ability_03 to abilities\eldar_embolden.lua.
+
+* Warp Spiders can fire their weapons during their teleport animation.
+Fix: In eldar_squad_warp_spider and all campaign variants, under squad_jump_ext, set combat_enabled to False.
+
+* Harlequin's Kiss ability has AP values defined for infantry_high twice and no value defined for infantry_heavy_high. If it also still has the potential to mistarget commanders, then the min_damage_value needs to be dropped to prevent it from killing them.
+Fix: In eldar_liquefy, change the reference for entry_07 from infantry_high to infantry_heavy_high. Change min_damage_value to 0.
+
+* The Fire Dragon Exarch has a reduced morale death penalty of just 40 instead of 60 like other Exarchs.
+Fix: Set its health_ext\morale_death to 60
+
+* The Harlequin's Shrieker Cannon has 80% accuracy but no FotM penalty.
+Fix: Give it a FotM penalty of 65%.
+
+* The Fire Dragon squad is referred to as "Fire Dragon" in the tooltip for their button at the Aspect Portal. All other Eldar infantry units are referred to as a squad, e.g. "Dark Reaper Squad".
+Fix: Change the squad's tooltip title to read "Fire Dragon Squad"
+
+* The Shrine of Khaine addon for the Eldar listening post disappears until you build a Soul Shrine. This is because there is no display requirement. There is a requirement for eldar_listening_post but is_display_requirement is set to false.
+Fix: for eldar_list_post_addon_2 set is_display_requirement for requirements->required_1 to true.
+
+* Eldar Listening Post Brightlances are a significant downgrade in damage against Infantry High, Infantry Heavy High, and Daemon Medium. Their only significant damage increase is against buildings (almost useless).
+Fix: Increase the piercing values against those armor types to either maintain DPS to prevent a downgrade or to be in line with the DPS curve of the other armor types.
+
+* Fire Dragons have a ranged_attackrange of 35 but their weapon range is only 20. Attacking a Farseer will cause the squad to stop moving during an attack-move outside the range of their main weaponry, and also tends to keep the rear squad members from automatically moving into firing range.
+Fix: Reduce the squad's ranged_attackrange to 20.
+
+* Farseer Caerys' name is spelled incorrectly.
+Fix: Change 'Farseer Caeyrs' to 'Farseer Caerys'.
+
+* Dark Reapers use the Guardian damage and death vocals instead of the ones created for them.
+Fix: Under Event List\sound_vocal_damage\Event Properties, change Value to speech\races\eldar\dark_reaper\damage. Under Event List\sound_vocal_die\Event Properties, change Value to speech\races\eldar\dark_reaper\die. Do the same for the Dark Reaper Exarch.
+
+* Mysticism's tooltip does not mention that it increases the squad's damage by enabling Leadership.
+Fix: Create a new tooltip line explaining the effect and add it to eldar_warlock_ability_research's help_text_list.
+
+* The Nightwing has a death explosion, but both the Marauder Bomber and Barracuda do not, whose races had all other vehicles granted death explosions in SS 1.10. The Land Speeder Tempest and Fighta-Bomma also do not have death explosions. Air units having death explosions is apparently the aberration, not the other way around.
+Fix: Remove the Nightwing's death explosion.
+
+* Guardian Squad's Shuriken Catapult is lacking an AP value for infantry_heavy_high, although it is an anti-infantry weapon. Damage to this armor type does not scale with Improved Optics and Superior Optics, nor is it buffed by the Warlock's Leadership aura.
+Fix: In weapons/eldar_shuriken_catapult_guardian, define a proper AP value for entry_05.
+
+* Honor Guard Banshee Exarch Council members have a morale recovery rate of only 10 morale/sec, but regular Banshees have a morale recovery rate of 15 morale/sec.
+Fix: In sbps/races/eldar/eldar_squad_banshee_exarch_council, change morale rate_per_second from 10 to 15.
+
+* Honor Guard Fire Dragon Exarch Council members have only 600 morale, but regular Fire Dragons have 800 morale.
+Fix: In sbps/races/eldar/eldar_squad_fire_dragon_exarch_council, set the default and max morale to 800.
+
+* The tooltip for the Brightlance Platform says that it does no damage to targets. This is incorrect, it deals damage to all target types.
+Fix: Correct the tooltip (lines $698302 and $698404 for unit and squad tooltips respectively).
+
+* The Howling Banshee Exarch does not gain mass or armor upgrades from the Reinforced Armor upgrades.
+Fix: In both eldar_research_infantryhealth resrearches, create a duplicate of modifier_08, changing the target to eldar_banshee_exarch. Also, in the second research, create a duplicate of modifier_09, again changing the target name.
+
+* The Howling Banshee Exarch's damage against infantry_med decreases after Call of War.
+Fix: In eldar_executioner, increase the piercing against infantry_med to 82.95 (a 25% DPS increase, like against infantry_high and infantry_heavy_med).
+
+* The icon for Annihilate The Enemy research does not appear in the Soul Shrine until Mobilize For War is researched.
+Fix: In research/eldar_annihilate_the_enemy, set research_must_not_be_complete to true for requirements->required_10.
+
+***Addendum by CornCobMan - Thanks to Wraith_Lord***
+* Eldar Fire Dragon Aspect Stone Add-on states "- Upgrades this buildings with a Fire Dragon Aspect Stone" and "- Allows the training of Fire Dragons from this buildings"
+Fix: Change buildings to building in lines $700000 and $700001.
+
+* Eldar Nightwing Aspect Stone Add-on states "- Upgrades this buildings with a Nightwing Aspect Stone"
+Fix: Change buildings to building in line $4550009.
+
+***Addendum by CornCobMan - Thanks to Reaper_R66***
+
+* In the campaign the icons for the Warp Spider don't appear on the metamap.
+Fix: Rename eldar_squad_warp_spide_large and eldar_squad_warp_spide_larger to eldar_squad_warp_spider_large and eldar_squad_warp_spider in art/ui/swf/icons
+
+***Addendum by CornCobMan - Thanks to Soul_Reaver***
+
+* Eldar Warlocks are not affected by Eldar Reinforced Armor upgrade due to wrong applicaton type
+Fix: For elder_research_infantryhealth_1.rdg, for modifier_13, change application_type to type_modifierapplicationtype\tp_mod_apply_to_entity_type.lua. Repeat for modifier_14 in elder_research_infantryhealth_2.rdg
+
+* Howling Banshee Exarch does not gain mass or armor upgrades from the Reinforced Armor (ie, Level 2 armour) upgrade.
+Fix: For elder_research_infantryhealth_2.rdg, create a duplicate of modifier_08, changing the target to eldar_banshee_exarch. Then create a duplicate of modifier_09, again changing the target name to elder_banshee_exarch.
+
+***Addendum by CornCobMan - Thanks to Anubis6***
+* The Fire Dragon Exarch Council tooltips mention that they are effective against Infantry and Heavy Infantry.
+Fix: remove or change the tooltip line from sbps/eldar/eldar_squad_fire_dragon_exarch_council
+
+* The Warp Spider Exarch Council tooltips mention that they are effective against Infantry and Heavy Infantry twice.
+Fix: remove the offending tooltip line from sbps/eldar/eldar_squad_warp_spider_exarch_council
+
+* The Mysticism research tooltips repeats the line that the Entanglement ability is available instead of the Embolden ability.
+Fix: Change the tooltip line from $694403 to $694402
+
+***Addendum by CornCobMan ***
+* Add new events and effects for Eldar troop reinforcement and weapon upgrades to make them more distinct.
+
+Orks
+* All teleporting Ork units (via Big Mek) can fire during their teleport animation. Stormboyz, as a jump unit, are fine though.
+Fix: For the following squads and their campaign variants, under squad_jump_ext, set combat_enabled to False: ork_flash_gitz_squad, ork_squad_mek_boy, ork_squad_nob, ork_squad_shoota_boy, ork_squad_slugga_boy, and ork_squad_tankbusta.
+
+* The 10 s recharge duration increase to the Big Mek's teleport was not implemented for all Ork squads, only the Big Mek himself. This means that unless the Big Mek is unattached (rare), the nerf has no effect.
+Fix: For the following squads and their campaign variants, under squad_jump_ext, set charge_jump_cost_max, charge_jump_cost_min, and charge_max to 135: ork_flash_gitz_squad, ork_squad_mek_boy, ork_squad_nob, ork_squad_shoota_boy, ork_squad_slugga_boy, and ork_squad_tankbusta.
+
+* Mega Armored Nobz have no morale penalty on death.
+Fix: Give them a value for health_ext\morale_death (balance implications).
+
+* The Squiggoth's Big Shootas each do reduced damage to a single armor type that the other is effective against. They are both ineffective against Infantry Heavy High, Building Medium, and Building High.
+Fix: Set armor piercing for ork_big_shoota_twin_squig_l for infantry_heavy_high to to 3. Set armor piercing for ork_big_shoota_twin_squig_r for building_low to to 3. Set the piercing on both weapons for the remaining three armor types to 3.
+
+* The health regeneration mob bonus provides a meager 12% health regeneration bonus only to the unit with the ability, making it almost completely useless.
+Fix: Change the effect to apply to the entire squad (and likely reduce its strength for balance purposes).
+
+* Mega Armored Nobz have a mod value of just 1, which means even at full strength they cannot activate their own weapon damage and morale regeneration mob bonuses. They also have a lower mob value than regular Nobz.
+Fix: Increase the mob value of Mega Armored Nobz to 2.
+
+* Mad Doks have a charge bonus of 50% instead of 30% like other Ork units.
+Fix: Reduce the Mad Dok's charge bonus to 30%.
+
+* Kustom Gadgitz still says it increases the build time of the Big Mek.
+Fix: Remove the fourth tooltip line from the research.
+
+* The tooltip for Extra Vehicle Armor says it improves the health of all Ork vehicles, but Fighta-Bommas are unaffected.
+Fix: Either change the entry to list only the vehicles affected or add a modifier to include Fighta-Bommas.
+
+* The Ork Wartrak and Looted Tank are missing death explosions, although the Watrukk and Killa Kan both have one.
+Fix: Add death explosion values.
+
+* Honor Guard Mega Armored Nobz use pop cap.
+Fix: Under ork_armored_nob_advance_sp (the ebps file), change cost_ext\time_cost\cost\population to 0.
+
+* Text line $5300432 (in DXP2_VO.ucs) says "Let us slay them in their pens, before they Orks release more of them."
+Fix: Change "they" to "the".
+
+* Nuddyfist speaks with Gorgutz's icon throughout the Ork stronghold.
+Fix: Under scenarios\sp\stronghold_ork.nis, in lines 18 and 76, change ACT.Gorgutz to ACT.Nuddyfist.
+
+* Gorgutz is noticeably smaller than a normal Warboss, as his vis_scale_min and vis_scale_max values are set to 1 rather than 1.2.
+Fix: Under art\ebps\races\orks\troops, copy warboss.lua and rename it to warboss_tgd.lua.
+
+* The Wartrukk is armed with two Big Shootaz, but they both have AP values of 0 assigned for vehicle_med and vehicle_high. They are also missing an AP value for monster_high. As a result, the damage to these armor types doesn't scale when Blastier and Even More Dakka is researched.
+Fix: In weapon\ork_big_shoota_trukk.lua, fix the AP values for entry_02 and entry_03. Assign an AP value for entry_11.
+
+* The Looted Tank's Heavy Bolters have no piercing against vehicle_high.
+Fix: Assign a piercing value for that armor type.
+
+* Gorgutz's Big Horns wargear AND his Red Gob wargear both have no piercing against vehicle_high, although they have 10 piercing against monster and building high.
+Fix: In weapons/ork_warboss_big_horns and ork_warboss_red_gob, change the armor piercing for vehicle_high (entry_10) to 10.
+
+* Honor Guard Big Mek has a reduced sight radius of 13. The regular Big Mek has a sight radius of 25. His detection radius is fine, though.
+Fix: In ebps/races/ork/troops/ork_mek_boy_advance_sp, change sight_radius from 13 to 25.
+
+* Honor Guard Big Mek is using a modified power klaw that does roughly 1/9th the melee damage of a regular Big Mek against building_high.
+Fix: In weapons/ork_mega_claw_boss_sp, set the armor piercing for building_high to 13.86.
+
+* Gorgutz starts with only 2000 HP, less than a regular Ork Warboss at 2240 HP.
+Fix: In ebps/races/ork/troops/ork_warboss_advance_sp, change hitpoints from 2000 to 2240.
+
+* Text line 5300405 (in DXP2_VO.ucs) is missing a period at the end of the sentence.
+Fix: Add the period.
+
+* Text line 5300409 (in DXP2_VO.ucs) says "You try getting’ it back!" The second 'g' is redundant.
+Fix: Change the line to read "You try gettin’ it back!"
+
+* Text line 5300435 (in DXP2_VO.ucs) has an unnecessary space between "sez" and the period.
+Fix: Delete the extra space.
+
+***Addendum by CornCobMan - thanks to Soul_Reaver***
+
+* Honour Guard Mad Dok has a charge bonus of 50% instead of 30% like other Ork units.
+Fix: For ork_bad_dok_advance_sp.rgd, in melee_ext/charge_modifiers/modifier_01 change value to 1.3. Repeat for ork_bad_dok_sp_trainer.rgd.
+
+* Grots have no regen rate at all
+Fix: Give them a regen rate of 1
+
+* Honor Guard Big Mek is using the wrong weapon (which does roughly 1/9th the melee damage of a regular Big Mek against building_high prior to the fix). He should actually be using a different weapon entirely, though this weapon has some armour piercing inconsistencies as well.
+Fix: Go to attrib/ebps/races/orks/troops/ork_mek_boy_advance_sp.rgd, then change combat_ext/hardpoints/hardpoint_02/weapon_table/weapon_01/weapon to ork_power_claw_mekboy_sp.lua. Then go to attrib/weapon/ork_power_claw_mekboy_sp.rgd and change area_effect/weapon_damage/armour_damage/min_damage_value to 10 and area_effect/weapon_damage/armour_damage/armour_piercing_types/entry_14 (for tp_building_high) to 13.867 to match standard MekBoy Power Klaw.
+
+Imperial Guard
+* Relic did not properly implement the fix to Techpriest Enginseer's stance.
+Fix: In guard_squad_enginseer, under squad_combat_stance_ext, change ignore_building_stance to True.
+
+* The General's Strafing Run has 25 piercing against vehicle_low, but full piercing against all other armor types. It is apparently part of an abandoned plan to create a full set of piercing values for the ability (half of the armor types are outright missing from the piercing table). Since this was never completed, it should be returned to full piercing like the other armor types.
+Fix: In the ability guard_strafing_run and all children, set the armor_piercing_value for entry_07 to 100.
+
+* HQ Priest's Eviscerator lacks an AP value for vehicle_high, so his damage to this armor type is not buffed by Righteous Fury.
+Fix: Assign an AP value for entry_08 in guard_eviscerator_priest.
+
+* CS Priest Chainswords, HQ Priest Eviscerators, and Guardsmen Sergeant Laspistols all do 0 or near-0 morale damage.
+Fix: Give them morale damage.
+
+* Kasrkin Plasma Guns have a reload time of 1 s while all other Plasma Guns have a reload time of 0.5 s.
+Fix: Halve the base damage of the Kasrkin Plasma Gun and set its reload to 0.5 s.
+
+* The tooltip for Assassination Scope just says it increases the damage of the Exitus Rifle. It increases the damage of all of the Assassin's weaponry.
+Fix: Correct the tooltip.
+
+* Beating the Imperial Guard Stronghold kills all of the player's Honor Guard.
+Fix: under scenarios\sp\races\stronghold_imperial_guard.nis, comment out line number 1914
+
+* Lightning Arc says it has a chance to jump to nearby squads. It does not, this feature was never implemented.
+Fix: Remove the third tooltip line from all variations of the lightning arc ability.
+
+* Text line 5300124 (in DXP2_VO.ucs) says "This city was ours. How many millions did we lose, to this – this madness?" The actual line spoken by Stubbs is slightly different.
+Fix: Change the line to read "This city was ours… How many millions did we lose to this - to this madness?"
+
+* Stubbs's line at $5200048 says "and, and zealots." For a pause in the speech like he uses, it should read "and... and zealots."
+Fix: Fix the voiceover line.
+
+* Both CS Psyker and HQ Psyker have no AP values against building_high on the psychic spike weapon.
+Fix: Assign a proper AP value to entry_12 in weapon/guard_psychic_spike_psyker.
+
+* Vindicare Assassin has no AP values against vehicle_high and monster_high on his exitus pistol (melee weapon).
+Fix: Assign proper AP values to entry_08, entry_10 in weapon/guard_exitus_pistol_assassin.
+
+* The Regimental Command tooltip says it increases the size of Guardsmen Squads. It does not, it only maintains the increased size from the Battle Command add-on.
+Fix: Remove the third tooltip line from addon_guard_hq_2.
+
+* Lemun Russ heavy bolters mounted on the hull and both sponsons do almost 0 DPS to vehicle_high, whereas similar weapons on other tanks do significantly more (Predators and Chaos Predators for example).
+Fix: Set the piercing against vehicle_high for the three Leman Russ Heavy Bolters to match their building_high piercing.
+
+* The Basilisk Heavy Bolter has 0 piercing against vehicle_high and monster_high, but still has piercing against building_high.
+Fix: Assign piercing values for entry_08, entry_10 in weapon\guard_heavy_bolter_basilisk.
+
+* Genetic Enhancement only boosts the speed of Kasrkin and Sergeants, not attached commanders. Because Kasrkin require the attachment of a commander to be competitive with other Tier 3 infantry, this means they never receive any benefit from the research, rendering it useless.
+Fix: Create a new ability called ability_kasrkin_bionic_wargear_ability.
+Create a modifier of type speed_maximum_modifier
+Set the requirement to research_kasrkin_speed.
+Give this ability to Kasrkin, Kasrkin Sergeants, and the campaign variants of each.
+
+*Addendum by CornCobMan thanks to JJSawry
+Ability reworked, target type: squad, exclusive true, target_filter set to commander (no longer applies to each commander differently)
+
+* The Baneblade Heavy Bolters have 0 piercing against building_high.
+Fix: In guard_heavy_bolter_baneblade_1, _2, and _3, set the piercing to a non-0 value (Land Raider Heavy Bolter uses 4).
+
+* In the race selection screen the Conservators are referred to as the 252nd Kaurava instead of the 252nd Kauravan.
+Fix: Change "Kaurava" to "Kauravan" in text line 3900386 in DXP2.ucs.
+
+* Let it Burn does not create a persistant flame effect (a.k.a. "burning") on units like all other flame-related abilities and flamer weapons do in Soulstorm. This means that as soon as the target walks out of the area of effect, they are completely free from damage.
+Fix: In abilities/guard_let_it_burn, create two new modifiers. Set modifier_01's type to health_degeneration_modifier and usage_addition, lifetime to 1, exclusive to true. Set modifier_02's type to flamer_hit_event, lifetime to 1. Do the same for the children abilities, but set their modifier lifetimes to 3.
+
+* Strip Soul still says it has a chance to backfire and kill the Psyker.
+Fix: In guard_psyker_strip_soul, under ui_info\help_text_list, remove the second entry ($694804).
+
+***Addendum by CornCobMan - thanks to Soul_Reaver***
+
+* The guard_kasrkin_bionic_wargear_ability doesn’t affect the Honour Guard Psyker, so attaching him to squad of Kasrkin with Genetic Enhancement researched will slow the squad down.
+Fix: For guard_kasrkin_bionic_wargear_ability, in area_effect/weapon_damage/modifiers/modifier_04/modifier, change target_type_name to guard_leaders_psyker_advance_sp.
+
+* The guard_ability_kasrkin_bionic_wargear_ability doesn’t affect the single-player Prisoner Psyker, so attaching him to squad of Kasrkin with Genetic Enhancement researched will slow the squad down.
+Fix: For guard_ability_kasrkin_bionic_wargear_ability, copy area_effect/weapon_damage/modifiers/modifier_04 to area_effect/weapon_damage/modifiers/modifier_08, then change target_type_name to guard_leaders_psyker_sp_dxp3_prisoner.
+
+* Both Command Squad Psykers and HQ Psyker have no AP values against building_high on the psychic spike weapon.
+Fix: Assign an AP value of 10 to entry_12 in weapon/guard_psychic_spike_psyker 
+
+* IG vehicle death explosions are all identical and do no damage, and Baneblade doesn’t even have an explosion at all. Honour guard vehicles have the same problem.
+Fix: Copy the death_explosion_ext values from a ‘source’ unit to the unit being fixed. For the Baneblade, you’ll first need to create the death_explosion_ext child under GameData.
+The source unit should be from a vehicle with similar size/’explodiness’ as the target vehicle. I would suggest:
+Chimera = Rhino
+Sentinel = Land Speeder
+Hellhound = Whirlwind/Predator
+Basilisk = Whirlwind/Predator
+Leman Russ = Whirlwind/Predator
+Baneblade = Land Raider
+
+***Addendum by CornCobMan - thanks to Gambit and GreenScorpion***
+*If multiple Field Commands HQ buildings have been upgraded with tier addons but one building gets destroyed, the Guardsmen squad size increase no longer applies.
+Fix: remove the modifier from guard_hq_addon_1 and guard_hq_addon_2, and put them into new abilities, each increasing the squad size by 3 with modifier\application_type set to tp_mod_apply_to_squad. Give the abilities to guard_infantry_guardsmen and guard_infantry_guardsmen_sergeant.
+
+Tau
+* Relic did not properly implement the intended damage reduction to Photon Grenades.
+Fix: In tau_photon_grenade, under area_effect\weapon_damage\armour_damage, change min_damage_value to 0 and change armour_piercing to 100.
+
+* The Crisis Suit flamer has no angle values, which means unlike other flamers it has no aoe.
+Fix: Give the flamer angle values. Rebalancing likely necessary.
+
+* Despite being classified as infantry, Fire Warrior Shield Drones have no health regen.
+Fix: Set their health regen to 1
+
+* The Tau Commander's SQUAD tooltip states that the has no melee attack. This is incorrect, his melee attack is actually just as powerful as his basic Burst Cannon.
+Fix: Correct the tooltip for the squad file.
+
+* The Honor Guard Stealth Suits do not have any entries under list of armor types they are effective against. The regular XV15 Stealth Suit Team does not gain effective against vehicles when equipped with the Shas'Vre or Fusion Blasters. The Crisis Suit Fusion Blaster is listed as effective against infantry but not vehicles.
+Fix: Add Vehicles to ui_effective_against of tau_fusion_blaster_shasvre_stealth_suit, tau_fusion_blaster_stealth_suit, and tau_fusion_blaster_crisis_suit. Remove infantry and heavy infantry from the crisis suit weapon.
+
+* Targeting Optics is STILL not correctly increasing the sight radius of the Shas'Vre due to an incorrection application type.
+Fix: In tau_targeting_optics, change the Shas'Vre sight radius modifier, modifier_07, to tp_mod_apply_to_entity_type.
+
+* Or'es'Ka's Marker Drone STILL doesn't work properly, failing to buff the campaign versions of his main weapon.
+Fix: Full description and fixes.
+
+* The Kroot Shaper STILL does not have Feral Leap like other Kroot infantry.
+Fix: Duplicate the Feral Leap information from the Kroot Carnivores for the Kroot Shaper.
+
+* Commander Or'es'Ka's tooltip says that he serves at the side of Aun'el Shi'ores. This should be changed to reflect the new Ethereal Aun'Ro'Yr.
+Fix: Change 'Aun'el Shi'ores' to 'Aun'Ro'Yr'.
+
+* Kroot Carnivores and Kroot Hounds are affected by morale but do not have a morale death penalty. The Kroot Shaper does have a morale death penalty.
+Fix: Give them a morale death penalty (standard for Tau infantry is 40).
+
+* The tooltip for the Kroot Hunting Pack says they are 'Kroot Hounds bred by the Kroot Shaper Harbyx'. Underneath is a line saying they were bred by Shaper Ortrazk (the new Shaper in SS).
+Fix: Remove the offending line from the tooltip for both campaign Kroot Hounds (unit files only, squad file is already correct).
+
+* The Tau army in the campaign is incorrectly called 'T'au Strike Force'. This should be changed to reflect the new Sept, Fal'Shia.
+Fix: In scenarios\sp\races\tau.race, change the ForceName entry to $3950224.
+
+* XV15 Stealth Teams favor targeting infantry over vehicles. However, at the time vehicles are on the field, Stealth Teams will have switched over to AV duties with Fusion Blasters but will still favor infantry over vehicles.
+Fix: Move the five existing infantry entries under tau_stealth_team_squad\squad_combat_stance_ext\att ack_priorities down three rows, then fill in those three rows with vehicle_low, _medium, and _high (in that order). Do the same for tau_stealth_team_squad_sp and tau_stealth_team_squad_sp_dxp3.
+
+* Shaper Ortrazk's tooltip says he 'is has fought many wars under Commander Or'es'Ka.'
+Fix: Remove 'is' from the line ($4450101).
+
+* Target Acquired's speech file does not play as there is no specified speech_directory.
+Fix: Under abilities\tau_target_acquired, set speech_directory to ability\target_aquired (yes, it is spelled incorrectly).
+
+* The Kauyon Command Post, Mont'ka Command Post, and Coalition Centre do not display their health bars when selected.
+Fix: Under ebps\races\tau\structures\tau_shrine_of_kauyon, tau_shrine_of_montka, tau_shrine_of_purpose, and tau_shrine_of_purpose_sp_dxp3 set health_ext\display_health_bar to true.
+
+* The Kauyon Command Post's tooltip says it "Dedicated the cadre to the Kauyon tactics of the patient hunter."
+Fix: Change "Dedicated" to "Dedicates".
+
+* The Mont'ka Command Post's tooltip says it "Dedicated the cadre to Mont'ka tactics (the killing blow)."
+Fix: Change the line to read "Dedicates the cadre to the Mont'ka tactics of the killing blow."
+
+* The Mont'ka Command Post's tooltip says it "Allows advanced research." It does not.
+Fix: Remove the fifth line from the tooltip.
+
+* Honor Guard Broadsides appear in the hero UI section, along with Or'es'Ka and the Greater Knarloc. As they are not heroes in any sense, they should not appear there.
+Fix: under tau_broadside_battlesuits_hg_dxp3, change ui_ext\use_hero_ui to False.
+
+* Honor Guard Stealth Suits and Stealth Teams that have lost all but the Shas'Vre do not play a voice clip upon capturing a point. They have the same sound set as Shas'Vres, but this set lacks capture sounds and they don't have regular Stealth Suits to play the speech clips instead.
+Fix: Duplicate the capture.con and capture folder in sound\speech\races\tau\stealth_warrior to the shasvre_stealth_suit folder.
+
+* Crisis Suit missile pod is dealing negligible morale damage in combat (0.1 morale DPS).
+Fix: Give a proper morale damage value to tau_missile_pod_crisis_suit.
+
+* Barracuda missile pods are doing negligible morale damage (0.3 morale DPS).
+Fix: Give a proper morale damage value to tau_missile_pod_barracuda and tau_missile_pod_barracuda_2.
+
+* The Krootox's Kroot Gun has almost no morale damage.
+Fix: Give it a morale damage appropriate for the weapon's size.
+
+* If the Deceiver's main attack successfully confuses any enemy Ethereal or the Archon casts Crucible of Malediction on an enemy Ethereal, all other teams except the owner of the Ethereal gain huge amounts of health for all units.
+Fix: In the ability tau_for_the_greater_good, change modifier_01's modifier type to health_maximum_modifier and
+application_type to apply_to_entity, modifier_03's type to morale_maximum_squad_modifier and application_type to apply_to_squad and exclusive to True, and modifier_04's and modifier_05's exclusive to True and value to 0.
+
+* Although it produces a unit, the Coalition Center does not count towards Annihilation.
+Fix: In scar\win_conditions\annihilate.scar, under the annihilate exceptions, remove tau_shrine_of_purpose from the list.
+
+* Photon Grenades have a damage range set, but because there is no default piercing value set they always default to the min_damage_value.
+Fix: In tau_photon_grenade, under area_effect\weapon_damage\armour_damage, set armour_piercing to 100.
+
+* The firing effects and projectiles used for the Barracuda's Ion Cannon are taken from the Fire Warrior Pulse Rifle, a rather glaring mismatch.
+Fix: In art\ebps\races\tau\troops\barracuda.whe, under the animation information for the Ion Cannon hardpoint, change tau\weapon_fx\tau_tracer_fire_pulse_rifle to tau\weapon_fx\ion_cannon_tracer and tau\weapon_fx\pulse_rifle_muzzle_03 to tau\weapon_fx\ion_cannon_muzzle.
+
+* The Fortified Position Add-on calls the added weapons Pulse Rifles. However, the weapon is visibly a Plasma Rifle, and the firing effects are not those of a Pulse Rifle (which fire energy bolts, not beams).
+Fix: In line $704953, change "pulse rifles" to "Plasma Rifles".
+
+* The Air Caste Strike ability used in the Tau stronghold has no animation set for it, causing the Coalition Center to suddenly display the construction rigging through the model.
+Fix: Under abilities\tau_death_pulse_sp_dxp3, set ability_motion_name to default.
+
+* The Tau Listening Post and Plasma Generator have only 2 max repairers, unlike all other Tau structures and vehicles.
+Fix: Under tau_listening_post and tau_plasma_generator, in health_ext, change max_repairers to 3.
+
+* Tau Commander clone has 1350 HP, but the regular Tau Commander has only 1000 HP.
+Fix: In ebps/races/tau/troops/tau_troop_clones/tau_commander_clone, change hitpoints from 1350 to 1000.
+
+* Crisis Suit clones have 3250 HP, but regular Crisis Suits have only 2500 HP.
+Fix: In ebps/races/tau/troops/tau_troop_clones/tau_crisis_suit_clone, change hitpoints from 3250 to 2500.
+
+* Honor Guard Crisis Suits and their clones have only 800 HP, while regular Crisis Suits have 2500 HP.
+Fix: In ebps/races/tau/troops/tau_crisis_suit_advance_honor_guard_sp, change hitpoints from 800 to 2500. Do the same for tau_crisis_suit_advance_honor_guard_sp_clone.
+
+* The Ar'Ka Cannon's tooltip is missing a period at the end of the sentence: line 591801 (in DXP2.ucs).
+Fix: Add the period.
+
+* Typo in the Tau stronghold voiceover subtitles. Text line 5200000 (in DXP2_VO.ucs) is missing a period at the end of the sentence.
+Fix: Add the period.
+
+* Pathfinders are referred to as Path Finders in the Tau stronghold. This should be changed for consistency.
+Fix: Change Path Finders to Pathfinders in text lines 5200010 and 5300345 (DXP2_VO.ucs).
+
+* Text line 5300315 (in DXP2_VO.ucs) says "Do you have a gift for us?" The line spoken by Stubbs is slightly different.
+Fix: Change the line to read "You have a gift for us?"
+
+* Text line 5300317 (in DXP2_VO.ucs) says "going to wait". The line spoken by Stubbs is slightly different.
+Fix: Change "going to" to "gonna".
+
+* Text line 5300320 (in DXP2_VO.ucs) says "what we are made of". The line spoken by Boreale is slightly different.
+Fix: Change "we are" to "we're".
+
+* In text line 5300355 (in DXP2_VO.ucs) there are two spaces instead of just one between "orbital" and "defenses".
+Fix: Delete the extra space.
+
+* Tau Barracks in the Tau Stronghold mission has only 1500 HP, but the regular Tau Barracks has 2000 HP.
+Fix: In ebps/races/tau/structures/tau_barracks_sp_dxp3.lua, change hitpoints from 1500 to 2000.
+
+* Tau Cadre Headquarters in the Tau Stronghold mission has only 2400 HP, but the regular Cadre Headquarters has 4800 HP.
+Fix: In ebps/races/tau/structures/tau_hq_sp_dxp3.lua, change hitpoints from 2400 to 4800.
+
+* Tau Kroot Shaping Center in the Tau Stronghold mission has only 1875 HP, but the regular Kroot Shaping Center has 2500 HP. It also doesn't regenerate.
+Fix: In ebps/races/tau/structures/tau_kroot_nest_sp_dxp3.lua, change hitpoints from 1875 to 2500 and regeneration_rate from 0 to 5.
+
+***Addendum by CornCobMan - thanks to Soul_Reaver***
+
+* Target Acquired's speech file does not play as there is no specified speech_directory. This fix was attempted earlier, but the path to the audio NEEDS to be misspelled (see below) for it to work – the fix didn’t misspell it, so the audio still doesn’t play.
+Fix: Under abilities\tau_target_acquired, set speech_directory to ability\target_aquired (note the intentional misspelling required to make it work!)
+
+* Honor Guard Stealth Suits and Stealth Teams that have lost all but the Shas'Vre do not play a voice clip upon capturing a point. They have the same sound set as Shas'Vres, but this set lacks capture sounds and they don't have regular Stealth Suits to play the speech clips instead.
+Fix: Duplicate the capture.con and capture folder in sound\speech\races\tau\stealth_warrior to the shasvre_stealth_suit folder.
+
+* Kroot Shaper Clone charge range is lower than Kroot Carnivores
+Fix: For tau_kroot_shaper_clone, in melee_ext, change charge_range to 15.
+
+* Kroot Carnivore Clones have a shorter charge range than regular Kroot Carnivores.
+Fix: For tau_kroot_carnivore_clone, in melee_ext, change charge_range to 15.
+
+* Tau vehicle death explosions are all identical and do no damage. Honour guard vehicles have the same problem.
+Fix: Copy the death_explosion_ext values from a ‘source’ unit to the unit being fixed. For the Baneblade, you’ll first need to create the death_explosion_ext child under GameData.
+The source unit should be from a vehicle with similar size/’explodiness’ as the target vehicle. I would suggest:
+Devilfish Troop Carrier = Rhino
+Skyray Missle Gunship = Whirlwind/Predator
+Drone Harbinger = Whirlwind/Predator
+Hammerhead Gunship = Whirlwind/Predator
+
+* Greater Knarloc’s special attacks have no armour pierce values defined
+Fix: Give its special attacks armour pierce values as per the Squiggoth
+
+***Addendum by CornCobMan - thanks to Kasrkin84***
+
+* In the single player campaign, a fully-upgraded Tau Commander has two leader slots available for drones. These slots can be filled with either 2 shield drones, 2 marker drones or 1 of each. The commander model on the wargear screen and the description of both drone wargear options (they are referred to in the singular in each case) would seem to indicate that 1 of each is the "correct" option.
+Fix: In "Data\attrib\sbps\races\tau\tau_commander_squad_advance_sp.rgd", change "squad_leader_ext/multi_with_upgrades" to "true".
+
+* Similar to the Tau Commander, Tau Fire Warriors can have a maximum of 2 leaders, which can be either 2 Shas'ui team leaders, 2 Shield Drones or 1 of each. This should be set to 1 of each.
+Fix: In "Data\attrib\sbps\races\tau\tau_fire_warrior_squad.rgd", change "squad_leader_ext/multi_with_upgrades" to "true".
+
+***Addendum by Kasrkin84***
+* Some of the Tau icons are missing alpha channels, so display incorrectly with black around the border. Also, several icons have the incorrect format for their icon type.
+Fix: Replace the relevant Tau icons with fixed versions. Also change the Tau Snare trap ability to refer to the new icon (but leave the Tau Snare Trap entity with the original icon).
+
+Necrons
+* Any Flayed One squads within a Monolith when it becomes active become suspended, i.e. they take up cap but they can't be taken out from the activated Monolith by any means.
+Fix: Copy the squad_hold_ext entries from the building ebps file of "monolith" to the troops ebps file of "necron_restored_monolith".
+
+* The Lord Destroyer's Stasis Field tooltip says it only affects enemy units. It affects all unit types, friendly and enemy.
+Fix: Correct the tooltip line $551411, changing "enemy" to "all targeted".
+
+* The Deceiver's first tooltip line ($4450030), second sentence says he cannot attack, which is untrue, and the remainder is a duplicate of the second tooltip line.
+Fix: Remove the second sentence from the first tooltip line.
+
+* The Gauss Turret's morale damage decreases dramatically when upgraded.
+Fix: In necron_warrior_gauss_flayer_turret_2, set the morale damage to 30 (same as first gun).
+
+* Pariah Warscythes do near zero morale damage.
+Fix: Increase their morale damage.
+
+* Although the Necron Lord is visibly impeded from firing while teleporting, he is still able to do so.
+Fix: In necron_lord_squad and necron_lord_squad_advance_sp, under squad_jump_ext, change combat_enabled to False.
+
+* The Restored Monolith transports the wrong type of unit, causing Flayed Ones to be instantly ejected and all other infantry types to be stored for Deep Striking.
+Fix: In necron_restored_monolith, under squad_hold_ext, change acceptable_type_01 to type_transportable\transport_terminator.lua.
+
+* The Restored Monolith's Particle Whip visual effects are out of sync with when the damage is dealt.
+Fix: In necron_particle_whip_monolith and necron_particle_whip_monolith_illustion, set shot_delay_time to 0.
+
+* The Necron Lord of All Kaurava's Staff of Light (melee) does 1/4th the damage of the regular variant to building high, but is the same for all other armor types.
+Fix: In necron_lord_staff_of_light_melee_sp, change the armour_piercing_value for building high (entry_03) to 20.
+
+* The Summoning Core does not display its health bar when selected.
+Fix: Under ebps\races\necrons\structures\necron_summoning_cor e, set health_ext\display_health_bar to true. Do the same for the campaign variant.
+
+* The Plasma Generator, Thermo Plasma Generator, Forbidden Archive, Greater Summoning Core, Energy Core, and Gauss Turret do not complete their death animations before disappearing.
+Fix: For all those buildings, under health_ext, set post_death_event_delay to 3.
+
+* Necron Immortal prisoners have only 400 HP. Regular Immortals have 450 HP.
+Fix: In ebps/races/necron/troops/necron_immortal_sp_dxp3_prisoner, change hitpoints from 400 to 450.
+
+* Necron Pariah prisoners have only 1000 HP. Regular Pariahs have 1100 HP.
+Fix: In ebps/races/necron/troops/necron_pariah_sp_dxp3_prisoner, change hitpoints from 1000 to 1100.
+
+* Wailing Terror can target monster_high, air_med, and all three building types, but it only deals 1 damage against them. It has AP entries defined for those types, but no corresponding values assigned.
+Fix: In abilities/necron_listening_post, either assign proper AP values for those armor types, increase the min_damage_value, or filter those types out of the target list.
+
+* The Illusionary Monoltih created by the Deceiver has a strong tendency to persist beyond its allotted 60 s, especially when in heavy combat or if hit by a Stasis Field. The unnecessary suicide_ext added to it is interfering with the natural self destruction all illusion units do.
+Fix: In necron_restored_monolith_grand_illusion, remove suicide_ext. In necron_restored_monolith_illusion_squad, under squad_loadout_ext, change cause_transformation to False.
+
+* The UI for the Illusionary Monolith has the build button and all buildable squad icons, but it can't actually construct anything. Since they are completely irrelevant, the button and icons should be removed.
+Fix: In ebps/races/necron/troops, remove the spawner_ext from necron_restored_monolith_grand_illusion.
+
+***Addendum by CornCobMan***
+
+* The Necron Pariah's melee weapon maximum health reduction modifiers cause units under the effects of invulnerability abilities (e.g. Space Marine units with Librarian's Word of the Emperor, Imperial Guard units under the Priest's Fanaticism) to still get their maximum health reduced, eventually they can have a value in negative numbers causing them to not die until they are knocked down. 
+Fix: A modifier called shield_of_faith can effectively negate the effects of modifiers but is not used currently in the game. 
+1) Set the shield_of_faith field for modifier_02 in weapon/necron_warscythe_pariah weapon to true.
+2) Add a modifier called enable_shield_of_faith for units and abilities which are invulnerable. This includes abilities/marines_word_of_emperer, 
+abilities/marines_word_of_emperer_advance_sp, 
+abilities/guard_priest_fanatical,  
+abilities/guard_priest_fanatical_advance_sp,
+ebps/races/necrons/troops/necron_deceiver,
+ebps/races/necrons/troops/necron_deceiver_advance_sp,
+ebps/races/necrons/troops/necron_deceiver_illusion,
+ebps/races/necrons/troops/necron_deceiver_nightbringer,
+ebps/races/necrons/troops/necron_deceiver_nightbringer_advance_sp,
+
+***Addendum by CornCobMan - thanks to Wraith_Lord***
+* It turns out that the Deciever DOES have a spawn animation that isn't playing correctly because the motion_name is missing and the motion_duration is erroneously set to 0.
+
+Fix: In ebps/races/necrons/troops/necron_deciever and necron_deciever_advance_sp (not sure if it's used) under spawn_ext, set oncreate_motion_name to spawn and oncreate_motion_duration to 3.03 (same as the Nightbringer). Do not erase the oncreate_event_name, as it is an unecessary change and does not affect the spawn animation.
+
+
+Dark Eldar
+* The Tower of Carnage add-on (LP3 add-on) for the LP increases the requisition rate to 23 (as displayed) instead of 24 like other LP3s.
+Fix: Change modifier 2's value of addon_dark_eldar_list_post_2 to 1.333333 (that's 6 '3's, not 5 as implemented in the patch)
+
+* The Slave Chamber tooltip still says that it increases REINFORCEMENT speed. It does not.
+Fix: Remove the offending line from the tooltip.
+
+* The tooltip for Incubi says they are infantry, but they have commander armor.
+Fix: Correct the tooltip.
+
+* Tahril's tooltip and unit name do not name him like other commanders, so he is still just "Archon"
+Fix: Change the unit name for the unit and squad to "Tahril" or "Archon Tahril"
+
+* The Kabal Fortress tooltip says it "Contains research that grants abilities to Dark Eldar buildings." It does not.
+Fix: Remove the fourth line from the tooltip.
+
+* The Wych Squad tooltip for the squad, used for the build icon, does not mention that the unit is a detector. The unit file does, however.
+Fix: Add line 4050136 in between the first and second existing tooltip line for the squad file to match the unit file's tooltip.
+
+* Text line 5300723 (in DXP2_VO.ucs) says "We wield powers you cannot event imagine."
+Fix: Change "event" to "even".
+
+* The Archon's first special attack does not use the fx created for it, instead using the Chaos Frag Grenade fx.
+Fix: Create a new event that uses the correct fx file.
+
+* The Tortured Slave's get up animation is broken due to the get_up_time being too short.
+Fix: Under dark_eldar\troops\dark_eldar_support_slave\special _attack_physics_ext, change get_up_time to 2.5.
+
+* The Tortured Slave's thrown death animation is STILL broken: the animation type is set to Looping, causing it to repeat.
+Fix: Under Motions\thrown_die\Motion Properties\Animations, set Type to Hold End.
+
+* The description for Haywire Bombs (wargear) is too long, causing it to be cut off. It also contains a grammatical typo.
+Fix: Change line number $4000054 to read: "Gives the Archon the Haywire Bomb ability, which is effective against vehicles and buildings."
+
+* The Haywire Bombs ability itself is called Haywire Grenades instead, in contradiction to the wargear name, the identical ability name used by Warp Spiders, and the file name itself.
+Fix: Change line number $4100087, $4100088, and $4100091 to use "Haywire Bombs" instead. Change line $4100092 to use "Haywire Bomb".
+
+* The Hellions' tooltip says they are "Good against Infantry" instead of "Effective against Infantry" like other tooltips.
+Fix: Change line $4050086 to say "Effective".
+
+* Text line 5100012 (in DXP2_VO.ucs) says "By the time the avalanche of Warboss Gorgutz’ Waaagh! ... or to escape with their lives ... any possible chance of rebuffing the Orks." The actual line spoken by the narrator is slightly different.
+Fix: Change the line to read "By the time that Warboss Gorgutz’ avalanching Waaagh! ... or escape with their lives ... any chance of rebuffing the Orks that they could possibly have gained."
+
+* Text line 5100011 (in DXP2_VO.ucs) says "It was her full intent that news of her victory and their defeat should reach the Dark Eldar home city of Commorragh ." The actual line spoken by the narrator is slightly different.
+Fix: Change the line to read "It was her full intent that news should reach the Dark Eldar home city of Commorragh of her victory and their defeat.
+
+* Text line 5300719 (in DXP2_VO.ucs) says "Then go - and see that you do not fail." The actual line spoken by Vect is slightly different.
+Fix: Change the line to read "Then go - and see to it that you do not fail."
+
+* The Hellion Squad's tooltip says they are "Good against Infantry." This is inconsistent with all the other unit tooltips in the game.
+Fix: Change "Good" to "Effective".
+
+* The Beastmaster does not leave a persistent body like other infantry.
+Fix: Under ebps\races\dark_eldar\troops\dark_eldar_infantry\w arp_beast_leader\health_ext, set keep_persistent_body to true.
+
+* The Warp Beast's syncdeathinfo_01 entry is filled in, but it has no corresponding animation.
+Fix: Under ebps\races\dark_eldar\troops\dark_eldar_infantry_w arp_beast\syncdeath_ext\syncdeathinfos\syncdeathin fo_01, set synckill_id to type_synckillids\sk_none.lua. Do the same for dark_eldar_infantry_warp_beast_sp_dxp3.
+
+* Vect speaks with Tahril's icon when the Soul Cages are destroyed.
+Fix: Under scenarios\sp\stronghold_dark_eldar.nis, in lines 884, 898, 912, 926, and 941, change ACT.Archon to ACT.Vect.
+
+* The Tortured Slave's soul harvesting speech files do not play.
+Fix: Create a new event that uses the speech files.
+
+* The Incubi Torture Helms wargear says it decreases the recharge time of Tahril's abilities. It does not.
+Fix: Correct the tooltip (line $4000060).
+
+* The Dark Eldar Incubus Honor Guard squad can capture points, but have no animation or sound effects for doing so. It appears to be an accidental addition like various Honor Guard boarding Raiders.
+Fix: Remove the squad_capture_strategic_point_ext from dark_eldar_squad_incubus_hg_dxp3.
+
+* Dark Eldar vehicles do not have death explosions, although they all visibly explode.
+Fix: Give them death explosions.
+
+* Archon's morale death penalty is set for a regular unit (40), not a commander (usually 300).
+Fix: Set his morale death penalty to a commander-appropriate value.
+
+* The Haemonculus has no morale death penalty.
+Fix: Give him a death penalty.
+
+* Text line 5300256 (in DXP2_VO.ucs) says "Well, look what escaped from it's cage."
+Fix: Change "it's" to "its".
+
+* Incubi torture helms are all inheriting a 10% accuracy while moving, which is lower than the standard for most weapons.
+Fix: In weapon\dark_eldar_tormentor_helm and all children of it, set the accuracy_reduction_when_moving to 0.45000
+
+* The Dais of Destructin's Dark Scythe deals damage well before the animation, particularly on the left edge of the sweep.
+Fix: In the ability dark_eldar_darklance_sweep, under area_effect\sweeping_information, change sweep_duration to 3.
+
+* Although the Soulstorm entity's damaging aura has piercing values for buildings, they do not appear in the filter list.
+Fix: In dark_eldar_soulstorm_aura, under area_effect\area_effect_information\target_filter, add building_low, _medium, and _high to the end of the filter list.
+
+* Soul Destruction uses the Torture Amp animation instead of the one created for it.
+Fix: Under ebps\races\dark_eldar\dark_eldar_leader_haemonculu s\soul_destruction_ext, change action_name to special_ability_3.
+
+* Dark Eldar Listening Posts, Plasma Generators, and Thermo Plasma Generators all have only 1 max repairer instead of 3 like the rest of the Dark Eldar structures and vehicles.
+Fix: In dark_eldar_listening_post, dark_eldar_plasma_generator, dark_eldar_thermo_plasma, under health_ext, set max_repairers to 3.
+
+* Honor Guard Hellion Succubi have only 550 HP, the same as a Hellion Squad member. Regular Hellion Succubi have 750 HP.
+Fix: In ebps/races/dark_eldar/troops/dark_eldar_infantry_hellion_leader_hg_dxp3, change hitpoints from 550 to 750.
+
+***Addendum by CornCobMan***
+
+* The Haemonculus Soul Destruction ability sometimes doesn't work, it spawns an invisible entity that can be targetted by weapons, despite it having a really low health value. As a result it gets killed if any weapon shoots it, stopping the effect.
+Fix: Set invulnerable to true in health_ext for ebps/gameplay/dark_eldar_death_blossom_soul_desruction
+
+* Textures for the Dark Lance on Tower of Loathing (Dark Eldar Listening Post) are completely black, due to a problem with the teamcolour files.
+Fix: Replace the texture file art/ebps/races/dark_eldar/texture_share/dark_eldar_towerofloathing_default.wtp with the fixed one.
+
+***Addendum by CornCobMan - Thanks to Reaper_R66***
+
+* The Haemonculus does not use any animation while talking in the Dark Eldar stronghold campaign cutscene.
+Fix: In scenarions/sp/strongold_dark_eldar.nis change Anim_PlaySGroupAnim("sg_opening_hemon", "sp_talk") to Anim_PlaySGroupAnim("sg_opening_hemon", "sp_pleasework") 
+
+* In the campaign the icons for the Raider, Scourges and Wyches don't appear on the metamap.
+Fix: Make icon copies for dark_eldar_squad_raider, dark_eldar_squad_raider_large, dark_eldar_squad_scourge, dark_eldar_squad_scourge_large, dark_eldar_squad_wych and dark_eldar_squad_wych_large in art/ui/swf/icons
+
+***Addendum by CornCobMan - Thanks to Soul_Reaver***
+
+* Death explosion for some Dark Eldar Ravager and Dais of Destruction (and honour guard variants) are not set up fully/correctly (eg, they have the death_explosion_ext data field, but values are empty or almost empty).
+Fix: Copy the death_explosion_ext values from a ‘source’ unit to the unit being fixed.
+The source unit should be from a vehicle with similar size/’explodiness’ as the target vehicle. I would suggest:
+Ravager = Predator/Whirlwind
+Dais of Destruction = Land Raider
+
+***Addendum by CornCobMan - Thanks to Soul_Reaver***
+
+* The Wyches squad bugs out when the AI uses the Combat Drugs ability, the squad stays in range and does not engage in melee combat, caused by something in the ability code itself
+Fix: For abilities\dark_eldar_combat_drugs change target_self to false and target_ground to true 
+
+***Addendum by CornCobMan - thanks to Anubis6***
+* Dark Eldar honour guard Warp Beasts tooltip mentions that they are effective against Infantry, Heavy Infantry and Vehicles
+Fix: change the tooltip to "effective against all units".
+
+***Addendum by CornCobMan - thanks to Cortez2000***
+* The Haemonculus Torture Amp bleeds like infantry when hit
+Fix: change type_surface for attrib/ebps/environment/gameplay/dark_eldar_torture_amp to tp_light_metal_armour.
+
+***Addendum by CornCobMan ***
+* Add new events and effects for Dark Eldar troop reinforcement and weapon upgrades to make them more distinct.
+
+Sisters of Battle
+* Relic did not properly implement the fix to grant Celestian Veteran Superiors their health bonus from Blessed Armor, so the bonus is applied to the entire race.
+Fix: In sisters_health_research, change modifier_10 to health_maximum_modifier, and change the application_type to tp_mod_apply_to_entity_type.
+
+* Relic did not properly implement the fix to the Rhino's icon disappearing when 3 are built, breaking the 3 count limit.
+Fix: In sisters_squad_rhino, under squad_requirement_ext\requirements\require_11, change is_display_requirement to False.
+
+* When a unit is attached to the Celestian Squad, its weapons outrange the squad's Meltas and Multi-Meltas, preventing them from getting into range.
+Fix: Decrease squad_combat_stance_ext\ranged_attackrange to 21 from 35.
+
+* After Martyr's Gift is researched the campaign versions of Celestian Veteran Superiors, Imagifers, and Seraphim Veteran Superiors do not provide a Faith bonus on death like the campaign Battle Sister Veteran Superior or other faithful campaign units.
+Fix: Under the research sisters_martyrs_gift, duplicate modifiers 10, 11, and 12 at 13, 14, and 15 respecitvely, with the duplicates using the targets sisters_veteran_superior_celestian_hg_dxp3, sisters_veteran_superior_seraphim_hg_dxp3, and sisters_celestian_imagifer_hg_dxp3.
+
+* Despite being a flamer-type weapon and having angle values, the Immolater's Heavy Flamer uses a circle aoe instead of a pie aoe like all other flamers.
+Fix: Change the aoe type of sisters_heavy_flamer_immolater_tank to tp_area_effect_pie.
+
+* The Commander Veteran/Hero Upgrades say they reduce commander ability recharges. They do not.
+Fix: Remove the offending line from the tooltips.
+
+* Wargear: Reinforced Hull Plating upgrades the health of Lightning Fighters but the tooltip does not list them as one of the upgraded units.
+Fix: Adding Lightning Fighters to the tooltip entry.
+
+* Seraphim Veteran Superiors do not have Zealot Charge like regular Seraphim, although Mistresses get Zealot Charge like their Sisters Repentia.
+Fix: Duplicate the Seraphim Zealot Charge for the Seraphim Veteran Superior.
+
+* Zealot Charge Research makes no mention that Seraphim receive the ability.
+Fix: Add Seraphim to the description of the research.
+
+* Selena Agna's tooltip and unit name do not name her like other commanders, so she is still just "Canoness"
+Fix: Change the unit name for the unit and squad to "Canoness Selena Agna"
+
+* The Exorcist STILL does not have a death explosion like other Sisters of Battle vehicles. The only death explosion has a 0% chance to occur so it never triggers, and the chance to have a death explosion occur is incorrecty set to 1 instead of 0.25.
+Fix: Set the death explosion chance to 0.25, and the chance for death_explosion_01 to 1.
+
+* The Sisters of Battle Immolator and Confessor Honor Guard use pop cap.
+Fix: Create a new Honor Guard version of the Immolator that does not use support cap. Add the ability abilities\sp_dxp_unit_glow.lua to the Confessor Honor Guard ebps file. Update the research sisters_vehicle_armor_research to also upgrade the health of the Honor Guard Immolator. Replace the costs of Honor Guard in the Sisters of Battle race file with the correct units. Create icons for these new units in art\ui\swf\icons. Replace the Sisters of Battle Honor Guard provided in scenarios\sp\parmenian_steppe.ter and skerries.ter with the correct Honor Guard units.
+
+* The Battle Sister Squad's morale restored sounds do not play. There is a typo in the sound file and folder.
+Fix: Under data\sound\speech\races\sisters\battle_sister, correct the typos in morale_resotred.con and the morale_resotred folder. Make sure to also extract every single _default.rat in the directory structure from the root to this folder (these files do not need to be modified, just extracted).
+
+* The description of Act of Faith: Ascension is misspelled.
+Fix: On line 4350021, change "Assension" to "Ascension".
+
+* The Purgatus Mine Field has a square selection highlight, while other mine fields have a circular highlight.
+Fix: Change the model's Selected UI\Display Type from Rectangle to Circle.
+
+* Laud Hailers (all versions) does not have a recharge time, allowing it to be chain-casted from all units all the time. The recharge time was set on the wrong ability.
+Fix: For all abilities of the form sisters_laud_hailers_fx_[unit_name], set the recharge time to 90. Or, set the recharge time for sisters_laud_hailers_fx to 90 and rebuild the inheritances.
+
+* The Ecclesiarchal Servitor has unused death vocals.
+Fix: Under Motions\die_1\Motion Properties\Events, add sound_vocal_die <0.00> to the list of events. Do the same for Motions\die_2 and Motions\thrown_death.
+
+* Selena Agna is referred to as Selina Agna in some of the victory epilogues.
+Fix: Change the spelling of her name to Selena in lines 5100005, 5100063, 5100121, and 5100136 (in DXP2_VO.ucs).
+
+* One of the Missionary's melee attack animations does not show up in-game, as it was not included on the list of random motions.
+Fix: Under Motions\melee_attacks\Motion Properties\Random Motions, add melee_attack_3 to the list.
+
+* The Missionary's syncdeathinfo_02 entry is filled in, but he has no corresponding animation (his syncdeath_2 motion is actually just a copy of syncdeath_3).
+Fix: Under ebps\races\sisters\troops\sisters_missionary\syncd eath_ext\syncdeathinfos\syncdeathinfo_02, set synckill_id to type_synckillids\sk_none.lua. Do the same for the campaign variants.
+
+* Selena Agna's chainsword is missing AP values for vehicle_high and building_high, making it do negligible damage (0.7 DPS) against these armor types.
+Fix: Assign proper AP values to entry_08 and entry_14 in weapon\sisters_chain_sword_canoness.
+
+* The Battle Sister's get up animation is broken due to the get_up_time being too short.
+Fix: Under sisters\troops\sisters_battle_sister, set special_attack_physics_ext\change get_up_time to 2.23. Do the same for the campaign versions.
+
+* The Sister Repentia's get up animation is broken due to the get_up_time being too short.
+Fix: Under sisters\troops\sisters_repentia, set special_attack_phy sics_ext\get_up_time to 2.5. Do the same for the mistress and all campaign variants.
+
+* Sisters Repentia Squad's eviscerator has no AP value against vehicle_high, so their damage to this armor type is not buffed by Righteous Fervor.
+Fix: Assign an AP value for entry_08 under weapon\sisters_eviscerator. Do the same for the Mistress's sisters_neural_whip and sisters_neural_whip_twin.
+
+* The Living Saint is building in 70 sec, while all other relic units (Necrons exempt) are building in 90 sec.
+Fix: In ebps/races/sisters/troops/sisters_living_saint, change the time cost seconds from 70 to 90.
+
+* Despite being a jumping melee unit, the Living Saint still suffers from movement penalties in cover.
+Fix: Remove the movement speed cover penalties from the unit sisters_living_saint and the campaign variant.
+
+* Seraphim have their ranged_attackrange set too high, which tends to cause the rear squad members to not close into range, especially when the Veteran Superior has her Inferno Pistol (which has 1 more range than the Seraphim's Dual Bolt Pistols).
+Fix: Reduce the squad_combat_stance_ext\ranged_attackrange to 19 for sisters_squad_seraphim and all campaign variants.
+
+* The Lightning Fighter has a death explosion, but both the Marauder Bomber and Barracuda do not, whose races had all other vehicles granted death explosions in SS 1.10. The Land Speeder Tempest and Fighta-Bomma also do not have death explosions. Air units having death explosions is apparently the aberration, not the other way around.
+Fix: Remove the Lightning Fighter's death explosion.
+
+* Honor Guard Penitent Engines have only 4500 HP, but regular Penitent Engines have 5500 HP.
+Fix: In ebps/races/sisters/troops/penitent_engine_hg_dxp3, change hitpoints from 4500 to 5500.
+
+* Honor Guard Exorcists and Rhinos are using support cap.
+Fix: In sbps/races/sisters/sisters_exorcist_tank_sp_dxp3 and sisters_rhino_sp_dxp3, set support_cap_usage to 0.
+
+* Honor Guard Exorcists are using a modified version of Hunter-Killer Missile, which has a recharge time of 0.
+Fix: In abilities/sisters_hk_missiles_sp_dxp3, change recharge_time from 0 to 180, same as regular Exorcists.
+
+* Honor Guard Missionaries and prisoners are using a modified version of AoF: Lay Hands, which sets the squad's health regeneration to 300 instead of 20. It appears an extra '0' was added to the modifier value.
+Fix: In abilities/sisters_battlefield_medics_hg_dxp3, change modifier_01 value from 300 to 30.
+
+* Seraphim Squad's Zealot Charge passive ability has no minimum range or cooldown time, unlike all other units with the ability
+Fix: In ebps/races/sisters/troops/sisters_seraphim, the campaign variant, and the veteran superior and variant, add new lines that set melee_leap_min_distance to 10 and melee_leap_min_time_separation to 40.
+
+* Celestian Bolters have a range of just 21 instead of the standard 25. Standardizing their range is only a problem with the Melta-equipped squad members if their ranged_attackrange is incorrectly set too high.
+Fix: In weapons/sisters_bolter_celestian, change max_range from 21 to 25.
+
+* Psyocculum uses the wrong verb tense. Text line 4350081 (in DXP2.ucs) says "Dramatically increased the damage done by all Battle Sister ranged weapons."
+Fix: Change "increased" to "increases".
+
+* The Battle Sister Squad's tooltip says they are a "Resilient general combat unit strong at range and close combat" and have a "Broad range of weapon upgrades." Both lines are copied from the Space Marine Squad tooltip and are inaccurate.
+Fix: Change text line 4250074 to "Resilient general combat unit effective at range." and line 4250075 to "Weapon upgrades effective against infantry and at breaking morale."
+
+* Although Conflagration has armor piercing for commanders, they are not included in the target filter list, although all other armor types besides air_med are.
+Fix: In sisters_conflagration, under area_effect\area_effect_information\target_filter, add tp_commander to the armor type list.
+
+* The Exorcist does not show any damage dealt in its UI info because of how its damage dealing is implemented.
+Fix: In sisters_exorcist_missile, set min_damage to 85 and max_damage to 100 (same as the damage ability does). Make sure min_damage_value and armour_piercing are both set to 0.
+
+****Addendum by CornCobMan****
+
+* The Canoness chainsword idle sound has too high a priority and therefore plays too prominently. It also plays too often for units like Celestians, Veteran Superiors and Repentia which use the same sound.
+Fix: In sound/races/sisters/canoness/chainsword/idle/_default.rat reduce the priority to match the Space Marines chainsword. Also add some blank sounds so that the sound plays less often
+
+***Addendum by CornCobMan - Thanks to Reaper_R66***
+
+* The Canoness does not use any animation while speaking in the Sisters of Battle stronghold campaign cutscene.
+Fix: In scenarios/sp/stronghold_sisters.nis change Anim_PlaySGroupAnim("sg_nis_cannoness", "talk") to Anim_PlaySGroupAnim("sg_nis_cannoness", "sp_talk") and add Anim_PlaySGroupAnim("sg_nis_cannoness", "default") to line 1182 to stop the Cannonness talking while the Confessor is.
+
+* In the campaign the icons for the Death Cult Assassin, Celestians and Missionaries don't appear on the metamap.
+Fix: Make icon copies for sisters_squad_assassin, sisters_squad_assassin_large, sisters_squad_celestian, sisters_squad_celestian_large, sisters_squad_missionary and sisters_squad_missionary_lar in art/ui/swf/icons
+
+***Addendum by CornCobMan - Thanks to Soul_Reaver***
+
+* The Chance for the death explosion for Sister of Battle Immolater Tank (and honour guard variant) is set far too high (100). Not sure how the game handles this.
+Fix: Under death_explosion_ext, set chance to 1.
+
+* Death explosion for Sisters of Battle Exorcist (and honour guard variants) are not set up fully/correctly (eg, they have the death_explosion_ext data field, but values are empty or almost empty).
+Fix: Copy the death_explosion_ext values from a ‘source’ unit to the unit being fixed.
+The source unit should be from a vehicle with similar size/’explodiness’ as the target vehicle. I would suggest:
+Exorcist = Predator/Whirlwind
+
+****Addendum by CornCobMan - Thanks to mdcertainty****
+
+* The texture for the Chainsword teeth are black instead of transparent
+Fix: Put the sisters_chainsword_blades.rsh texture file fix by mdcertainty into art/ebps/races/sisters/texture_share
+
+****Addendum by Kasrkin84****
+
+* Several Tau icons have a black border around the outside where they should be transparent, and some others do not use the correct icon format (e.g. research icons having the ability icon border and arrows).
+Fix: Put amended icons into data/art/ui/ingame/tau_icons and data/art/ui/ingame_disabled/tau_icons.
+
+* A number of Soulstorm campaign maps have their impass maps set incorrectly, which can result in units getting stuck in terrain, or in players being able to jump troops into what should be impassible areas.
+Fix: Use fixed SGB files for affected maps in data/scenarios/sp and data/scenarios/mp.
+
+* The Tau Orca, Devilfish and Hammerhead use the incorrect thruster FX.
+Fix: Replace these units' WHE files in data/art/ebps/races/tau/troops with fixed versions by Crystalking52.
+
+---------------
+
+v1.56 Fixes:
+- Fixed inconsistencies in the Tau clone units for the Ethereal's Holographic Projection ability.
+- Minor miscellaneous tooltip fixes.
+- Minor AI fix for Imperial Guard Commissars.
+- Removed the tunnel from the Dark Crusade Necron stronghold from the Army Painter.
+- Fixed a Fatal Scar Error at the start of the Sisters of Battle stronghold mission.
+- Fixed the Ork colour scheme on the Dark Eldar, Eldar, Imperial Guard and Tau stronghold missions.

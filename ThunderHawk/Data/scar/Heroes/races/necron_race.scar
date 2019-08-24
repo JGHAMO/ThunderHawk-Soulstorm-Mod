@@ -1,0 +1,574 @@
+--####################################################################################################
+--#
+--#     Heroes Special Necron race info script
+--#
+--#     Original Heroes idea and implementation by CutterShane 2006
+--#     Heroes Special rework by Arkhan 2007
+--#
+--####################################################################################################
+
+CommandLevel.necron_race = { 4, 7 }
+
+UnitTypes.necron_race =
+{
+	-- Skirmish units
+	necron_builder_scarab_squad =
+	{
+		Title = "Builder Scarabs",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeBuilder,
+		FXType = "Squad",
+	},
+	necron_basic_warrior_squad =
+	{
+		Title = "Necron Warriors",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	necron_wraith_squad =
+	{
+		Title = "Wraith",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	necron_flayed_one_squad =
+	{
+		Title = "Flayed Ones",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	necron_immortal_squad =
+	{
+		Title = "Immortals",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	necron_pariah_squad =
+	{
+		Title = "Pariahs",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"necron_gauss_blaster_pariah",
+			"necron_warscythe_pariah",
+		},
+	},
+	necron_lord_squad =
+	{
+		Title = "Necron Lord",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		General = true,
+		CanMorph = true,
+		MorphID = 1,
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"necron_lord_staff_of_light_ranged",
+			"necron_lord_staff_of_light_ranged_2",
+			"necron_lord_staff_of_light_melee",
+		},
+	},
+	-- Vehicle
+	necron_tomb_spyder_squad =
+	{
+		Title = "Tomb Spyder",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeWalker,
+		FXType = "Vehicle",
+		MorphID = 2,
+	},
+	necron_scarab_squad =
+	{
+		Title = "Attack Scarabs",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+		CanMorph = true,
+		Summoned = true,
+		MorphID = 2,
+	},
+	necron_destroyer_squad =
+	{
+		Title = "Destroyer",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	necron_heavy_destroyer_squad =
+	{
+		Title = "Heavy Destroyer",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	necron_lord_destroyer_squad =
+	{
+		Title = "Lord Destroyer",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		General = true,
+	},
+	necron_restored_monolith_squad =
+	{
+		Title = "Restored Monolith",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"necron_particle_whip_monolith",
+			"necron_heavy_gauss_cannon_left_front_monolith",
+			"necron_heavy_gauss_cannon_left_rear_monolith",
+			"necron_heavy_gauss_cannon_right_front_monolith",
+			"necron_heavy_gauss_cannon_right_rear_monolith",
+		},
+	},
+	necron_restored_monolith_illusion_squad =
+	{
+		Title = "Restored Monolith Illusion",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		CanMorph = true,
+		Summoned = true,
+		MorphID = 1,
+	},
+	necron_deceiver_squad =
+	{
+		Title = "Deceiver",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		General = true,
+		CanMorph = true,
+		Immortal = true,
+		MorphID = 1,
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"necron_deceiver_blast",
+		},
+	},
+	necron_night_bringer =
+	{
+		Title = "Nightbringer",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		General = true,
+		CanMorph = true,
+		Immortal = true,
+		MorphID = 1,
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"necron_nightbringer_scythe_ranged",
+			"necron_nightbringer_scythe_melee",
+		},
+	},
+
+	-- Campaign units
+	necron_lord_squad_advance_sp =
+	{
+		Title = "Necron Lord of All Kaurava",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		General = true,
+		CanMorph = true,
+		MorphID = 1,
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"necron_lord_staff_of_light_ranged",
+			"necron_lord_staff_of_light_ranged_2",
+			"necron_lord_staff_of_light_gauss_flayer",
+			"necron_lord_staff_of_light_melee_sp",
+			"necron_lord_staff_of_light_skinning_blades",
+			"necron_lord_staff_of_light_reaping_blades",
+		},
+	},
+	necron_deceiver_squad_advance_sp =
+	{
+		Title = "Deceiver",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		General = true,
+		CanMorph = true,
+		Immortal = true,
+		MorphID = 1,
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"necron_deceiver_blast",
+		},
+	},
+	necron_night_bringer_squad_advance_sp =
+	{
+		Title = "Nightbringer",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		General = true,
+		CanMorph = true,
+		Immortal = true,
+		MorphID = 1,
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"necron_nightbringer_scythe_ranged",
+			"necron_nightbringer_scythe_melee",
+		},
+	},
+	-- StrongholdSquads
+	necron_basic_warrior_squad_dxp3_sp =
+	{
+		Title = "Necron Warriors",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	necron_wraith_squad_sp_dxp3 =
+	{
+		Title = "Wraith",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	necron_lord_squad_sp =
+	{
+		Title = "Necron Lord",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		General = true,
+		CanMorph = true,
+		MorphID = 1,
+	},
+	necron_lord_squad_sp_deceiver =
+	{
+		Title = "Necron Lord",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		General = true,
+		CanMorph = true,
+		MorphID = 1,
+	},
+	necron_restored_monolith_squad_sp_dxp3 =
+	{
+		Title = "Restored Monolith",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+	},
+	-- BonusSquads
+	necron_builder_scarab_squad_advance_sp =
+	{
+		Title = "Builder Scarabs",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeBuilder,
+		FXType = "Squad",
+		Unique = true,
+	},
+	necron_basic_warrior_squad_advance_sp =
+	{
+		Title = "Necropolis Deathtouch Guard",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	necron_wraith_squad_advance_sp =
+	{
+		Title = "Wraith",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	necron_flayed_one_squad_advance_sp =
+	{
+		Title = "Deathtouch Flayed Ones",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	necron_immortal_squad_advance_sp =
+	{
+		Title = "Deathtouch Immortals",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	necron_pariah_squad_advance_sp =
+	{
+		Title = "Deathtouch Pariah",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+		Unique = true,
+	},
+	necron_destroyer_squad_advance_sp =
+	{
+		Title = "Destroyer",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	necron_tomb_spyder_squad_advance_sp =
+	{
+		Title = "Tomb Spyder",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeWalker,
+		FXType = "Vehicle",
+		MorphID = 2,
+	},
+}
+
+UnitRanks.necron_race =
+{
+	{
+		Name = "Regular",
+		XPRequirements =
+		{
+			Commander = 0,
+			RegularForces = 0,
+			SpecialForces = 0,
+			CommandoForces = 0,
+		},
+		UpgradeFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = nil,
+			Sound = nil,
+		},
+	},
+	{
+		Name = "Experienced",
+		XPRequirements =
+		{
+			Commander = 1000,
+			RegularForces = 1000,
+			SpecialForces = 1500,
+			CommandoForces = 2000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Veteran",
+		XPRequirements =
+		{
+			Commander = 2000,
+			RegularForces = 2000,
+			SpecialForces = 3000,
+			CommandoForces = 4000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Expert",
+		XPRequirements =
+		{
+			Commander = 4000,
+			RegularForces = 4000,
+			SpecialForces = 6000,
+			CommandoForces = 8000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Elite",
+		XPRequirements =
+		{
+			Commander = 6000,
+			RegularForces = 6000,
+			SpecialForces = 9000,
+			CommandoForces = 12000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Ultra Elite",
+		XPRequirements =
+		{
+			Commander = 8000,
+			RegularForces = 8000,
+			SpecialForces = 12000,
+			CommandoForces = 16000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Legendary",
+		XPRequirements =
+		{
+			Commander = 11000,
+			RegularForces = 11000,
+			SpecialForces = 16500,
+			CommandoForces = 22000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Champion",
+		XPRequirements =
+		{
+			Commander = 14000,
+			RegularForces = -1,
+			SpecialForces = -1,
+			CommandoForces = -1,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Hero",
+		XPRequirements =
+		{
+			Commander = 17000,
+			RegularForces = -1,
+			SpecialForces = -1,
+			CommandoForces = -1,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+}

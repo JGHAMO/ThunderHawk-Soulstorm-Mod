@@ -1,0 +1,260 @@
+-- AI donations script
+-- Created by LarkinVB
+-- Edited by Arkhan
+
+import("Player.scar");
+import("GroupCallers.scar");
+import("Command.scar");
+import("Groups.scar");
+import("ScarUtil.scar");
+import("WXPGroups.scar");
+
+
+-- Donation settings
+DonationSettings =
+{
+	chaos_marine_race =
+	{
+		Title = "Chaos",
+		ResourceExchangeRestricted = false,
+		RequisitionExcess = 1000,
+		RequisitionDemand = 400,
+		PowerExcess = 800,
+		PowerDemand = 400,
+	},
+	dark_eldar_race =
+	{
+		Title = "Dark Eldar",
+		ResourceExchangeRestricted = false,
+		RequisitionExcess = 1000,
+		RequisitionDemand = 400,
+		PowerExcess = 800,
+		PowerDemand = 400,
+	},
+	eldar_race =
+	{
+		Title = "Eldar",
+		ResourceExchangeRestricted = false,
+		RequisitionExcess = 1000,
+		RequisitionDemand = 400,
+		PowerExcess = 800,
+		PowerDemand = 400,
+	},
+	guard_race =
+	{
+		Title = "Imperial Guard",
+		ResourceExchangeRestricted = false,
+		RequisitionExcess = 1000,
+		RequisitionDemand = 400,
+		PowerExcess = 800,
+		PowerDemand = 400,
+	},
+	necron_race =
+	{
+		Title = "Necron",
+		ResourceExchangeRestricted = false,
+		RequisitionExcess = 0,
+		RequisitionDemand = 0,
+		PowerExcess = 1200,
+		PowerDemand = 600,
+	},
+	ork_race =
+	{
+		Title = "Ork",
+		ResourceExchangeRestricted = false,
+		RequisitionExcess = 1000,
+		RequisitionDemand = 400,
+		PowerExcess = 800,
+		PowerDemand = 400,
+	},
+	sisters_race =
+	{
+		Title = "Sisters",
+		ResourceExchangeRestricted = false,
+		RequisitionExcess = 1000,
+		RequisitionDemand = 400,
+		PowerExcess = 800,
+		PowerDemand = 400,
+	},
+	space_marine_race =
+	{
+		Title = "Space Marine",
+		ResourceExchangeRestricted = false,
+		RequisitionExcess = 1000,
+		RequisitionDemand = 400,
+		PowerExcess = 800,
+		PowerDemand = 400,
+	},
+	tau_race =
+	{
+		Title = "Tau",
+		ResourceExchangeRestricted = false,
+		RequisitionExcess = 1000,
+		RequisitionDemand = 400,
+		PowerExcess = 800,
+		PowerDemand = 400,
+	}
+}
+
+-- Init globals
+g_iPlayerCount = 0
+g_iCurrentAIPlayer = 1
+
+
+-- Init the SCAR support code
+function AIDonations_InitRule()
+
+	-- Check for AI players
+	local bAIPlayers = false
+	g_iPlayerCount = World_GetPlayerCount()
+	for iLoop1 = 0, g_iPlayerCount - 1 do
+
+		-- Check for AI player
+		local ePlayerID = World_GetPlayerAt(iLoop1)
+		if (Cpu_IsCpuPlayer(ePlayerID)) then
+			pcall(Cpu_SetLippy, ePlayerID, true)
+			bAIPlayers = true
+		end
+	end
+	
+	-- Process SCAR support rule every second
+	if (bAIPlayers) then
+		print("Init AI Donations...")
+		Rule_AddInterval(AIDonations_MainRule, 1.0)
+	end
+end
+
+function AIDonations_MainRule()
+
+	-- Get next AI player
+	local eCurrentPlayerID = nil
+	for iLoop1 = 1, g_iPlayerCount do
+	
+		-- Increase current AI player index
+		g_iCurrentAIPlayer = g_iCurrentAIPlayer + 1
+		if (g_iCurrentAIPlayer > g_iPlayerCount) then
+			g_iCurrentAIPlayer = 1
+		end
+			
+		-- Check if AI player is valid
+		local ePlayerID = World_GetPlayerAt(g_iCurrentAIPlayer - 1)
+		if (Player_IsAlive(ePlayerID) and Cpu_IsCpuPlayer(ePlayerID)) then
+			eCurrentPlayerID = ePlayerID
+			break
+		end
+	end
+	if (eCurrentPlayerID == nil) then
+		return
+	end
+	
+	-- Check donation settings
+	local sRace = Player_GetRaceName(eCurrentPlayerID)
+	if (DonationSettings[sRace] == nil) then
+		print("Warning: No donation information for "..sRace)
+		return
+	end
+
+	-- Check status of current player
+	local iRequisition = Player_GetResource(eCurrentPlayerID, RT_Requisition)
+	local iPower = Player_GetResource(eCurrentPlayerID, RT_Power)
+	if (iRequisition <= DonationSettings[sRace].RequisitionExcess and iPower <= DonationSettings[sRace].PowerExcess) then
+		return
+	end
+
+	-- Check for allies in demand of resources
+	for iLoop1 = 1, g_iPlayerCount do
+	
+		-- Get other players
+		if (iLoop1 ~= g_iCurrentAIPlayer) then
+		
+			-- Get player ID and race
+			local eAllyID = World_GetPlayerAt(iLoop1 - 1)
+			local sAllyRace = Player_GetRaceName(eAllyID)
+			
+			-- Check donation settings
+			if (DonationSettings[sAllyRace] ~= nil) then
+			
+				-- Check restrictions
+				local bExchangeRestricted = (DonationSettings[sRace].ResourceExchangeRestricted or
+											 DonationSettings[sAllyRace].ResourceExchangeRestricted)
+				
+				-- Check if player a valid ally
+				if (Player_IsAlive(eAllyID) and Player_IsAllied(eCurrentPlayerID, eAllyID) and
+					(not bExchangeRestricted or sRace == sAllyRace)) then
+	
+					-- Check if we have excess requisition
+					local bRequisitionDonation = false
+					if (iRequisition > DonationSettings[sRace].RequisitionExcess) then
+					
+						-- Check requisition demand
+						local iAllyRequisition = Player_GetResource(eAllyID, RT_Requisition)
+						if (iAllyRequisition < DonationSettings[sAllyRace].RequisitionDemand) then
+							
+							-- Donate requisition
+							Player_AddResource(eAllyID, RT_Requisition, 200)
+							Player_AddResource(eCurrentPlayerID, RT_Requisition, -200)
+							iRequisition = iRequisition - 200
+							bRequisitionDonation = true
+						end
+					end
+					
+					-- Check if we have excess power
+					local bPowerDonation = false
+					if (iPower > DonationSettings[sRace].PowerExcess) then
+					
+						-- Check power demand
+						local iAllyPower = Player_GetResource(eAllyID, RT_Power)
+						if (iAllyPower < DonationSettings[sAllyRace].PowerDemand) then
+							
+							-- Donate power
+							Player_AddResource(eAllyID, RT_Power, 200)
+							Player_AddResource(eCurrentPlayerID, RT_Power, -200)
+							iPower = iPower - 200
+							bPowerDonation = true
+						end
+					end
+					
+					-- Check if we have made a donation
+					if (bRequisitionDonation or bPowerDonation) then
+						
+						-- Check if we have to send a message to the local player
+						if (iLoop1 == Tut_GetLocalPlayerIndex() + 1) then
+						
+							-- Create message
+							local sMessage = nil
+							if (bRequisitionDonation and bPowerDonation) then
+								sMessage = DonationSettings[sRace].Title.." requisition + power donation"
+							elseif (bRequisitionDonation) then
+								sMessage = DonationSettings[sRace].Title.." requisition donation"
+							elseif (bPowerDonation) then
+								sMessage = DonationSettings[sRace].Title.." power donation"
+							end
+							
+							-- Send message
+							local sIcon = "player_donation"
+							local sSound = "event_cue_notifications/donation_received"
+							EventCue_DoEvent("player_donation", "event_cue_notifications/donation_received", sMessage, sMessage)
+							
+							-- Ping my starting position
+							Ping_Position(Player_GetStartPosition(eCurrentPlayerID), false)
+						end
+					end
+				end
+			end
+		end
+		
+		-- Check if we've still excess resources
+		if (iRequisition <= DonationSettings[sRace].RequisitionExcess and iPower <= DonationSettings[sRace].PowerExcess) then
+			return
+		end
+	end
+end
+
+
+-- Init ai SCAR support rule system
+function SetupAIDonations()
+	Rule_AddOneShot( AIDonations_InitRule, 0.0 )
+end
+
+-- Init AI donations
+Scar_AddInit( SetupAIDonations )

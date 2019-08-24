@@ -1,0 +1,3741 @@
+-------------------------------------------------
+--[[ IMPORTS -- This is neccesary to use all the functions of SCAR]]
+-------------------------------------------------
+import("ScarUtil.scar")
+import("WXPScarUtil.scar")
+
+-------------------------------------------------
+--[[ GAME SETUP ]]
+-------------------------------------------------
+
+--[[ the OnGameSetup() function is mandatory! -- Here you should setup all your global variables, which can be used in any function.]]
+function OnGameSetup()
+
+--[[Tweak these variables to change difficulty]]
+-- global timers
+g_FaithGenerationTimer = 29 -- amount of time between incrementing faith counter
+g_InitialAttackTimer = 10  -- delay before initial attack
+g_InitialBaseAttackTimer = 100 -- time between attacks from the small base next to the player base
+g_NumberOfLPsLeft = 0 -- (CANT BE HIGHER THAN 6!) -- number of LP's with worshippers left standing, used to check off when the secondary objective is completed
+g_AmtOfFaithRequiredForCrusade = 600 --600 amount of faith needed to generate before a crusade is summoned
+g_SecondaryObjectiveCounterMax = 600 -- if the player doesnt blow up the initial LP, how long until the objective is assigned anyway
+g_UpdateShrineHPInterval = 3 -- this is how long between the updates for shrine hp.
+g_SaintJumpCoolDown = 60 -- cooldown between saint jumping around
+g_MainBaseAttackTimer = 295 -- (295) spawns units to attack the players main base every X second
+g_MainBaseAttackTierTimer = 700 -- 700 tiers up so more/bigger units attack the players base every X seconds
+g_DeathCultSpawnTimer = 913 -- 600 every X seconds, g_MaxAssassins spawn and attack the players hero
+g_Rt1SpawnTimer = 250 -- 250 every X seconds, a squad spawns and patrols this route
+g_Rt2SpawnTimer = 280 -- 280 every X seconds, a squad spawns and patrols this route
+g_HunterKillerAttackTimer = 620
+g_ResearchTierTimer = 250 -- 250
+g_ExorcistAttackPlayerBaseTimer = 350 -- 350
+g_SpawnSeraphimToDefendShrineTimer = 60 -- spawns seraphim that jump from the center base to defend shrines
+g_AttackFinalBaseFromRecruitmentCentersTimer = 90 -- 90
+g_RecaptureLPTimer = 300 -- sends celestians with multimeltas to recapture listening posts
+g_SaintIdleTimer = 30 --  saint jumps back to hq after this many seconds of being idle
+g_StartExorcistBaseAt = 5 --should be 5
+
+-- skill cooldowns
+g_LayHandsCooldown = 45
+g_DivineRetributionCooldown = 85
+g_EmperorsTouchCooldown = 75
+g_AngelicVisageCooldown = 60
+g_LaudHailerCooldown = 30
+
+-- lightning plane stuff
+g_LightningSquadAttackTimer = 220 -- 170 checks to see if the player has any air units and sends out lightning fighters to take it out every X seconds
+g_LightningSquadTierTimer = 600 -- 600 increases the amount of lightnings we could send each X seconds
+g_StartPlanesWhenRecruitmentAt = 6 -- highest # this can be is 7
+
+-- fake population
+g_MaxInitialAttacks = 3
+g_MaxConfessor = 1
+g_MaxExorcist = 2
+g_MaxSisters = 6
+g_MaxEngines = 3
+g_MaxRepentia = 4
+g_MaxMissionary = 4
+g_MaxImmolators = 3
+g_MaxSeraphim = 4
+g_MaxCelestian = 4
+g_MaxAssassins = 3
+g_MaxLightning = 3
+g_MaxCanoness = 1
+
+--debug stuff
+g_Debug = false -- turns debug mode off and on.  (turns on and off fog of war)
+
+-- other global variables (DO NOT MODIFY)
+t_PickupPoints = {1,2,3,4,5,6,7}
+t_ShrineHP = {1,1,1,1,1}
+g_TotalPickupPoints = 7
+g_Faith  = World_GetRand(10, 21)
+g_InitialAttackCounter = 0
+g_ConfessorCounter = 0
+g_SistersCounter = 0
+g_EngineCounter = 0
+g_CelestianCounter = 0
+g_RepentiaCounter = 0
+g_MissionaryCounter = 0
+g_ImmolatorCounter = 0
+g_SeraphimCounter = 0
+g_ExorcistCounter = 0
+g_WanderFlag = false
+g_SecondaryObjectiveCounter = 0
+g_RecruitmentDestroyed = false
+g_ConfessorNextPoint = ""
+g_PlayerUnitCounter = 0
+g_SaintAtMainBase = true
+g_CanSaintJump = true
+g_JumpFlag = true
+g_BaseAttackTier = 1
+g_PBACounter = 0
+g_TempSquadCounter = 0
+g_AssassinCounter = 0
+g_WanderCounter = 0
+g_PrayerIEFlag = false
+g_RecruitmentIEFlag = false
+g_ping_obj_recruitment_mm = {}
+g_ping_obj_recruitment = {}
+g_TempSquadCounter = 0
+g_AirTargetCounter = 0
+g_LightningCounter = 5
+g_LightningAttackNumber = 1
+g_ping_obj_recruitment_etc = {false, false,false, false,false, false,false}
+g_PopulateCounter = 0
+g_CrusadeCounter = 0
+g_SaintJumpsToMainBaseIE = false
+g_DeadShrineIEs = {false, false}
+g_SaintJumpedCounter = 0
+g_PlayerSquadsNearBases = 0
+g_IE_AssassinsSent = false
+g_IE_HKMissleFired = false
+g_HunterKillerTargetCounter = 0
+g_ResearchTier = 0
+g_SeraphimJumped = {false, false}
+g_SeraphimSkillFired = {false, false}
+g_RighteousFerver1 = {}
+g_RighteousFerver2 = {}
+g_FinalAttackCounter = 0
+g_SistersTier = 1
+g_CanonessCounter = 0
+g_AscensionFlag = false
+-- generator markers start at 0
+g_bonus_gen_counter = 0
+-- turrer markers start at 6
+g_bonus_turret_counter = 6
+g_CaptureCounter = 0
+g_FirstRecapture = true
+g_GlobalAttackPos = 0
+g_RatchetThroughSkills = 0
+g_LayHandsCastFlag = true
+g_LayHandsCounter = 0
+g_DivineRetributionCastFlag = true
+g_DivineRetributionCounter = 0
+g_EmperorsTouchCastFlag = true
+g_EmperorsTouchCounter = 0
+g_AngelicVisageCastFlag = true
+g_AngelicVisageCounter = 0
+g_RatchetThroughSpawn = 0
+g_LaudHailerFlag = true
+g_LaudHailerCounter = 0
+g_SaintRecentlyUnderAttack = false
+g_SaintUnderAttackCounter = 0
+g_BattleSistersWithExorcist = {}
+g_PrimaryObjectives = 0
+g_SecondaryObjectives = 0
+g_ping_obj_shrine_pingid = {}
+g_ping_obj_shrine = {false, false, false, false}
+
+--[[defining the name of the player's faction]]
+if MetaMap_GetPlayerRaceName() == "chaos_marine_race" then
+	factionname = "$3950214"
+	colorscheme = "default_0"
+elseif MetaMap_GetPlayerRaceName() == "guard_race" then
+	factionname = "$3950219"
+	colorscheme = "default_4"
+elseif MetaMap_GetPlayerRaceName() == "ork_race" then
+	factionname = "$3950215"
+	colorscheme = "default_4"
+elseif MetaMap_GetPlayerRaceName() == "space_marine_race" then
+	factionname = "$3950213"
+	colorscheme = "default_0"
+elseif MetaMap_GetPlayerRaceName() == "tau_race" then
+	factionname = "$3950224"
+	colorscheme = "default_4"
+elseif MetaMap_GetPlayerRaceName() == "eldar_race" then
+	factionname = "$3950217"
+	colorscheme = "default_5"
+elseif MetaMap_GetPlayerRaceName() == "necron_race" then
+	factionname = "$3950223"
+	colorscheme = "default_0"
+elseif MetaMap_GetPlayerRaceName() == "dark_eldar_race" then
+	factionname = "$3950220"
+	colorscheme = "default_1"
+elseif MetaMap_GetPlayerRaceName() == "sisters_race" then
+	factionname = "$3900048"
+	colorscheme = "default_2"
+end
+g_Player1 = Setup_Player(0, factionname, MetaMap_GetPlayerRaceName(), 0)
+Misc_PlayerTeamColor(g_Player1, colorscheme)
+	
+--setting up the upgrades for the commander
+MetaMap_UpdatePlayerWargear(g_Player1)
+
+g_Player2 = Setup_Player(1, "$3950221", "sisters_race", 1) -- main
+g_Player3 = Setup_Player(2, "$3950221", "sisters_race", 1) -- assassins
+g_Player4 = Setup_Player(3, "$3950221", "sisters_race", 1) -- wander
+g_Player5 = Setup_Player(4, "$3950221", "sisters_race", 1) -- recapture
+g_Player6 = Setup_Player(5, "$3950221", "sisters_race", 1) -- plane wander
+g_Player7 = Setup_Player(6, "$3950221", "sisters_race", 1)
+g_Player8 = Setup_Player(7, "$3950221", "sisters_race", 1)
+Misc_PlayerTeamColor(g_Player2, "default_2")
+Misc_PlayerTeamColor(g_Player3, "default_2")
+Misc_PlayerTeamColor(g_Player4, "default_2")
+Misc_PlayerTeamColor(g_Player5, "default_2")
+Misc_PlayerTeamColor(g_Player6, "default_2")
+Misc_PlayerTeamColor(g_Player7, "default_2")
+Misc_PlayerTeamColor(g_Player8, "default_2")
+	
+end
+
+--[[ the OnGameRestore() function is mandatory!, this will only get called after loading a game ]]
+function OnGameRestore()
+end
+
+--[[This function runs first, here you can setup anything you want to happen before the game starts.]]
+function OnInit()
+
+	Rule_AddOneShot(Rule_CreateSistersBases, 0)
+	
+	--NIS_Setup()
+	if g_Debug == false then
+		WXP_OpeningNISPreset( )
+		Util_StartNIS( EVENTS.NIS_Opening )
+	end
+	
+	
+	
+	Rule_PresetAI()
+	
+	--[[ Start Gameplay]]
+	Rule_Add( Rule_GameStart )
+	
+	--[[Define Objective]]
+	Objective_DestroyStronghold = {title_id = 3950031, short_desc_id = 3950032 , help_tip_id =3950032}
+	Objective_DestroyTankBase = {title_id = 3950033, short_desc_id = 3950034 , help_tip_id =3950034}
+	Objective_DestroyShrines = {title_id = 3950038, short_desc_id = 3950039 , help_tip_id =3950039}
+	Objective_DestroyCrusade = {title_id = 3950041, short_desc_id = 3950042 , help_tip_id =3950042}
+	Objective_DestroyRecruitment = {title_id = 3950043, short_desc_id = 3950044 , help_tip_id =3950044}
+	Objective_DestroyAirBase = {title_id = 3950035, short_desc_id = 3950036 , help_tip_id =3950036}
+	
+	--[[
+	3950031	Destroy the Sisters Stronghold!
+	3950032	Destroy the sisters headquarters to blow them off the planet!
+	3950033	Destroy the Exorcist Tank Base
+	3950034	This base has been producing exorcist tanks, destroy it to stop their production!
+	3950035	Destroy the prayer groups to decrease faith generation!
+	3950036	The sisters have sent out missionaries to worship at various altars around their city, destroy the missionaries and the alters to slow down their generation of faith.
+	3950037	Faith: %1NUM%
+	3950038	Destroy the Shrines of the Living Saint
+	3950039	The shrines give the living saint her divine power, destroy them to make her vulnerable!
+	3950040	Shrines: %1NUM%
+	3950041	Stop the crusade!
+	3950042	When the Sisters of Battle gain enough faith, they will send out a crusade.
+	3950043	Destroy the recruitment bases!
+	3950044	The Sisters of Battle have placed recruitment centers throughout the city.  The crusade will be weakened if these bases are destroyed.
+	]]--
+
+	
+	
+end
+
+--[[ the Scar_AddInit(OnInit) function is mandatory! This registers your init function with scar. ]]
+Scar_AddInit(OnInit)
+
+-------------------------------------------------
+--[[ PRESET AI ]]
+-------------------------------------------------
+
+function Rule_PresetAI()
+	
+	--[[This function is called from OnInit() and start or stop the AI.]]
+	
+	Cpu_Enable(g_Player2, false)
+	--Cpu_SetDifficulty(g_Player2,AD_Standard)
+	Cpu_Enable(g_Player3, false)
+	--Cpu_SetDifficulty(g_Player3,AD_Standard)
+	Cpu_Enable(g_Player4, false)
+	--Cpu_SetDifficulty(g_Player4,AD_Standard)
+	Cpu_Enable(g_Player5, false)
+	--Cpu_SetDifficulty(g_Player5,AD_Insane)
+	Cpu_Enable(g_Player6, false)
+	--Cpu_SetDifficulty(g_Player5,AD_Insane)
+	Cpu_Enable(g_Player7, false)
+	--Cpu_SetDifficulty(g_Player5,AD_Insane)
+	Cpu_Enable(g_Player8, false)
+	--Cpu_SetDifficulty(g_Player5,AD_Insane)
+	--[[Cpu_EnableComponent(g_Player5, true, CT_Attacking)
+	Cpu_EnableComponent(g_Player5, true, CT_Tactics)
+	Cpu_EnableComponent(g_Player5, false, CT_BuildBuildings)
+	Cpu_EnableComponent(g_Player5, false, CT_BuildResearch)
+	Cpu_EnableComponent(g_Player5, false, CT_Defending)
+	Cpu_EnableComponent(g_Player5, false, CT_BuildUnits)
+	Cpu_EnableComponent(g_Player5, false, CT_BuildAddOns)
+	Cpu_EnableComponent(g_Player5, false, CT_Resourcing)]]
+	
+	--[[Cpu_Enable(g_Player4, false)
+	Cpu_SetDifficulty(g_Player4, AD_Standard)
+	Cpu_EnableComponent(g_Player4, false, CT_Attacking)
+	Cpu_EnableComponent(g_Player4, false, CT_Tactics)
+	Cpu_Enable(g_Player5, false)
+	Cpu_SetDifficulty(g_Player5, AD_Standard)
+	Player_RestrictSquad(g_Player5, "necron_lord_squad")
+	Cpu_Enable(g_Player6, false)
+	Cpu_SetDifficulty(g_Player6, AD_Standard)
+	
+	Cpu_EnableComponent(g_Player5, false, CT_Attacking)
+	Cpu_EnableComponent(g_Player5, false, CT_Tactics)
+	Cpu_EnableComponent(g_Player5, false, CT_BuildBuildings)
+	Cpu_EnableComponent(g_Player5, false, CT_BuildResearch)
+	Cpu_EnableComponent(g_Player4, false, CT_Resourcing)]]
+	
+end
+
+-------------------------------------------------
+--[[ MUSIC -- Called from Rule_GameStart()]]
+-------------------------------------------------
+
+function Rule_Start_Music()
+	
+	--[[Starts the music]]
+	t_Sisters_stronghold_music = {"MU_IG_STR_sisters_perc_str", "MU_IG_STR_sisters", "MU_IG_STR_sisters_perc_voice"}
+	
+	Playlist_Manager( PC_Music, t_Sisters_stronghold_music, true, true , {2, 4})
+	
+	
+	--[[Set ambient sounds]]
+	t_Sisters_stronghold_ambient = {"Ambience_Imperial_City"}
+	
+	Playlist_Manager( PC_Ambient, t_Sisters_stronghold_ambient, true, true , {5, 15})
+	
+end
+
+
+-------------------------------------------------
+--[[ START PLAY ]]
+-------------------------------------------------
+
+function Rule_GameStart()
+	
+	if Event_IsAnyRunning() == false then
+		
+		if g_Debug == true then
+			FOW_RevealAll()
+		end
+		
+		--[[ Set resources for both players ]]
+		Player_SetAllResources(g_Player1, 1000, 300, 20)
+		Player_AddResource( g_Player2, RT_Faith, 100000000000 )
+		Player_AddResource( g_Player3, RT_Faith, 100000000000 )
+		Player_AddResource( g_Player4, RT_Faith, 100000000000 )
+		
+		-- Set Difficulty Level
+		DifficultyLevel()
+	
+		-- Timer
+		Rule_UI_Game_Timer()
+		
+		--Music
+		Rule_AddOneShot(Rule_Start_Music, 0)
+		
+		-- Create Bases
+		Rule_AddOneShot(Rule_CreatePlayerBases, 0)	
+		AddLastShrine()
+		OrientateShrines()
+		Rule_AddOneShot(SpawnSaint, 5)	
+		
+		
+		-- Objectives
+		Rule_AddInterval(Rule_Objective_DestroyStronghold, 10)
+		Rule_AddInterval(Rule_Objective_DestroyShrinesHelper, 1)
+		
+		-- Gameplay Rules
+		Rule_AddOneShot(InitialAttack, g_InitialAttackTimer)
+		Rule_AddInterval(UpdateShrineHP, g_UpdateShrineHPInterval)
+		Rule_AddInterval(DeathCultAI, g_DeathCultSpawnTimer)
+		Rule_AddInterval(Route2Spawn, g_Rt2SpawnTimer)
+		Rule_AddInterval(Route1Spawn, g_Rt1SpawnTimer)
+		LightningAttack()
+		Rule_AddInterval(LightningAttack, g_LightningSquadAttackTimer)
+		Rule_AddInterval(FindVehiclesAndHunterKillerThem, g_HunterKillerAttackTimer)
+		Rule_AddInterval(Research, g_ResearchTierTimer)
+		Rule_AddInterval(ExorcistAttackPlayerBase, g_ExorcistAttackPlayerBaseTimer)
+		Rule_AddInterval(FinalBase_Seraphim, g_SpawnSeraphimToDefendShrineTimer)
+		Rule_AddInterval(FinalBase_RecruitmentCenters, g_AttackFinalBaseFromRecruitmentCentersTimer)
+		Rule_AddInterval(RecaptureLP, g_RecaptureLPTimer)
+		
+		Rule_AddInterval(BattleSisterExorcistEscort, 5)
+		Rule_AddInterval(ActsOfFaith_Skills, 2)
+		Rule_AddInterval(SpawnInitialUnitsInAllBases, 3)
+		Rule_AddInterval(PopulateWanderRoutes, 25)
+		Rule_AddInterval(CrusadeObjectiveHelper, 1)
+		Rule_Add(SortPickupPoints)
+		Rule_AddInterval(WanderConfessor, 1)
+		Rule_AddInterval(SaintAI, 1)
+		Rule_AddInterval(IdleSaint, 1)
+		Rule_AddInterval(Search, 15)
+		Rule_AddInterval(Wander, 5)
+		Rule_AddInterval(AirBaseObjectiveHelper, 1)
+		Rule_AddInterval(IE_EnterAirBase, 4)
+		Rule_AddInterval(IE_EnterExorcistBase, 4)
+		Rule_AddInterval(IE_EnterMainBase, 5)
+		Rule_AddInterval(IE_ProxSaint, 2)
+		Rule_AddOneShot(RandomCanonessTaunt1, World_GetRand(200,250))
+		Rule_AddInterval(IE_DeadShrines, 2)
+		Rule_AddInterval(AttackLP5, 2)
+		Rule_AddInterval(BaseAttacks, 3)
+		Research()
+		Rule_AddInterval(ExorcistAttackPlayerBaseObjective, 3)
+		Rule_AddInterval(FinalBase_Seraphim_Jump, 1)
+		Rule_AddInterval(MoveFinalAttackGuysToMainBase, 10)
+		--Rule_AddInterval(CanonessSkillz, 2)
+		Rule_AddInterval(Lose, 10)
+		Rule_AddInterval(AttackPlayerbaseFromMarker, 4)
+		Rule_AddInterval(IntelligentlyMoveAttacks, 5)
+		Rule_AddInterval(ActsOfFaith_Skills_Cooldowns, 1)
+		Rule_AddInterval(PatrolPlanes, 5)
+
+
+		--[[ Clean up -- Since we did Rule_Add(Rule_GameStart) it was attempting to run this function every frame, but now that it has finished running, we don't need it to run anymore.]]
+		Rule_Remove(Rule_GameStart)
+	end
+
+end
+
+-- Create and Initially Show the Game Timer
+function Rule_UI_Game_Timer()
+	g_UI_gameTimer	= 0
+	WinWarning_Add( "ui_gameTime", World_GetPlayerAt(0), "", "", "" )
+ 	Rule_AddInterval(Rule_UI_Game_Timer_Tick, 1)
+end
+-- Updates and shows the Game Timer every second
+function Rule_UI_Game_Timer_Tick()
+	g_UI_gameTimer = g_UI_gameTimer+1
+	WinWarning_SetText( "ui_gameTime", Loc_FormatText1( 60445, Loc_FormatTime( 60409, g_UI_gameTimer ) ) )
+end
+
+
+--[[Drops down buildings at markers, to create the SM bases around the map]]
+function Rule_CreateSistersBases()
+
+	--[[SISTERS ENTITIES
+	sisters_holy_reliquary
+	sisters_hq
+	sisters_infantry
+	sisters_listening_post
+	sisters_mines
+	sisters_plasma_generator
+	sisters_sanctuary
+	sisters_shrine
+	sisters_thermo_plasma
+	sisters_turret_flamer
+	sisters_vehicle_building	
+	]]
+	--[[MainBase]]
+	Entity_CreateBuildingMarker(g_Player2, "eg_MainBaseHQ", "sisters_hq", "mkr_mainbase_hq", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_SpawnPoint5", "sisters_infantry", "mkr_mainbase_barracks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_MainBaseBarracks2", "sisters_infantry", "mkr_mainbase_barracks2", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_MainBaseBarracks3", "sisters_infantry", "mkr_mainbase_barracks3", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_MainBaseTanks1", "sisters_vehicle_building", "mkr_mainbase_tanks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_MainBaseTanks2", "sisters_vehicle_building", "mkr_mainbase_tanks2", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_MainBaseTanks3", "sisters_vehicle_building", "mkr_mainbase_tanks3", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_MainBaseArmory", "sisters_sanctuary", "mkr_mainbase_armory", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_MainBaseHoly1", "sisters_vehicle_building", "mkr_mainbase_holy1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_MainBaseHoly2", "sisters_vehicle_building", "mkr_mainbase_holy2", 1)
+	
+	EGroup_ForceAddOn("eg_MainBaseHQ", "addon_sisters_hq_1")
+	EGroup_ForceAddOn("eg_MainBaseHQ", "addon_sisters_hq_2")
+	
+	--[[Initial Base]]
+	Entity_CreateBuildingMarker(g_Player2, "eg_InitialBarracks", "sisters_infantry", "mkr_initial_barracks", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_InitialArmory", "sisters_sanctuary", "mkr_initial_armory", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_InitialTurret", "sisters_turret_flamer", "mkr_initial_turret", 1)
+	for i=1,3 do
+		Entity_CreateBuildingMarker(g_Player2, "InitialGenerator"..i, "sisters_plasma_generator", "mkr_initial_generator"..i, 1)
+	end
+	
+	--[[Shrines]]
+	--[[for i=1,4 do
+		Entity_CreateBuildingMarker(g_Player2, "eg_Shrine"..i, "sisters_shrine_sp_dxp3", "mkr_shrine"..i, 1)
+	end]]
+	
+	--[[Base1]]	
+	Entity_CreateBuildingMarker(g_Player2, "eg_SpawnPoint7", "sisters_infantry", "mkr_base1_barracks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base1Tanks1", "sisters_vehicle_building", "mkr_base1_tanks1", 1)
+
+	--[[Base2]]
+	local flag = false
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base2Barracks1", "sisters_infantry", "mkr_base2_barracks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base2Barracks2", "sisters_infantry", "mkr_base2_barracks2", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base2Barracks3", "sisters_infantry", "mkr_base2_barracks3", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_SpawnPoint6", "sisters_vehicle_building", "mkr_base2_tanks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base2Tanks2", "sisters_vehicle_building", "mkr_base2_tanks2", 1)
+	
+	--[[Base3]]
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base3HQ", "sisters_hq", "mkr_base3_hq", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base3Barracks1", "sisters_infantry", "mkr_base3_barracks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_SpawnPoint4", "sisters_infantry", "mkr_base3_barracks2", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base3Tanks1", "sisters_vehicle_building", "mkr_base3_tanks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base3Armory", "sisters_sanctuary", "mkr_base3_armory", 1)
+	
+	--[[Base4]]
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base4Barracks1", "sisters_infantry", "mkr_base4_barracks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_SpawnPoint2", "sisters_infantry", "mkr_base4_barracks2", 1)
+	
+	--[[Base5]]
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base5HQ", "sisters_hq", "mkr_base5_hq", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_SpawnPoint1", "sisters_infantry", "mkr_base5_barracks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base5Barracks2", "sisters_infantry", "mkr_base5_barracks2", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base5Tanks1", "sisters_vehicle_building", "mkr_base5_tanks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_Base5Armory", "sisters_sanctuary", "mkr_base5_armory", 1)
+	
+	
+	--[[TankBase]]
+	Entity_CreateBuildingMarker(g_Player2, "eg_TankBaseHQ", "sisters_hq", "mkr_tankbase_hq", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_TankBaseTanks1", "sisters_vehicle_building", "mkr_tankbase_tanks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_TankBaseTanks2", "sisters_vehicle_building", "mkr_tankbase_tanks2", 1)
+	--Entity_CreateBuildingMarker(g_Player2, "eg_SpawnPoint3", "sisters_vehicle_building", "mkr_tankbase_tanks3", 1)
+	Entity_CreateBuildingPositionForce(g_Player2, "eg_SpawnPoint3", "sisters_vehicle_building", Marker_GetPosition(Marker_FromName("mkr_tankbase_tanks3", "basic_marker")), 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_TankBaseBarracks1", "sisters_infantry", "mkr_tankbase_barracks1", 1)
+	EGroup_CreateIfNotFound("eg_ExorcistBaseObj")
+	EGroup_AddGroup("eg_ExorcistBaseObj", "eg_TankBaseTanks1")
+	EGroup_AddGroup("eg_ExorcistBaseObj", "eg_TankBaseTanks2")
+	EGroup_AddGroup("eg_ExorcistBaseObj", "eg_SpawnPoint3")
+	
+	--[[Recapture Base]]
+	Entity_CreateBuildingMarker(g_Player2, "eg_RecaptureBaseHQ", "sisters_hq", "mkr_recapture_hq", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_RecaptureBaseBarracks1", "sisters_infantry", "mkr_recapture_barracks1", 1)
+	Entity_CreateBuildingMarker(g_Player2, "eg_RecaptureBaseBarracks2", "sisters_infantry", "mkr_recapture_barracks2", 1)
+	
+	--[[Random Turrets]]
+	for i=1,25 do
+		Entity_CreateBuildingMarker(g_Player2, "eg_RandomTurret"..i, "sisters_turret_flamer", "mkr_randomturret"..i, 1)
+		if EGroup_Exists("eg_RandomTurret"..i) and EGroup_Count("eg_RandomTurret"..i) > 0 then
+			EGroup_ForceAddOn("eg_RandomTurret"..i, "addon_sisters_turret")
+		else
+			-- print
+		end
+	end
+	
+	--[[ Mines ]]
+	for i=1,9 do
+		Entity_CreateBuildingMarker(g_Player2, "eg_Mine"..i, "sisters_mines", "mkr_mine"..i, 1)
+	end
+	
+	-- give the AI all of the strategic points, and put upgraded listening posts on them
+	--[[Strategic Points]]
+	for i = 1,7 do
+		EGroup_SetPlayerOwner("eg_LP"..i, g_Player2)
+		Entity_CreateBuildingPosition(g_Player2, "eg_ListeningPosts"..i, "sisters_listening_post", EGroup_GetPosition("eg_LP"..i), 1)
+		EGroup_ForceAddOn("eg_ListeningPosts"..i, "addon_sisters_list_post_1")
+		EGroup_ForceAddOn("eg_ListeningPosts"..i, "addon_sisters_list_post_2")
+		EGroup_ForceAddOn("eg_ListeningPosts"..i, "addon_sisters_holy_icon")
+	end
+	
+	
+	
+	--EGroup_SetPlayerOwner("eg_InitialLP", g_Player2)
+	--Entity_CreateBuildingPosition(g_Player2, "eg_InitialListeningPost", "sisters_listening_post", EGroup_GetPosition("eg_InitialLP"), 1)
+	
+	--[[Relic]]
+	EGroup_SetPlayerOwner("eg_Relic", g_Player2)
+	Entity_CreateBuildingPosition(g_Player2, "eg_RelicPost", "sisters_listening_post", EGroup_GetPosition("eg_Relic"), 1)
+	EGroup_ForceAddOn("eg_RelicPost", "addon_sisters_list_post_1")
+	EGroup_ForceAddOn("eg_RelicPost", "addon_sisters_list_post_2")
+	
+end
+
+function AddLastShrine()
+	Entity_CreateBuildingMarker(g_Player2, "eg_Shrine3", "sisters_shrine_sp_dxp3", "mkr_shrine3_2", 1)
+end
+
+function OrientateShrines()
+	EPath_Start("shrine2", "shrine2_1", "shrine2_2", "eg_Shrine2")
+	EPath_Start("shrine4", "shrine4_1", "shrine4_2", "eg_Shrine4")	
+end
+
+function Rule_CreatePlayerBases()
+
+	local Race
+	local Player
+
+	Race = MetaMap_GetPlayerNRaceName(0)
+	Player = g_Player1
+
+	if Race == "chaos_marine_race" then
+		
+		Entity_CreateBuildingMarker(Player, "eg_Player_HQ", "chaos_hq", "mkr_Player_HQ", 1)
+		Util_CreateSquadsAtMarkerEx(Player, "sg_Player_Builder", "chaos_squad_slave", "mkr_Player_Builder", 1, 1)
+		
+		--win/loss
+		t_building_exceptions = {
+		"chaos_armoury",
+		"chaos_listening_post",
+		"chaos_mine_field",
+		"chaos_plasma_generator",
+		"chaos_thermo_plasma_generator",
+		"chaos_turret_bolter"
+		}
+		
+		t_unit_exceptions = {}
+		
+		
+	elseif Race == "guard_race" then
+		
+		Entity_CreateBuildingMarker(Player, "eg_Player_HQ", "guard_hq", "mkr_Player_HQ", 1)
+		Util_CreateSquadsAtMarkerEx(Player, "sg_Player_Builder", "guard_squad_enginseer", "mkr_Player_Builder", 1, 1)
+		
+		--win/loss
+		t_building_exceptions = {
+		"guard_listening_post",
+		"guard_mines",
+		"guard_plasma_generator",
+		"guard_tactica",
+		"guard_thermo_plasma",
+		"guard_turret_heavy_bolter"
+		}
+		
+		t_unit_exceptions = {}
+		
+	elseif Race == "ork_race" then
+		
+		Entity_CreateBuildingMarker(Player, "eg_Player_HQ", "ork_hq", "mkr_Player_HQ", 1)
+		Util_CreateSquadsAtMarkerEx(Player, "sg_Player_Builder", "ork_squad_grot", "mkr_Player_Builder", 1, 1)
+		
+		--win/loss
+		t_building_exceptions = {
+		"ork_bigger_generator",
+		"ork_generator",
+		"ork_gork_totem",
+		"ork_mine_field",
+		"ork_pile_o_guns",
+		"ork_waagh_banner"
+		}
+		
+		t_unit_exceptions = {}
+		
+	elseif Race == "space_marine_race" then
+		
+		
+		Entity_CreateBuildingMarker(Player, "eg_Player_HQ", "space_marine_hq", "mkr_Player_HQ", 1)
+		Util_CreateSquadsAtMarkerEx(Player, "sg_Player_Builder", "space_marine_squad_servitor", "mkr_Player_Builder", 1, 1)
+		
+		--win/loss
+		t_building_exceptions = {
+		"space_marine_armoury",
+		"space_marine_generator",
+		"space_marine_listening_post",
+		"space_marine_mine_field",
+		"space_marine_turret_bolter",
+		"space_marine_thermo_generator"
+		}
+		
+		t_unit_exceptions = {}
+		
+	elseif Race == "tau_race" then
+		
+		
+		Entity_CreateBuildingMarker(Player, "eg_Player_HQ", "tau_hq", "mkr_Player_HQ", 1)
+		Util_CreateSquadsAtMarkerEx(Player, "sg_Player_Builder", "tau_builder_squad", "mkr_Player_Builder", 1, 1)
+		
+		--win/loss
+		t_building_exceptions = {
+		"tau_listening_post",
+		"tau_research_building",
+		"tau_shrine_of_kauyon",
+		"tau_shrine_of_montka",
+		"tau_shrine_of_purpose",
+		"tau_thermoplasma_generator",
+		"tau_turret_sp",	
+		"tau_plasma_generator"
+		}
+		
+		t_unit_exceptions = {}
+		
+	elseif Race == "necron_race" then
+		
+		
+		Entity_CreateBuildingMarker(Player, "eg_Player_HQ", "monolith", "mkr_Player_HQ", 1)
+		Util_CreateSquadsAtMarkerEx(Player, "sg_Player_Builder", "necron_builder_scarab_squad", "mkr_Player_Builder", 1, 1)
+		
+		--win/loss
+		t_building_exceptions = {
+		"necron_listening_post",
+		"necron_summoning_core",
+		"necron_plasma_generator",
+		"necron_energy_core",
+		"necron_greater_summoning_core",
+		"necron_forbidden_archive",
+		"necron_thermoplasma_generator",
+		"necron_turret"
+		}
+		
+		t_unit_exceptions = {}
+		
+		
+	elseif Race == "eldar_race" then
+		
+		
+		Entity_CreateBuildingMarker(Player, "eg_Player_HQ", "eldar_hq", "mkr_Player_HQ", 1)
+		Util_CreateSquadsAtMarkerEx(Player, "sg_Player_Builder", "eldar_squad_bonesinger", "mkr_Player_Builder", 1, 1)
+		
+		--win/loss
+		t_building_exceptions = {
+		"eldar_advanced_warp_generator",
+		"eldar_listening_post",
+		"eldar_mine_field",
+		"eldar_soul_shrine",
+		"eldar_support_platform_scatterlaser",
+		"eldar_warp_generator"
+		}
+		
+		t_unit_exceptions = {}
+		
+	elseif Race == "dark_eldar_race" then
+		
+		
+		Entity_CreateBuildingMarker(Player, "eg_Player_HQ", "dark_eldar_hq", "mkr_Player_HQ", 1)
+		Util_CreateSquadsAtMarkerEx(Player, "sg_Player_Builder", "dark_eldar_squad_slave", "mkr_Player_Builder", 1, 1)
+		
+		--win/loss
+		t_building_exceptions = {
+		"dark_eldar_haemonculus_laboratory",
+		"dark_eldar_listening_post",
+		"dark_eldar_plasma_generator",
+		"dark_eldar_slave_caravel",
+		"dark_eldar_soul_cage",
+		"dark_eldar_thermo_plasma"		
+		}
+		
+		t_unit_exceptions = {}
+		
+	elseif Race == "sisters_race" then
+		
+		
+		Entity_CreateBuildingMarker(Player, "eg_Player_HQ", "sisters_hq", "mkr_Player_HQ", 1)
+		Util_CreateSquadsAtMarkerEx(Player, "sg_Player_Builder", "sisters_squad_servitor", "mkr_Player_Builder", 1, 1)
+		
+		--win/loss
+		t_building_exceptions = {
+		"sisters_thermo_plasma",
+		"sisters_plasma_generator",
+		"sisters_turret_flamer",
+		"sisters_holy_reliquary",
+		"sisters_listening_post",
+		"sisters_mines",
+		"sisters_sanctuary"
+		}
+		
+		t_unit_exceptions = {}
+		
+	end
+	
+	t_blueprintbonus = {}
+	
+	MetaMap_GetRaceStartingSquadsList(MetaMap_GetPlayerNRaceName(0), t_blueprintbonus)	
+
+	for j = 1,  table.getn(t_blueprintbonus) do
+		
+		Util_CreateSquadsAtMarker(g_Player1, "sg_Bonus"..j, t_blueprintbonus[j], "mkr_Player_Builder", 1)
+		
+	end
+	
+
+--[[TODO: Remove! DEBUG USE ONLY!]]
+	if g_Debug == true then
+		EGroup_SetHealthInvulnerable("eg_Player_HQ", true)
+	end
+	
+	ForwardBases()
+end
+
+function ForwardBases()
+
+	--determine race specific blueprints to be looked for when creating forward base
+	if MetaMap_GetPlayerRaceName() == "chaos_marine_race" then
+		
+		g_bonus_generator = "chaos_plasma_generator"
+		g_bonus_turret = "chaos_turret_bolter"
+		g_bonus_barracks = "chaos_temple"
+		g_bonus_barracks2 = 0 --value on used for tau kroot nest, dummy value for all other races, like the Tau turret.
+		g_bonus_research = "chaos_armoury"
+		
+	elseif MetaMap_GetPlayerRaceName() == "eldar_race" then
+		
+		g_bonus_generator = "eldar_warp_generator"
+		g_bonus_turret = "eldar_support_platform_scatterlaser"
+		g_bonus_barracks = "eldar_aspect_portal"
+		g_bonus_barracks2 = 0 --value on used for tau kroot nest, dummy value for all other races, like the Tau turret.
+		g_bonus_research = "eldar_soul_shrine"
+		
+	elseif MetaMap_GetPlayerRaceName() == "guard_race" then
+		
+		g_bonus_generator = "guard_plasma_generator"
+		g_bonus_turret = "guard_turret_heavy_bolter"
+		g_bonus_barracks = "guard_infantry"
+		g_bonus_barracks2 = 0 --value on used for tau kroot nest, dummy value for all other races, like the Tau turret.
+		g_bonus_research = "guard_tactica"
+		
+	elseif MetaMap_GetPlayerRaceName() == "ork_race" then
+		
+		g_bonus_generator = "ork_generator"
+		g_bonus_turret = "ork_waagh_banner"
+		g_bonus_barracks = "ork_boy_hut"
+		g_bonus_barracks2 = 0 --value on used for tau kroot nest, dummy value for all other races, like the Tau turret.
+		g_bonus_research = "ork_pile_o_guns"
+		
+	elseif MetaMap_GetPlayerRaceName() == "space_marine_race" then
+		
+		g_bonus_generator = "space_marine_generator"
+		g_bonus_turret = "space_marine_turret_bolter"
+		g_bonus_barracks = "space_marine_barracks"
+		g_bonus_barracks2 = 0 --value on used for tau kroot nest, dummy value for all other races, like the Tau turret.
+		g_bonus_research = "space_marine_armoury"
+		
+	elseif MetaMap_GetPlayerRaceName() == "tau_race" then
+		
+		g_bonus_generator = "tau_plasma_generator"
+		g_bonus_turret = 0  --tau have no turrets, so zero is simply a filler value to establish the variable instead of writting cutom checks for tau later.  0 will never be a value fed in by code, so it simply allows the algorithm to function in a standadrd manner for all races.
+		g_bonus_barracks = "tau_barracks"
+		g_bonus_barracks2 = "tau_kroot_nest"
+		g_bonus_research = "tau_research_building"
+		
+	elseif MetaMap_GetPlayerRaceName() == "sisters_race" then
+		
+		g_bonus_generator = "sisters_plasma_generator"
+		g_bonus_turret = "sisters_turret_flamer"
+		g_bonus_barracks = "sisters_infantry"
+		g_bonus_barracks2 = 0 --value on used for tau kroot nest, dummy value for all other races, like the Tau turret.
+		g_bonus_research = "sisters_sanctuary"
+		
+	elseif MetaMap_GetPlayerRaceName() == "dark_eldar_race" then
+		
+		g_bonus_generator = "dark_eldar_plasma_generator"
+		g_bonus_turret = "dark_eldar_slave_caravel"
+		g_bonus_barracks = "dark_eldar_hall_of_blood"
+		g_bonus_barracks2 = "dark_eldar_skimmer_shop"
+		g_bonus_research = "dark_eldar_haemonculus_laboratory"
+		
+	elseif MetaMap_GetPlayerRaceName() == "necron_race" then
+		
+		g_bonus_generator = "necron_plasma_generator"
+		g_bonus_turret = "necron_turret"
+		g_bonus_barracks = "necron_summoning_core"
+		g_bonus_barracks2 = 0 --value on used for tau kroot nest, dummy value for all other races, like the Tau turret.
+		g_bonus_research = "necron_forbidden_archive"
+		
+	end
+
+	--Add in any bonus buildings made availible if the player has purchased them via owning Hyperion peaks province
+	t_blueprintEntitybonus = {}
+
+	
+	-- Always builds the building (prevents crashes and speeds things up)
+	function user_CreateBuilding(p_PlayerID, p_EGroupID, p_MarkerName, p_Blueprint)
+		l_EntityID = Entity_Create(p_Blueprint, p_PlayerID, Marker_GetPosition(Marker_FromName(p_MarkerName, "basic_marker" )))
+		EGroup_Add(EGroup_CreateIfNotFound(p_EGroupID), l_EntityID)
+		Entity_Spawn(l_EntityID)                        
+	end
+
+	MetaMap_GetAttackingRaceStartingEntitiesList(t_blueprintEntitybonus)
+
+	for j=1,table.getn(t_blueprintEntitybonus) do
+		
+		if t_blueprintEntitybonus[j] == g_bonus_generator then
+			user_CreateBuilding(g_Player1, "eg_Bonus"..j,"MM_Reinforcement"..g_bonus_gen_counter, t_blueprintEntitybonus[j])
+			--increase by one, the next generator will then spawn at the correct marker after this one
+			g_bonus_gen_counter = g_bonus_gen_counter + 1
+		elseif t_blueprintEntitybonus[j] == g_bonus_turret then
+			user_CreateBuilding(g_Player1, "eg_Bonus"..j,"MM_Reinforcement"..g_bonus_turret_counter, t_blueprintEntitybonus[j])
+			--increase by one, the next turret will then spawn at the correct marker after this one
+			g_bonus_turret_counter = g_bonus_turret_counter + 1
+		elseif t_blueprintEntitybonus[j] == g_bonus_barracks then
+			--fixed marker spawn based on Phil's table.  Only one barracks is spawned, always at marker 10
+			--Necron intentionally spawn a summoning core in place of a barracks due to the monolith doubling as their barracks.
+			user_CreateBuilding(g_Player1, "eg_Bonus"..j,"MM_Reinforcement10", t_blueprintEntitybonus[j])
+		elseif t_blueprintEntitybonus[j] == g_bonus_research then
+			--fixed marker spawn based on Phil's table.  Only one research building is spawned, always at marker 11
+			user_CreateBuilding(g_Player1, "eg_Bonus"..j,"MM_Reinforcement11", t_blueprintEntitybonus[j])
+		elseif t_blueprintEntitybonus[j] == g_bonus_barracks2 then
+			--This will only be used to spawn the kroot nest when the player is Tau, otherwise it will be passed over due to g_bonus_barracks2 being a dummy value.
+			--fixed marker spawn based on Phil's table.  Only one kroot nest is spawned, always at marker 13
+			user_CreateBuilding(g_Player1, "eg_Bonus"..j,"MM_Reinforcement13", t_blueprintEntitybonus[j])
+		end
+	end
+end
+
+
+function DifficultyLevel()
+	local StrongholdStrength = MetaMap_GetTerritoryMilitaryStrength(MetaMap_GetDefendingTerritoryIndex())
+	
+	if StrongholdStrength == 10 or StrongholdStrength == 11 or StrongholdStrength == 12 then
+		g_Difficulty = 1
+	elseif StrongholdStrength == 13 or StrongholdStrength == 14 or StrongholdStrength == 15 then
+		g_Difficulty = 2
+	elseif  StrongholdStrength == 16 or StrongholdStrength == 17 then
+		g_Difficulty = 3
+	end
+end
+
+function PopCheck(Counter, SGroup, MaxPop)
+
+	local Pop = 0
+	
+	for i=0,Counter do
+			if SGroup_Exists(SGroup..i) and SGroup_Count(SGroup..i) > 0 then
+				
+				Pop = Pop + SGroup_Count(SGroup..i)
+				
+			end
+	end
+	
+	
+	if Pop < math.floor(MaxPop) then
+		return true
+	else
+		return false
+	end
+
+end
+
+function RecaptureLP()
+
+	local Random = World_GetRand(1,10)
+	if Random >= 6 then
+		local Count = 0
+		local table_LP = {}
+		for i=1,8 do
+			if i <= 7 then
+				lp = "eg_LP"..i
+			else
+				lp = "eg_Relic"
+			end				
+			if EGroup_IsCapturedByPlayer(lp, g_Player1, true) == true then
+				Count = Count + 1
+				table_LP[Count] = lp
+			end
+		end
+		
+		if table.getn(table_LP) > 0 then
+			g_CapturePointPoint = table_LP[World_GetRand(1,table.getn(table_LP))]
+			if PopCheck(g_CaptureCounter, "sg_CaptureDudes", 3) then
+				local Building = 1
+				if EGroup_Exists("eg_RecaptureBaseBarracks1") and EGroup_Count("eg_RecaptureBaseBarracks1") > 0 then
+					Building = 1
+				elseif EGroup_Exists("eg_RecaptureBaseBarracks2") and EGroup_Count("eg_RecaptureBaseBarracks2") > 0 then
+					Building = 2
+				elseif (EGroup_Exists("eg_RecaptureBaseBarracks2") and EGroup_Count("eg_RecaptureBaseBarracks2") == 0 and EGroup_Exists("eg_RecaptureBaseBarracks1") and EGroup_Count("eg_RecaptureBaseBarracks1") == 0) or (EGroup_Exists("eg_RecaptureBaseHQ") and EGroup_Count("eg_RecaptureBaseHQ") == 0) then
+					Rule_Remove(RecaptureLP)
+					return
+				end
+				-- 1st squad
+				g_CaptureCounter = g_CaptureCounter + 1
+				Util_CreateSquadsAtMarkerEx(g_Player5, "sg_CaptureDudes"..g_CaptureCounter, "sisters_squad_celestian", "mkr_recapture_barracks"..Building, 1, 6)
+				SGroup_AddLeadersAtIndex("sg_CaptureDudes"..g_CaptureCounter, 1)
+				SGroup_AddLeadersAtIndex("sg_CaptureDudes"..g_CaptureCounter, 2)
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_CaptureDudes"..g_CaptureCounter), 1),"sisters_multi_melta_celestian", World_GetRand(3,4))
+				Util_CreateSquadsAtMarkerEx(g_Player5, "sg_CaptureMissionaries"..g_CaptureCounter, "sisters_squad_missionary", "mkr_recapture_barracks"..Building, 1, 1)
+				Cmd_AttachSquads("sg_CaptureDudes"..g_CaptureCounter, "sg_CaptureMissionaries"..g_CaptureCounter)
+				
+				if g_Difficulty >= 2 then
+					-- 2nd squad
+					g_CaptureCounter = g_CaptureCounter + 1
+					Util_CreateSquadsAtMarkerEx(g_Player5, "sg_CaptureDudes"..g_CaptureCounter, "sisters_squad_celestian", "mkr_recapture_barracks"..Building, 1, 6)
+					SGroup_AddLeadersAtIndex("sg_CaptureDudes"..g_CaptureCounter, 1)
+					SGroup_AddLeadersAtIndex("sg_CaptureDudes"..g_CaptureCounter, 2)
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_CaptureDudes"..g_CaptureCounter), 1),"sisters_multi_melta_celestian", World_GetRand(3,4))
+					Util_CreateSquadsAtMarkerEx(g_Player5, "sg_CaptureMissionaries"..g_CaptureCounter, "sisters_squad_missionary", "mkr_recapture_barracks"..Building, 1, 1)
+					Cmd_AttachSquads("sg_CaptureDudes"..g_CaptureCounter, "sg_CaptureMissionaries"..g_CaptureCounter)
+				end				
+			end
+			
+			-- loop through, att move everyone to the point
+			for i=1,g_CaptureCounter do
+				if SGroup_Exists("sg_CaptureDudes"..i) and SGroup_Count("sg_CaptureDudes"..i) > 0 then
+					Cmd_AttackMovePos("sg_CaptureDudes"..i, EGroup_GetPosition(g_CapturePointPoint))
+				end
+			end
+		end
+	end
+	
+	if g_FirstRecapture == true then
+		g_FirstRecapture = false
+		Rule_AddInterval(ForceCapture, 5)
+	end
+end
+
+function ForceCapture()
+	-- loop through all markers
+	for i=1,8 do
+		if i <= 7 then
+			lp = "eg_LP"..i
+			mkr = "mkr_lp"..i
+		else
+			lp = "eg_Relic"
+			mkr = "mkr_reliclp"
+		end		
+		-- loop through all capture guys
+		for j=1,g_CaptureCounter do
+			if SGroup_Exists("sg_CaptureDudes"..j) and SGroup_Count("sg_CaptureDudes"..j) > 0 then
+				if Prox_AnySquadNearMarker("sg_CaptureDudes"..j, mkr) and EGroup_IsCapturedByPlayer(lp, g_Player1, true) == true then
+					Cmd_Capture("sg_CaptureDudes"..j, lp)
+				end
+			end
+		end
+	end
+end
+
+
+function InitialAttack()
+	if g_Difficulty == 1 then
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttack1", "sisters_squad_battle_sister", "mkr_initial_barracks", 1, 5)
+		Cmd_AttackMoveMarker("sg_InitialAttack1", "mkr_Player_HQ")
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttack2", "sisters_squad_battle_sister", "mkr_initial_barracks", 1, 5)
+		Cmd_AttackMoveMarker("sg_InitialAttack2", "mkr_Player_HQ")
+	elseif g_Difficulty == 2 then
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttack", "sisters_squad_battle_sister", "mkr_initial_barracks", 2, World_GetRand(5,8))
+		Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_InitialAttack"), 1),"sisters_flamer_battle_sister", 3)
+		Cmd_AttackMoveMarker("sg_InitialAttack", "mkr_Player_HQ")
+	elseif g_Difficulty == 3 then
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttack1", "sisters_squad_battle_sister", "mkr_initial_barracks", 2, World_GetRand(5,8))
+		Cmd_AttackMoveMarker("sg_InitialAttack1", "mkr_Player_HQ")
+		Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_InitialAttack1"), 1),"sisters_flamer_battle_sister", 3)
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttack2", "sisters_squad_seraphim", "mkr_initial_barracks", 2, World_GetRand(4,7))
+		Cmd_AttackMoveMarker("sg_InitialAttack2", "mkr_Player_HQ")
+		Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_InitialAttack2"), 1),"sisters_flamer_battle_sister", 3)
+	end
+	Rule_AddInterval(InitialBaseAttackWaves, g_InitialBaseAttackTimer)
+end
+
+function InitialBaseAttackWaves()
+	if PopCheck(g_InitialAttackCounter, "sg_InitialAttacks", g_MaxInitialAttacks) == true and EGroup_Exists("eg_InitialBarracks") and EGroup_Count("eg_InitialBarracks") > 0 then
+		if g_Difficulty == 1 then
+			g_InitialAttackCounter = g_InitialAttackCounter + 1
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttacks"..g_InitialAttackCounter, "sisters_squad_battle_sister", "mkr_initial_barracks", 1, 6)
+			Cmd_AttackMoveMarker("sg_InitialAttacks"..g_InitialAttackCounter, "mkr_Player_HQ")
+		elseif g_Difficulty == 2 then
+			g_InitialAttackCounter = g_InitialAttackCounter + 1
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttacks"..g_InitialAttackCounter, "sisters_squad_battle_sister", "mkr_initial_barracks", 1, World_GetRand(6,8))
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_InitialAttacks"..g_InitialAttackCounter), 1),"sisters_flamer_battle_sister", World_GetRand(2,4))
+			Cmd_AttackMoveMarker("sg_InitialAttacks"..g_InitialAttackCounter, "mkr_Player_HQ")
+			g_InitialAttackCounter = g_InitialAttackCounter + 1
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttacks"..g_InitialAttackCounter, "sisters_squad_seraphim", "mkr_initial_barracks", 1, World_GetRand(6,8))
+			Cmd_AttackMoveMarker("sg_InitialAttacks"..g_InitialAttackCounter, "mkr_Player_HQ")
+		elseif g_Difficulty == 3 then
+			g_InitialAttackCounter = g_InitialAttackCounter + 1
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttacks"..g_InitialAttackCounter, "sisters_squad_battle_sister", "mkr_initial_barracks", 1, World_GetRand(6,8))
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_InitialAttacks"..g_InitialAttackCounter), 1),"sisters_flamer_battle_sister", World_GetRand(2,4))
+			Cmd_AttackMoveMarker("sg_InitialAttacks"..g_InitialAttackCounter, "mkr_Player_HQ")
+			g_InitialAttackCounter = g_InitialAttackCounter + 1
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttacks"..g_InitialAttackCounter, "sisters_squad_battle_sister", "mkr_initial_barracks", 1, World_GetRand(5,8))
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_InitialAttacks"..g_InitialAttackCounter), 1),"sisters_flamer_battle_sister", World_GetRand(2,4))
+			Cmd_AttackMoveMarker("sg_InitialAttacks"..g_InitialAttackCounter, "mkr_Player_HQ")
+			g_InitialAttackCounter = g_InitialAttackCounter + 1
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_InitialAttacks"..g_InitialAttackCounter, "sisters_squad_seraphim", "mkr_initial_barracks", 1, World_GetRand(6,8))
+			Cmd_AttackMoveMarker("sg_InitialAttacks"..g_InitialAttackCounter, "mkr_Player_HQ")
+		end
+	elseif EGroup_Exists("eg_InitialBarracks") and EGroup_Count("eg_InitialBarracks") == 0 then
+		Rule_Remove(InitialBaseAttackWaves)
+	end
+end
+
+function Rule_Objective_DestroyStronghold()
+
+	--[[ Objective Successfull ]]
+	if Event_IsAnyRunning() == false and EGroup_Exists("eg_MainBaseHQ") and EGroup_Count("eg_MainBaseHQ") == 0 then
+		
+		Util_ObjectiveComplete( Objective_DestroyStronghold.title_id )
+		Rule_Remove( Rule_Objective_DestroyStronghold)
+		Objective_PingRemove(Objective_DestroyStronghold.title_id, g_ping_obj)
+		Rule_AddOneShot(CompleteScenario, 10)
+		
+	--[[If the objective doesn't exist, we're going to create it ]]
+	else
+		if Event_IsAnyRunning() == false and Objective_Exists(Objective_DestroyStronghold.title_id) == false then
+			
+			--[[Utility function to add objectives]]
+			Util_ObjectiveCreate(Objective_DestroyStronghold, true)
+			g_ping_obj = Objective_PingMarker(Objective_DestroyStronghold.title_id, "mkr_mainbase_hq", true, "default")
+			g_ping_obj_mini = Ping_Marker("mkr_mainbase_hq", false, "default")
+			Rule_AddOneShot(IE_Intro, 3)
+			Rule_AddOneShot(IE_InitialBase, 37)
+			Objective_SetDefaultPrimary(g_PrimaryObjectives)
+			g_PrimaryObjectives = g_PrimaryObjectives + 1
+			if g_Debug == false then Objective_ShowScreen() end
+		end
+	end
+end
+
+function CompleteScenario()
+	if SGroup_Exists("sg_Saint") and SGroup_Count("sg_Saint") > 0 then
+		Cmd_CastAbilitySelf("sg_Saint", "sisters_invincibility_aura_sp_dxp3")
+	end
+	Rule_RemoveAll()
+	WXP_OpeningNISPreset( )
+	Util_StartNIS( EVENTS.NIS_Outro )
+	Rule_AddInterval(CompleteScenarioWin, 1)
+end
+
+function CompleteScenarioWin()
+	if Event_IsAnyRunning() == false then
+		World_SetGameOver() 	
+	end
+end
+
+function Rule_Objective_DestroyRecruitment()
+	local Count = 0
+	for i=1,7 do
+		if EGroup_Exists("eg_SpawnPoint"..i) and EGroup_Count("eg_SpawnPoint"..i) > 0 then
+			Count = Count + 1
+		end
+	end
+	
+	if Count == 0 and Objective_Exists(Objective_DestroyRecruitment.title_id) == false then
+		Rule_Remove(Rule_Objective_DestroyRecruitment)
+		g_RecruitmentDestroyed = true
+		return true
+	end
+	
+	if Count <= 5 and g_RecruitmentIEFlag == false then
+		Util_StartIntel(EVENTS.IE_KillACoupleRecruitment)	
+		g_RecruitmentIEFlag = true
+	end
+	
+	--[[ Objective Successfull ]]
+	if Event_IsAnyRunning() == false and Count == 0 then
+		
+		Util_ObjectiveComplete( Objective_DestroyRecruitment.title_id )
+		Rule_Remove( Rule_Objective_DestroyRecruitment)
+		Objective_PingRemove(Objective_DestroyRecruitment.title_id, g_ping_obj)
+		g_RecruitmentDestroyed = true
+		
+		Rule_Remove( Rule_Objective_DestroyRecruitment)
+		
+	--[[If the objective doesn't exist, we're going to create it ]]
+	else
+		if Event_IsAnyRunning() == false and Objective_Exists(Objective_DestroyRecruitment.title_id) == false then
+			
+			--[[Utility function to add objectives]]
+			Objective_SubAdd(Objective_DestroyRecruitment, Objective_DestroyCrusade.title_id)
+			for i=1,7 do
+				g_ping_obj_recruitment[i] = Objective_PingMarker(Objective_DestroyRecruitment.title_id, "mkr_spawnpoint"..i, true, "default")
+				g_ping_obj_recruitment_mm[i] = Ping_Marker("mkr_spawnpoint"..i, false, "default")
+			end
+			Objective_SetDefaultSecondary(g_SecondaryObjectives)
+			g_SecondaryObjectives = g_SecondaryObjectives + 1
+			if g_Debug == false then Objective_ShowScreen() end
+			Rule_AddInterval(Recruitment_PingRemove, 1)
+		end
+	end
+end
+
+function Rule_Objective_DestroyShrinesHelper()
+	for i=1,4 do
+		if EGroup_GetAvgHealth("eg_Shrine"..i) < 1  or Player_AreSquadsNearMarker(g_Player1, "mkr_mainbasearea1") then
+			Rule_AddInterval(Rule_Objective_DestroyShrines,1)
+			Rule_AddInterval(Shrine_PingRemove, 4)
+			Rule_Remove(Rule_Objective_DestroyShrinesHelper)
+			return
+		end
+	end
+end
+
+function Rule_Objective_DestroyShrines()
+	
+	if Objective_Exists(Objective_DestroyStronghold.title_id) == true then
+		local Count = 0
+		for i=1,4 do
+			if EGroup_Exists("eg_Shrine"..i) and EGroup_Count("eg_Shrine"..i) == 0 then
+				Count = Count + 1
+			end
+		end
+		
+		--[[ Objective Successfull ]]
+		if Event_IsAnyRunning() == false and Count == 4 then
+			-- turn off the living saints invulnerability spell
+			Cmd_CastAbilitySelf("sg_Saint", "sisters_invincibility_aura_sp_dxp3")
+			-- remove this rule
+			Rule_Remove(UpdateShrineHP)
+			Util_ObjectiveComplete( Objective_DestroyShrines.title_id )
+			Rule_Remove( Rule_Objective_DestroyShrines)
+			Objective_PingRemove(Objective_DestroyShrines.title_id, g_ping_obj)
+			
+		--[[If the objective doesn't exist, we're going to create it ]]
+		else
+			if Event_IsAnyRunning() == false and Objective_Exists(Objective_DestroyShrines.title_id) == false then
+				
+				--[[Utility function to add objectives]]
+				Objective_SubAdd(Objective_DestroyShrines, Objective_DestroyStronghold.title_id)
+				for i=1,4 do
+					g_ping_obj_shrine_pingid[i] = Objective_PingMarker(Objective_DestroyShrines.title_id, "mkr_shrine"..i, true, "default")
+					g_ping_obj_shrine_mini = Ping_Marker("mkr_shrine"..i, false, "default")
+				end
+				Objective_SetDefaultPrimary(g_PrimaryObjectives)
+				g_PrimaryObjectives = g_PrimaryObjectives + 1
+				if g_Debug == false then Objective_ShowScreen() end
+			end
+		end
+	end
+end
+
+function Recruitment_PingRemove()
+	local Count = 0
+	for i=1,7 do
+		if EGroup_Exists("eg_SpawnPoint"..i) and EGroup_Count("eg_SpawnPoint"..i) == 0 and g_ping_obj_recruitment_etc[i] == false then
+			g_ping_obj_recruitment_etc[i] = true
+			Objective_PingRemove(Objective_DestroyRecruitment.title_id, g_ping_obj_recruitment[i])
+		elseif EGroup_Exists("eg_SpawnPoint"..i) and EGroup_Count("eg_SpawnPoint"..i) == 0 and g_ping_obj_recruitment_etc[i] == true then
+			Count = Count + 1
+		end
+	end
+	
+	if Count == 7 then
+		Rule_Remove(Recruitment_PingRemove)
+	end
+end
+
+
+function Shrine_PingRemove()
+	local Count = 0
+	for i=1,4 do
+		if EGroup_Exists("eg_Shrine"..i) and EGroup_Count("eg_Shrine"..i) == 0 and g_ping_obj_shrine[i] == false then
+			g_ping_obj_shrine[i] = true
+			Objective_PingRemove(Objective_DestroyShrines.title_id, g_ping_obj_shrine_pingid[i])
+		elseif EGroup_Exists("eg_Shrine"..i) and EGroup_Count("eg_Shrine"..i) == 0 and g_ping_obj_shrine[i] == true then
+			Count = Count + 1
+		end
+	end
+	
+	if Count == 4 then
+		Rule_Remove(Shrine_PingRemove)
+	end
+end
+
+function Rule_Objective_DestroyCrusade()
+
+	--[[ Objective Successfull ]]
+	if Event_IsAnyRunning() == false and g_RecruitmentDestroyed == true then
+		
+		Util_ObjectiveComplete( Objective_DestroyCrusade.title_id )
+		Rule_Remove( Rule_Objective_DestroyCrusade)
+		Objective_PingRemove(Objective_DestroyCrusade.title_id, g_ping_obj)
+		WinWarning_Remove("Faith")
+	--[[If the objective doesn't exist, we're going to create it ]]
+	else
+		if Event_IsAnyRunning() == false and Objective_Exists(Objective_DestroyCrusade.title_id) == false then
+			
+			--[[Utility function to add objectives]]
+			Util_ObjectiveCreate(Objective_DestroyCrusade, false)
+			Rule_AddInterval(Rule_Objective_DestroyRecruitment, 1)
+			Objective_SetDefaultSecondary(g_SecondaryObjectives)
+			g_SecondaryObjectives = g_SecondaryObjectives + 1
+			--Rule_AddInterval(Rule_Objective_DestroyPrayerGroups, 2)
+		end
+	end
+end
+
+function Rule_Objective_DestroyTankBase()
+
+	--[[ Objective Successfull ]]
+	if Event_IsAnyRunning() == false and EGroup_Exists("eg_ExorcistBaseObj") and EGroup_Count("eg_ExorcistBaseObj") == 0 and Objective_Exists(Objective_DestroyTankBase.title_id ) == true then
+		
+		Util_ObjectiveComplete( Objective_DestroyTankBase.title_id )
+		Rule_Remove( Rule_Objective_DestroyTankBase)
+		Objective_PingRemove(Objective_DestroyTankBase.title_id, g_ping_obj)
+		
+	--[[If the objective doesn't exist, we're going to create it ]]
+	else
+		if Event_IsAnyRunning() == false and Objective_Exists(Objective_DestroyTankBase.title_id) == false then
+			
+			--[[Utility function to add objectives]]
+			Util_ObjectiveCreate(Objective_DestroyTankBase, false)
+			g_ping_obj = Objective_PingMarker(Objective_DestroyTankBase.title_id, "mkr_tankbase_hq", true, "default")
+			g_ping_obj_mini = Ping_Marker("mkr_tankbase_hq", false, "default")
+			Objective_SetDefaultSecondary(g_SecondaryObjectives)
+			g_SecondaryObjectives = g_SecondaryObjectives + 1
+			if g_Debug == false then Objective_ShowScreen() end
+			Rule_AddOneShot(TankObjectiveIE, 9)
+		end
+	end
+end
+
+function AirBaseObjectiveHelper()
+	for i=0,g_LightningCounter do
+		if SGroup_Exists("sg_Lightning"..i) and SGroup_IsUnderAttack("sg_Lightning"..i, false) then
+			Rule_AddInterval(Rule_Objective_DestroyAirBase, 1)
+			Rule_AddInterval(IncreaseLightningSquadsSent, g_LightningSquadTierTimer)
+			Rule_Remove(AirBaseObjectiveHelper)
+			Rule_AddOneShot(IE_FirstAirKilled, 10)
+			return
+		end
+		if SGroup_Exists("sg_L1ghtning"..i) and SGroup_IsUnderAttack("sg_L1ghtning"..i, false) then
+			Rule_AddInterval(Rule_Objective_DestroyAirBase, 1)
+			Rule_AddInterval(IncreaseLightningSquadsSent, g_LightningSquadTierTimer)
+			Rule_Remove(AirBaseObjectiveHelper)
+			Rule_AddOneShot(IE_FirstAirKilled, 10)
+			return
+		end
+	end
+end
+
+function Rule_Objective_DestroyAirBase()
+	--[[ Objective Successfull ]]
+	if Event_IsAnyRunning() == false and EGroup_Exists("eg_Base2Tanks2") and EGroup_Count("eg_Base2Tanks2") == 0
+		and EGroup_Exists("eg_Base2Tanks3") and EGroup_Count("eg_Base2Tanks3") == 0
+		and EGroup_Exists("eg_SpawnPoint6") and EGroup_Count("eg_SpawnPoint6") == 0 and Objective_Exists(Objective_DestroyAirBase.title_id ) == true then
+		
+		Util_ObjectiveComplete( Objective_DestroyAirBase.title_id )
+		Rule_Remove( Rule_Objective_DestroyAirBase)
+		Objective_PingRemove(Objective_DestroyAirBase.title_id, g_ping_obj)
+		
+	--[[If the objective doesn't exist, we're going to create it ]]
+	else
+		if Event_IsAnyRunning() == false and Objective_Exists(Objective_DestroyAirBase.title_id) == false then
+			
+			--[[Utility function to add objectives]]
+			Util_ObjectiveCreate(Objective_DestroyAirBase, false)
+			for i=1,3 do
+				g_ping_obj = Objective_PingMarker(Objective_DestroyAirBase.title_id, "mkr_base2_tanks"..i, true, "default")
+				g_ping_obj_mini = Ping_Marker("mkr_base2_tanks"..i, false, "default")
+			end
+			Objective_SetDefaultSecondary(g_SecondaryObjectives)
+			g_SecondaryObjectives = g_SecondaryObjectives + 1
+			if g_Debug == false then Objective_ShowScreen() end
+		end
+	end
+end
+
+function CrusadeObjectiveHelper()
+	g_SecondaryObjectiveCounter = g_SecondaryObjectiveCounter + 1
+	if EGroup_Exists("eg_InitialBarracks") and EGroup_Count("eg_InitialBarracks") == 0 or g_SecondaryObjectiveCounter >= g_SecondaryObjectiveCounterMax then
+		--add crusade objective
+		Rule_AddInterval(Rule_Objective_DestroyCrusade, 1)
+		-- increase faith for the crusade
+		Rule_AddInterval(FaithGeneration, g_FaithGenerationTimer)
+		-- check faith for crusade
+		Rule_AddInterval(CheckFaithForCrusade, 1)
+		--add faith counter
+		CreateCounter()
+		Rule_AddInterval(Display_Faith,1)
+		Rule_Remove(CrusadeObjectiveHelper)
+		--add attacks from the main base
+		Rule_AddInterval(MainBaseAttackTier, g_MainBaseAttackTierTimer)
+		Rule_AddInterval(MainBaseAttack, g_MainBaseAttackTimer)
+	end
+end
+
+function FaithGeneration()
+	--faith income
+	if g_TotalPickupPoints > 4 then
+		g_Faith = g_Faith + World_GetRand(9,18)
+	else
+		g_Faith = g_Faith + World_GetRand(11,24)
+	end
+end
+
+function CreateCounter()
+	WinWarning_Add( "Faith", World_GetPlayerAt(0), "", "", "" )
+	--UI_ShowCountDXP("Faith", g_Player1, 3950037, g_Faith )
+end
+
+function Display_Faith()
+	WinWarning_SetText( "Faith", Loc_FormatText2( 3950174, Loc_ConvertNumber(g_Faith),Loc_ConvertNumber(g_AmtOfFaithRequiredForCrusade)))
+	--UI_ShowCountUpdateDxp("Faith", g_Faith, 3950037)
+end
+
+function CheckFaithForCrusade()
+	if g_Faith >= g_AmtOfFaithRequiredForCrusade and PopCheck(g_ConfessorCounter, "sg_Confessor", g_MaxConfessor) and EGroup_Exists("eg_MainBaseHQ") and EGroup_Count("eg_MainBaseHQ") > 0 and g_TotalPickupPoints > 0 then
+		-- reset faith
+		g_Faith = 0
+		--g_Faith = g_Faith - g_AmtOfFaithRequiredForCrusade		
+		-- spawn confessor
+		g_ConfessorCounter = g_ConfessorCounter + 1
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Confessor"..g_ConfessorCounter, "sisters_squad_confessor", "mkr_mainbase_hq", 1, 1)
+		Cmd_AttackMoveMarker("sg_Confessor"..g_ConfessorCounter, "mkr_confessorwander"..t_PickupPoints[1])
+		FOW_TagSGroup(g_Player1, "sg_Confessor"..g_ConfessorCounter)
+		
+		-- ie stuff, tell the player that we're launching a crusade
+		g_CrusadeCounter = g_CrusadeCounter + 1
+		local PlayIE = 0
+		if g_CrusadeCounter > 4 then
+			PlayIE = World_GetRand(2,4)
+		else
+			PlayIE = g_CrusadeCounter
+		end
+		if PlayIE == 1 then
+			Util_StartIntel(EVENTS.IE_FirstCrusadeLaunched)
+		elseif PlayIE == 2 then
+			Util_StartIntel(EVENTS.IE_LaunchCrusade)
+		elseif PlayIE == 3 then
+			Util_StartIntel(EVENTS.IE_CrusadeReLaunched1)
+		elseif PlayIE == 4 then
+			Util_StartIntel(EVENTS.IE_CrusadeReLaunched2)
+		elseif PlayIE == 0 then
+			-- this should never happen
+		end
+	end
+end
+
+function SortPickupPoints()
+	--[[
+	local Point1 = "eg_Base5Barracks1"
+	local Point2 = "eg_Base4Barracks2"
+	local Point3 = "eg_TankBaseTanks3"
+	local Point4 = "eg_Base3Barracks2"
+	local Point5 = "eg_MainBaseBarracks1"
+	local Point6 = "eg_Base2Tanks1"
+	local Point7 = "eg_Base1Barracks1"
+	]]
+	
+	if g_TotalPickupPoints > 0 then
+		-- loop through all possible points
+		for i=1,7 do
+			-- if a shrine doesnt exist
+			if EGroup_Exists("eg_SpawnPoint"..i) and EGroup_Count("eg_SpawnPoint"..i) == 0 then
+				--loop through the table of existing points, and see if it is there
+				for j=1,g_TotalPickupPoints do
+					-- if it does exist in the array
+					if t_PickupPoints[j] == i then
+						--take a point from the end of the list and move it into its slot and decrement the global points
+						t_PickupPoints[j] = t_PickupPoints[g_TotalPickupPoints]
+						g_TotalPickupPoints = g_TotalPickupPoints - 1
+						PrintArray()
+					end
+				end
+			end
+		end	
+		
+		-- sort the thing if there are 2 or more points left
+		if g_TotalPickupPoints > 1 then
+			for i=g_TotalPickupPoints - 1, 1, -1 do
+				for j=2, i+1 do
+					if t_PickupPoints[j-1] > t_PickupPoints[j] then
+						local temp = t_PickupPoints[j-1]
+						t_PickupPoints[j-1] = t_PickupPoints[j]
+						t_PickupPoints[j] = temp
+						PrintArray()
+					end					
+				end				
+			end
+		end
+	else
+		Rule_Remove(SortPickupPoints)
+	end
+end
+
+function PrintArray()
+	--[[
+	if g_TotalPickupPoints >= 1 then
+		print("{")
+		for j=1,g_TotalPickupPoints do
+			print(t_PickupPoints[j] .. ", ")
+		end	
+		print("}")
+	end
+	]]
+end
+
+function WanderConfessor()
+	if g_TotalPickupPoints > 0 then
+		if SGroup_Exists("sg_Confessor"..g_ConfessorCounter) and SGroup_Count("sg_Confessor"..g_ConfessorCounter) > 0 then
+			for i=1,7 do
+				if Prox_AnySquadNearMarker("sg_Confessor"..g_ConfessorCounter, "mkr_confessorwander"..i) then
+					if g_WanderFlag == false then
+						g_WanderFlag = true
+						if SGroup_Exists("sg_ConfessorAttack"..g_ConfessorCounter) == false then
+							SGroup_Create("sg_ConfessorAttack"..g_ConfessorCounter)
+						end
+						-- if the building is alive, add units to the crusade
+						if EGroup_Exists("eg_SpawnPoint"..i) and EGroup_Count("eg_SpawnPoint"..i) > 0 then
+							if i == 1 then
+								if PopCheck(g_SistersCounter, "sg_Sisters", g_MaxSisters) == true then
+									g_SistersCounter = g_SistersCounter + 1
+									Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Sisters"..g_SistersCounter, "sisters_squad_battle_sister", "mkr_spawnpoint"..i, 1, 8)
+									SGroup_AddLeaders("sg_Sisters"..g_SistersCounter)
+									Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_Sisters"..g_SistersCounter), 1),"sisters_flamer_battle_sister", 4)
+									SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Sisters"..g_SistersCounter)
+									if g_Difficulty >= 2 then
+										g_SistersCounter = g_SistersCounter + 1
+										Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Sisters"..g_SistersCounter, "sisters_squad_battle_sister", "mkr_spawnpoint"..i, 1, 8)
+										SGroup_AddLeaders("sg_Sisters"..g_SistersCounter)
+										Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_Sisters"..g_SistersCounter), 1),"sisters_heavy_bolter_battle_sister", 4)
+										SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Sisters"..g_SistersCounter)
+									end
+								end
+							elseif i == 2 then
+								if PopCheck(g_CelestianCounter, "sg_Celestians", g_MaxCelestian) == true then
+									g_CelestianCounter = g_CelestianCounter + 1
+									Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Celestians"..g_CelestianCounter, "sisters_squad_celestian", "mkr_spawnpoint"..i, 1, 4)
+									SGroup_AddLeadersAtIndex("sg_Celestians"..g_CelestianCounter, 1)
+									SGroup_AddLeadersAtIndex("sg_Celestians"..g_CelestianCounter, 2)
+									Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_Celestians"..g_CelestianCounter), 1),"sisters_multi_melta_celestian", 4)
+									SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Celestians"..g_CelestianCounter)
+									if g_Difficulty == 2 then
+										g_CelestianCounter = g_CelestianCounter + 1
+										Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Celestians"..g_CelestianCounter, "sisters_squad_celestian", "mkr_spawnpoint"..i, 1, 4)
+										SGroup_AddLeadersAtIndex("sg_Celestians"..g_CelestianCounter, 1)
+										SGroup_AddLeadersAtIndex("sg_Celestians"..g_CelestianCounter, 2)
+										Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_Celestians"..g_CelestianCounter), 1),"sisters_melta_celestian", 2)
+										Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_Celestians"..g_CelestianCounter), 1),"sisters_multi_melta_celestian", 2)
+										SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Celestians"..g_CelestianCounter)
+									elseif g_Difficulty == 3 then
+										g_CelestianCounter = g_CelestianCounter + 1
+										Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Celestians"..g_CelestianCounter, "sisters_squad_celestian", "mkr_spawnpoint"..i, 1, 4)
+										SGroup_AddLeadersAtIndex("sg_Celestians"..g_CelestianCounter, 1)
+										SGroup_AddLeadersAtIndex("sg_Celestians"..g_CelestianCounter, 2)
+										Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_Celestians"..g_CelestianCounter), 1),"sisters_melta_celestian", 2)
+										Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_Celestians"..g_CelestianCounter), 1),"sisters_multi_melta_celestian", 2)
+										SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Celestians"..g_CelestianCounter)
+										-- throw in an extra missionary
+										g_MissionaryCounter = g_MissionaryCounter + 1
+										Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Missionary"..g_MissionaryCounter, "sisters_squad_missionary", "mkr_spawnpoint"..i, 1, 6)
+										SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Missionary"..g_MissionaryCounter)
+										Cmd_AttachSquads("sg_Celestians"..g_CelestianCounter,"sg_Missionary"..g_MissionaryCounter)
+									end
+								end
+							elseif i == 3 then
+								if PopCheck(g_EngineCounter, "sg_Engines", g_MaxEngines) == true then
+									g_EngineCounter = g_EngineCounter + 1
+									Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Engines"..g_EngineCounter, "sisters_squad_penitent_engine", "mkr_spawnpoint"..i, 1, 1)
+									SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Engines"..g_EngineCounter)
+								elseif PopCheck(g_ExorcistCounter, "sg_Exorcist", g_MaxExorcist) == true then
+									g_ExorcistCounter = g_ExorcistCounter + 1
+									Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Exorcist"..g_ExorcistCounter, "sisters_squad_exorcist_tank", "mkr_spawnpoint"..i, 1, 1)
+									SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Exorcist"..g_ExorcistCounter)
+								end
+							elseif i == 4 then
+								if PopCheck(g_RepentiaCounter, "sg_Repentia", g_MaxRepentia) == true then
+									g_RepentiaCounter = g_RepentiaCounter + 1
+									Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Repentia"..g_RepentiaCounter, "sisters_squad_repentia", "mkr_spawnpoint"..i, 1, 8)
+									SGroup_AddLeaders("sg_Repentia"..g_RepentiaCounter)
+									SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Repentia"..g_RepentiaCounter)
+									if g_Difficulty == 2 then
+										g_RepentiaCounter = g_RepentiaCounter + 1
+										Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Repentia"..g_RepentiaCounter, "sisters_squad_repentia", "mkr_spawnpoint"..i, 1, 8)
+										SGroup_AddLeaders("sg_Repentia"..g_RepentiaCounter)
+										SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Repentia"..g_RepentiaCounter)
+									elseif g_Difficulty == 3 then
+										g_RepentiaCounter = g_RepentiaCounter + 1
+										Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Repentia"..g_RepentiaCounter, "sisters_squad_repentia", "mkr_spawnpoint"..i, 1, 8)
+										SGroup_AddLeaders("sg_Repentia"..g_RepentiaCounter)
+										SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Repentia"..g_RepentiaCounter)
+										-- throw in an extra missionary
+										g_MissionaryCounter = g_MissionaryCounter + 1
+										Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Missionary"..g_MissionaryCounter, "sisters_squad_missionary", "mkr_spawnpoint"..i, 1, 6)
+										SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Missionary"..g_MissionaryCounter)
+										Cmd_AttachSquads("sg_Repentia"..g_RepentiaCounter,"sg_Missionary"..g_MissionaryCounter)
+									end
+								end
+							elseif i == 5 then
+								if PopCheck(g_MissionaryCounter, "sg_Missionary", g_MaxMissionary) == true then
+									g_SistersCounter = g_SistersCounter + 1
+									Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Sisters"..g_SistersCounter, "sisters_squad_battle_sister", "mkr_spawnpoint"..i, 1, 8)
+									SGroup_AddLeaders("sg_Sisters"..g_SistersCounter)
+									Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_Sisters"..g_SistersCounter), 1),"sisters_heavy_bolter_battle_sister", 4)
+									SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Sisters"..g_SistersCounter)
+									-- attach missionary to battle sisters
+									g_MissionaryCounter = g_MissionaryCounter + 1
+									Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Missionary"..g_MissionaryCounter, "sisters_squad_missionary", "mkr_spawnpoint"..i, 1, 1)
+									SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Missionary"..g_MissionaryCounter)
+									Cmd_AttachSquads("sg_Sisters"..g_SistersCounter,"sg_Missionary"..g_MissionaryCounter)
+								end
+							elseif i == 6 then
+								if PopCheck(g_ImmolatorCounter, "sg_Immolators", g_MaxImmolators) == true then
+									g_ImmolatorCounter = g_ImmolatorCounter + 1
+									Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Immolators"..g_ImmolatorCounter, "sisters_squad_immolator_tank", "mkr_spawnpoint"..i, 1, 1)
+									if World_GetRand(1,2) == 2 then
+										Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_Immolators"..g_ImmolatorCounter), 1),"sisters_multi_melta_immolator", 1)
+									end
+									SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Immolators"..g_ImmolatorCounter)
+								end
+							elseif i == 7 then
+								if PopCheck(g_SeraphimCounter, "sg_Seraphim", g_MaxSeraphim) == true then
+									g_SeraphimCounter = g_SeraphimCounter + 1
+									Util_CreateSquadsAtMarkerEx(g_Player2, "sg_Seraphim"..g_SeraphimCounter, "sisters_squad_seraphim", "mkr_spawnpoint"..i, 1, 8)
+									SGroup_AddLeaders("sg_Seraphim"..g_SeraphimCounter)
+									Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_Seraphim"..g_SeraphimCounter), 1),"sisters_chain_sword_seraphim", 6)
+									SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_Seraphim"..g_SeraphimCounter)
+								end
+							end
+							FOW_TagSGroup(g_Player1, "sg_ConfessorAttack"..g_ConfessorCounter)
+							Cmd_AttackMovePos("sg_ConfessorAttack"..g_ConfessorCounter, SGroup_GetPosition("sg_Confessor"..g_ConfessorCounter))
+						end
+						-- wait 30 seconds, then send the confessor and his guys somewhere else
+						Rule_AddOneShot(MoveConfessor, 30)
+						
+					end
+					
+					for j=1, g_TotalPickupPoints do
+						--if there is another point after this, move to it
+						if t_PickupPoints[j] == i and j < g_TotalPickupPoints then
+							g_ConfessorNextPoint = "mkr_confessorwander"..t_PickupPoints[j+1]
+							return true
+						--if this is the last point in the list, move to the player hq
+						elseif t_PickupPoints[j] == i and j >= g_TotalPickupPoints then
+							g_ConfessorNextPoint = "mkr_Player_HQ"
+							return true
+						end
+						
+						--if we get to the end of the list and havent picked a point, give it a random point in the list
+						-- this prevents a bug where the confessor wont move from his point
+						if j == g_TotalPickupPoints then
+							g_ConfessorNextPoint = "mkr_confessorwander"..t_PickupPoints[World_GetRand(1,g_TotalPickupPoints)]
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+function MoveConfessor()
+	
+	if SGroup_Exists("sg_Confessor"..g_ConfessorCounter) and SGroup_Count("sg_Confessor"..g_ConfessorCounter) > 0 then
+		Cmd_AttackMoveMarker("sg_Confessor"..g_ConfessorCounter, g_ConfessorNextPoint)
+	end
+	
+	if SGroup_Exists("sg_ConfessorAttack"..g_ConfessorCounter) and SGroup_Count("sg_ConfessorAttack"..g_ConfessorCounter) > 0 then
+		-- grab any random stragglers and add them to the grp
+		if g_ConfessorCounter > 2 then
+			for z=1,g_ConfessorCounter do
+				if SGroup_Exists("sg_ConfessorAttack"..z) and SGroup_Count("sg_ConfessorAttack"..z) > 0 and i ~= g_ConfessorCounter then
+					SGroup_AddGroup("sg_ConfessorAttack"..g_ConfessorCounter, "sg_ConfessorAttack"..z)
+				end
+			end
+		end
+		Cmd_AttackMoveMarker("sg_ConfessorAttack"..g_ConfessorCounter, g_ConfessorNextPoint)
+	end	
+	Rule_AddOneShot(Wait, 5)
+end
+
+function Wait()
+	g_WanderFlag = false
+end
+
+function SpawnSaint()
+	Util_CreateSquadsAtMarker(g_Player2, "sg_Saint", "sisters_squad_living_saint_sp_dxp3", "mkr_mainbase_hq", 1)
+	Cmd_CastAbilitySelf("sg_Saint", "sisters_invincibility_aura_sp_dxp3")
+	Rule_AddInterval(SaintJumpHelper, 1)
+end
+
+function SaintAI()
+	if SGroup_Exists("sg_Saint") and SGroup_Count("sg_Saint") > 0 and g_CanSaintJump == true then
+		local JumpToShrines = false
+		
+		--[[STRONGHOLD]]
+		if EGroup_GetAvgHealth("eg_MainBaseHQ") < t_ShrineHP[5] then
+			if g_SaintAtMainBase == false then
+				Cmd_JumpToMarker("sg_Saint", "mkr_mainbase_hq")
+				if g_SaintJumpsToMainBaseIE == false then
+					g_SaintJumpsToMainBaseIE = true
+					Util_StartIntel(EVENTS.IE_SaintJumpsBackToMainBase )
+				end
+				g_SaintAtMainBase = true
+				g_CanSaintJump = false
+			end
+		else
+			JumpToShrines = true
+		end
+		
+		--[[SHRINES]]
+		if JumpToShrines == true then
+			for i=1,4 do
+				-- if shrine1-4 is taking dmg 
+				if EGroup_GetAvgHealth("eg_Shrine"..i) < t_ShrineHP[i] and EGroup_GetAvgHealth("eg_Shrine"..i) ~= 0 then
+					-- count the number of squads in the main area
+					local MainAreaCount = 0
+					local ShrineAreaCount = 0
+					for j=1,4 do
+						if Player_AreSquadsNearMarker(g_Player1,"mkr_mainbasearea"..j) then
+							g_PlayerUnitCounter = g_PlayerUnitCounter + 1
+							Player_GetAllSquadsNearMarker(g_Player1, "PlayerUnitCount"..g_PlayerUnitCounter, "mkr_mainbasearea"..j)
+							MainAreaCount = MainAreaCount + SGroup_Count("PlayerUnitCount"..g_PlayerUnitCounter)
+						end
+					end
+					-- count the number of squads in the shrine area
+					for j=1,7 do
+						if Player_AreSquadsNearMarker(g_Player1,"mkr_shrinearea"..j) then
+							g_PlayerUnitCounter = g_PlayerUnitCounter + 1
+							Player_GetAllSquadsNearMarker(g_Player1, "PlayerUnitCount"..g_PlayerUnitCounter, "mkr_shrinearea"..j)
+							ShrineAreaCount = ShrineAreaCount + SGroup_Count("PlayerUnitCount"..g_PlayerUnitCounter)
+						end
+					end
+					-- if the number of squads in main is > shrine
+					if MainAreaCount > 0 or ShrineAreaCount > 0 then
+						if MainAreaCount >= ShrineAreaCount then
+							-- stay
+						elseif ShrineAreaCount > MainAreaCount then
+							g_SaintAtMainBase = false
+							g_CanSaintJump = false
+							Cmd_JumpToMarker("sg_Saint", "mkr_shrine"..i)				
+						end
+					end
+				end
+			end
+		end
+	elseif SGroup_Exists("sg_Saint") and SGroup_Count("sg_Saint") == 0 then
+		Rule_Remove(SaintAI)
+		Rule_Remove(SaintJumpHelper)
+	end
+end
+
+function SaintJumpHelper()
+	if g_CanSaintJump == false then
+		if g_JumpFlag == true then
+			g_SaintJumpedCounter = g_SaintJumpedCounter + 1
+			if g_SaintJumpedCounter == 1 then
+				Util_StartIntel(EVENTS.IE_FirstSaintJump)
+			elseif g_SaintJumpedCounter == 2 then
+				Util_StartIntel(EVENTS.IE_LivingSaintInvulnerabilityTaunt4)
+			elseif g_SaintJumpedCounter == 4 then
+				Util_StartIntel(EVENTS.IE_LivingSaintInvulnerabilityTaunt1)
+			elseif g_SaintJumpedCounter == 5 then
+				Util_StartIntel(EVENTS.IE_LivingSaintInvulnerabilityTaunt2)
+			elseif g_SaintJumpedCounter == 7 then
+				Util_StartIntel(EVENTS.IE_LivingSaintInvulnerabilityTaunt3)
+			end			
+			g_JumpFlag = false
+			Rule_AddOneShot(SaintJump, g_SaintJumpCoolDown)
+		end
+	end
+end
+
+function IdleSaint()
+	if SGroup_Exists("sg_Saint") and SGroup_Count("sg_Saint") > 0 and g_CanSaintJump == true then
+		-- add one to the counter if the saint is by a shrine, not under attack, and there are no enemy units nearby
+		for i=1,4 do
+			if Prox_AnySquadNearMarker("sg_Saint", "mkr_closeto_shrine"..i) and Player_AreSquadsNearMarker(g_Player1, "mkr_closeto_shrine"..i) == false and SGroup_IsUnderAttack("sg_Saint", false) == false then
+				g_SaintUnderAttackCounter = g_SaintUnderAttackCounter + 1
+			elseif Prox_AnySquadNearMarker("sg_Saint", "mkr_closeto_shrine"..i) and SGroup_IsUnderAttack("sg_Saint", false) then
+				--if the saint is under attack, reset the counter
+				g_SaintUnderAttackCounter = 0
+			end
+		end
+		
+		-- if the counter is >= the timer, have her jump back to the main base to idle there instead
+		if g_SaintUnderAttackCounter >= g_SaintIdleTimer then
+			Cmd_JumpToMarker("sg_Saint", "mkr_mainbase_hq")
+			g_SaintUnderAttackCounter = 0
+		end		
+	end
+end
+	
+function SaintJump()
+	g_JumpFlag = true
+	g_CanSaintJump = true
+end
+
+function UpdateShrineHP()
+	for i=1,4 do
+		t_ShrineHP[i] = EGroup_GetAvgHealth("eg_Shrine"..i)
+	end
+	t_ShrineHP[5] = EGroup_GetAvgHealth("eg_MainBaseHQ")
+end
+
+function MainBaseAttackTier()
+	if g_BaseAttackTier < 6 then
+		g_BaseAttackTier = g_BaseAttackTier + 1
+	end
+end
+
+function MainBaseAttack()
+
+	local TierType = 2
+	local AmountSpawned = 1
+	local CanAttach = false
+	
+	if g_Difficulty == 1 then
+		if g_BaseAttackTier == 1 then
+			AmountSpawned = 1
+		elseif g_BaseAttackTier == 2 then
+			AmountSpawned = 2
+		elseif g_BaseAttackTier == 3 then
+			AmountSpawned = 2
+		elseif g_BaseAttackTier == 4 then
+			AmountSpawned = 3
+		elseif g_BaseAttackTier == 5 then
+			AmountSpawned = 3
+		elseif g_BaseAttackTier == 6 then
+			AmountSpawned = 4
+		end
+	elseif g_Difficulty == 2 then
+		if g_BaseAttackTier == 1 then
+			AmountSpawned = 1
+		elseif g_BaseAttackTier == 2 then
+			AmountSpawned = 2
+		elseif g_BaseAttackTier == 3 then
+			AmountSpawned = 3
+		elseif g_BaseAttackTier == 4 then
+			AmountSpawned = 3
+		elseif g_BaseAttackTier == 5 then
+			AmountSpawned = 3
+		elseif g_BaseAttackTier == 6 then
+			AmountSpawned = 4
+		end
+	elseif g_Difficulty == 3 then
+		if g_BaseAttackTier == 1 then
+			AmountSpawned = 1
+		elseif g_BaseAttackTier == 2 then
+			AmountSpawned = 2
+		elseif g_BaseAttackTier == 3 then
+			AmountSpawned = 3
+		elseif g_BaseAttackTier == 4 then
+			AmountSpawned = 3
+		elseif g_BaseAttackTier == 5 then
+			AmountSpawned = 4
+		elseif g_BaseAttackTier == 6 then
+			AmountSpawned = 4
+		end
+	end
+	
+	
+	for i=1, AmountSpawned do
+		local Chance = 0
+		if i ==1 then
+			Chance = World_GetRand(3,6)
+		elseif i == 2 then
+			Chance = World_GetRand(3,10)
+		elseif i == 3 then
+			-- dont spawn the PE unless we're at tier 4... otherwise its too early.
+			if g_BaseAttackTier >= 4 then
+				Chance = World_GetRand(3,14)
+			else
+				Chance = World_GetRand(3,12)
+			end
+		elseif i >= 4 then
+			Chance = World_GetRand(3,14)
+		end
+		if Chance == 0 then
+			-- should never happen
+		end
+		
+		if Chance == 3 or Chance == 4 then
+			SGroup = "sg_MainBaseSeraphim"
+			Counter =g_SeraphimCounter
+			Blueprint = "sisters_squad_seraphim"
+			SquadNum =  World_GetRand(5,8)
+			MaxPop = 3
+			Building = "eg_SpawnPoint1"
+			SpawnMarker = "mkr_base5_barracks1"
+		elseif Chance == 5 or Chance == 6 then
+			SGroup = "sg_MainBaseSisters"
+			Counter = g_SistersCounter
+			Blueprint = "sisters_squad_battle_sister" 
+			SquadNum = World_GetRand(5, 8)
+			MaxPop = 3
+			Building = "eg_SpawnPoint1"
+			SpawnMarker = "mkr_base5_barracks1"
+		elseif Chance == 7 or Chance == 8 then
+			-- repentia
+			SGroup = "sg_MainBaseRepentia"
+			Counter = g_RepentiaCounter
+			Blueprint = "sisters_squad_repentia" 
+			SquadNum = World_GetRand(5, 8)
+			MaxPop = 3
+			Building = "eg_Base5Barracks2"
+			SpawnMarker = "mkr_base5_barracks2"
+		elseif Chance == 9 or Chance == 10 then
+			-- celestians
+			SGroup = "sg_MainBaseCelestians"
+			Counter = g_CelestianCounter
+			Blueprint = "sisters_squad_celestian" 
+			SquadNum = World_GetRand(3, 4)
+			MaxPop = 2
+			Building = "eg_Base5Barracks2"
+			SpawnMarker = "mkr_base5_barracks2"
+		elseif Chance == 11 or Chance == 12 then
+			-- immolator
+			SGroup = "sg_MainBaseImmolators"
+			Counter = g_ImmolatorCounter
+			Blueprint = "sisters_squad_immolator_tank"
+			SquadNum =  1
+			MaxPop = 2
+			Building = "eg_Base5Tanks1"
+			SpawnMarker = "mkr_base5_tanks1"
+		elseif Chance == 13 or Chance == 14 then
+			SGroup = "sg_MainBaseEngines"
+			Counter = g_EngineCounter
+			Blueprint = "sisters_squad_penitent_engine"
+			SquadNum =  1
+			MaxPop = 1
+			Building = "eg_Base5Tanks1"
+			SpawnMarker = "mkr_base5_tanks1"
+		end
+		
+		if PopCheck(Counter, SGroup, MaxPop) == true and EGroup_Exists(Building) and EGroup_Count(Building) > 0 then
+			Util_CreateSquadsAtMarkerEx(g_Player2, SGroup..Counter, Blueprint, SpawnMarker, 1, SquadNum)			
+			RandomPoint = World_GetRand(1,4)
+			Cmd_AttackMoveMarker(SGroup..Counter, "mkr_playerbase_attack"..RandomPoint)
+		end	
+		
+		if SGroup_Exists(SGroup..Counter) and SGroup_CountSpawned(SGroup..Counter) > 0 then
+			if Blueprint == "sisters_squad_missionary" then
+				g_MissionaryCounter = g_MissionaryCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_seraphim" then
+				g_SeraphimCounter = g_SeraphimCounter + 1
+			elseif Blueprint == "sisters_squad_battle_sister" then
+				g_SistersCounter = g_SistersCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_repentia" then
+				g_RepentiaCounter = g_RepentiaCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_celestian" then
+				g_CelestianCounter = g_CelestianCounter+ 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_immolator_tank" then
+				g_ImmolatorCounter = g_ImmolatorCounter + 1
+			elseif Blueprint == "sisters_squad_penitent_engine" then
+				g_EngineCounter = g_EngineCounter + 1
+			end
+			
+			if g_SistersTier >= 2 then
+				if Blueprint == "sisters_squad_seraphim" then
+					SGroup_AddLeaders(SGroup..Counter)
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_chain_sword_seraphim", World_GetRand(3,6))
+				elseif Blueprint == "sisters_squad_battle_sister" then
+					SGroup_AddLeaders(SGroup..Counter)
+					if World_GetRand(1,10) > 5 then
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_flamer_battle_sister", World_GetRand(2,5))
+					end
+				elseif Blueprint == "sisters_squad_celestian" then
+					SGroup_AddLeadersAtIndex(SGroup..Counter, 1)
+					SGroup_AddLeadersAtIndex(SGroup..Counter, 2)
+					if World_GetRand(1,10) > 5 then
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_melta_celestian", 2)
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_multi_melta_celestian", 2)
+					end
+				end
+			end
+			
+			if g_SistersTier >= 3 then
+				if Blueprint == "sisters_squad_battle_sister" then
+					if World_GetRand(1,2) == 1 then
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_heavy_bolter_battle_sister", World_GetRand(3,5))
+					else
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_flamer_battle_sister", World_GetRand(3,5))
+					end
+				elseif Blueprint == "sisters_squad_repentia" then
+					SGroup_AddLeaders(SGroup..Counter)
+				elseif Blueprint == "sisters_squad_immolator_tank" then
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_multi_melta_immolator", 4)
+				end
+			end
+			
+			-- potentially add missionary / canoness
+			if g_SistersTier >= 2 and CanAttach == true and EGroup_Exists("eg_Base5HQ") and EGroup_Count("eg_Base5HQ") > 0 then
+				local Chance = World_GetRand(1,100)
+				if Chance <= 20 then
+					if PopCheck(g_CanonessCounter, "sg_Canoness", g_MaxCanoness) then
+						-- canoness
+						g_CanonessCounter = g_CanonessCounter + 1
+						Util_CreateSquadsAtPositionEx(g_Player2, "sg_Canoness"..g_CanonessCounter, "sisters_squad_canoness", SGroup_GetPosition(SGroup..Counter), 1, 1)
+						Cmd_AttachSquads(SGroup..Counter, "sg_Canoness"..g_CanonessCounter)
+					end
+				elseif Chance >= 21 and Chance <= 70 then
+					if PopCheck(g_MissionaryCounter, "sg_MainBaseMissionary", g_MaxMissionary) then
+						-- missionary
+						g_MissionaryCounter = g_MissionaryCounter + 1
+						Util_CreateSquadsAtPositionEx(g_Player2, "sg_MainBaseMissionary"..g_MissionaryCounter, "sisters_squad_missionary", SGroup_GetPosition(SGroup..Counter), 1, 1)
+						Cmd_AttachSquads(SGroup..Counter, "sg_MainBaseMissionary"..g_MissionaryCounter)
+					end
+				else
+					-- nada
+				end
+			end
+		end
+	end
+end
+
+function AttackPlayerbaseFromMarker()
+	for i=1,4 do
+		if Player_AreSquadsNearMarker(g_Player2, "mkr_playerbase_attack"..i) then
+			g_PBACounter = g_PBACounter + 1
+			Player_GetAllSquadsNearMarker(g_Player2, "sg_PlayerbaseAttack"..g_PBACounter, "mkr_playerbase_attack"..i)
+			Cmd_AttackMovePos("sg_PlayerbaseAttack"..g_PBACounter, g_GlobalAttackPos)
+			--Cmd_AttackMoveMarker("sg_PlayerbaseAttack"..g_PBACounter, "mkr_Player_HQ")
+		end
+	end
+end
+
+function Search()
+	
+	Player_GetSquads(g_Player1)
+	local bpTable = Util_MakeBlueprintTable("necron_lord_squad_advance_sp", "chaos_squad_sorcerer_advance_sp", "chaos_squad_lord_advance_sp","guard_squad_command_squad_advance_sp", "ork_squad_warboss_advance_sp",
+	"ork_squad_mek_boy_advance_sp", "space_marine_squad_librarian_advance_sp", "space_marine_squad_force_commander_advance_sp", "eldar_squad_farseer_advance_sp", --[["dark_eldar_squad_archon_hg_dxp3",]]
+	"tau_commander_squad_advance_sp","necron_lord_squad","chaos_squad_sorcerer", "chaos_squad_lord", "guard_squad_command_squad", "ork_squad_warboss", "ork_squad_mek_boy", "space_marine_squad_librarian",
+	"space_marine_squad_force_commander", "eldar_squad_farseer", "dark_eldar_squad_archon", "tau_commander_squad", "dark_eldar_squad_archon_hg_dxp3", "sisters_squad_canoness_advance_sp")
+	
+	local FindCommander = function( sgroupid, itemindex, squadID )
+		g_TempSquadCounter = g_TempSquadCounter + 1
+		SGroup_Create("temp"..g_TempSquadCounter)
+		SGroup_Add("temp"..g_TempSquadCounter, SGroup_GetSpawnedSquadAt(sgroupid,itemindex))
+        local flag = SGroup_ContainsBlueprints("temp"..g_TempSquadCounter,bpTable,false)
+		if flag == true then
+			if SGroup_Exists("sg_AssassinTarget") == false then
+				SGroup_Create("sg_AssassinTarget")
+			end
+			SGroup_AddGroup("sg_AssassinTarget", "temp"..g_TempSquadCounter)
+			return true
+		else
+			return false
+		end
+    end
+    SGroup_ForEach( SGroup_FromName("__Player1000Squads"), FindCommander )
+end
+
+function DeathCultAI()
+	local ReturnHomeWhenReadyFlag = false
+	if SGroup_Exists("sg_AssassinTarget") and SGroup_Count("sg_AssassinTarget") > 0 then
+		for i=1,g_MaxAssassins do
+			if PopCheck(g_AssassinCounter, "sg_Assassins", g_MaxAssassins) and EGroup_Exists("eg_Base5Barracks2") and EGroup_Count("eg_Base5Barracks2") > 0 then
+				g_AssassinCounter = g_AssassinCounter + 1
+				Util_CreateSquadsAtMarker(g_Player3, "sg_Assassins"..g_AssassinCounter, "sisters_squad_assassin", "mkr_base5_barracks2", 1)
+			end
+		end
+		for i=1,g_AssassinCounter do
+			if SGroup_Exists("sg_Assassins"..g_AssassinCounter) and SGroup_Count("sg_Assassins"..g_AssassinCounter) > 0 then
+				Cmd_AttackSGroup("sg_Assassins"..i, "sg_AssassinTarget")
+				if g_IE_AssassinsSent == false then
+					g_IE_AssassinsSent = true
+					Util_StartIntel(EVENTS.IE_AssassinsSent)
+				end
+				ReturnHomeWhenReadyFlag = true
+			end
+		end
+		if ReturnHomeWhenReadyFlag == true then
+			Rule_Remove(DeathCultAI)
+			Rule_AddInterval(DeathCultReturnHome, 1)
+			return true
+		end
+	end
+end
+
+function DeathCultReturnHome()
+	local Count = 0
+	local ReturnHomeFlag = false
+	
+	for i=1,g_AssassinCounter do
+		if SGroup_Exists("sg_Assassins"..g_AssassinCounter) and SGroup_Count("sg_Assassins"..g_AssassinCounter) > 0 then
+			Count = Count +1
+		end
+	end
+	
+	-- if the target is dead
+	if SGroup_Exists("sg_AssassinTarget") and SGroup_Count("sg_AssassinTarget") == 0 then
+		ReturnHomeFlag = true
+	elseif Count == 0 then
+		-- if the assassins are dead
+		ReturnHomeFlag = true
+	end
+	
+	if ReturnHomeFlag == true then
+		for i=1,g_AssassinCounter do
+			if SGroup_Exists("sg_Assassins"..g_AssassinCounter) and SGroup_Count("sg_Assassins"..g_AssassinCounter) > 0 then
+				Cmd_MoveToMarker("sg_Assassins"..i, "mkr_mainbase_hq")
+			end
+		end
+		Rule_AddInterval(DeathCultAI, g_DeathCultSpawnTimer)
+		Rule_Remove(DeathCultReturnHome)
+	end
+end
+
+function Route1Spawn()
+
+	local TierType = 2
+	local AmountSpawned = 1
+	local CanAttach = false
+	
+	if g_BaseAttackTier == 1 then
+		TierType = 6
+		AmountSpawned = 1
+	elseif g_BaseAttackTier == 2 then
+		TierType = 6
+		AmountSpawned = 1
+	elseif g_BaseAttackTier == 3 then
+		TierType = 9
+		AmountSpawned = 2
+	elseif g_BaseAttackTier == 4 then
+		TierType = 9
+		AmountSpawned = 2
+	elseif g_BaseAttackTier == 5 then
+		TierType = 12
+		AmountSpawned = 3
+	elseif g_BaseAttackTier == 6 then
+		TierType = 12
+		AmountSpawned = 3
+	end
+	
+	for i=1, AmountSpawned do
+		local Chance = World_GetRand(1,TierType)
+		local RandomBarracks = 0
+		local UnitWasSpawned = false
+		
+		if Chance == 1 or Chance == 2 then
+			-- seraphim
+			SGroup = "sg_Seraphim1Wander"
+			Counter =g_SeraphimCounter
+			Blueprint = "sisters_squad_seraphim"
+			SquadNum =  World_GetRand(5,8)
+			MaxPop = g_MaxSeraphim
+			RandomBarracks = World_GetRand(1,3)
+			Building = "eg_Base2Barracks"..RandomBarracks
+			SpawnMarker = "mkr_base2_barracks"..RandomBarracks
+			GoToMkr = "mkr_rt1_wander5"
+		elseif Chance == 3 or Chance == 4 then
+			-- battle sisters
+			SGroup = "sg_Sisters1Wander"
+			Counter = g_SistersCounter
+			Blueprint = "sisters_squad_battle_sister" 
+			SquadNum = World_GetRand(5, 8)
+			MaxPop = g_MaxSisters
+			RandomBarracks = World_GetRand(1,3)
+			Building = "eg_Base2Barracks"..RandomBarracks
+			SpawnMarker = "mkr_base2_barracks"..RandomBarracks
+			GoToMkr = "mkr_rt1_wander5"
+		elseif Chance == 5 or Chance == 6 then
+			-- celestian
+			SGroup = "sg_Celestians1Wander"
+			Counter = g_CelestianCounter
+			Blueprint = "sisters_squad_celestian" 
+			SquadNum = World_GetRand(3, 4)
+			MaxPop = g_MaxCelestian
+			RandomBarracks = World_GetRand(1,3)
+			Building = "eg_Base2Barracks"..RandomBarracks
+			SpawnMarker = "mkr_base2_barracks"..RandomBarracks
+			GoToMkr = "mkr_rt1_wander5"
+		elseif Chance == 7 or Chance == 8 then
+			-- repentia
+			SGroup = "sg_Repentia1Wander"
+			Counter = g_RepentiaCounter
+			Blueprint = "sisters_squad_repentia" 
+			SquadNum = World_GetRand(5, 8)
+			MaxPop = g_MaxRepentia
+			RandomBarracks = World_GetRand(1,3)
+			Building = "eg_Base2Barracks"..RandomBarracks
+			SpawnMarker = "mkr_base2_barracks"..RandomBarracks
+			GoToMkr = "mkr_rt1_wander5"
+		elseif Chance == 9 or Chance == 10 then
+			-- immolator
+			SGroup = "sg_Immolators1Wander"
+			Counter = g_ImmolatorCounter
+			Blueprint = "sisters_squad_immolator_tank"
+			SquadNum =  1
+			MaxPop = g_MaxImmolators
+			RandomBarracks = World_GetRand(1,3)
+			Building = "eg_Base2Barracks"..RandomBarracks
+			SpawnMarker = "mkr_base2_barracks"..RandomBarracks
+			GoToMkr = "mkr_rt1_wander5"
+		elseif Chance == 11 or Chance == 12 then
+			-- engine
+			SGroup = "sg_Engines1Wander"
+			Counter = g_EngineCounter
+			Blueprint = "sisters_squad_penitent_engine"
+			SquadNum =  1
+			MaxPop = g_MaxEngines
+			RandomBarracks = World_GetRand(1,3)
+			Building = "eg_Base2Barracks"..RandomBarracks
+			SpawnMarker = "mkr_base2_barracks"..RandomBarracks
+			GoToMkr = "mkr_rt1_wander5"
+		end
+		
+		if PopCheck(Counter, SGroup, MaxPop / 2) == true and EGroup_Exists(Building) and EGroup_Count(Building) > 0 then
+			Util_CreateSquadsAtMarkerEx(g_Player4, SGroup..Counter, Blueprint, SpawnMarker, 1, SquadNum)			
+			RandomPoint = World_GetRand(1,4)
+			Cmd_AttackMoveMarker(SGroup..Counter, GoToMkr)
+			UnitWasSpawned = true
+		end	
+		
+		if UnitWasSpawned == true and SGroup_Exists(SGroup..Counter) and SGroup_CountSpawned(SGroup..Counter) > 0 then
+			if g_SistersTier >= 2 and UnitWasSpawned == true then
+				if Blueprint == "sisters_squad_seraphim" then
+					SGroup_AddLeaders(SGroup..Counter)
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_chain_sword_seraphim", World_GetRand(3,6))
+				elseif Blueprint == "sisters_squad_battle_sister" then
+					SGroup_AddLeaders(SGroup..Counter)
+					if World_GetRand(1,10) > 5 then
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_flamer_battle_sister", World_GetRand(2,5))
+					end
+				elseif Blueprint == "sisters_squad_celestian" then
+					SGroup_AddLeadersAtIndex(SGroup..Counter, 1)
+					SGroup_AddLeadersAtIndex(SGroup..Counter, 2)
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_melta_celestian", 2)
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_multi_melta_celestian", 2)
+				end
+			end
+			
+			if g_SistersTier >= 3 and UnitWasSpawned == true then
+				if Blueprint == "sisters_squad_battle_sister" then
+					if World_GetRand(1,2) == 1 then
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_heavy_bolter_battle_sister", World_GetRand(3,5))
+					else
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_flamer_battle_sister", World_GetRand(3,5))
+					end
+				elseif Blueprint == "sisters_squad_repentia" then
+					SGroup_AddLeaders(SGroup..Counter)
+				elseif Blueprint == "sisters_squad_immolator_tank" then
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_multi_melta_immolator", 4)
+				end
+			end
+			
+			if Blueprint == "sisters_squad_missionary" then
+				g_MissionaryCounter = g_MissionaryCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_seraphim" then
+				g_SeraphimCounter = g_SeraphimCounter + 1
+			elseif Blueprint == "sisters_squad_battle_sister" then
+				g_SistersCounter = g_SistersCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_repentia" then
+				g_RepentiaCounter = g_RepentiaCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_celestian" then
+				g_CelestianCounter = g_CelestianCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_immolator_tank" then
+				g_ImmolatorCounter = g_ImmolatorCounter + 1
+			elseif Blueprint == "sisters_squad_penitent_engine" then
+				g_EngineCounter = g_EngineCounter + 1
+			end
+			
+			if PopCheck(g_MissionaryCounter, "sg_Missionary1Wander", g_MaxMissionary) and CanAttach == true and World_GetRand(1,10) > 5 then
+				-- missionary
+				g_MissionaryCounter = g_MissionaryCounter + 1
+				Util_CreateSquadsAtPositionEx(g_Player4, "sg_Missionary1Wander"..g_MissionaryCounter, "sisters_squad_missionary", SGroup_GetPosition(SGroup..Counter), 1, 1)
+				Cmd_AttachSquads(SGroup..Counter, "sg_Missionary1Wander"..g_MissionaryCounter)
+			end
+		end
+	end
+end
+
+function Route2Spawn()
+
+	local TierType = 2
+	local AmountSpawned = 1
+	local CanAttach = false
+	
+	if g_BaseAttackTier == 1 then
+		TierType = 6
+		AmountSpawned = 1
+	elseif g_BaseAttackTier == 2 then
+		TierType = 6
+		AmountSpawned = 1
+	elseif g_BaseAttackTier == 3 then
+		TierType = 9
+		AmountSpawned = 2
+	elseif g_BaseAttackTier == 4 then
+		TierType = 9
+		AmountSpawned = 2
+	elseif g_BaseAttackTier == 5 then
+		TierType = 12
+		AmountSpawned = 3
+	elseif g_BaseAttackTier == 6 then
+		TierType = 12
+		AmountSpawned = 3
+	end
+	
+	for i=1, AmountSpawned do
+		local Chance = World_GetRand(1,TierType)
+		local RandomBarracks = 0
+		local UnitWasSpawned = false
+		
+		if Chance == 1 or Chance == 2 then
+			-- seraphim
+			SGroup = "sg_Seraphim2Wander"
+			Counter =g_SeraphimCounter
+			Blueprint = "sisters_squad_seraphim"
+			SquadNum =  World_GetRand(5,8)
+			MaxPop = g_MaxSeraphim
+			Building = "eg_SpawnPoint4"	
+			SpawnMarker = "mkr_base3_barracks2"
+			GoToMkr = "mkr_rt2_wander4"
+		elseif Chance == 3 or Chance == 4 then
+			-- battle sisters
+			SGroup = "sg_Sisters2Wander"
+			Counter = g_SistersCounter
+			Blueprint = "sisters_squad_battle_sister" 
+			SquadNum = World_GetRand(5, 8)
+			MaxPop = g_MaxSisters
+			Building = "eg_Base4Barracks1"	
+			SpawnMarker = "mkr_base4_barracks1"
+			GoToMkr = "mkr_rt2_wander2"
+		elseif Chance == 5 or Chance == 6 then
+			-- celestian
+			SGroup = "sg_Celestians2Wander"
+			Counter = g_CelestianCounter
+			Blueprint = "sisters_squad_celestian" 
+			SquadNum = World_GetRand(3, 4)
+			MaxPop = g_MaxCelestian
+			RandomBarracks = World_GetRand(1,3)
+			Building = "eg_SpawnPoint1"	
+			SpawnMarker = "mkr_base5_barracks1"
+			GoToMkr = "mkr_rt2_wander1"
+		elseif Chance == 7 or Chance == 8 then
+			-- repentia
+			SGroup = "sg_Repentia2Wander"
+			Counter = g_RepentiaCounter
+			Blueprint = "sisters_squad_repentia" 
+			SquadNum = World_GetRand(5, 8)
+			MaxPop = g_MaxRepentia
+			Building = "eg_Base5Barracks2"	
+			SpawnMarker = "mkr_base5_barracks2"
+			GoToMkr = "mkr_rt2_wander1"
+		elseif Chance == 9 or Chance == 10 then
+			-- immolator
+			SGroup = "sg_Immolators2Wander"
+			Counter = g_ImmolatorCounter
+			Blueprint = "sisters_squad_immolator_tank"
+			SquadNum =  1
+			MaxPop = g_MaxImmolators
+			Building = "eg_Base5Tanks1"	
+			SpawnMarker = "mkr_base5_tanks1"
+			GoToMkr = "mkr_rt2_wander1"
+		elseif Chance == 11 or Chance == 12 then
+			-- engine
+			SGroup = "sg_Engine2Wander"
+			Counter = g_EngineCounter
+			Blueprint = "sisters_squad_penitent_engine"
+			SquadNum =  1
+			MaxPop = g_MaxEngines
+			Building = "eg_TankBaseTanks1"
+			SpawnMarker = "mkr_tankbase_tanks1"
+			GoToMkr = "mkr_rt2_wander3"
+		end
+		
+		if PopCheck(Counter, SGroup, MaxPop / 2) == true and EGroup_Exists(Building) and EGroup_Count(Building) > 0 then
+			Util_CreateSquadsAtMarkerEx(g_Player4, SGroup..Counter, Blueprint, SpawnMarker, 1, SquadNum)
+			Cmd_AttackMoveMarker(SGroup..Counter, GoToMkr)
+			UnitWasSpawned = true
+		end	
+		
+		if UnitWasSpawned == true and SGroup_Exists(SGroup..Counter) and SGroup_CountSpawned(SGroup..Counter) > 0 then
+			if g_SistersTier >= 2 then
+				if Blueprint == "sisters_squad_seraphim" then
+					SGroup_AddLeaders(SGroup..Counter)
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_chain_sword_seraphim", World_GetRand(3,6))
+				elseif Blueprint == "sisters_squad_battle_sister" then
+					SGroup_AddLeaders(SGroup..Counter)
+					if World_GetRand(1,10) > 5 then
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_flamer_battle_sister", World_GetRand(2,5))
+					end
+				elseif Blueprint == "sisters_squad_celestian" then
+					SGroup_AddLeadersAtIndex(SGroup..Counter, 1)
+					SGroup_AddLeadersAtIndex(SGroup..Counter, 2)
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_melta_celestian", 2)
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_multi_melta_celestian", 2)
+				end
+			end
+			
+			if g_SistersTier >= 3 then
+				if Blueprint == "sisters_squad_battle_sister" then
+					if World_GetRand(1,2) == 1 then
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_heavy_bolter_battle_sister", World_GetRand(3,5))
+					else
+						Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_flamer_battle_sister", World_GetRand(3,5))
+					end
+				elseif Blueprint == "sisters_squad_repentia" then
+					SGroup_AddLeaders(SGroup..Counter)
+				elseif Blueprint == "sisters_squad_immolator_tank" then
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName(SGroup..Counter), 1),"sisters_multi_melta_immolator", 4)
+				end
+			end
+			
+			if Blueprint == "sisters_squad_missionary" then
+				g_MissionaryCounter = g_MissionaryCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_seraphim" then
+				g_SeraphimCounter = g_SeraphimCounter + 1
+			elseif Blueprint == "sisters_squad_battle_sister" then
+				g_SistersCounter = g_SistersCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_repentia" then
+				g_RepentiaCounter = g_RepentiaCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_celestian" then
+				g_CelestianCounter = g_CelestianCounter + 1
+				CanAttach = true
+			elseif Blueprint == "sisters_squad_immolator_tank" then
+				g_ImmolatorCounter = g_ImmolatorCounter + 1
+			elseif Blueprint == "sisters_squad_penitent_engine" then
+				g_EngineCounter = g_EngineCounter + 1
+			end
+			
+			if PopCheck(g_MissionaryCounter, "sg_Missionary2Wander", g_MaxMissionary) and CanAttach == true and World_GetRand(1,10) > 5 then
+				-- missionary
+				g_MissionaryCounter = g_MissionaryCounter + 1
+				Util_CreateSquadsAtPositionEx(g_Player4, "sg_Missionary2Wander"..g_MissionaryCounter, "sisters_squad_missionary", SGroup_GetPosition(SGroup..Counter), 1, 1)
+				Cmd_AttachSquads(SGroup..Counter, "sg_Missionary2Wander"..g_MissionaryCounter)
+			end
+		end
+	end
+end
+
+function PopulateWanderRoutes()
+	g_PopulateCounter = g_PopulateCounter + 1
+	if g_PopulateCounter <= 6 then
+		Route2Spawn()
+	end
+	if g_PopulateCounter <= 4 then
+		Route1Spawn()
+	end
+	
+	if g_PopulateCounter == 7 then
+		Rule_Remove(PopulateWanderRoutes)
+	end
+end
+
+function Wander()
+	for i=1,6 do
+		if Player_AreSquadsNearMarker(g_Player4, "mkr_rt2_wander"..i) then
+			g_WanderCounter = g_WanderCounter + 1
+			Player_GetAllSquadsNearMarker(g_Player4, "sg_WanderSquad"..i.."Counter"..g_WanderCounter, "mkr_rt2_wander"..i)
+			if i < 6 then
+				Cmd_AttackMoveMarker("sg_WanderSquad"..i.."Counter"..g_WanderCounter, "mkr_rt2_wander"..i+1)
+			else
+				Cmd_AttackMoveMarker("sg_WanderSquad"..i.."Counter"..g_WanderCounter, "mkr_rt2_wander1")
+			end
+		end
+	end
+	for i=1,5 do
+		if Player_AreSquadsNearMarker(g_Player4, "mkr_rt1_wander"..i) then
+			g_WanderCounter = g_WanderCounter + 1
+			Player_GetAllSquadsNearMarker(g_Player4, "sg_WanderSquad"..i.."Counter"..g_WanderCounter, "mkr_rt1_wander"..i)
+			if i < 5 then
+				Cmd_AttackMoveMarker("sg_WanderSquad"..i.."Counter"..g_WanderCounter, "mkr_rt1_wander"..i+1)
+			else
+				Cmd_AttackMoveMarker("sg_WanderSquad"..i.."Counter"..g_WanderCounter, "mkr_rt1_wander1")
+			end
+		end
+	end
+end
+
+function LightningAttack()
+	local Count = 0
+	Player_GetSquads(g_Player1)
+	local bpTable = Util_MakeBlueprintTable("chaos_squad_hell_talon", "dark_eldar_squad_raven", "eldar_squad_nightwing", "guard_squad_marauder", 
+	"necron_scarab_squad", "necron_builder_scarab_squad", "necron_builder_scarab_squad_advance_sp", "ork_squad_fighta_bomba", "space_marine_squad_tempest", "tau_barracuda_squad")
+	
+	local FindAir = function( sgroupid, itemindex, squadID )
+		g_TempSquadCounter = g_TempSquadCounter + 1
+		SGroup_Create("temp"..g_TempSquadCounter)
+		SGroup_Add("temp"..g_TempSquadCounter, SGroup_GetSpawnedSquadAt(sgroupid,itemindex))
+		local flag = SGroup_ContainsBlueprints("temp"..g_TempSquadCounter,bpTable,false)
+		if flag == true then
+			g_AirTargetCounter = g_AirTargetCounter + 1
+			SGroup_CreateIfNotFound("sg_AirTarget"..g_AirTargetCounter)
+			SGroup_AddGroup("sg_AirTarget"..g_AirTargetCounter, "temp"..g_TempSquadCounter)
+			return true
+		else
+			return false
+		end
+    end
+	
+	for i=1,7 do
+		if EGroup_Exists("eg_SpawnPoint"..i) and EGroup_Count("eg_SpawnPoint"..i) > 0 then
+			Count = Count + 1
+		end
+	end
+	
+	if Count <= g_StartPlanesWhenRecruitmentAt then		
+		SGroup_ForEach( SGroup_FromName("__Player1000Squads"), FindAir )
+		if SGroup_Exists("sg_AirTarget"..g_AirTargetCounter) and SGroup_Count("sg_AirTarget"..g_AirTargetCounter) > 0 then
+			-- check if we have pop for lightning, spawn it, and tell ALL other lightnings to take out this plane
+			for i=1,g_LightningAttackNumber do
+				local pos = World_GetRand(2,3)
+				if PopCheck(g_LightningCounter, "sg_Lightning", g_MaxLightning) and EGroup_Exists("eg_Base2Tanks"..pos) and EGroup_Count("eg_Base2Tanks"..pos) > 0 then
+					Util_CreateSquadsAtPositionEx(g_Player3, "sg_Lightning"..g_LightningCounter, "sisters_squad_lightning", EGroup_GetPosition("eg_Base2Tanks"..pos), 1,1)
+				end
+				for i=0,g_LightningCounter do
+					if SGroup_Exists("sg_Lightning"..i) and SGroup_Count("sg_Lightning"..i) > 0 then
+						Cmd_AttackSGroup("sg_Lightning"..i, "sg_AirTarget"..g_AirTargetCounter)
+					end
+				end
+			end
+		else
+			-- send units to patrol
+			local pos = World_GetRand(2,3)
+			if PopCheck(g_LightningCounter, "sg_Lightning", g_MaxLightning) and EGroup_Exists("eg_Base2Tanks"..pos) and EGroup_Count("eg_Base2Tanks"..pos) > 0 then
+				Util_CreateSquadsAtPositionEx(g_Player6, "sg_Lightning"..g_LightningCounter, "sisters_squad_lightning", EGroup_GetPosition("eg_Base2Tanks"..pos), 1,1)
+				Cmd_AttackMoveMarker("sg_Lightning"..g_LightningCounter, "mkr_airpatrol1")
+			end			
+		end
+	end	
+	
+	Count = 0
+	for i=2,3 do
+		if EGroup_Exists("eg_Base2Tanks"..i) and EGroup_Count("eg_Base2Tanks"..i) == 0 then
+			Count = Count + 1
+		end
+	end	
+	if Count == 2 then
+		Rule_Remove(LightningAttack)
+	end
+end
+
+function PatrolPlanes()
+	for i=1,9 do
+		for j=1,g_LightningCounter do
+			if Player_AreSquadsNearMarker(g_Player6, "mkr_airpatrol"..i) then
+				if SGroup_Exists("sg_Lightning"..j) and SGroup_Count("sg_Lightning"..j) > 0 then
+					if Prox_AnySquadNearMarker("sg_Lightning"..j, "mkr_airpatrol"..i) then
+						local Point = 1
+						if i==9 then
+							Point = 1
+						else
+							Point = i + 1
+						end
+						Cmd_AttackMoveMarker("sg_Lightning"..j, "mkr_airpatrol"..Point)
+					end
+				end
+			end
+		end
+	end
+end
+
+function IncreaseLightningSquadsSent()
+	if g_LightningAttackNumber < 4 then
+		g_LightningAttackNumber = g_LightningAttackNumber + 1
+	else
+		Rule_Remove(IncreaseLightningSquadsSent)
+	end
+end
+
+function AttackLP5()
+	if EGroup_Exists("eg_ListeningPosts5") and EGroup_Count("eg_ListeningPosts5") > 0 and EGroup_IsUnderAttack("eg_ListeningPosts5", true) then
+		if EGroup_Exists("eg_Base2Barracks1") and EGroup_Count("eg_Base2Barracks1") > 0 then
+			-- create squad of seraphim
+			Util_CreateSquadsAtPositionEx(g_Player2, "sg_SeraphimJumpToLP5Squad1", "sisters_squad_seraphim", EGroup_GetPosition("eg_Base2Barracks1"), 1, 8)
+			SGroup_AddLeaders("sg_SeraphimJumpToLP5Squad1")
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_SeraphimJumpToLP5Squad1"), 1),"sisters_chain_sword_seraphim", 3)
+			Cmd_AttackMoveMarker("sg_SeraphimJumpToLP5Squad1", "mkr_lp5attack_jump")
+		end
+		if EGroup_Exists("eg_Base2Barracks2") and EGroup_Count("eg_Base2Barracks2") > 0 then
+			Util_CreateSquadsAtPositionEx(g_Player2, "sg_SeraphimJumpToLP5Squad2", "sisters_squad_seraphim", EGroup_GetPosition("eg_Base2Barracks2"), 1, 8)
+			SGroup_AddLeaders("sg_SeraphimJumpToLP5Squad2")
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_SeraphimJumpToLP5Squad2"), 1),"sisters_chain_sword_seraphim", 3)
+			Cmd_AttackMoveMarker("sg_SeraphimJumpToLP5Squad2", "mkr_lp5attack_jump")
+		end			
+		-- add rule for point to make them jump
+		Rule_AddInterval(AttackLP5_Jump, 1)
+		Rule_AddInterval(AttackLP5_SeraphimSkill, 4)
+		Rule_Remove(AttackLP5)		
+	end
+end
+
+function AttackLP5_Jump()
+	local Count = 0
+	for i=1,2 do
+		if SGroup_Exists("sg_SeraphimJumpToLP5Squad"..i) and SGroup_Count("sg_SeraphimJumpToLP5Squad"..i) > 0 then
+			if Prox_AnySquadNearMarker("sg_SeraphimJumpToLP5Squad"..i, "mkr_lp5attack_jump") and g_SeraphimJumped[i] == false then
+				g_SeraphimJumped[i] = true
+				Cmd_JumpToMarker("sg_SeraphimJumpToLP5Squad"..i, "mkr_lp5attack_jumpto"..i)
+			end
+		end
+		if g_SeraphimJumped[i] == true then
+			Count = Count + 1
+		end
+	end
+	
+	if Count == 2 then
+		Rule_Remove(AttackLP5_Jump)
+	end	
+end
+
+function AttackLP5_SeraphimSkill()
+	local Count = 0
+	local Count2 = 0
+	for i=1,2 do
+		if SGroup_Exists("sg_SeraphimJumpToLP5Squad"..i) and SGroup_Count("sg_SeraphimJumpToLP5Squad"..i) > 0 then
+			if g_SeraphimJumped[i] == true and g_SeraphimSkillFired[i] == false then
+				g_SeraphimSkillFired[i] = true
+				Cmd_CastAbilitySelf("sg_SeraphimJumpToLP5Squad"..i, "sisters_act_of_faith_holy_passion")
+			end
+		elseif SGroup_Exists("sg_SeraphimJumpToLP5Squad"..i) and SGroup_Count("sg_SeraphimJumpToLP5Squad"..i) == 0 then
+			Count2 = Count2 + 1
+		end
+		if g_SeraphimSkillFired[i] == true then
+			Count = Count + 1
+		end
+	end
+	
+	if Count == 2 or Count2 == 2 then
+		Rule_Remove(AttackLP5_SeraphimSkill)
+	end	
+end
+
+function SpawnInitialUnitsInAllBases()
+	g_RatchetThroughSpawn = g_RatchetThroughSpawn + 1
+	
+	if g_RatchetThroughSpawn == 1 then
+		-- initial base
+		for i=1,3 do
+			Util_CreateSquadsAtMarkerEx(g_Player3, "sg_InitBattleSisters"..i, "sisters_squad_battle_sister", "mkr_initial_battlesisters"..i, 1, World_GetRand(5,6))
+			SGroup_AddLeaders("sg_InitBattleSisters"..i)
+			Util_CreateSquadsAtMarkerEx(g_Player3, "sg_InitMissionaries"..i, "sisters_squad_missionary", "mkr_initial_battlesisters"..i, 1, 1)
+			Cmd_AttachSquads("sg_InitBattleSisters"..i, "sg_InitMissionaries"..i)
+		end
+		
+		-- base 1
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B1BattleSisters"..i, "sisters_squad_battle_sister", "mkr_base1_battlesisters"..i, 1, 8)
+			SGroup_AddLeaders("sg_B1BattleSisters"..i)
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B1Missionaries1_"..i, "sisters_squad_missionary", "mkr_base1_battlesisters"..i, 1, 1)
+			Cmd_AttachSquads("sg_B1BattleSisters"..i, "sg_B1Missionaries1_"..i)
+		end		
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B1Seraphim"..i, "sisters_squad_seraphim", "mkr_base1_seraphim"..i, 1, 8)
+			SGroup_AddLeaders("sg_B1BattleSisters"..i)
+		end		
+	elseif g_RatchetThroughSpawn == 2 then
+	
+		-- base 2
+		--[[for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B2Engines"..i, "sisters_squad_penitent_engine", "mkr_base2_engine"..i, 1, 1)
+		end]]
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B2Rhinos"..i, "sisters_squad_rhino_sp_dxp3", "mkr_base2_rhino"..i, 1, 1)
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B2Immolators"..i, "sisters_squad_immolator_tank", "mkr_base2_immolater"..i, 1, 1)
+			if i==1 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B2Immolators"..i), 1),"sisters_multi_melta_immolator", 4)
+			end
+		end
+		for i=1,4 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B2BattleSisters"..i, "sisters_squad_battle_sister", "mkr_base2_battlesisters"..i, 1, 8)
+			SGroup_AddLeaders("sg_B2BattleSisters"..i)
+			if i==1 or i==3 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B2BattleSisters"..i), 1),"sisters_heavy_bolter_battle_sister", 4)
+				Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B2Missionaries2_"..i, "sisters_squad_missionary", "mkr_base2_battlesisters"..i, 1, 1)
+				Cmd_AttachSquads("sg_B2BattleSisters"..i, "sg_B2Missionaries2_"..i)
+			else
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B2BattleSisters"..i), 1),"sisters_flamer_battle_sister", 4)
+			end
+		end
+		for i=1,3 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_L1ghtning"..i, "sisters_squad_lightning", "mkr_base2_lightning"..i, 1, 1)
+		end
+		
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B2Repentia"..i, "sisters_squad_repentia", "mkr_base2_repentia"..i, 1, 8)
+			SGroup_AddLeaders("sg_B2Repentia"..i)
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B2Missionaries21_"..i, "sisters_squad_missionary", "mkr_base2_repentia"..i, 1, 1)
+			Cmd_AttachSquads("sg_B2Repentia"..i, "sg_B2Missionaries21_"..i)
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B2Celestian"..i, "sisters_squad_celestian", "mkr_base2_celestian"..i, 1, 4)
+			SGroup_AddLeadersAtIndex("sg_B2Celestian"..i, 1)
+			SGroup_AddLeadersAtIndex("sg_B2Celestian"..i, 2)
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B2Celestian"..i), 1),"sisters_melta_celestian", 2)
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B2Celestian"..i), 1),"sisters_multi_melta_celestian", 2)
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B2Missionaries22_"..i, "sisters_squad_missionary", "mkr_base2_celestian"..i, 1, 1)
+			Cmd_AttachSquads("sg_B2Celestian"..i, "sg_B2Missionaries22_"..i)
+		end
+		
+		Cmd_EnterTransport("sg_B2BattleSisters1","sg_B2Rhinos1")
+		Cmd_EnterTransport("sg_B2Repentia1","sg_B2Rhinos1")
+		Cmd_EnterTransport("sg_B2Celestian1","sg_B2Rhinos2")
+		Cmd_EnterTransport("sg_B2BattleSisters2","sg_B2Rhinos2")
+	elseif g_RatchetThroughSpawn == 3 then
+		
+		-- base 3
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B3BattleSisters"..i, "sisters_squad_battle_sister", "mkr_base3_battlesisters"..i, 1, 8)
+			SGroup_AddLeaders("sg_B3BattleSisters"..i)
+			if i==1 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B3BattleSisters"..i), 1),"sisters_heavy_bolter_battle_sister", 3)
+				Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B3Missionaries3_"..i, "sisters_squad_missionary", "mkr_base3_battlesisters"..i, 1, 1)
+				Cmd_AttachSquads("sg_B3BattleSisters"..i, "sg_B3Missionaries3_"..i)
+			else
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B3BattleSisters"..i), 1),"sisters_flamer_battle_sister", 3)
+			end
+		end
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B3Engine", "sisters_squad_penitent_engine", "mkr_base3_engine", 1, 1)
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B3Rhino", "sisters_squad_rhino_sp_dxp3", "mkr_base3_rhino", 1, 1)
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B3Celestian", "sisters_squad_celestian", "mkr_base3_celestian", 1, 4)
+		SGroup_AddLeadersAtIndex("sg_B3Celestian", 1)
+		SGroup_AddLeadersAtIndex("sg_B3Celestian", 2)
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B3Missionaries31_", "sisters_squad_missionary", "mkr_base3_celestian", 1, 1)
+		Cmd_AttachSquads("sg_B3Celestian", "sg_B3Missionaries31_")
+		Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B3Celestian"), 1),"sisters_melta_celestian", 2)
+		Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B3Celestian"), 1),"sisters_multi_melta_celestian", 2)
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B3Repentia", "sisters_squad_repentia", "mkr_base3_repentia", 1, 8)
+		SGroup_AddLeaders("sg_B3Repentia")
+		
+		Cmd_EnterTransport("sg_B3Celestian","sg_B3Rhino")
+		Cmd_EnterTransport("sg_B3Repentia","sg_B3Rhino")	
+	elseif g_RatchetThroughSpawn == 4 then
+		
+		-- base 4
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B4Rhinos"..i, "sisters_squad_rhino_sp_dxp3", "mkr_base4_rhino"..i, 1, 1)
+		end
+		for i=1,4 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B4BattleSisters"..i, "sisters_squad_battle_sister", "mkr_base4_battlesisters"..i, 1, 8)
+			SGroup_AddLeaders("sg_B4BattleSisters"..i)
+			if i==1 or i==3 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B4BattleSisters"..i), 1),"sisters_heavy_bolter_battle_sister", 4)
+			else
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B4BattleSisters"..i), 1),"sisters_flamer_battle_sister", 4)
+				Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B4Missionaries4_"..i, "sisters_squad_missionary", "mkr_base4_battlesisters"..i, 1, 1)
+				Cmd_AttachSquads("sg_B4BattleSisters"..i, "sg_B4Missionaries4_"..i)
+			end
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B4Repentia"..i, "sisters_squad_repentia", "mkr_base4_repentia"..i, 1, 8)
+			SGroup_AddLeaders("sg_B4Repentia"..i)
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B4Missionaries41_"..i, "sisters_squad_missionary", "mkr_base4_repentia"..i, 1, 1)
+			Cmd_AttachSquads("sg_B4Repentia"..i, "sg_B4Missionaries41_"..i)
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B4Celestian"..i, "sisters_squad_celestian", "mkr_base4_celestian"..i, 1, 4)
+			SGroup_AddLeadersAtIndex("sg_B4Celestian"..i, 1)
+			SGroup_AddLeadersAtIndex("sg_B4Celestian"..i, 2)
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B4Celestian"..i), 1),"sisters_melta_celestian", 2)
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B4Celestian"..i), 1),"sisters_multi_melta_celestian", 2)
+		end
+		Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B4Immolator", "sisters_squad_immolator_tank", "mkr_base4_immolater", 1, 1)
+		
+		Cmd_EnterTransport("sg_B4BattleSisters1","sg_B4Rhinos1")
+		Cmd_EnterTransport("sg_B4BattleSisters2","sg_B4Rhinos1")
+		Cmd_EnterTransport("sg_B4Repentia1","sg_B4Rhinos2")
+		Cmd_EnterTransport("sg_B4Celestian1","sg_B4Rhinos2")
+		
+	elseif g_RatchetThroughSpawn == 5 then
+		
+		-- base 5
+		for i=1,3 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B5Immolators"..i, "sisters_squad_immolator_tank", "mkr_base5_immolater"..i, 1, 1)
+			if i==1 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B5Immolators"..i), 1),"sisters_multi_melta_immolator", 4)
+			end
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B5Rhinos"..i, "sisters_squad_rhino_sp_dxp3", "mkr_base5_rhino"..i, 1, 1)
+		end
+		for i=1,4 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B5BattleSisters"..i, "sisters_squad_battle_sister", "mkr_base5_battlesisters"..i, 1, 8)
+			SGroup_AddLeaders("sg_B5BattleSisters"..i)
+			if i==1 or i==3 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B5BattleSisters"..i), 1),"sisters_heavy_bolter_battle_sister", 4)
+				Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B5Missionaries5_"..i, "sisters_squad_missionary", "mkr_base5_battlesisters"..i, 1, 1)
+				Cmd_AttachSquads("sg_B5BattleSisters"..i, "sg_B5Missionaries5_"..i)
+			else
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B5BattleSisters"..i), 1),"sisters_flamer_battle_sister", 4)
+			end
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B5Repentia"..i, "sisters_squad_repentia", "mkr_base5_repentia"..i, 1, 8)
+			SGroup_AddLeaders("sg_B5Repentia"..i)
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B5Missionaries51_"..i, "sisters_squad_missionary", "mkr_base5_repentia"..i, 1, 1)
+			Cmd_AttachSquads("sg_B5Repentia"..i, "sg_B5Missionaries51_"..i)
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B5Celestian"..i, "sisters_squad_celestian", "mkr_base5_celestian"..i, 1, 4)
+			SGroup_AddLeadersAtIndex("sg_B5Celestian"..i, 1)
+			SGroup_AddLeadersAtIndex("sg_B5Celestian"..i, 2)
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B5Celestian"..i), 1),"sisters_melta_celestian", 2)
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B5Celestian"..i), 1),"sisters_multi_melta_celestian", 2)
+		end
+		for i=1,1 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B5Engines"..i, "sisters_squad_penitent_engine", "mkr_base5_engine"..i, 1, 1)
+		end
+		
+		Cmd_EnterTransport("sg_B5BattleSisters1","sg_B5Rhinos1")
+		Cmd_EnterTransport("sg_B5Repentia1","sg_B5Rhinos1")
+		Cmd_EnterTransport("sg_B5BattleSisters2","sg_B5Rhinos2")
+		Cmd_EnterTransport("sg_B5Celestian1","sg_B5Rhinos2")
+		
+	elseif g_RatchetThroughSpawn == 6 then
+		
+		-- tankbase
+		Rule_AddInterval(ExorcistsAttGround, 5)
+		for i=1,4 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B6Exorcist"..i, "sisters_squad_exorcist_tank_sp_dxp3", "mkr_tankbase_exorcist"..i, 1, 1)
+		end
+		
+		for i=1,1 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B6Immolators"..i, "sisters_squad_immolator_tank", "mkr_tankbase_immolater"..i, 1, 1)
+			if i==1 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B6Immolators"..i), 1),"sisters_multi_melta_immolator", 4)
+			end		
+		end
+		for i=1,3 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B6BattleSisters"..i, "sisters_squad_battle_sister", "mkr_tankbase_battlesisters"..i, 1, 8)
+			SGroup_AddLeaders("sg_B6BattleSisters"..i)
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B6Missionaries6_"..i, "sisters_squad_missionary", "mkr_tankbase_battlesisters"..i, 1, 1)
+			Cmd_AttachSquads("sg_B6BattleSisters"..i, "sg_B6Missionaries6_"..i)
+			if i==1 or i==2 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B6BattleSisters"..i), 1),"sisters_heavy_bolter_battle_sister", 4)
+			else
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B6BattleSisters"..i), 1),"sisters_flamer_battle_sister", 4)
+			end
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B6Rhinos"..i, "sisters_squad_rhino_sp_dxp3", "mkr_tankbase_rhino"..i, 1, 1)
+		end
+		
+	elseif g_RatchetThroughSpawn == 7 then
+		
+		-- random assasins @ lp's
+		for i=1,18 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_RandomAssassin"..i, "sisters_squad_assassin", "mkr_randomassassin"..i, 1, 1)
+		end
+		
+		-- mainbase
+		for i=1,1 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B7Engines"..i, "sisters_squad_penitent_engine", "mkr_base7_engine"..i, 1, 1)
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B7Rhinos"..i, "sisters_squad_rhino_sp_dxp3", "mkr_base7_rhino"..i, 1, 1)
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B7Immolators"..i, "sisters_squad_immolator_tank", "mkr_base7_immolator"..i, 1, 1)
+			if i==1 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B7Immolators"..i), 1),"sisters_multi_melta_immolator", 4)
+			end
+		end
+		for i=1,3 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B7BattleSisters"..i, "sisters_squad_battle_sister", "mkr_base7_battlesisters"..i, 1, 8)
+			SGroup_AddLeaders("sg_B7BattleSisters"..i)
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B7Missionaries7_"..i, "sisters_squad_missionary", "mkr_base7_battlesisters"..i, 1, 1)
+			Cmd_AttachSquads("sg_B7BattleSisters"..i, "sg_B7Missionaries7_"..i)
+			if i==1 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B7BattleSisters"..i), 1),"sisters_heavy_bolter_battle_sister", 4)
+			else
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B7BattleSisters"..i), 1),"sisters_flamer_battle_sister", 4)
+			end
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B7Repentia"..i, "sisters_squad_repentia", "mkr_base7_repentia"..i, 1, 8)
+			SGroup_AddLeaders("sg_B7Repentia"..i)
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B7Missionaries71_"..i, "sisters_squad_missionary", "mkr_base7_repentia"..i, 1, 1)
+			Cmd_AttachSquads("sg_B7Repentia"..i, "sg_B7Missionaries71_"..i)
+		end
+		for i=1,2 do
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B7Celestian"..i, "sisters_squad_celestian", "mkr_base7_celestian"..i, 1, 4)
+			SGroup_AddLeadersAtIndex("sg_B7Celestian"..i, 1)
+			SGroup_AddLeadersAtIndex("sg_B7Celestian"..i, 2)
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_B7Missionaries72_"..i, "sisters_squad_missionary", "mkr_base7_celestian"..i, 1, 1)
+			Cmd_AttachSquads("sg_B7Celestian"..i, "sg_B7Missionaries72_"..i)
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B7Celestian"..i), 1),"sisters_melta_celestian", 2)
+			Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_B7Celestian"..i), 1),"sisters_multi_melta_celestian", 2)
+		end
+		
+		Cmd_EnterTransport("sg_B7BattleSisters1","sg_B7Rhinos1")
+		Cmd_EnterTransport("sg_B7Repentia1","sg_B7Rhinos1")
+		Cmd_EnterTransport("sg_B7Celestian1","sg_B7Rhinos2")
+		Cmd_EnterTransport("sg_B7BattleSisters2","sg_B7Rhinos2")
+		
+		-- rules for all these guys
+		Rule_AddInterval(TurnOnOffRighteousFerver, 1)
+		Rule_AddInterval(Grenades, 3)
+		Rule_AddInterval(Conflagration, 3)
+		
+		-- create the multidimensional array for righteous fervor
+		for i=1,10 do
+			g_RighteousFerver1[i] = {}     -- create a new row
+			g_RighteousFerver2[i] = {}     -- create a new row
+			for j=1,10 do
+				g_RighteousFerver1[i][j] = false
+				g_RighteousFerver2[i][j] = false
+			end
+		end
+	end
+	
+	if g_RatchetThroughSpawn == 7 then
+		Rule_Remove(SpawnInitialUnitsInAllBases)
+	end		
+end
+
+function ExorcistsAttGround()
+	for i=1,5 do
+		if SGroup_Exists("sg_B6Exorcist"..i) and SGroup_Count("sg_B6Exorcist"..i) > 0 then
+			if i ==1 or i == 2 then
+				Cmd_AttackGroundMarker("sg_B6Exorcist"..i, "mkr_exorcist_attground"..World_GetRand(1,10))
+			else
+				Cmd_AttackGroundMarker("sg_B6Exorcist"..i, "mkr_exorcist_attground"..World_GetRand(10,28))
+			end
+		end
+	end
+end
+
+function BaseAttacks()
+	for i=1,7 do
+		if Player_AreSquadsNearMarker(g_Player1, "mkr_basearea"..i) then
+			g_PlayerSquadsNearBases = g_PlayerSquadsNearBases  + 1
+			Player_GetAllSquadsNearMarker(g_Player1, "sg_P1NearBase"..i.."SquadNum"..g_PlayerSquadsNearBases, "mkr_basearea"..i)
+			Player_GetAllSquadsNearMarker(g_Player2, "sg_P2NearBase"..i.."SquadNum"..g_PlayerSquadsNearBases, "mkr_basearea"..i)
+			if SGroup_Exists("sg_P1NearBase"..i.."SquadNum"..g_PlayerSquadsNearBases) and SGroup_Count("sg_P1NearBase"..i.."SquadNum"..g_PlayerSquadsNearBases) > 1 then
+				if SGroup_Exists("sg_P2NearBase"..i.."SquadNum"..g_PlayerSquadsNearBases) and SGroup_Count("sg_P2NearBase"..i.."SquadNum"..g_PlayerSquadsNearBases) > 0 then
+					Cmd_AttackSGroup("sg_P2NearBase"..i.."SquadNum"..g_PlayerSquadsNearBases, "sg_P1NearBase"..i.."SquadNum"..g_PlayerSquadsNearBases)
+				end
+			end	
+		end
+	end
+end
+
+
+function FindVehiclesAndHunterKillerThem()
+	local Count = 0
+	local FindVehicle = function( sgroupid, itemindex, squadID )
+		g_TempSquadCounter = g_TempSquadCounter + 1
+		SGroup_Create("temp"..g_TempSquadCounter)
+		SGroup_Add("temp"..g_TempSquadCounter, SGroup_GetSpawnedSquadAt(sgroupid,itemindex))
+		local flag = SGroup_IsVehicle("temp"..g_TempSquadCounter)
+		if flag == true then
+			g_HunterKillerTargetCounter = g_HunterKillerTargetCounter + 1
+			SGroup_CreateIfNotFound("sg_HunterKillerTarget"..g_HunterKillerTargetCounter)
+			SGroup_AddGroup("sg_HunterKillerTarget"..g_HunterKillerTargetCounter, "temp"..g_TempSquadCounter)
+			return true
+		else
+			return false
+		end
+    end
+	
+	SGroup_ForEach( SGroup_FromName("__Player1000Squads"), FindVehicle )
+	-- if the target exists
+	if SGroup_Exists("sg_HunterKillerTarget"..g_HunterKillerTargetCounter) and SGroup_Count("sg_HunterKillerTarget"..g_HunterKillerTargetCounter) > 0 then
+		if SGroup_Exists("sg_B6Exorcist5") and SGroup_Count("sg_B6Exorcist5") > 0 then
+			Cmd_CastAbilitySGroup("sg_B6Exorcist5", "sisters_hk_missiles_sp_dxp3", "sg_HunterKillerTarget"..g_HunterKillerTargetCounter)
+			if g_IE_HKMissleFired == false then
+				g_IE_HKMissleFired = true
+				Util_StartIntel(EVENTS.IE_HunterKillerMissle)
+			end				
+		end
+	end
+end
+
+function Research()
+	g_ResearchTier = g_ResearchTier + 1
+	
+	if g_ResearchTier == 13 then
+		Rule_Remove(Research)
+	end
+	
+
+	if g_ResearchTier == 1 then
+		-- unlock skills
+		Player_GrantResearch(g_Player2, "sisters_act_of_faith_ascension_research") -- act of faith: ascension
+		Player_GrantResearch(g_Player3, "sisters_act_of_faith_ascension_research") -- act of faith: ascension
+		Player_GrantResearch(g_Player4, "sisters_act_of_faith_ascension_research") -- act of faith: ascension
+		
+		Player_GrantResearch(g_Player2, "sisters_battlefield_medics_research") -- lay hands research
+		Player_GrantResearch(g_Player3, "sisters_battlefield_medics_research") -- lay hands research
+		Player_GrantResearch(g_Player4, "sisters_battlefield_medics_research") -- lay hands research
+		
+		Player_GrantResearch(g_Player2, "sisters_conflagration_research") -- conflagration research
+		Player_GrantResearch(g_Player3, "sisters_conflagration_research") -- conflagration research
+		Player_GrantResearch(g_Player4, "sisters_conflagration_research") -- conflagration research
+		
+		Player_GrantResearch(g_Player2, "sisters_divine_retribution_research") -- divine retribution
+		Player_GrantResearch(g_Player3, "sisters_divine_retribution_research") -- divine retribution
+		Player_GrantResearch(g_Player4, "sisters_divine_retribution_research") -- divine retribution
+		
+		Player_GrantResearch(g_Player2, "sisters_divine_pronouncement") -- holy edict (stun)
+		Player_GrantResearch(g_Player3, "sisters_divine_pronouncement") -- holy edict (stun)
+		Player_GrantResearch(g_Player4, "sisters_divine_pronouncement") -- holy edict (stun)
+		
+		Player_GrantResearch(g_Player2, "sisters_emperors_touch_research") -- emperors touch
+		Player_GrantResearch(g_Player3, "sisters_emperors_touch_research") -- emperors touch
+		Player_GrantResearch(g_Player4, "sisters_emperors_touch_research") -- emperors touch
+		
+		Player_GrantResearch(g_Player2, "sisters_krak_grenades_research") -- krak grenades
+		Player_GrantResearch(g_Player3, "sisters_krak_grenades_research") -- krak grenades
+		Player_GrantResearch(g_Player4, "sisters_krak_grenades_research") -- krak grenades
+		
+		Player_GrantResearch(g_Player2, "sisters_phosphor_grenades_research") -- phosphor grenades
+		Player_GrantResearch(g_Player3, "sisters_phosphor_grenades_research") -- phosphor grenades
+		Player_GrantResearch(g_Player4, "sisters_phosphor_grenades_research") -- phosphor grenades
+		
+		Player_GrantResearch(g_Player2, "sisters_laud_hailer_research") -- laud hailers research
+		Player_GrantResearch(g_Player3, "sisters_laud_hailer_research") -- laud hailers research
+		Player_GrantResearch(g_Player4, "sisters_laud_hailer_research") -- laud hailers research
+		
+		-- economy upgrades / popcap
+		Player_GrantResearch(g_Player2, "sisters_vehicle_cap_research") -- improved mechanized production efficiency
+		Player_GrantResearch(g_Player3, "sisters_vehicle_cap_research") -- improved mechanized production efficiency
+		Player_GrantResearch(g_Player4, "sisters_vehicle_cap_research") -- improved mechanized production efficiency
+		
+		Player_GrantResearch(g_Player2, "sisters_vehicle_cap_research_2")  -- enhanced mechanized production efficiency
+		Player_GrantResearch(g_Player3, "sisters_vehicle_cap_research_2")  -- enhanced mechanized production efficiency
+		Player_GrantResearch(g_Player4, "sisters_vehicle_cap_research_2")  -- enhanced mechanized production efficiency
+		
+		Player_GrantResearch(g_Player2, "sisters_vehicle_cap_research_3")  -- elite mechanized production efficiency
+		Player_GrantResearch(g_Player3, "sisters_vehicle_cap_research_3")  -- elite mechanized production efficiency
+		Player_GrantResearch(g_Player4, "sisters_vehicle_cap_research_3")  -- elite mechanized production efficiency
+		
+		Player_GrantResearch(g_Player2, "sisters_upgrade_power_1") -- improved power grid research
+		Player_GrantResearch(g_Player3, "sisters_upgrade_power_1") -- improved power grid research
+		Player_GrantResearch(g_Player4, "sisters_upgrade_power_1") -- improved power grid research
+		
+		Player_GrantResearch(g_Player2, "sisters_upgrade_power_2") -- plasma battery storage research
+		Player_GrantResearch(g_Player3, "sisters_upgrade_power_2") -- plasma battery storage research
+		Player_GrantResearch(g_Player4, "sisters_upgrade_power_2") -- plasma battery storage research
+		
+		Player_GrantResearch(g_Player2, "sisters_upgrade_requisition_1") -- escalate engagement
+		Player_GrantResearch(g_Player3, "sisters_upgrade_requisition_1") -- escalate engagement
+		Player_GrantResearch(g_Player4, "sisters_upgrade_requisition_1") -- escalate engagement
+		
+		Player_GrantResearch(g_Player2, "sisters_upgrade_requisition_2") -- full scale war
+		Player_GrantResearch(g_Player3, "sisters_upgrade_requisition_2") -- full scale war
+		Player_GrantResearch(g_Player4, "sisters_upgrade_requisition_2") -- full scale war
+		
+		Player_GrantResearch(g_Player2, "sisters_squad_cap_research") -- improved field logistics
+		Player_GrantResearch(g_Player3, "sisters_squad_cap_research") -- improved field logistics
+		Player_GrantResearch(g_Player4, "sisters_squad_cap_research") -- improved field logistics
+		
+		Player_GrantResearch(g_Player2, "sisters_squad_cap_research_2") -- enhanced field logistics
+		Player_GrantResearch(g_Player3, "sisters_squad_cap_research_2") -- enhanced field logistics
+		Player_GrantResearch(g_Player4, "sisters_squad_cap_research_2") -- enhanced field logistics
+		
+		Player_GrantResearch(g_Player2, "sisters_squad_cap_research_3") -- elite field logistics
+		Player_GrantResearch(g_Player3, "sisters_squad_cap_research_3") -- elite field logistics
+		Player_GrantResearch(g_Player4, "sisters_squad_cap_research_3") -- elite field logistics
+		
+		Player_GrantResearch(g_Player2, "sisters_martyrs_gift") -- martyrs gift (returns faith each time a unit dies)
+		Player_GrantResearch(g_Player3, "sisters_martyrs_gift") -- martyrs gift (returns faith each time a unit dies)
+		Player_GrantResearch(g_Player4, "sisters_martyrs_gift") -- martyrs gift (returns faith each time a unit dies)
+		
+		Player_GrantResearch(g_Player2, "sisters_max_weapons_research") -- heavy weapons increase
+		Player_GrantResearch(g_Player3, "sisters_max_weapons_research") -- heavy weapons increase
+		Player_GrantResearch(g_Player4, "sisters_max_weapons_research") -- heavy weapons increase
+		
+		Player_GrantResearch(g_Player2, "sisters_faith_production_bonus_research") -- heart of worship
+		Player_GrantResearch(g_Player3, "sisters_faith_production_bonus_research") -- heart of worship
+		Player_GrantResearch(g_Player4, "sisters_faith_production_bonus_research") -- heart of worship
+		
+	elseif g_ResearchTier == 2 then
+		Player_GrantResearch(g_Player2, "sisters_blessed_ammunition") -- wargear: blessed ammunition (ignore cover bonuses)
+		Player_GrantResearch(g_Player3, "sisters_blessed_ammunition") -- wargear: blessed ammunition (ignore cover bonuses)
+		Player_GrantResearch(g_Player4, "sisters_blessed_ammunition") -- wargear: blessed ammunition (ignore cover bonuses)		
+	elseif g_ResearchTier == 3 then
+		Player_GrantResearch(g_Player2, "sisters_health_research") -- wargear: carapace armor (increases hp on infantry)
+		Player_GrantResearch(g_Player3, "sisters_health_research") -- wargear: carapace armor (increases hp on infantry)
+		Player_GrantResearch(g_Player4, "sisters_health_research") -- wargear: carapace armor (increases hp on infantry)		
+	elseif g_ResearchTier == 4 then
+		Player_GrantResearch(g_Player2, "sisters_commander_health_research_1") -- commander veteran upgrade
+		Player_GrantResearch(g_Player3, "sisters_commander_health_research_1") -- commander veteran upgrade
+		Player_GrantResearch(g_Player4, "sisters_commander_health_research_1") -- commander veteran upgrade
+	elseif g_ResearchTier == 5 then
+		Player_GrantResearch(g_Player2, "sisters_leader_melee_upgrade_1") -- wargear: power weapons
+		Player_GrantResearch(g_Player3, "sisters_leader_melee_upgrade_1") -- wargear: power weapons
+		Player_GrantResearch(g_Player4, "sisters_leader_melee_upgrade_1") -- wargear: power weapons
+		g_SistersTier = 2 
+	elseif g_ResearchTier == 6 then
+		Player_GrantResearch(g_Player2, "sisters_leader_range_upgrade") -- wargear: inferno pistol
+		Player_GrantResearch(g_Player3, "sisters_leader_range_upgrade") -- wargear: inferno pistol
+		Player_GrantResearch(g_Player4, "sisters_leader_range_upgrade") -- wargear: inferno pistol
+	elseif g_ResearchTier == 7 then
+		Player_GrantResearch(g_Player2, "sisters_ranged_damage_research") -- wargear: psyoculum (increases range / dmg of battle sister bolters)
+		Player_GrantResearch(g_Player3, "sisters_ranged_damage_research") -- wargear: psyoculum (increases range / dmg of battle sister bolters)
+		Player_GrantResearch(g_Player4, "sisters_ranged_damage_research") -- wargear: psyoculum (increases range / dmg of battle sister bolters)
+		g_SistersTier = 3
+	elseif g_ResearchTier == 9 then
+		Player_GrantResearch(g_Player2, "sisters_holy_promethium_research") -- wargear: improved reactor core 
+		Player_GrantResearch(g_Player3, "sisters_holy_promethium_research") -- wargear: improved reactor core 
+		Player_GrantResearch(g_Player4, "sisters_holy_promethium_research") -- wargear: improved reactor core 
+	elseif g_ResearchTier == 10 then
+		Player_GrantResearch(g_Player2, "sisters_leader_melee_upgrade_2") -- wargear: master crafted weapons
+		Player_GrantResearch(g_Player3, "sisters_leader_melee_upgrade_2") -- wargear: master crafted weapons
+		Player_GrantResearch(g_Player4, "sisters_leader_melee_upgrade_2") -- wargear: master crafted weapons
+	elseif g_ResearchTier == 11 then
+		Player_GrantResearch(g_Player2, "sisters_commander_health_research_2") -- commander hero upgrade
+		Player_GrantResearch(g_Player3, "sisters_commander_health_research_2") -- commander hero upgrade
+		Player_GrantResearch(g_Player4, "sisters_commander_health_research_2") -- commander hero upgrade
+	elseif g_ResearchTier == 12 then
+		Player_GrantResearch(g_Player2, "sisters_faithful_morale") -- wargear: chaplet ecclisasticus (increases morale of all squads)
+		Player_GrantResearch(g_Player3, "sisters_faithful_morale") -- wargear: chaplet ecclisasticus (increases morale of all squads)
+		Player_GrantResearch(g_Player4, "sisters_faithful_morale") -- wargear: chaplet ecclisasticus (increases morale of all squads)
+		g_SistersTier = 4
+	end
+end
+
+function ExorcistAttackPlayerBase()
+	local Count = 0
+	for i=1,7 do
+		if EGroup_Exists("eg_SpawnPoint"..i) and EGroup_Count("eg_SpawnPoint"..i) > 0 then
+			Count = Count + 1
+		end
+	end
+	
+	if Count <= g_StartExorcistBaseAt then
+		local pos = World_GetRand(1,3)
+		if pos ==1 then
+			Building = "eg_TankBaseTanks1"
+		elseif pos == 2 then
+			Building = "eg_TankBaseTanks1"
+		elseif pos == 3 then
+			Building = "eg_SpawnPoint3"
+		end
+		if PopCheck(g_ExorcistCounter, "sg_ExorcistAttack", g_MaxExorcist) and EGroup_Exists(Building) and EGroup_Count(Building) > 0 then
+			g_ExorcistCounter = g_ExorcistCounter + 1
+			Util_CreateSquadsAtMarkerEx(g_Player2, "sg_ExorcistAttack"..g_ExorcistCounter, "sisters_squad_exorcist_tank_sp_dxp3", "mkr_tankbase_exorcist"..pos, 1, 1)			
+			Cmd_AttackMovePos("sg_ExorcistAttack"..g_ExorcistCounter, g_GlobalAttackPos)			
+			g_BattleSistersWithExorcist[g_ExorcistCounter] = false
+		end
+	end
+end
+
+function BattleSisterExorcistEscort()
+	if SGroup_Exists("sg_ExorcistAttack"..g_ExorcistCounter) and SGroup_Count("sg_ExorcistAttack"..g_ExorcistCounter) > 0 and g_BattleSistersWithExorcist[g_ExorcistCounter] == false then
+		if PopCheck(g_ExorcistCounter, "sg_BattleSisterEscort", 3) then
+			g_BattleSistersWithExorcist[g_ExorcistCounter] = true
+			-- create battle sister squad
+			Util_CreateSquadsAtMarkerEx(g_Player4, "sg_BattleSisterEscort"..g_ExorcistCounter, "sisters_squad_battle_sister", "mkr_tankbase_barracks1", 1, 8)
+			SGroup_AddLeaders("sg_BattleSisterEscort"..g_ExorcistCounter)
+			if World_GetRand(1,2) == 1 then
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_BattleSisterEscort"..g_ExorcistCounter), 1),"sisters_heavy_bolter_battle_sister", 4)
+			else
+				Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_BattleSisterEscort"..g_ExorcistCounter), 1),"sisters_flamer_battle_sister", 4)
+			end
+			Util_CreateSquadsAtMarkerEx(g_Player4, "sg_MissionaryEscort"..g_ExorcistCounter, "sisters_squad_missionary", "mkr_tankbase_barracks1", 1, 1)
+			Cmd_AttachSquads("sg_BattleSisterEscort"..g_ExorcistCounter, "sg_MissionaryEscort"..g_ExorcistCounter)
+		end
+	end
+	
+	for i=1, g_ExorcistCounter do
+		if SGroup_Exists("sg_ExorcistAttack"..i) and SGroup_Count("sg_ExorcistAttack"..i) > 0 and SGroup_Exists("sg_BattleSisterEscort"..i) and SGroup_Count("sg_BattleSisterEscort"..i) > 0 then
+			Cmd_AttackMovePos("sg_BattleSisterEscort"..i, SGroup_GetPosition("sg_ExorcistAttack"..i))
+		elseif SGroup_Exists("sg_ExorcistAttack"..i) and SGroup_Count("sg_ExorcistAttack"..i) == 0 and SGroup_Exists("sg_BattleSisterEscort"..i) and SGroup_Count("sg_BattleSisterEscort"..i) > 0 then
+			Cmd_AttackMovePos("sg_BattleSisterEscort"..i, g_GlobalAttackPos)
+		end
+	end
+end
+
+function ExorcistAttackPlayerBaseObjective()
+	for i=0,g_ExorcistCounter do
+		if SGroup_Exists("sg_ExorcistAttack"..i) and SGroup_Count("sg_ExorcistAttack"..i) == 0 then
+			Rule_AddInterval(Rule_Objective_DestroyTankBase, 1)
+			Rule_Remove(ExorcistAttackPlayerBaseObjective)
+			return
+		end
+	end
+end
+
+
+function TurnOnOffRighteousFerver()
+	for i=1,6 do
+		for j=1,5 do 
+			if SGroup_Exists("sg_B"..i.."Repentia"..j) and SGroup_Count("sg_B"..i.."Repentia"..j) > 0 and SGroup_IsUnderAttack("sg_B"..i.."Repentia"..j, true) and SGroup_GetAvgHealth("sg_B"..i.."Repentia"..j) > .9 and g_RighteousFerver1[i][j] == false then
+				-- when repentia squad is > 90% hp and under attack
+				g_RighteousFerver1[i][j] = true
+				-- turn it on
+				Cmd_CastAbilitySelf("sg_B"..i.."Repentia"..j,"sisters_righteous_fervor")
+			elseif SGroup_Exists("sg_B"..i.."Repentia"..j) and SGroup_Count("sg_B"..i.."Repentia"..j) > 0 and SGroup_GetAvgHealth("sg_B"..i.."Repentia"..j) < .4 and g_RighteousFerver1[i][j] == true and g_RighteousFerver2[i][j] == false then
+				g_RighteousFerver2[i][j] = true
+				-- when squad is < 40% and the ability is on
+				-- turn it off
+				Cmd_CastAbilitySelf("sg_B"..i.."Repentia"..j,"sisters_righteous_fervor")
+			end
+		end
+	end
+end
+
+function Conflagration()
+	-- if immolator tank is under attack, fire this skill
+	for i=1,6 do
+		for j=1,5 do 
+			if SGroup_Exists("sg_B"..i.."Immolators"..j) and SGroup_Count("sg_B"..i.."Immolators"..j) > 0 and SGroup_IsUnderAttack("sg_B"..i.."Immolators"..j, true) then
+				Cmd_CastAbilitySelf("sg_B"..i.."Immolators"..j, "sisters_conflagration")
+			end
+		end
+	end
+end
+
+function Grenades()
+	local range = 20
+	for i=1,6 do
+		for j=1,5 do
+			-- ForEach Function: Checks if a Enemy Squad (Non-Vehicle) is In Range of Your Squad for Skill Targeting
+			function Detect_Proximity(sgroupid, itemindex, squadID)
+				SGroup_CreateIfNotFound("sg_BattleSisterGrenadeTarget")
+				SGroup_Clear("sg_BattleSisterGrenadeTarget")
+				SGroup_Add("sg_BattleSisterGrenadeTarget", SGroup_GetSpawnedSquadAt(sgroupid,itemindex))					
+				if SGroup_IsVehicle("sg_BattleSisterGrenadeTarget") == false and Prox_SquadsInProximityOfSquads("sg_B"..i.."BattleSisters"..j, "sg_BattleSisterGrenadeTarget", range, true) then
+					return true
+				end
+			end
+			
+			-- loop through all the static battle sisters at all 5 bases
+			if SGroup_Exists("sg_B"..i.."BattleSisters"..j) and SGroup_Count("sg_B"..i.."BattleSisters"..j) > 0 then
+				-- if they exist, try to find a squad near them to use a grenade on
+				if SGroup_ForEach(Player_GetSquads(g_Player1), Detect_Proximity) and SGroup_Exists("sg_BattleSisterGrenadeTarget") and SGroup_Count("sg_BattleSisterGrenadeTarget") > 0 and 
+					Cmd_CastAbilitySGroup("sg_B"..i.."BattleSisters"..j, "sisters_phosphor_grenades", "sg_BattleSisterGrenadeTarget") then
+					return true
+				end
+			end
+		end
+	end
+end
+
+function FinalBase_Seraphim()
+	--produce and jump seraphim from the main base to the shrines
+	for i=1,4 do
+		if EGroup_Exists("eg_Shrine"..i) and EGroup_Count("eg_Shrine"..i) > 0 and EGroup_IsUnderAttack("eg_Shrine"..i, true) then
+			local pos = World_GetRand(2,3)
+			if EGroup_Exists("eg_MainBaseBarracks"..pos) and EGroup_Count("eg_MainBaseBarracks"..pos) > 0 then
+				if PopCheck(g_SeraphimCounter, "sg_FinalBaseSeraphim", g_MaxSeraphim) then
+					g_SeraphimCounter = g_SeraphimCounter + 1
+					Util_CreateSquadsAtMarkerEx(g_Player2, "sg_FinalBaseSeraphim"..g_SeraphimCounter, "sisters_squad_seraphim", "mkr_mainbase_barracks"..pos, 1, World_GetRand(7,8))
+					SGroup_AddLeaders("sg_FinalBaseSeraphim"..g_SeraphimCounter)
+					Squad_ForceUpgradeWeapons(SGroup_GetSpawnedSquadAt(SGroup_FromName("sg_FinalBaseSeraphim"..g_SeraphimCounter), 1),"sisters_chain_sword_seraphim", 5)
+					Cmd_AttackMoveMarker("sg_FinalBaseSeraphim"..g_SeraphimCounter, "mkr_jumpto_shrine"..i)
+					return
+				end
+			end
+		end
+	end
+end
+
+function FinalBase_Seraphim_Jump()
+	for i=1,4 do
+		for j=1,g_SeraphimCounter do
+			if SGroup_Exists("sg_FinalBaseSeraphim"..j) and SGroup_Count("sg_FinalBaseSeraphim"..j) > 0 and Prox_AnySquadNearMarker("sg_FinalBaseSeraphim"..j, "mkr_jumpto_shrine"..i) then
+				Cmd_JumpToPos("sg_FinalBaseSeraphim"..j, EGroup_GetPosition("eg_Shrine"..i))
+			end
+		end
+	end
+end
+
+function FinalBase_RecruitmentCenters()
+	if g_TotalPickupPoints > 0 then
+		for i=1,4 do
+			if EGroup_Exists("eg_Shrine"..i) and EGroup_Count("eg_Shrine"..i) > 0 and EGroup_IsUnderAttack("eg_Shrine"..i, true) then
+				-- send in units from any living recruitment center to defend the shrines
+				local randomnum = t_PickupPoints[World_GetRand(1,g_TotalPickupPoints)]
+				if EGroup_Exists("eg_SpawnPoint"..randomnum) and EGroup_Count("eg_SpawnPoint"..randomnum) > 0 then
+					g_FinalAttackCounter = g_FinalAttackCounter + 1
+					SGroup_CreateIfNotFound("sg_FinalAttack"..g_FinalAttackCounter)
+					if randomnum == 1 then
+						if PopCheck(g_SistersCounter, "sg_FinalSisters", 2) == true then
+							g_SistersCounter = g_SistersCounter + 1
+							Util_CreateSquadsAtMarkerEx(g_Player2, "sg_FinalSisters"..g_SistersCounter, "sisters_squad_battle_sister", "mkr_spawnpoint"..randomnum, 1, 8)
+							SGroup_AddGroup("sg_FinalAttack"..g_FinalAttackCounter, "sg_FinalSisters"..g_SistersCounter)
+						end
+					elseif randomnum == 2 then
+						if PopCheck(g_CelestianCounter, "sg_FinalCelestians", 1) == true then
+							g_CelestianCounter = g_CelestianCounter + 1
+							Util_CreateSquadsAtMarkerEx(g_Player2, "sg_FinalCelestians"..g_CelestianCounter, "sisters_squad_celestian", "mkr_spawnpoint"..randomnum, 1, 4)
+							SGroup_AddGroup("sg_FinalAttack"..g_FinalAttackCounter, "sg_FinalCelestians"..g_CelestianCounter)
+						end
+					elseif randomnum == 3 then
+						if PopCheck(g_ExorcistCounter, "sg_FinalExorcist", 1) == true then
+							g_ExorcistCounter = g_ExorcistCounter + 1
+							Util_CreateSquadsAtMarkerEx(g_Player2, "sg_FinalExorcist"..g_ExorcistCounter, "sisters_squad_exorcist_tank", "mkr_spawnpoint"..randomnum, 1, 1)
+							SGroup_AddGroup("sg_FinalAttack"..g_FinalAttackCounter, "sg_FinalExorcist"..g_ExorcistCounter)
+						elseif PopCheck(g_EngineCounter, "sg_FinalEngines", 1) == true then
+							g_EngineCounter = g_EngineCounter + 1
+							Util_CreateSquadsAtMarkerEx(g_Player2, "sg_FinalEngines"..g_EngineCounter, "sisters_squad_penitent_engine", "mkr_spawnpoint"..randomnum, 1, 1)
+							SGroup_AddGroup("sg_FinalAttack"..g_FinalAttackCounter, "sg_FinalEngines"..g_EngineCounter)
+						end
+					elseif randomnum == 4 then
+						if PopCheck(g_RepentiaCounter, "sg_FinalRepentia", 1) == true then
+							g_RepentiaCounter = g_RepentiaCounter + 1
+							Util_CreateSquadsAtMarkerEx(g_Player2, "sg_FinalRepentia"..g_RepentiaCounter, "sisters_squad_repentia", "mkr_spawnpoint"..randomnum, 1, 8)
+							SGroup_AddGroup("sg_FinalAttack"..g_FinalAttackCounter, "sg_FinalRepentia"..g_RepentiaCounter)
+						end
+					elseif randomnum == 5 then
+						if PopCheck(g_MissionaryCounter, "sg_FinalMissionary", 2) == true then
+							g_MissionaryCounter = g_MissionaryCounter + 1
+							Util_CreateSquadsAtMarkerEx(g_Player2, "sg_FinalMissionary"..g_MissionaryCounter, "sisters_squad_missionary", "mkr_spawnpoint"..randomnum, 1, 1)
+							SGroup_AddGroup("sg_FinalAttack"..g_FinalAttackCounter, "sg_FinalMissionary"..g_MissionaryCounter)
+						end
+					elseif randomnum == 6 then
+						if PopCheck(g_ImmolatorCounter, "sg_FinalImmolators", 1) == true then
+							g_ImmolatorCounter = g_ImmolatorCounter + 1
+							Util_CreateSquadsAtMarkerEx(g_Player2, "sg_FinalImmolators"..g_ImmolatorCounter, "sisters_squad_immolator_tank", "mkr_spawnpoint"..randomnum, 1, 1)
+							SGroup_AddGroup("sg_FinalAttack"..g_FinalAttackCounter, "sg_FinalImmolators"..g_ImmolatorCounter)
+						end
+					elseif randomnum == 7 then
+						if PopCheck(g_SeraphimCounter, "sg_FinalSeraphim", 2) == true then
+							g_SeraphimCounter = g_SeraphimCounter + 1
+							Util_CreateSquadsAtMarkerEx(g_Player2, "sg_FinalSeraphim"..g_SeraphimCounter, "sisters_squad_seraphim", "mkr_spawnpoint"..randomnum, 1, 8)
+							SGroup_AddGroup("sg_FinalAttack"..g_FinalAttackCounter, "sg_FinalSeraphim"..g_SeraphimCounter)
+						end
+					end
+					FOW_TagSGroup(g_Player1, "sg_FinalAttack"..g_FinalAttackCounter)
+					Cmd_AttackMoveMarker("sg_FinalAttack"..g_FinalAttackCounter, "mkr_shrine"..i)
+				end
+			end
+		end
+	end
+end
+
+function MoveFinalAttackGuysToMainBase()
+	-- moves leftover guys around the shrines up to the main base
+	for i=1,4 do
+		for j=0, g_FinalAttackCounter do
+			if SGroup_Exists("sg_FinalAttack"..j) and SGroup_Count("sg_FinalAttack"..j) > 0 and SGroup_IsUnderAttack("sg_FinalAttack"..j, false) == false and Prox_AnySquadNearMarker("sg_FinalAttack"..j, "mkr_closeto_shrine"..i) then
+				-- see if there is a shrine under attack and head there
+				local test = false
+				for q=1,4 do
+					if EGroup_Exists("eg_Shrine"..q) and EGroup_Count("eg_Shrine"..q) > 0 and EGroup_IsUnderAttack("eg_Shrine"..q, true) then
+						-- if shrine under attack, move there
+						Cmd_AttackMovePos("sg_FinalAttack"..j, EGroup_GetPosition("eg_Shrine"..q))
+						test = true
+					end
+				end
+				if test == false then
+					-- else move to the hq
+					Cmd_AttackMoveMarker("sg_FinalAttack"..j, "mkr_finalattack_hangout"..World_GetRand(1,11))
+					FOW_UnTagSGroup(g_Player1, "sg_FinalAttack"..j)
+				end
+			end
+		end
+	end
+	
+	-- moves main base guys down to the shrines
+	for j=0, g_FinalAttackCounter do
+		if SGroup_Exists("sg_FinalAttack"..j) and SGroup_Count("sg_FinalAttack"..j) > 0 and SGroup_IsUnderAttack("sg_FinalAttack"..j, false) == false and Prox_AnySquadNearMarker("sg_FinalAttack"..j, "mkr_basearea7") then
+			for q=1,4 do
+				if EGroup_Exists("eg_Shrine"..q) and EGroup_Count("eg_Shrine"..q) > 0 and EGroup_IsUnderAttack("eg_Shrine"..q, true) then
+					-- if shrine under attack, move there
+					Cmd_AttackMovePos("sg_FinalAttack"..j, EGroup_GetPosition("eg_Shrine"..q))
+				end
+			end
+		end
+	end
+end
+
+function IntelligentlyMoveAttacks()
+	if EGroup_Exists("eg_Player_HQ") and EGroup_Count("eg_Player_HQ") == 0 then
+		-- find the next HQ to attack
+		Race = MetaMap_GetPlayerNRaceName(0)
+		if Race == "chaos_marine_race" then
+			hqbp = "chaos_hq"
+		elseif Race == "guard_race" then
+			hqbp = "guard_hq"
+		elseif Race == "ork_race" then	
+			hqbp = "ork_hq"
+		elseif Race == "space_marine_race" then
+			hqbp = "space_marine_hq"
+		elseif Race == "tau_race" then
+			hqbp = "tau_hq"
+		elseif Race == "necron_race" then
+			hqbp = "monolith"
+		elseif Race == "eldar_race" then
+			hqbp = "eldar_hq"
+		elseif Race == "dark_eldar_race" then
+			hqbp = "dark_eldar_hq"
+		elseif Race == "sisters_race" then
+			hqbp = "sisters_hq"
+		end
+		Player_GetEntities( g_Player1 )
+		if EGroup_Exists("__Player1000Entities") and EGroup_CountSpawned("__Player1000Entities") > 0 then
+			EGroup_CreateIfNotFound("eg_targettemp")
+			EGroup_CreateIfNotFound("eg_GlobalAttackTarget")
+			EGroup_Clear("eg_targettemp")
+			EGroup_Clear("eg_GlobalAttackTarget")
+			Util_GetEntitiesByBP( "__Player1000Entities", "eg_targettemp", hqbp )
+			if EGroup_Exists("eg_targettemp") and EGroup_Count("eg_targettemp") > 0 then
+				EGroup_Add("eg_GlobalAttackTarget", EGroup_GetSpawnedEntityAt(EGroup_FromName("eg_targettemp"), 1))
+			end
+			if EGroup_Exists("eg_GlobalAttackTarget") and EGroup_Count("eg_GlobalAttackTarget") > 0 then
+				-- pick the first item in the egroup to attack 
+				g_GlobalAttackPos = EGroup_GetPosition("eg_GlobalAttackTarget")
+			else
+				-- search for another building to attack
+				EGroup_Clear("eg_GlobalAttackTarget")
+				local Rand = World_GetRand(1,EGroup_CountSpawned("__Player1000Entities"))
+				EGroup_Add("eg_GlobalAttackTarget", EGroup_GetSpawnedEntityAt(EGroup_FromName("__Player1000Entities"), Rand))
+				g_GlobalAttackPos = EGroup_GetPosition("eg_GlobalAttackTarget")
+			end
+		else
+			-- the player should lose if they have no entities left
+			Lose()
+		end
+	else
+		g_GlobalAttackPos = EGroup_GetPosition("eg_Player_HQ")
+	end
+end
+
+function Lose()
+	if Player_HasBuildingsExcept(g_Player1, t_building_exceptions) == false then
+		if Player_HasSquadsExcept(g_Player1, t_unit_exceptions ) == false then
+			Rule_RemoveAll()
+			Fade_Start(4, false)
+			World_SetTeamWin( g_Player2, "" )
+			Rule_AddIntervalEx( GameOver,5,1 )
+		end
+	end
+end
+
+function GameOver()
+	World_SetGameOver()
+end
+
+function ActsOfFaith_Skills_Cooldowns()
+	if g_LayHandsCastFlag == false then
+		g_LayHandsCounter = g_LayHandsCounter + 1
+		if g_LayHandsCounter >= g_LayHandsCooldown then
+			g_LayHandsCastFlag = true
+			g_LayHandsCounter = 0
+		end
+	end
+	
+	if g_DivineRetributionCastFlag == false then
+		g_DivineRetributionCounter = g_DivineRetributionCounter + 1
+		if g_DivineRetributionCounter >= g_DivineRetributionCooldown then
+			g_DivineRetributionCastFlag = true
+			g_DivineRetributionCounter = 0
+		end
+	end
+	
+	if g_EmperorsTouchCastFlag == false then
+		g_EmperorsTouchCounter = g_EmperorsTouchCounter + 1
+		if g_EmperorsTouchCounter >= g_EmperorsTouchCooldown then
+			g_EmperorsTouchCastFlag = true
+			g_EmperorsTouchCounter = 0
+		end
+	end
+
+	if g_AngelicVisageCastFlag == false then
+		g_AngelicVisageCounter = g_AngelicVisageCounter + 1
+		if g_AngelicVisageCounter >= g_AngelicVisageCooldown then
+			g_AngelicVisageCastFlag = true
+			g_AngelicVisageCounter = 0
+		end
+	end
+	
+	if g_LaudHailerFlag == false then
+		g_LaudHailerCounter = g_LaudHailerCounter + 1
+		if g_LaudHailerCounter >= g_LaudHailerCooldown then
+			g_LaudHailerFlag = true
+			g_LaudHailerCounter = 0
+		end
+	end
+end
+
+function ActsOfFaith_Skills()
+	if g_SistersTier >= 2 then
+		g_RatchetThroughSkills = g_RatchetThroughSkills + 1
+		if g_RatchetThroughSkills == 1 then
+			-- confessor
+			-- holy edict - stuns enemy squad
+			-- emperors wrath - ae dmg, targets area
+			radius = 20 -- the radius of the skill
+			if SGroup_Exists("sg_Confessor"..g_ConfessorCounter) and SGroup_Count("sg_Confessor"..g_ConfessorCounter) > 0 then
+				if Prox_PlayerSquadsInProximityOfSquads(g_Player1, "sg_Confessor"..g_ConfessorCounter, radius, false) then
+					SGroup_CreateIfNotFound("sg_PlayerSquadsNearConf")
+					SGroup_CreateIfNotFound("sg_ConfTempTarget")
+					SGroup_Clear("sg_PlayerSquadsNearConf")
+					SGroup_Clear("sg_ConfTempTarget")
+					Player_GetAllSquadsNearPos(g_Player1, "sg_PlayerSquadsNearConf", SGroup_GetPosition("sg_Confessor"..g_ConfessorCounter), radius)
+					-- pick a random squad near the living saint and fire the skill towards them
+					SGroup_Add("sg_ConfTempTarget", SGroup_GetSpawnedSquadAt("sg_PlayerSquadsNearConf",World_GetRand(1, SGroup_Count("sg_PlayerSquadsNearConf"))))
+					Cmd_CastAbilitySGroup("sg_Confessor"..g_ConfessorCounter, "sisters_divine_pronouncement", "sg_ConfTempTarget")
+					Cmd_CastAbilityPos("sg_Confessor"..g_ConfessorCounter, "sisters_witch_hammer", SGroup_GetPosition("sg_ConfTempTarget"))				
+				end			
+			end
+		elseif g_RatchetThroughSkills == 2 then
+			-- missionary
+			local player
+			for i=1,2 do
+				if i == 1 then
+					player = g_Player2
+					squad = "__Player1001Squads"
+				elseif i == 2 then
+					player = g_Player4
+					squad = "__Player1003Squads"
+				end
+				Player_GetSquads(player)
+				SGroup_CreateIfNotFound("sg_AllMissionary")
+				SGroup_CreateIfNotFound("sg_MissionaryTemp")
+				SGroup_Clear("sg_AllMissionary")
+				Util_GetSquadsByBP(squad, "sg_AllMissionary", "sisters_squad_missionary")
+				if SGroup_Exists("sg_AllMissionary") and SGroup_Count("sg_AllMissionary") > 0 then
+					for i=1, SGroup_Count("sg_AllMissionary") do
+						SGroup_Clear("sg_MissionaryTemp")
+						SGroup_Add("sg_MissionaryTemp",SGroup_GetSpawnedSquadAt("sg_AllMissionary",i))
+						if SGroup_Exists("sg_MissionaryTemp") and SGroup_Count("sg_MissionaryTemp") > 0 and SGroup_IsUnderAttack("sg_MissionaryTemp", false) and World_GetRand(1,10) >= 7 then
+							if g_ResearchTier >=6 then
+								if g_EmperorsTouchCastFlag == true and g_LayHandsCastFlag == true and g_DivineRetributionCastFlag == true then
+									local Rand = World_GetRand(1,100)
+									if Rand >= 1 and Rand <=40 then
+										-- emperors touch
+										Cmd_CastAbilitySelf("sg_MissionaryTemp", "sisters_emperors_touch_notech")
+										g_EmperorsTouchCastFlag = false
+									elseif Rand >= 41 and Rand <=55 then
+										-- divine retribution
+										Cmd_CastAbilitySelf("sg_MissionaryTemp", "sisters_act_of_faith_divine_retribution")
+										g_DivineRetributionCastFlag = false
+									elseif Rand >= 56 and Rand <=100 then
+										-- lay hands
+										Cmd_CastAbilitySelf("sg_MissionaryTemp", "sisters_battlefield_medics")
+										g_LayHandsCastFlag = false
+									end
+								else
+									local Rand = World_GetRand(1,3)
+									if Rand ==1 then
+										-- emperors touch
+										Cmd_CastAbilitySelf("sg_MissionaryTemp", "sisters_emperors_touch_notech")
+										g_EmperorsTouchCastFlag = false
+									elseif Rand ==2 then
+										-- lay hands
+										Cmd_CastAbilitySelf("sg_MissionaryTemp", "sisters_battlefield_medics")
+										g_LayHandsCastFlag = false
+									elseif Rand ==3 then
+										-- nada
+									end
+								end
+							end
+						end				
+					end
+				end
+			end		
+		elseif g_RatchetThroughSkills == 3 then
+			-- seraphim: 
+			--angelic visage: immune to morale dmg + increased dmg
+			local player
+			for i=1,2 do
+				if i == 1 then
+					player = g_Player2
+					squad = "__Player1001Squads"
+				elseif i == 2 then
+					player = g_Player4
+					squad = "__Player1003Squads"
+				end
+				Player_GetSquads(player)
+				SGroup_CreateIfNotFound("sg_AllSeraphim")
+				SGroup_CreateIfNotFound("sg_SeraphimTemp")
+				SGroup_Clear("sg_AllSeraphim")
+				Util_GetSquadsByBP(squad, "sg_AllSeraphim", "sisters_squad_seraphim")
+				if SGroup_Exists("sg_AllSeraphim") and SGroup_Count("sg_AllSeraphim") > 0 then
+					for i=1, SGroup_Count("sg_AllSeraphim") do
+						SGroup_Clear("sg_SeraphimTemp")
+						SGroup_Add("sg_SeraphimTemp",SGroup_GetSpawnedSquadAt("sg_AllSeraphim",i))
+						if SGroup_Exists("sg_SeraphimTemp") and SGroup_Count("sg_SeraphimTemp") > 0 and SGroup_IsUnderAttack("sg_SeraphimTemp", false) and World_GetRand(1,10) >= 6 then
+							if g_AngelicVisageCastFlag == true then
+								g_AngelicVisageCastFlag = false
+								Cmd_CastAbilitySelf("sg_SeraphimTemp", "sisters_angelic_visage")
+							end
+						end				
+					end
+				end
+			end
+		elseif g_RatchetThroughSkills == 4 then
+			-- living saint
+			-- wave attack targets position
+			radius = 20 -- the radius of the skill
+			if SGroup_Exists("sg_Saint") and SGroup_Count("sg_Saint") > 0 then
+				if Prox_PlayerSquadsInProximityOfSquads(g_Player1, "sg_Saint", radius, false) then
+					SGroup_CreateIfNotFound("sg_PlayerSquadsNearSaint")
+					SGroup_CreateIfNotFound("sg_LivingSaintTempTarget")
+					SGroup_Clear("sg_PlayerSquadsNearSaint")
+					SGroup_Clear("sg_LivingSaintTempTarget")
+					Player_GetAllSquadsNearPos(g_Player1, "sg_PlayerSquadsNearSaint", SGroup_GetPosition("sg_Saint"), radius)
+					-- pick a random squad near the living saint and fire the skill towards them
+					SGroup_Add("sg_LivingSaintTempTarget", SGroup_GetSpawnedSquadAt("sg_PlayerSquadsNearSaint",World_GetRand(1, SGroup_Count("sg_PlayerSquadsNearSaint"))))
+					Cmd_CastAbilityPos("sg_Saint", "sisters_ardent_flame", SGroup_GetPosition("sg_LivingSaintTempTarget"))
+				end			
+			end
+		elseif g_RatchetThroughSkills == 5 then
+			-- rhinos
+			-- laud hailers
+			local player
+			for i=1,2 do
+				if i == 1 then
+					player = g_Player2
+					squad = "__Player1001Squads"
+				elseif i == 2 then
+					player = g_Player4
+					squad = "__Player1003Squads"
+				end
+				Player_GetSquads(player)
+				SGroup_CreateIfNotFound("sg_AllRhinos")
+				SGroup_CreateIfNotFound("sg_RhinoTemp")
+				SGroup_Clear("sg_AllRhinos")
+				Util_GetSquadsByBP(squad, "sg_AllRhinos", "sisters_squad_rhino_sp_dxp3")
+				if SGroup_Exists("sg_AllRhinos") and SGroup_Count("sg_AllRhinos") > 0 then
+					for i=1, SGroup_Count("sg_AllRhinos") do
+						SGroup_Clear("sg_RhinoTemp")
+						SGroup_Add("sg_RhinoTemp",SGroup_GetSpawnedSquadAt("sg_AllRhinos",i))
+						if SGroup_Exists("sg_RhinoTemp") and SGroup_Count("sg_RhinoTemp") > 0 and SGroup_IsUnderAttack("sg_RhinoTemp", false) then
+							if g_LaudHailerFlag == true then
+								g_LaudHailerFlag = false
+								Cmd_CastAbilitySelf("sg_RhinoTemp", "sisters_laud_hailers")
+							end
+						end				
+					end
+				end
+			end
+		elseif g_RatchetThroughSkills == 6 then
+			-- canoness
+			radius = 15 -- the radius of the skill
+			if SGroup_Exists("sg_Canoness"..g_CanonessCounter) and SGroup_Count("sg_Canoness"..g_CanonessCounter) > 0 then
+				if Prox_PlayerSquadsInProximityOfSquads(g_Player1, "sg_Canoness"..g_CanonessCounter, radius, false) then
+					if World_GetRand(1,2) == 1 then
+						Cmd_CastAbilitySelf("sg_Canoness"..g_CanonessCounter, "sisters_act_of_faith_divine_light")
+					else
+						Cmd_CastAbilitySelf("sg_Canoness"..g_CanonessCounter, "sisters_act_of_faith_ascension")
+					end
+				end			
+			end
+		end
+		
+		-- next time through reset to 0
+		if g_RatchetThroughSkills == 6 then
+			g_RatchetThroughSkills = 0
+		end
+	end
+end
+
+
+---------------------------
+--[[((((((IE's))))))]]
+---------------------------
+
+function IE_ProxSaint()
+	if SGroup_Exists("sg_Saint") and SGroup_Count("sg_Saint") > 0 and Prox_PlayerSquadsInProximityOfSquads(g_Player1, "sg_Saint", 20, false) then
+		Util_StartIntel(EVENTS.IE_ProxSaint)
+		Rule_Remove(IE_ProxSaint)
+	end
+end
+function FaithObjectiveIE()
+	Util_StartIntel(EVENTS.IE_FaithObjective)
+end
+
+function TankObjectiveIE()
+	Util_StartIntel(EVENTS.IE_TankObjective)
+end
+
+function IE_EnterAirBase()
+	if Player_AreSquadsNearMarker(g_Player1, "mkr_ie_enterairbase") then
+		if MetaMap_GetPlayerRaceName() == "eldar_race" then
+			Util_StartIntel(EVENTS.IE_Eldar_EnterAirBase)
+		elseif MetaMap_GetPlayerRaceName() == "guard_race" then
+			Util_StartIntel(EVENTS.IE_IG_EnterAirBase)
+		elseif MetaMap_GetPlayerRaceName() == "necron_race" then
+			Util_StartIntel(EVENTS.IE_Necron_EnterAirBase)
+		elseif MetaMap_GetPlayerRaceName() == "ork_race" then
+			Util_StartIntel(EVENTS.IE_Ork_EnterAirBase)
+		elseif MetaMap_GetPlayerRaceName() == "chaos_marine_race" then
+			Util_StartIntel(EVENTS.IE_Chaos_EnterAirBase)
+		elseif MetaMap_GetPlayerRaceName() == "tau_race" then
+			Util_StartIntel(EVENTS.IE_Tau_EnterAirBase)
+		elseif MetaMap_GetPlayerRaceName() == "space_marine_race" then
+			Util_StartIntel(EVENTS.IE_SM_EnterAirBase)
+		elseif MetaMap_GetPlayerRaceName() == "dark_eldar_race" then
+			Util_StartIntel(EVENTS.IE_DE_EnterAirBase)
+		end
+		Rule_Remove(IE_EnterAirBase)
+	end
+end
+
+function IE_FirstAirKilled()
+	if MetaMap_GetPlayerRaceName() == "eldar_race" then
+		Util_StartIntel(EVENTS.IE_Eldar_FirstAirKilled)
+	elseif MetaMap_GetPlayerRaceName() == "guard_race" then
+		Util_StartIntel(EVENTS.IE_IG_FirstAirKilled)
+	elseif MetaMap_GetPlayerRaceName() == "necron_race" then
+		Util_StartIntel(EVENTS.IE_Necron_FirstAirKilled)
+	elseif MetaMap_GetPlayerRaceName() == "ork_race" then
+		Util_StartIntel(EVENTS.IE_Ork_FirstAirKilled)
+	elseif MetaMap_GetPlayerRaceName() == "chaos_marine_race" then
+		Util_StartIntel(EVENTS.IE_Chaos_FirstAirKilled)
+	elseif MetaMap_GetPlayerRaceName() == "tau_race" then
+		Util_StartIntel(EVENTS.IE_Tau_FirstAirKilled)
+	elseif MetaMap_GetPlayerRaceName() == "space_marine_race" then
+		Util_StartIntel(EVENTS.IE_SM_FirstAirKilled)
+	elseif MetaMap_GetPlayerRaceName() == "dark_eldar_race" then
+		Util_StartIntel(EVENTS.IE_DE_FirstAirKilled)
+	end
+end
+
+function IE_InitialBase()
+	if MetaMap_GetPlayerRaceName() == "eldar_race" then
+		Util_StartIntel(EVENTS.IE_Eldar_AttackInitialBase)
+	elseif MetaMap_GetPlayerRaceName() == "guard_race" then
+		Util_StartIntel(EVENTS.IE_IG_AttackInitialBase)
+	elseif MetaMap_GetPlayerRaceName() == "necron_race" then
+		Util_StartIntel(EVENTS.IE_Necron_AttackInitialBase)
+	elseif MetaMap_GetPlayerRaceName() == "ork_race" then
+		Util_StartIntel(EVENTS.IE_Ork_AttackInitialBase)
+	elseif MetaMap_GetPlayerRaceName() == "chaos_marine_race" then
+		Util_StartIntel(EVENTS.IE_Chaos_AttackInitialBase)
+	elseif MetaMap_GetPlayerRaceName() == "tau_race" then
+		Util_StartIntel(EVENTS.IE_Tau_AttackInitialBase)
+	elseif MetaMap_GetPlayerRaceName() == "space_marine_race" then
+		Util_StartIntel(EVENTS.IE_SM_AttackInitialBase)
+	elseif MetaMap_GetPlayerRaceName() == "dark_eldar_race" then
+		Util_StartIntel(EVENTS.IE_DE_AttackInitialBase)
+	end
+end
+
+function IE_EnterExorcistBase()
+	if Player_AreSquadsNearMarker(g_Player1, "mkr_basearea6") then
+		if MetaMap_GetPlayerRaceName() == "eldar_race" then
+			Util_StartIntel(EVENTS.IE_Eldar_EnterExorcistBase)
+		elseif MetaMap_GetPlayerRaceName() == "guard_race" then
+			Util_StartIntel(EVENTS.IE_IG_EnterExorcistBase)
+		elseif MetaMap_GetPlayerRaceName() == "necron_race" then
+			Util_StartIntel(EVENTS.IE_Necron_EnterExorcistBase)
+		elseif MetaMap_GetPlayerRaceName() == "ork_race" then
+			Util_StartIntel(EVENTS.IE_Ork_EnterExorcistBase)
+		elseif MetaMap_GetPlayerRaceName() == "chaos_marine_race" then
+			Util_StartIntel(EVENTS.IE_Chaos_EnterExorcistBase)
+		elseif MetaMap_GetPlayerRaceName() == "tau_race" then
+			Util_StartIntel(EVENTS.IE_Tau_EnterExorcistBase)
+		elseif MetaMap_GetPlayerRaceName() == "space_marine_race" then
+			Util_StartIntel(EVENTS.IE_SM_EnterExorcistBase)
+		elseif MetaMap_GetPlayerRaceName() == "dark_eldar_race" then
+			Util_StartIntel(EVENTS.IE_DE_EnterExorcistBase)
+		end
+		Rule_Remove(IE_EnterExorcistBase)
+	end
+end
+
+function IE_EnterMainBase()
+	if Player_AreSquadsNearMarker(g_Player1, "mkr_mainbasearea1") then
+		Util_StartIntel(EVENTS.IE_EnterMainBase)
+		Rule_Remove(IE_EnterMainBase)
+	end
+end
+
+function IE_DeadShrines()
+	local Count = 0
+	for i=1,4 do
+		if EGroup_Exists("eg_Shrine"..i) and EGroup_Count("eg_Shrine"..i) == 0 then
+			Count = Count + 1
+		end
+	end
+	
+	if Count == 2 and g_DeadShrineIEs[1] == false then
+		g_DeadShrineIEs[1] = true
+		Util_StartIntel(EVENTS.IE_TwoShrinesDead)
+	elseif Count == 4 and g_DeadShrineIEs[2] == false then
+		g_DeadShrineIEs[2] = true
+		Util_StartIntel(EVENTS.IE_AllShrinesDead)
+		Rule_Remove(IE_DeadShrines)
+	end
+end
+
+function RandomCanonessTaunt1()
+	Util_StartIntel(EVENTS.IE_RandomCanonessTaunt1)
+	Rule_AddOneShot(RandomCanonessTaunt2, World_GetRand(400,500))
+end
+
+function RandomCanonessTaunt2()
+	Util_StartIntel(EVENTS.IE_RandomCanonessTaunt2)
+	Rule_AddOneShot(RandomCanonessTaunt3, World_GetRand(500,600))
+end
+
+function RandomCanonessTaunt3()
+	Util_StartIntel(EVENTS.IE_RandomCanonessTaunt3)
+end
+
+function IE_Intro()
+	Util_StartIntel(EVENTS.IE_Intro)
+end

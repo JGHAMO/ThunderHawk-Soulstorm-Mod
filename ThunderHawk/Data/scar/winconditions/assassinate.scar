@@ -1,0 +1,197 @@
+----------------------------------------------------------------------------------------------------------------
+-- Assassinate Win Condtition (for all faction mods)
+-- Edited by Thudmeizer  @ 04.06.2008
+--
+--	Kill the commander unit
+--
+-- (c) 2003 Relic Entertainment Inc.
+import("ScarUtil.scar");
+
+function AssassinateInit()
+	-- create global table
+	_Commanders = { }
+	
+	SetPlayerCommanders()
+	Rule_AddInterval(CheckAssassinate, 2)
+	
+	obj_table_P2 = { title_id = 60004, short_desc_id = 60304, help_tip_id = 60304 }
+	
+	Objective_Add( obj_table_P2, 1 )
+	
+	Rule_AddOneShot( Rule_NotifyAssassinate, 0 )
+
+end
+
+function Rule_NotifyAssassinate()
+
+	print("rule notify assassinate")
+	
+	--get the AI to attack on the 240second mark
+	local count = World_GetPlayerCount()
+	for i = 0, count - 1 do
+		local player = World_GetPlayerAt(i)
+		if Cpu_IsCpuPlayer( player ) then
+			Cpu_NotifyAssassinate( player )
+		end
+	end
+
+end
+
+-- stores globals we need for this wc
+_ASSSettings = {}
+_ASSSettings.sgCommander = "sg_assas_commP_"
+_ASSSettings.raceInfo = {}
+
+_ASSSettings.raceInfo["chaos_marine_race"] = 
+{
+	commSBP = "chaos_squad_lord",
+
+	-- this *optional* field is needed in case the commander transforms into the daemonprince
+	commSBP2 = "chaos_squad_daemon_prince"
+}
+
+_ASSSettings.raceInfo["dark_eldar_race"] = 
+{
+	commSBP = "dark_eldar_squad_archon"
+}
+
+_ASSSettings.raceInfo["eldar_race"] = 
+{
+	commSBP = "eldar_squad_farseer"
+}
+
+_ASSSettings.raceInfo["guard_race"] = 
+{
+	commSBP = "guard_squad_command_squad"
+}
+
+_ASSSettings.raceInfo["necron_race"] = 
+{
+	commSBP = "necron_lord_squad",
+
+	-- this *optional* field is needed in case the commander transforms into the nightbringer
+	commSBP2 = "necron_night_bringer",
+	
+	-- this *optional* field is needed in case the commander transforms into the deceiver
+	commSBP3 = "necron_deceiver_squad"
+}
+
+_ASSSettings.raceInfo["ork_race"] = 
+{
+	commSBP = "ork_squad_mek_boy"
+}
+
+_ASSSettings.raceInfo["sisters_race"] = 
+{
+	commSBP = "sisters_squad_canoness"
+}
+
+_ASSSettings.raceInfo["space_marine_race"] = 
+{
+	commSBP = "space_marine_squad_force_commander"
+}
+
+_ASSSettings.raceInfo["tau_race"] = 
+{
+	commSBP = "tau_commander_squad"
+}
+
+-- iterates through all players and gets their commander units
+function SetPlayerCommanders()
+	
+	-- returns the squad id of the commander.  returns nil if not found
+	local GetPlayerCommander = function( player )
+		--get all players squads
+		local commanderID = nil
+		
+		local CheckCommander = function( sgroupid, itemindex, squadID )
+			if Squad_GetBlueprintName( squadID ) == _ASSSettings.raceInfo[Player_GetRaceName(player)].commSBP then
+				local commanderHealth = Squad_GetHealth(squadID)
+				if commanderHealth > 0 then
+					commanderID = squadID
+				else
+					Squad_Destroy(squadID)
+				end
+			end
+		end
+		
+		-- find the commander
+		SGroup_ForEach( Player_GetSquads( player ), CheckCommander )
+		
+		return  commanderID
+	end
+	
+	-- get the commander squad for all players and place them in the commanders table.
+	local j = World_GetPlayerCount()
+	for i = 1, j
+	do
+		-- this player
+		local player = World_GetPlayerAt(i-1)
+		local playerRace = Player_GetRaceName(player)
+		
+		if( _ASSSettings.raceInfo[ playerRace ] == nil or _ASSSettings.raceInfo[ playerRace ].commSBP == nil ) then
+			error("No race settings for player "..i.." with race "..playerRace )
+		end
+		
+		-- create commander group and clear
+		SGroup_CreateIfNotFound( _ASSSettings.sgCommander..i )
+		SGroup_Clear( _ASSSettings.sgCommander..i ) 
+		
+		-- try to find commander and add it to group... spawn one if it doesn't exist
+		local commanderID = GetPlayerCommander( player )
+		if ( commanderID == nil ) then			
+			-- drop pod in some units
+			local pos = Player_GetStartPosition( player )
+			
+			Util_CreateSquadsAtPosition(player, _ASSSettings.sgCommander..i, _ASSSettings.raceInfo[ playerRace ].commSBP, pos, 1)
+			
+			-- GW doesn't like the drop pod being used for all races...
+			--Util_CreateSquadsAndDropPodIn( player, _ASSSettings.sgCommander..i, _ASSSettings.raceInfo[ playerRace ].commSBP, pos, 1, 1 )
+			
+		else
+			-- add commanderID to group
+			SGroup_Add( _ASSSettings.sgCommander..i, commanderID )
+		end		
+		
+	end
+end
+
+function CheckAssassinate()
+
+	-- total number of players
+	local j = World_GetPlayerCount();	
+	
+	--check for annihilated dudes
+	for i = 1, j
+	do
+		-- check if player has been annihilated
+		local player = World_GetPlayerAt(i-1);
+	
+		--if the commander is dead so are you
+		if( Player_IsAlive(player) ) then
+			local playerRace = Player_GetRaceName( player )
+			
+			-- 2nd param can be nil
+			local bptable
+			
+			if( _ASSSettings.raceInfo[ playerRace ].commSBP2 == nil ) then 
+				bptable = Util_MakeBlueprintTable( _ASSSettings.raceInfo[ playerRace ].commSBP )
+			elseif( _ASSSettings.raceInfo[ playerRace ].commSBP3 == nil ) then 
+				bptable = Util_MakeBlueprintTable( _ASSSettings.raceInfo[ playerRace ].commSBP, _ASSSettings.raceInfo[ playerRace ].commSBP2 )
+			else
+				bptable = Util_MakeBlueprintTable( _ASSSettings.raceInfo[ playerRace ].commSBP, _ASSSettings.raceInfo[ playerRace ].commSBP2, _ASSSettings.raceInfo[ playerRace ].commSBP3 )
+			end
+			
+			-- check that the commander group contains a commander
+			if( SGroup_ContainsBlueprints( _ASSSettings.sgCommander..i, bptable, false ) == false ) then
+				Player_Kill( player )
+			end
+			
+		end
+	end
+		
+	-- check if only one team left -- if only one team left, they win and everybody else loses
+	Util_CheckOneTeamLeft("assassinate");
+end
+
+Scar_AddInit(AssassinateInit)

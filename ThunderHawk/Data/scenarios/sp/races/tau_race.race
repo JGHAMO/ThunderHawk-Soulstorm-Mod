@@ -1,0 +1,2313 @@
+IntroMovie = "" 
+IntroMovieText =
+{
+
+}
+
+OutroMovie = "ss_tau_race_outro"
+OutroMovieText =
+{
+	{
+		Text = "$5200190",
+		Start = 8.170,
+		End = 33.290,
+	},
+	{
+		Text = "$5200191",
+		Start = 43.150,
+		End = 69.170,
+	},
+	{
+		Text = "$5200192",
+		Start = 77.270,
+		End = 107.280,
+	},
+}
+
+NuggetMovie = "tau_race_nugget"
+
+ForceName = "$3950224"
+TeamColourForceName = "Fal'shia"
+TeamColour = "default_4"
+CommanderName = "tau_commander_squad_advance_sp"
+
+ArmyModel = "Art/UI/3D_Models/MM_Tau_Commander"
+ArmyModelScale = 0.15
+ArmyModelBone = "master"
+
+TerritoryColour = { 100, 72, 19 }
+
+-- Delays used for army move fx
+TeleportFXLength = 0.5
+SpacePortTeleportFXLength = 0.5
+
+ApplyTeamColours = true
+
+CommanderScreenModel = "Art/UI/3D_Models/Race_Tau"
+CommanderScreenBackgroundImage = "Art/UI/RaceImages/Race_Tau"
+CommanderScreenAction = "sp_wargear"
+
+WargearScreenModel = "Art/EBPs/Races/Tau/Troops/Commander_TGD_Wargear"
+WargearScreenBackgroundImage = "Art/UI/Wargear/tau wargear backdrop"
+WargearScreenAction = "sp_wargear"
+
+RetractedStartingSquads = {}
+
+-- Territory special ability values
+IndustrialProductionRequisitionBonus = 1000
+IndustrialProductionPowerBonus = 0
+
+IncreasedManpowerStartingSquadCapBonus = 4
+IncreasedManpowerMaximumSquadCapBonus = 4
+IncreasedManpowerStartingVehicleCapBonus = 2
+IncreasedManpowerMaximumVehicleCapBonus = 2
+
+RequisitionReducedCostBonus = 0.85
+
+PopulationGrowthTerritoryRate = 3
+PopulationGrowthTerritoryChance = 0.33
+PopulationGrowthArmyRate = 3
+PopulationGrowthMilitaryStrengthIncrement = 1
+PopulationGrowthAIRankIncrement = 1
+
+RessurectionChancePlayer = 0.33
+RessurectionChanceAI = 0.33
+
+TauGunMinDamageAI = 0
+TauGunMaxDamageAI = 1
+TauGunMinDamagePlayer = 0
+TauGunMaxDamagePlayer = 1
+
+RoadwaySeedsMaxDistance = 3
+
+DisconnectedSupplyModifier = 0.0
+
+RaceSelectionScreen =
+{
+	Model = "Race_Tau",
+	RaceImage = "Race_Tau",
+	ExitAnimationLength = 2,
+	AmbientLight = { 128, 128, 128 }
+}
+
+VictoryScreen =
+{
+	ImageVictory = "TauVictory",
+	ImageDefeat = "TauDefeat",
+
+	TextVictoryAttacking = "$3000700",
+	TextVictoryDefending = "$3000701",
+
+	TextDefeatAttacking = "$3000702",
+	TextDefeatDefending = "$3000703",
+
+	TextDescription_chaos_marine_race = "$3000554",
+	TextDescription_eldar_race = "$3000555",
+	TextDescription_guard_race = "$3000556",
+	TextDescription_necron_race = "$3000557",
+	TextDescription_ork_race = "$3000558",
+	TextDescription_space_marine_race = "$3000559",
+	TextDescription_dark_eldar_race  = "$3900445",
+	TextDescription_sisters_race  = "$3900453",
+}
+
+Messages =
+{
+	-- Bonus Units
+	NewBonusUnit = "$3003010",
+	PreservedBonusUnit = "$3003011",
+	FailedToGainBonusUnit = "$3003013",
+	LostBonusUnit = "$3003012",
+
+	-- Abilities
+	NewAbility = "$3003010",
+	PreservedAbility = "$3003011",
+	FailedToGainAbility = "$3003013",
+	LostAbility = "$3003012",
+
+	-- Race elimination
+	DefeatedRace = "$3003014",
+}
+
+BonusSquadCosts =
+{
+	tau_honor_guard_stealth_suit_squad_advance_sp = 225,
+	tau_honor_guard_fire_warrior_squad_advance_sp = 325,
+	tau_kroot_alpha_squad_advance_sp = 300,
+	tau_vespid_elder_squad_advance_sp = 425,
+	tau_kroot_hound_squad_advance_sp = 500,
+	tau_honor_guard_crisis_suit_squad_advance_sp = 475,
+	tau_kroot_shaper_squad_advance_sp = 350,
+	tau_skyray_squad_advance_sp = 475,
+	tau_broadside_battlesuit_squad_hg_dxp3 = 800
+}
+
+ReinforcementStructures =
+{
+	{
+		Blueprint = "tau_plasma_generator",
+		Cost = 50,
+		Markers =
+		{
+			"MM_Reinforcement0", "MM_Reinforcement1", "MM_Reinforcement2",
+			"MM_Reinforcement3" 
+		}				
+	},
+	{
+		Blueprint = "tau_barracks",
+		Cost = 200,
+		Markers =
+		{
+			"MM_Reinforcement10"
+		}
+	},
+	{
+		Blueprint = "tau_research_building",
+		Cost = 150,
+		Markers =
+		{
+			"MM_Reinforcement11"
+		}
+	},
+	{
+		Blueprint = "tau_kroot_nest",
+		Cost = 175,
+		Markers =
+		{
+			"MM_Reinforcement13"
+		}
+	},
+}
+
+ReinforcementSquads = 
+{
+	{
+		Blueprint = "tau_builder_squad",
+		Cost = 25,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "tau_fire_warrior_squad",
+		Cost = 75,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "tau_kroot_carnivore_squad",
+		Cost = 60,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "tau_broadside_battlesuit_squad",
+		Cost = 225,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+}
+
+DeepStrikeSquads = 
+{ -- by and large, 1.5 * the garrison price
+	{
+		Blueprint = "tau_builder_squad",
+		Cost = 125,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "tau_fire_warrior_squad",
+		Cost = 350,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "tau_kroot_carnivore_squad",
+		Cost = 325,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "tau_broadside_battlesuit_squad",
+		Cost = 875,
+		Markers =
+		{
+			"MM_Reinforcement12"
+		}
+	},
+}
+
+TechLevel2Structures =
+{
+	"tau_research_building"
+}
+
+TechLevel3Structures =
+{
+	"tau_shrine_of_montka",
+	"tau_shrine_of_kauyon"
+}
+
+WarGear =
+{
+	{
+		Research = "tau_wargear_upgrade_02_fusion_blaster_research",
+		WeaponName = "tau_fusion_blaster_commander",
+		WeaponNameDefault = "tau_burst_cannon_commander",
+		ClauseKey = "Weapon_Range_Upgrade_Right",
+		ClauseValueOn = "tau_fusion_blaster_commander",
+		ClauseValueDefault = "tau_burst_cannon_commander",
+		Name = "$4000155",
+		Icon = 44,
+		Description = "$4000156",
+		Specification = "$4000157",
+    AIVictoriesRequired = 1,
+	},
+	{
+		Research = "tau_wargear_upgrade_03_plasma_rifle_research",
+		WeaponName = "tau_plasma_rifle_commander",
+		WeaponNameDefault = "tau_burst_cannon_commander",
+		ClauseKey = "Weapon_Range_Upgrade_Right",
+		ClauseValueOn = "tau_plasma_rifle_commander",
+		ClauseValueDefault = "tau_burst_cannon_commander",
+		Name = "$4000158",
+		Icon = 49,
+		Description = "$4000159",
+		Specification = "$4000160",
+    AIVictoriesRequired = 2,
+	},
+	{
+		Research = "tau_wargear_upgrade_04_missile_pod_research",
+		WeaponName = "tau_missile_launcher_commander",
+		WeaponNameDefault = nil,
+		ClauseKey = "Weapon_Range_Upgrade_Right_Top",
+		ClauseValueOn = "tau_missile_launcher_commander",
+		ClauseValueDefault = "<None>",
+		Name = "$3001220",
+		Icon = 48,
+		Description = "$3001221",
+		Specification = "$3001222",
+    AIVictoriesRequired = 3,
+	},
+	{
+		Research = "tau_wargear_upgrade_01_flamer_research",
+		WeaponName = "tau_flamer_commander",
+		WeaponNameDefault = nil,
+		ClauseKey = "Weapon_Range_Upgrade_Left",
+		ClauseValueOn = "tau_flamer_commander",
+		ClauseValueDefault = "<No_Weapon>",
+		Name = "$3001230",
+		Icon = 43,
+		Description = "$3001231",
+		Specification = "$3001232",
+    AIVictoriesRequired = 4,
+	},
+	{
+		Research = "tau_wargear_upgrade_07_jetpack_research",
+		WeaponName = "tau_commander_jetpack",
+		WeaponNameDefault = nil,
+		ClauseKey = "Weapon_Melee_Upgrade_Main",
+		ClauseValueOn = "tau_commander_jetpack",
+		ClauseValueDefault = "<No_Weapon>",
+		Name = "$3001240",
+		Icon = 47,
+		Description = "$3001241",
+		Specification = "$3001242",
+    AIVictoriesRequired = 5,
+	},
+	{
+		Research = "tau_wargear_upgrade_05_advanced_sensor_array_research",
+		WeaponName = "tau_commander_advanced_sensor_array",
+		WeaponNameDefault = nil,
+		ClauseKey = "Wargear_Upgrade_01",
+		ClauseValueOn = "Wargear_01",
+		ClauseValueDefault = "<NONE>",
+		Name = "$4000161",
+		Icon = 42,
+		Description = "$4000162",
+		Specification = "$4000163",
+    AIVictoriesRequired = 6,
+	},
+	{
+		Research = "tau_wargear_upgrade_06_iridium_armor_research",
+		WeaponName = "tau_commander_iridium_armor",
+		WeaponNameDefault = nil,
+		ClauseKey = "Wargear_Upgrade_02",
+		ClauseValueOn = "Wargear_02",
+		ClauseValueDefault = "<NONE>",
+		Name = "$4000164",
+		Icon = 46,
+		Description = "$4000165",
+		Specification = "$4000166",
+    AIVictoriesRequired = 7,
+	},
+	{
+		Research = "tau_wargear_upgrade_08_stealth_field_research",
+		WeaponName = nil,
+		WeaponNameDefault = nil,
+		ClauseKey = "<NONE>",
+		ClauseValueOn = "<NONE>",
+		ClauseValueDefault = "<NONE>",
+		ApplyOptionalAlpha = 0.5,
+		Name = "$3001270",
+		Icon = 51,
+		Description = "$3001271",
+		Specification = "$3001272",
+    AIVictoriesRequired = 8,
+	},
+	{
+		Research = "tau_wargear_upgrade_09_shield_drone_research",
+		WeaponName = nil,
+		WeaponNameDefault = nil,
+		ClauseKey = "Wargear_Upgrade_04",
+		ClauseValueOn = "Wargear_04",
+		ClauseValueDefault = "<NONE>",
+		Name = "$3001280",
+		Icon = 50,
+		Description = "$3001281",
+		Specification = "$3001282",
+    AIVictoriesRequired = 9,
+	},
+	{
+		Research = "tau_wargear_upgrade_10_gun_drone_research",
+		WeaponName = nil,
+		WeaponNameDefault = nil,
+		ClauseKey = "Wargear_Upgrade_03",
+		ClauseValueOn = "Wargear_03",
+		ClauseValueDefault = "<NONE>",
+		Name = "$4000167",
+		Icon = 45,
+		Description = "$4000168",
+		Specification = "$4000169",
+    AIVictoriesRequired = 10,
+	},
+}
+
+Promotions =
+{
+	{
+		Name = "$3002000",
+		Description = "$3003001",
+		Conditions = 
+		{
+			ConqueredTerritories = 1
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003002",
+		Conditions = 
+		{
+			ConqueredTerritories = 5
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003003",
+		Conditions = 
+		{
+			ConqueredTerritories = 15
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003004",
+		Conditions = 
+		{
+			UnitKillsLifetime = 2000
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003005",
+		Conditions = 
+		{
+			UnitKillsLifetime = 5000
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003006",
+		Conditions = 
+		{
+			ConqueredStrongholds = 3
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003000",
+		Conditions = 
+		{
+			UnitKillsMission = 200,
+			KillRatioMission = 3
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003007",
+		Conditions = 
+		{
+			DefensiveMissionsWon = 1,
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003008",
+		Conditions = 
+		{
+			DefensiveMissionsWon = 3,
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003009",
+		Conditions = 
+		{
+			DefensiveMissionsWon = 5,
+		}
+	},
+}
+
+AIStartingStructuresAttacking =
+{
+
+	{
+		MilitaryStrength = 1,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 2,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},	
+	
+	{
+		MilitaryStrength = 3,
+		Structures =
+		{
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},
+	
+	{
+
+		MilitaryStrength = 4,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},
+
+	{
+
+		MilitaryStrength = 5,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},
+
+	{
+
+		MilitaryStrength = 6,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+	
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 7,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start7_",
+				},
+			},
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},	
+
+	
+	{
+
+		MilitaryStrength = 8,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start7_",
+				},
+			},
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 9,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start7_",
+				},
+			},
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},	
+	
+	
+	{
+
+		MilitaryStrength = 10,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start7_",
+				},
+			},
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+	
+		},
+	},	
+}
+
+AIStartingStructuresDefending =
+{
+
+	{
+		MilitaryStrength = 1,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+		},
+	},
+
+	{
+		MilitaryStrength = 2,
+		Structures =
+		{
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+		},
+	},
+	
+	{
+
+		MilitaryStrength = 3,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+		},
+	},
+
+	{
+
+		MilitaryStrength = 4,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 5,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start13_",
+				},
+			}, 
+			
+			{
+				Blueprint = "tau_kroot_nest",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 6,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start13_",
+				},
+			}, 
+			
+			{
+				Blueprint = "tau_kroot_nest",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			--[[{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start15_",
+				},
+			},]]--
+		},
+	},
+
+	{
+
+		MilitaryStrength = 7,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "tau_kroot_nest",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+		--[[	{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start16_",
+				},
+			},]]--
+		},
+	},	
+
+	
+	{
+
+		MilitaryStrength = 8,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "tau_kroot_nest",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			--[[{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+
+			{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start17_",
+				},
+			},]]--
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 9,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "tau_kroot_nest",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			--[[{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+
+			{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start17_",
+				},
+			},]]--
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},	
+	
+	
+	{
+
+		MilitaryStrength = 10,
+		Structures =
+		{
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "tau_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "tau_barracks",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "tau_kroot_nest",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			--[[{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+
+			{
+				Blueprint = "tau_missile_turret_sp",
+				Markers =
+				{
+					"start17_",
+				},
+			},]]--
+			{
+				Blueprint = "tau_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+			{
+				Blueprint = "tau_research_building",
+				Markers =
+				{
+					"start9_",
+				},
+			},
+		},
+	},	
+}
+
+AIStartingSquadsAttacking =
+{
+	{
+
+		MilitaryStrength = 2,
+		Squads =
+		{
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 3,
+		Squads =
+		{
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 4,
+		Squads =
+		{
+	
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 5,
+		Squads =
+		{
+
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 6,
+		Squads =
+		{
+
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 7,
+		Squads =
+		{
+
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 8,
+		Squads =
+		{
+
+
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},		
+
+	{
+
+		MilitaryStrength = 9,
+		Squads =
+		{
+
+
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 10,
+		Squads =
+		{
+
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+}
+
+AIStartingSquadsDefending =
+{
+	{
+
+		MilitaryStrength = 4,
+		Squads =
+		{
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 5,
+		Squads =
+		{
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 6,
+		Squads =
+		{
+
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 7,
+		Squads =
+		{
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 8,
+		Squads =
+		{
+
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 9,
+		Squads =
+		{
+
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 10,
+		Squads =
+		{
+
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},	
+}
+
+ArmyRanks =
+{
+	-- Rank 1
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "tau_commander_squad_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		}
+	},
+	-- Rank 2
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "tau_commander_squad_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_stealth_team_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		}
+	},
+	-- Rank 3
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "tau_commander_squad_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_stealth_team_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		}
+	},
+	-- Rank 4
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "tau_commander_squad_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_stealth_team_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_kroot_carnivore_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		}
+	},
+	-- Rank 5
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "tau_commander_squad_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_stealth_team_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_kroot_carnivore_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_pathfinder_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		}
+	},
+	-- Rank 6
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "tau_commander_squad_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_stealth_team_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_kroot_carnivore_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_pathfinder_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_broadside_battlesuit_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		}
+	},
+	-- Rank 7
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "tau_commander_squad_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_stealth_team_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_kroot_carnivore_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_pathfinder_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_broadside_battlesuit_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_skyray_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		}
+	},
+	-- Rank 8
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "tau_commander_squad_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_stealth_team_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_kroot_carnivore_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_pathfinder_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_broadside_battlesuit_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_skyray_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		}
+	},
+	-- Rank 9
+	{
+		Difficulty = "hard",
+		Squads =
+		{
+			{
+				Blueprint = "tau_commander_squad_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_stealth_team_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_kroot_carnivore_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_pathfinder_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_broadside_battlesuit_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_skyray_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_crisis_suit_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		}
+	},
+	-- Rank 10
+	{
+		Difficulty = "hard",
+		Squads =
+		{
+			{
+				Blueprint = "tau_commander_squad_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_stealth_team_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_fire_warrior_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_kroot_carnivore_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_pathfinder_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_broadside_battlesuit_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_skyray_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_drone_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_crisis_suit_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "tau_hammerhead_gunship_squad",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+
+		}
+	},
+}

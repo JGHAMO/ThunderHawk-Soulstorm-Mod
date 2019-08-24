@@ -1,0 +1,536 @@
+--####################################################################################################
+--#
+--#     Heroes Special Dark Eldar race info script
+--#
+--#     Original Heroes idea and implementation by CutterShane 2006
+--#     Heroes Special rework by Arkhan 2007
+--#     Integrated by Thudmeizer 2007
+--#
+--####################################################################################################
+
+CommandLevel.dark_eldar_race = { 4, 7 }
+
+UnitTypes.dark_eldar_race =
+{
+	-- Skirmish units
+	dark_eldar_squad_slave =
+	{
+		Title = "Tortured Slave",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeBuilder,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_mandrake =
+	{
+		Title = "Mandrake Squad",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_warrior =
+	{
+		Title = "Warrior Squad",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_hellion =
+	{
+		Title = "Hellion Squad",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_scourge =
+	{
+		Title = "Scourge Squad",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_wych =
+	{
+		Title = "Wych Squad",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_warp_beast =
+	{
+		Title = "Warp Beast Pack",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_archon =
+	{
+		Title = "Archon",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		General = true,
+		Unique = true,
+		HasLeaders = true,
+		HasWeapons = true,
+		Leaders =
+		{
+			"dark_eldar_leader_incubus",
+		},
+		Weapons =
+		{
+			"dark_eldar_splinter_rifle_archon",
+			"dark_eldar_destructor_archon",
+			"dark_eldar_sword_archon",
+			"dark_eldar_power_scythe_archon",
+			"dark_eldar_agonizer_archon",
+			"dark_eldar_tormentor_helm_incubus",
+			"dark_eldar_punisher_incubus",
+		},
+	},
+	-- Attachable
+	dark_eldar_squad_haemonculus =
+	{
+		Title = "Haemonculus",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		CanAttach = true,
+		Unique = true,
+		HasLeaders = true,
+		HasWeapons = true,
+		Leaders =
+		{
+			"dark_eldar_torture_amp_entity",
+		},
+		Weapons =
+		{
+			"dark_eldar_destructor_haemonculus",
+			"dark_eldar_scissorhand_haemonculus",
+		},
+	},
+	-- Vehicles
+	dark_eldar_squad_reaver =
+	{
+		Title = "Reaver Jetbike",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	dark_eldar_squad_raider =
+	{
+		Title = "Raider",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	dark_eldar_squad_raven =
+	{
+		Title = "Raven",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	dark_eldar_squad_talos =
+	{
+		Title = "Talos",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeWalker,
+		FXType = "Vehicle",
+	},
+	dark_eldar_squad_ravager =
+	{
+		Title = "Ravager",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	dark_eldar_squad_dais_of_destruction =
+	{
+		Title = "Dais Of Destruction",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"dark_eldar_disintegrator_dais",
+			"dark_eldar_dark_lance_dais",
+		},
+	},
+	
+	-- Campaign units
+	dark_eldar_squad_archon_hg_dxp3 =
+	{
+		Title = "Archon Tahril",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		General = true,
+		Unique = true,
+		HasLeaders = true,
+		HasWeapons = true,
+		Leaders =
+		{
+			"dark_eldar_leader_incubus",
+		},
+		Weapons =
+		{
+			"dark_eldar_splinter_rifle_archon_sp",
+			"dark_eldar_destructor_archon_sp",
+			"dark_eldar_disintegrator_archon_sp",
+			"dark_eldar_sword_archon_sp",
+			"dark_eldar_power_scythe_archon_sp",
+			"dark_eldar_agonizer_archon_sp",
+			"dark_eldar_tormentor_helm_incubus",
+			"dark_eldar_punisher_incubus",
+		},
+	},
+	-- StrongholdSquads
+	dark_eldar_squad_fastrepair_sp_dxp3 =
+	{
+		Title = "Tortured Slave",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeBuilder,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_hellion_sp_dxp3 =
+	{
+		Title = "Hellion Squad",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_scourge_sp_dxp3 =
+	{
+		Title = "Scourge Squad",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_raider_sp_dxp3 =
+	{
+		Title = "Raider",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	dark_eldar_squad_dais_of_destruction_sp_dxp3 =
+	{
+		Title = "Dais Of Destruction",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+	},
+	-- BonusSquads
+	dark_eldar_squad_mandrake_hg_dxp3 =
+	{
+		Title = "Mandrake Devourer Squad",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+		Unique = true,
+	},
+	dark_eldar_squad_warrior_leader_hg_dxp3 =
+	{
+		Title = "Warrior Sybarite Clan",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_hellion_leader_hg_dxp3 =
+	{
+		Title = "Hellion Succubus Coven",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_scourge_hg_dxp3 =
+	{
+		Title = "Razorwing Scourge Squad",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+		Unique = true,
+	},
+	dark_eldar_squad_wych_leader_hg_dxp3 =
+	{
+		Title = "Wych Succubus Coven",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+		Unique = true,
+	},
+	dark_eldar_squad_warp_beast_hg_dxp3 =
+	{
+		Title = "Nightmare Warp Beast",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	dark_eldar_squad_incubus_hg_dxp3 =
+	{
+		Title = "Elite Incubus Coven",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		Unique = true,
+	},
+	dark_eldar_squad_haemonculus_hg_dxp3 =
+	{
+		Title = "Haemonculus Gruemenael",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		CanAttach = true,
+		Unique = true,
+		HasLeaders = true,
+		Leaders =
+		{
+			"dark_eldar_torture_amp_entity",
+		},
+	},
+	dark_eldar_squad_reaver_hg_dxp3 =
+	{
+		Title = "Elite Reaver Jetbike",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	dark_eldar_squad_raider_hg_dxp3 =
+	{
+		Title = "Raider",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+}
+
+UnitRanks.dark_eldar_race =
+{
+	{
+		Name = "Regular",
+		XPRequirements =
+		{
+			Commander = 0,
+			RegularForces = 0,
+			SpecialForces = 0,
+			CommandoForces = 0,
+		},
+		UpgradeFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = nil,
+			Sound = nil,
+		},
+	},
+	{
+		Name = "Experienced",
+		XPRequirements =
+		{
+			Commander = 1000,
+			RegularForces = 1000,
+			SpecialForces = 1500,
+			CommandoForces = 2000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Veteran",
+		XPRequirements =
+		{
+			Commander = 2000,
+			RegularForces = 2000,
+			SpecialForces = 3000,
+			CommandoForces = 4000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Expert",
+		XPRequirements =
+		{
+			Commander = 4000,
+			RegularForces = 4000,
+			SpecialForces = 6000,
+			CommandoForces = 8000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Elite",
+		XPRequirements =
+		{
+			Commander = 6000,
+			RegularForces = 6000,
+			SpecialForces = 9000,
+			CommandoForces = 12000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Ultra Elite",
+		XPRequirements =
+		{
+			Commander = 8000,
+			RegularForces = 8000,
+			SpecialForces = 12000,
+			CommandoForces = 16000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Legendary",
+		XPRequirements =
+		{
+			Commander = 11000,
+			RegularForces = 11000,
+			SpecialForces = 16500,
+			CommandoForces = 22000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Champion",
+		XPRequirements =
+		{
+			Commander = 14000,
+			RegularForces = -1,
+			SpecialForces = -1,
+			CommandoForces = -1,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Hero",
+		XPRequirements =
+		{
+			Commander = 17000,
+			RegularForces = -1,
+			SpecialForces = -1,
+			CommandoForces = -1,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+}

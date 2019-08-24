@@ -1,0 +1,593 @@
+--####################################################################################################
+--#
+--#     Heroes Special Imperial Guard race info script
+--#
+--#     Original Heroes idea and implementation by CutterShane 2006
+--#     Heroes Special rework by Arkhan 2007
+--#
+--####################################################################################################
+
+CommandLevel.guard_race = { 4, 7 }
+
+UnitTypes.guard_race =
+{
+	-- Skirmish units
+	guard_squad_enginseer =
+	{
+		Title = "Techpriest Enginseer",
+		Type = "Commander",
+		UpgradeFunction = UpgradeBuilder,
+		FXType = "Squad",
+	},
+	guard_squad_guardsmen =
+	{
+		Title = "Guardsmen",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	guard_heavy_weapons_team_squad =
+	{
+		Title = "Heavy Weapons Team",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+		HeavyWeaponsTeam = true,
+		HWT = true,
+	},
+	guard_heavy_weapon_team_entrenched_squad_sp =
+	{
+		Title = "Heavy Weapons Team Entrenched",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+		HeavyWeaponsTeam = true,
+		HWTE = true,
+	},
+	guard_squad_kasrkin =
+	{
+		Title = "Kasrkin",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+		Unique = true,
+		HasLeaders = true,
+		HasWeapons = true,
+		Leaders =
+		{
+			"guard_infantry_kasrkin_sergeant",
+		},
+		Weapons =
+		{
+			"guard_hellgun_kasrkin",
+			"guard_grenade_launcher_kasrkin",
+			"guard_plasma_gun_kasrkin",
+			"guard_knife_kasrkin",
+			"guard_hellgun_kasrkin_sergeant",
+			"guard_sword_kasrkin_sergeant",
+		},
+	},
+	guard_squad_ogryns =
+	{
+		Title = "Ogryns",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+		Unique = true,
+		HasLeaders = true,
+		HasWeapons = true,
+		Leaders =
+		{
+			"guard_infantry_ogryn_sergeant",
+		},
+		Weapons =
+		{
+			"guard_ripper_gun_ranged_ogryn",
+			"guard_ripper_gun_melee_ogryn",
+			"guard_ripper_gun_ranged_ogryn_sergeant",
+			"guard_ripper_gun_melee_ogryn_sergeant",
+		},
+	},
+	guard_squad_command_squad =
+	{
+		Title = "Command Squad",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		General = true,
+		Unique = true,
+		HasLeaders = true,
+		HasWeapons = true,
+		Leaders =
+		{
+			"guard_leaders_commissar_command_squad",
+			"guard_leaders_psyker_command_squad",
+			"guard_leaders_priest_command_squad",
+		},
+		Weapons =
+		{
+			"guard_laspistol_captain",
+			"guard_power_gauntlet_captain",
+			"guard_chainsword_priest",
+		},
+	},
+	guard_squad_assassin =
+	{
+		Title = "Assassin",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"guard_exitus_rifle",
+			"guard_exitus_pistol_assassin",
+		},
+	},
+	-- Attachable
+	guard_squad_commissar =
+	{
+		Title = "Commissar",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		CanAttach = true,
+	},
+	guard_squad_psyker =
+	{
+		Title = "Psyker",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		CanAttach = true,
+	},
+	guard_squad_priest =
+	{
+		Title = "Priest",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		CanAttach = true,
+	},
+	-- Vehicles
+	guard_squad_chimera =
+	{
+		Title = "Chimera",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	guard_squad_sentinel =
+	{
+		Title = "Sentinel",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeWalker,
+		FXType = "Vehicle",
+	},
+	guard_squad_hellhound =
+	{
+		Title = "Hellhound",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	guard_squad_basilisk =
+	{
+		Title = "Basilisk",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeArtillery,
+		FXType = "Vehicle",
+	},
+	guard_squad_marauder =
+	{
+		Title = "Marauder Bomber",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	guard_squad_lemanruss =
+	{
+		Title = "Leman Russ Battle Tank",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	guard_squad_baneblade =
+	{
+		Title = "Baneblade",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"guard_battle_cannon_baneblade",
+			"guard_demolisher_cannon_baneblade",
+			"guard_heavy_bolter_baneblade_1",
+			"guard_heavy_bolter_baneblade_2",
+			"guard_heavy_bolter_baneblade_3",
+			"guard_lascannon_baneblade_1",
+			"guard_lascannon_baneblade_2",
+			"guard_autocannon_baneblade",
+		},
+	},
+	
+	-- Campaign units
+	guard_squad_command_squad_advance_sp =
+	{
+		Title = "General Vance Stubbs",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		General = true,
+		Unique = true,
+		HasLeaders = true,
+		HasWeapons = true,
+		Leaders =
+		{
+			"guard_leaders_commissar_command_squad_advance_sp",
+			"guard_leaders_psyker_command_squad_advance_sp",
+			"guard_leaders_priest_command_squad_advance_sp",
+			"guard_infantry_kasrkin_sergeant_advance_sp",
+		},
+		Weapons =
+		{
+			"guard_laspistol_captain",
+			"guard_storm_bolter_captain",
+			"guard_plasma_pistol_captain",
+			"guard_power_gauntlet_captain",
+			"guard_master_power_claws_captain",
+			"guard_power_fist_captain",
+			"guard_chainsword_priest",
+		},
+	},
+	-- StrongholdSquads
+	guard_squad_artillery_spotter_sp_dxp3 =
+	{
+		Title = "Artillery Spotter",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	guard_squad_driver_sp_dxp3 =
+	{
+		Title = "Driver",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	guard_squad_convoy_sp_dxp3 =
+	{
+		Title = "Imperial Convoy Vehicle",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	guard_squad_baneblade_nerfed_sp_dxp3 =
+	{
+		Title = "Baneblade",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+	},
+	-- BonusSquads
+	guard_squad_enginseer_advance_sp =
+	{
+		Title = "Techpriest Enginseer",
+		Type = "Commander",
+		UpgradeFunction = UpgradeBuilder,
+		FXType = "Squad",
+	},
+	guard_squad_guardsmen_advance_sp =
+	{
+		Title = "Regimental Bodyguard",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	guard_heavy_weapons_team_squad_hg_dxp3 =
+	{
+		Title = "Regimental Heavies",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+		HeavyWeaponsTeam = true,
+		HWT = true,
+	},
+	guard_heavy_weapon_team_entrenched_squad_hg_dxp3 =
+	{
+		Title = "Regimental Heavies Entrenched",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+		HeavyWeaponsTeam = true,
+		HWTE = true,
+	},
+	guard_squad_kasrkin_advance_sp =
+	{
+		Title = "Veteran Kasrkin Squad",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+		Unique = true,
+		HasLeaders = true,
+		Leaders =
+		{
+			"guard_infantry_kasrkin_sgt_advance_sp",
+		},
+	},
+	guard_squad_ogryns_advance_sp =
+	{
+		Title = "Bone'ead Squad",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+		Unique = true,
+		HasLeaders = true,
+		Leaders =
+		{
+			"guard_infantry_ogryn_sergeant_advance_sp",
+		},
+	},
+	guard_squad_commissar_advance_sp =
+	{
+		Title = "Regimental Commissar",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		CanAttach = true,
+	},
+	guard_squad_psyker_advance_sp =
+	{
+		Title = "Sanctioned Psyker",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		CanAttach = true,
+	},
+	guard_squad_assassin_advance_sp =
+	{
+		Title = "Vindicare Assassin",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+	},
+	guard_squad_sentinel_advance_sp =
+	{
+		Title = "Sentinel",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeWalker,
+		FXType = "Vehicle",
+	},
+}
+
+UnitRanks.guard_race =
+{
+	{
+		Name = "Regular",
+		XPRequirements =
+		{
+			Commander = 0,
+			RegularForces = 0,
+			SpecialForces = 0,
+			CommandoForces = 0,
+		},
+		UpgradeFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = nil,
+			Sound = nil,
+		},
+	},
+	{
+		Name = "Experienced",
+		XPRequirements =
+		{
+			Commander = 1000,
+			RegularForces = 1000,
+			SpecialForces = 1500,
+			CommandoForces = 2000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Veteran",
+		XPRequirements =
+		{
+			Commander = 2000,
+			RegularForces = 2000,
+			SpecialForces = 3000,
+			CommandoForces = 4000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Expert",
+		XPRequirements =
+		{
+			Commander = 4000,
+			RegularForces = 4000,
+			SpecialForces = 6000,
+			CommandoForces = 8000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Elite",
+		XPRequirements =
+		{
+			Commander = 6000,
+			RegularForces = 6000,
+			SpecialForces = 9000,
+			CommandoForces = 12000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Ultra Elite",
+		XPRequirements =
+		{
+			Commander = 8000,
+			RegularForces = 8000,
+			SpecialForces = 12000,
+			CommandoForces = 16000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Legendary",
+		XPRequirements =
+		{
+			Commander = 11000,
+			RegularForces = 11000,
+			SpecialForces = 16500,
+			CommandoForces = 22000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Champion",
+		XPRequirements =
+		{
+			Commander = 14000,
+			RegularForces = -1,
+			SpecialForces = -1,
+			CommandoForces = -1,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Hero",
+		XPRequirements =
+		{
+			Commander = 17000,
+			RegularForces = -1,
+			SpecialForces = -1,
+			CommandoForces = -1,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+}

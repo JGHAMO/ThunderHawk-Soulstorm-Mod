@@ -1,0 +1,127 @@
+----------------------------------------------------------------------------------------------------------------
+-- Annihilate Win Condtition (for all mod factions)
+-- Edited by Thudmeizer  @ 04.06.2008
+--
+--	Last player standing wins.
+--
+-- (c) 2003 Relic Entertainment Inc.
+import("ScarUtil.scar");
+
+function Annihilate()
+
+	-- wait 0.25 secs before adding this rule. this is so it is not executed
+	-- on the same frame as the other win conditions
+	Rule_AddOneShot( Annihilate_AddMainRule, 0.25 )
+	
+	obj_table_P1 = { title_id = 60000, short_desc_id = 60300, help_tip_id = 60300 }
+	
+	Objective_Add( obj_table_P1, 1 )
+	
+end
+
+function Annihilate_AddMainRule()
+	Rule_AddInterval(CheckAnnihilate, 2)
+end
+
+_Annihilate = 
+{
+	--don't count these when counting the number of buildings owned
+	g_annihilate_exceptions = 
+	{
+		"chaos_armoury",
+		"chaos_listening_post",
+		"chaos_mine_field",
+		"chaos_plasma_generator",
+		"chaos_thermo_plasma_generator",
+		"chaos_turret_bolter",
+
+		"dark_eldar_haemonculus_laboratory",
+		"dark_eldar_listening_post",
+		"dark_eldar_plasma_generator",
+		"dark_eldar_slave_caravel",
+		"dark_eldar_soul_cage",
+		"dark_eldar_thermo_plasma",
+		"dark_eldar_wych_cult_arena",
+
+		"eldar_advanced_warp_generator",
+		"eldar_listening_post",
+		"eldar_mine_field",
+		"eldar_soul_shrine",
+		"eldar_support_platform_scatterlaser",
+		"eldar_warp_generator",
+
+		"guard_listening_post",
+		"guard_mines",
+		"guard_plasma_generator",
+		"guard_tactica",
+		"guard_thermo_plasma",
+		"guard_turret_heavy_bolter",
+
+	    	"necron_listening_post",
+		"necron_summoning_core",
+		"necron_plasma_generator",
+		"necron_energy_core",
+		"necron_greater_summoning_core",
+		"necron_forbidden_archive",
+		"necron_thermoplasma_generator",
+		"necron_turret",
+
+		"ork_bigger_generator",
+		"ork_generator",
+		"ork_gork_totem",
+		"ork_mine_field",
+		"ork_pile_o_guns",
+		"ork_waagh_banner",
+
+		"sisters_holy_reliquary",
+		"sisters_listening_post",
+		"sisters_mines",
+		"sisters_plasma_generator",
+		"sisters_sanctuary",
+		"sisters_thermo_plasma",
+		"sisters_turret_flamer",
+
+		"space_marine_armoury",
+		"space_marine_generator",
+		"space_marine_listening_post",
+		"space_marine_mine_field",
+		"space_marine_turret_bolter",
+		"space_marine_thermo_generator",
+		
+		"tau_listening_post",
+		"tau_research_building",
+		"tau_shrine_of_kauyon",
+		"tau_shrine_of_montka",
+		"tau_thermoplasma_generator",
+		"tau_turret_sp",	
+		"tau_plasma_generator",
+	},
+	
+	-- at least this number of units if no buildings
+	g_NumUnits = 0,
+}
+
+function CheckAnnihilate()
+
+	-- total number of players
+	local count = World_GetPlayerCount()
+	
+	--check for annihilated dudes
+	for i = 0, count-1
+	do
+		-- check if player has been annihilated
+		local player = World_GetPlayerAt(i)
+
+		-- if no buildings then you die
+		if( Player_IsAlive(player) ) then
+			if( Player_HasBuildingsExcept( player, _Annihilate.g_annihilate_exceptions ) == false ) then
+				Player_Kill(player)
+			end
+		end
+	end
+	
+	-- check if only one team left -- if only one team left, they win and everybody else loses
+	Util_CheckOneTeamLeft("annihilate")
+end
+
+Scar_AddInit(Annihilate)

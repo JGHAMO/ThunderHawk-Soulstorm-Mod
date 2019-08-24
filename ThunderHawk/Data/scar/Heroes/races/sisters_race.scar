@@ -1,0 +1,501 @@
+--####################################################################################################
+--#
+--#     Heroes Special WitchHunter race info script
+--#
+--#     Original Heroes idea and implementation by CutterShane 2006
+--#     Heroes Special rework by Arkhan 2007
+--#     Integrated by Thudmeizer 2007
+--#
+--####################################################################################################
+
+CommandLevel.sisters_race = { 4, 7 }
+
+UnitTypes.sisters_race =
+{
+	-- Skirmish units
+	sisters_squad_servitor =
+	{
+		Title = "Ecclesiarchal Servitor",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeBuilder,
+		FXType = "Squad",
+	},
+	sisters_squad_battle_sister =
+	{
+		Title = "Battle Sister Squad",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	sisters_squad_seraphim =
+	{
+		Title = "Seraphim Squad",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	sisters_squad_celestian =
+	{
+		Title = "Celestian Squad",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	sisters_squad_assassin =
+	{
+		Title = "Death-Cult Assassin",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	sisters_squad_repentia =
+	{
+		Title = "Sister Repentia Squad",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	-- Attachable
+	sisters_squad_missionary =
+	{
+		Title = "Missionary",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeScoutSquad,
+		FXType = "Squad",
+		CanAttach = true,
+	},
+	sisters_squad_canoness =
+	{
+		Title = "Canoness",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		General = true,
+		CanAttach = true,
+		Unique = true,
+		HasLeaders = true,
+		HasWeapons = true,
+		Leaders =
+		{
+			"sisters_ascension_angel",
+		},
+		Weapons =
+		{
+			"sisters_bolt_pistol_canoness",
+			"sisters_inferno_pistol_canoness",
+			"sisters_power_sword_canoness",
+			"sisters_brazier_of_holy_fire",
+			"sisters_ascension_angel_weapon",
+		},
+	},
+	sisters_squad_confessor =
+	{
+		Title = "Confessor",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		CanAttach = true,
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"sisters_bolt_pistol_confessor",
+			"sisters_inferno_pistol_confessor",
+			"sisters_mace_of_valaan",
+		},
+	},
+	-- Vehicles
+	sisters_squad_rhino =
+	{
+		Title = "Rhino Transport",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	sisters_squad_immolator_tank =
+	{
+		Title = "Immolator",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	sisters_squad_lightning =
+	{
+		Title = "Lightning Fighter",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	sisters_squad_exorcist_tank =
+	{
+		Title = "Exorcist",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeArtillery,
+		FXType = "Vehicle",
+	},
+	sisters_squad_penitent_engine =
+	{
+		Title = "Penitent Engine",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeWalker,
+		FXType = "Vehicle",
+	},
+	sisters_squad_living_saint =
+	{
+		Title = "Living Saint",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		CanMorph = true,
+		CanResurrect = true,
+		MorphID = 1,
+		Unique = true,
+		HasWeapons = true,
+		Weapons =
+		{
+			"sisters_ardent_blade",
+		},
+	},
+	
+	-- Campaign
+	sisters_squad_canoness_advance_sp =
+	{
+		Title = "Canoness Selena Agna",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		General = true,
+		CanAttach = true,
+		Unique = true,
+		HasLeaders = true,
+		HasWeapons = true,
+		Leaders =
+		{
+			"sisters_squad_ascension_angel",
+		},
+		Weapons =
+		{
+			"sisters_bolt_pistol_canoness",
+			"sisters_wargear_03",
+			"sisters_wargear_04",
+			"sisters_chain_sword_canoness",
+			"sisters_wargear_01",
+			"sisters_wargear_02",
+			"sisters_ascension_angel_weapon",
+		},
+	},
+	-- StrongholdSquads
+	sisters_squad_rhino_sp_dxp3 =
+	{
+		Title = "Rhino Transport",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeTank,
+		FXType = "Vehicle",
+	},
+	sisters_squad_exorcist_tank_sp_dxp3 =
+	{
+		Title = "Exorcist",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeArtillery,
+		FXType = "Vehicle",
+	},
+	sisters_squad_living_saint_sp_dxp3 =
+	{
+		Title = "Living Saint",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Vehicle",
+		CanMorph = true,
+		CanResurrect = true,
+		MorphID = 1,
+	},
+	-- BonusSquads
+	sisters_squad_servitor_hg_dxp3 =
+	{
+		Title = "Enhanced Ecclesiarchal Servitor",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeBuilder,
+		FXType = "Squad",
+		Unique = true,
+	},
+	sisters_squad_missionary_hg_dxp3 =
+	{
+		Title = "Holy Terra Missionary",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeScoutSquad,
+		FXType = "Squad",
+	},
+	sisters_squad_battle_sister_hg_dxp3 =
+	{
+		Title = "Battle Sister Prioris Squad",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	sisters_squad_seraphim_hg_dxp3 =
+	{
+		Title = "Flamewing Seraphim Squad",
+		Type = "RegularForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	sisters_squad_celestian_hg_dxp3 =
+	{
+		Title = "Ophelian Celestian Squad",
+		Type = "SpecialForces",
+		UpgradeFunction = UpgradeRangedSquad,
+		FXType = "Squad",
+	},
+	sisters_squad_assassin_hg_dxp3 =
+	{
+		Title = "Emperor's Blades Death-Cult Assassin",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+	},
+	sisters_squad_repentia_mistress_hg_dxp3 =
+	{
+		Title = "Elite Mistress Repentia Squad",
+		Type = "CommandoForces",
+		UpgradeFunction = UpgradeMeleeSquad,
+		FXType = "Squad",
+		Unique = true,
+	},
+	sisters_squad_confessor_hg_dxp3 =
+	{
+		Title = "Confessor",
+		Type = "Commander",
+		UpgradeFunction = UpgradeCommander,
+		FXType = "Squad",
+		CanAttach = true,
+	},
+}
+
+UnitRanks.sisters_race =
+{
+	{
+		Name = "Regular",
+		XPRequirements =
+		{
+			Commander = 0,
+			RegularForces = 0,
+			SpecialForces = 0,
+			CommandoForces = 0,
+		},
+		UpgradeFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = nil,
+			Sound = nil,
+		},
+	},
+	{
+		Name = "Experienced",
+		XPRequirements =
+		{
+			Commander = 1000,
+			RegularForces = 1000,
+			SpecialForces = 1500,
+			CommandoForces = 2000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Veteran",
+		XPRequirements =
+		{
+			Commander = 2000,
+			RegularForces = 2000,
+			SpecialForces = 3000,
+			CommandoForces = 4000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = nil,
+			Vehicle = nil,
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Expert",
+		XPRequirements =
+		{
+			Commander = 4000,
+			RegularForces = 4000,
+			SpecialForces = 6000,
+			CommandoForces = 8000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Elite",
+		XPRequirements =
+		{
+			Commander = 6000,
+			RegularForces = 6000,
+			SpecialForces = 9000,
+			CommandoForces = 12000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Ultra Elite",
+		XPRequirements =
+		{
+			Commander = 8000,
+			RegularForces = 8000,
+			SpecialForces = 12000,
+			CommandoForces = 16000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/docs_tools_unit" },
+			Vehicle = { "guard/abilities/fanatacism_hvy" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Legendary",
+		XPRequirements =
+		{
+			Commander = 11000,
+			RegularForces = 11000,
+			SpecialForces = 16500,
+			CommandoForces = 22000,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Champion",
+		XPRequirements =
+		{
+			Commander = 14000,
+			RegularForces = -1,
+			SpecialForces = -1,
+			CommandoForces = -1,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+	{
+		Name = "Hero",
+		XPRequirements =
+		{
+			Commander = 17000,
+			RegularForces = -1,
+			SpecialForces = -1,
+			CommandoForces = -1,
+		},
+		UpgradeFX =
+		{
+			Squad = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx" },
+			Vehicle = { "unit_ability_fx/battlecry_god_light", "unit_ability_fx/smite_anticipation_fx", "eldar_unit_fx/warp_fx", "unit_ability_fx/smite_impact_fx" },
+		},
+		AuraFX =
+		{
+			Squad = { "unit_ability_fx/inspiring" },
+			Vehicle = { "guard/abilities/fanatacism_hvy", "unit_ability_fx/rally_hvy_unit_fx" },
+		},
+		MessageFX =
+		{
+			Icon = "level_upgrade",
+			Sound = "/races/space_marines/librarian/word_of_the_emporer",
+		},
+	},
+}

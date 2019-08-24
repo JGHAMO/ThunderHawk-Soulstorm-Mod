@@ -1,0 +1,1060 @@
+--####################################################################################################
+--#
+--#     Heroes Special main SCAR script
+--#
+--#     Original Heroes idea and implementation by CutterShane 2006
+--#     Heroes Special rework by Arkhan 2007
+--#
+--####################################################################################################
+
+import("Player.scar");
+import("GroupCallers.scar");
+import("Command.scar");
+import("Groups.scar");
+import("ScarUtil.scar");
+import("WXPScarUtil.scar");
+import("Heroes/Settings.scar");
+
+
+-- Arkhan 01.2007: Init constants
+UnitTypes = {}
+UnitRanks = {}
+CommandLevel = {}
+
+-- Arkhan 01.2007: Init globals
+g_iPlayer = 0
+g_eCurrentPlayerID = nil
+g_sCurrentPlayerRace = nil
+g_iPlayerCount = 0
+g_aLastUpdateTime = {}
+g_aUnitList = {}
+g_aGenerals = {}
+g_iNextPlayerUpdate = 0
+g_iNextFXUpdate = 0
+g_eUpgradeSquadGroupID = nil
+g_eSelectionSquadGroupID = nil
+g_eCurrentSquadGroupID = nil
+g_iSelectedUnitID = nil
+g_iCurrentUnitLevel = 0
+g_iHWTID = 0
+g_ePlayer = 0
+
+-- Init start up data
+function Hero_InitRule()
+
+	-- Init heroes
+	Reset()
+	
+	-- Start main rule interval
+	Rule_AddInterval(Hero_MainRule, 0.5)
+end
+
+function Reset()
+
+	print("Reset Heroes...")
+
+	-- Get player count and game time
+	g_iPlayerCount = World_GetPlayerCount()
+	local iTime = World_GetGameTime()
+
+	-- Compute all players
+	g_aUnitList = {}
+	g_aLastUpdateTime = {}
+	g_aGenerals = {}
+	for iLoop1 = 1, g_iPlayerCount do
+	
+		-- Get player ID
+		local ePlayerID = World_GetPlayerAt(iLoop1 - 1)
+		
+		-- Set lippy for AI players
+		if (Cpu_IsCpuPlayer(ePlayerID) and Cpu_IsEnabled(ePlayerID)) then
+			pcall(Cpu_SetLippy, ePlayerID, true)
+		end
+		
+		-- Import race data
+		local sPlayerRace = Player_GetRaceName(ePlayerID)
+		if (UnitTypes[sPlayerRace] == nil) then
+			pcall(import, 'heroes/races/'..sPlayerRace..'.scar')
+		end
+		
+		-- Add unit list entry
+		table.insert(g_aUnitList, {})
+	
+		-- Add last update time entry
+		table.insert(g_aLastUpdateTime, iTime)
+		
+		-- Add generals entry
+		table.insert(g_aGenerals, 1)
+	end
+	
+	-- Create squad groups
+	g_eUpgradeSquadGroupID = SGroup_CreateIfNotFound("UpgradeSquadGroup")
+	g_eSelectionSquadGroupID = SGroup_CreateIfNotFound("SelectionSquadGroup")
+	g_eCurrentSquadGroupID = SGroup_CreateIfNotFound("CurrentSquadGroup")
+end
+
+-- Hero main rule function (Called each interval)
+function Hero_MainRule ()
+
+	-- Validation check
+	if (table.getn(g_aUnitList) <= 0 or
+		table.getn(g_aLastUpdateTime) <= 0 or
+		table.getn(g_aGenerals) <= 0 or
+		not SGroup_Exists("UpgradeSquadGroup") or
+		not SGroup_Exists("SelectionSquadGroup") or
+		not SGroup_Exists("CurrentSquadGroup")) then
+		
+		-- Reset heroes
+		Reset()
+	end
+
+	-- Player update only each second
+	local iCurrentTime = World_GetGameTime()
+	if (iCurrentTime < g_iNextPlayerUpdate) then
+		ShowCurrentUnitInfo()
+	end
+	g_iNextPlayerUpdate = iCurrentTime + 1
+	
+	-- Get player ID and race of the next player alive
+	g_eCurrentPlayerID = nil
+	g_sCurrentPlayerRace = nil
+	for iLoop1 = 1, g_iPlayerCount do
+	
+		-- Increase current player index
+		g_iPlayer = g_iPlayer + 1
+		if (g_iPlayer > g_iPlayerCount) then
+			g_iPlayer = 1
+		end
+		
+		-- Check if player is alive
+		local ePlayerID = World_GetPlayerAt(g_iPlayer - 1)
+		if (Player_IsAlive(ePlayerID)) then
+			
+			g_ePlayer = ePlayerID
+			-- Check player race
+			local sPlayerRace = Player_GetRaceName(ePlayerID)
+			if (UnitTypes[sPlayerRace] ~= nil) then
+				g_eCurrentPlayerID = ePlayerID
+				g_sCurrentPlayerRace = sPlayerRace
+				break
+			end
+		end
+	end
+	if (g_eCurrentPlayerID == nil) then
+		return
+	end
+	
+	-- Check last player update time
+	local iTimeDelta = iCurrentTime - g_aLastUpdateTime[g_iPlayer]
+	if (iTimeDelta < 1) then
+		return
+	end
+	g_aLastUpdateTime[g_iPlayer] = iCurrentTime
+	
+	-- Get player and enemy squads
+	local oPlayerSquads = Player_GetSquads(g_eCurrentPlayerID)
+	local aEnemySquads = {}
+	for iLoop1 = 1, g_iPlayerCount do
+	
+		-- Check if player is alive
+		local ePlayerID = World_GetPlayerAt(iLoop1 - 1)
+		if (Player_IsAlive(ePlayerID) and Player_GetRelationship(ePlayerID, g_eCurrentPlayerID) == R_ENEMY) then
+			table.insert(aEnemySquads, Player_GetSquads(ePlayerID))
+		end
+	end
+	
+	-- Check for a general with a command bonus
+	local iCommandLevel = 1
+	for iLoop1 in CommandLevel[g_sCurrentPlayerRace] do
+		
+		-- Check if the commander level is high enough for a command level increase
+		if (g_aGenerals[g_iPlayer] >= CommandLevel[g_sCurrentPlayerRace][iLoop1]) then
+			iCommandLevel = iCommandLevel + 1
+		end
+	end
+	g_aGenerals[g_iPlayer] = 1
+
+	-- Init squad check functor
+	local Hero_SquadCheck = function(eSquadGroupID, iItemIndex, eSquadID)
+		
+		-- Get unit info
+		local iSquadID = Squad_GetGameID(eSquadID)
+		
+		-- Search squad in unit list
+		local iUnitIndex = nil
+		for iLoop1 in g_aUnitList[g_iPlayer] do
+			
+			-- Check unit ID
+			if (g_aUnitList[g_iPlayer][iLoop1].ID == iSquadID) then
+				iUnitIndex = iLoop1
+				break
+			end
+		end
+		
+		local bHasXP = false
+		
+		-- Check if we have to initialize a new unit info struct
+		local sUnitName = Squad_GetBlueprintName(eSquadID)
+		if (iUnitIndex == nil) then
+			
+			-- Check if unit type is valid
+			if (UnitTypes[g_sCurrentPlayerRace][sUnitName] == nil) then
+				return
+			end
+			
+			-- Check if unit can attach
+			if (UnitTypes[g_sCurrentPlayerRace][sUnitName].CanAttach) then
+				
+				local bNotAttachedSquadCheck = false
+				local bAttachedSquadCheck = false
+				local iUnitIndex1 = nil
+				local iUnitIndex2 = nil
+				
+				-- Check if unit exists
+				for	iLoop1 in g_aUnitList[g_iPlayer] do
+				
+					-- Check for units with a health modifier
+					if (sUnitName == g_aUnitList[g_iPlayer][iLoop1].Name and not Squad_Exists(g_aUnitList[g_iPlayer][iLoop1].ID) and
+						Modifier_Exists(g_aUnitList[g_iPlayer][iLoop1].Modifications[g_aUnitList[g_iPlayer][iLoop1].HealthModID][1])) then				
+					
+						-- Check for attached units
+						for	iLoop2 in g_aUnitList[g_iPlayer] do
+							
+							-- Check for attached unit
+							if (g_aUnitList[g_iPlayer][iLoop1].ID == g_aUnitList[g_iPlayer][iLoop2].AttachedUnitID and
+								Squad_Exists(g_aUnitList[g_iPlayer][iLoop2].ID)) then
+								
+								-- Check modifier
+								local oModifier = g_aUnitList[g_iPlayer][iLoop1].Modifications[g_aUnitList[g_iPlayer][iLoop1].HealthModID][2]
+								local iModifierIndex = ModifierUtil_GetSquadApplierIndex(oModifier, eSquadID)
+								if (iModifierIndex == g_aUnitList[g_iPlayer][iLoop1].Modifications[g_aUnitList[g_iPlayer][iLoop1].HealthModID][3]) then
+								
+									-- Check attached ID
+									local eAttachedID = Squad_GetSquadFromGameID(g_aUnitList[g_iPlayer][iLoop2].ID)
+									if (not Squad_IsAttached(eAttachedID)) then
+										iUnitIndex1 = iLoop1
+										iUnitIndex2 = iLoop2
+										bNotAttachedSquadCheck = true
+										break
+									elseif (not bAttachedSquadCheck) then
+										iUnitIndex1 = iLoop1
+										iUnitIndex2 = iLoop2
+										bAttachedSquadCheck = true
+									end
+								end
+							end
+						end
+					end
+					
+					-- Check squad check flag
+					if (bNotAttachedSquadCheck) then break end
+				end
+				
+				-- Check squad check flags
+				if (not bAttachedSquadCheck and not bNotAttachedSquadCheck) then
+
+					-- Backup check
+					for	iLoop1 in g_aUnitList[g_iPlayer] do
+						
+						-- Check unit
+						if (sUnitName == g_aUnitList[g_iPlayer][iLoop1].Name and
+							not Squad_Exists(g_aUnitList[g_iPlayer][iLoop1].ID) and
+							not g_aUnitList[g_iPlayer][iLoop1].IsAttached and
+							Modifier_Exists(g_aUnitList[g_iPlayer][iLoop1].Modifications[g_aUnitList[g_iPlayer][iLoop1].HealthModID][1])) then
+							
+							-- Check modifier
+							local oModifier = g_aUnitList[g_iPlayer][iLoop1].Modifications[g_aUnitList[g_iPlayer][iLoop1].HealthModID][2]
+							local iModifierIndex = ModifierUtil_GetSquadApplierIndex(oModifier, eSquadID)
+							if (iModifierIndex == g_aUnitList[g_iPlayer][iLoop1].Modifications[g_aUnitList[g_iPlayer][iLoop1].HealthModID][3]) then
+								iUnitIndex1 = iLoop1
+								bNotAttachedSquadCheck = true
+								break
+							end
+						end
+					end
+				end
+				
+				-- Check squad check flags
+				if (bNotAttachedSquadCheck or bAttachedSquadCheck) then
+
+					-- Set unit info
+					iUnitIndex = iUnitIndex1
+					g_aUnitList[g_iPlayer][iUnitIndex1].IsAttached = false
+					g_aUnitList[g_iPlayer][iUnitIndex1].IsGarrisoned = false
+					g_aUnitList[g_iPlayer][iUnitIndex1].ID = iSquadID
+					if (iUnitIndex2) then
+						g_aUnitList[g_iPlayer][iUnitIndex2].IsAttached = false
+					end
+					
+					-- Upgrade unit
+					local iLevel = g_aUnitList[g_iPlayer][iUnitIndex1].Level
+					UnitTypes[g_sCurrentPlayerRace][sUnitName].UpgradeFunction(eSquadID, iLevel, iUnitIndex1)
+				end
+			end
+			
+			-- Check if we have to create a new data set
+			if (iUnitIndex == nil) then
+				
+				-- Set starting XP
+				local sUnitType = UnitTypes[g_sCurrentPlayerRace][sUnitName].Type
+				local iStartingXP = UnitRanks[g_sCurrentPlayerRace][iCommandLevel].XPRequirements[sUnitType]
+				
+				-- Check if squad was transformed or summoned
+				if (UnitTypes[g_sCurrentPlayerRace][sUnitName].CanMorph) then
+					
+					if	not UnitTypes[g_sCurrentPlayerRace][sUnitName].Summoned then
+						
+						for	iLoop1 in g_aUnitList[g_iPlayer] do
+							local sMorphUnitName = g_aUnitList[g_iPlayer][iLoop1].Name
+							
+							if	UnitTypes[g_sCurrentPlayerRace][sUnitName].MorphID == UnitTypes[g_sCurrentPlayerRace][sMorphUnitName].MorphID then
+								
+								iStartingXP = g_aUnitList[g_iPlayer][iLoop1].XP
+								break
+							end
+						end
+						
+					else
+						
+						if	not UnitTypes[g_sCurrentPlayerRace][sUnitName].Daemon then
+							
+							iStartingXP = 0
+							
+							for	iLoop1 in g_aUnitList[g_iPlayer] do
+								local sMorphUnitName = g_aUnitList[g_iPlayer][iLoop1].Name
+								
+								if	UnitTypes[g_sCurrentPlayerRace][sUnitName].MorphID == UnitTypes[g_sCurrentPlayerRace][sMorphUnitName].MorphID and
+									not UnitTypes[g_sCurrentPlayerRace][sMorphUnitName].Summoned then
+									
+									iStartingXP = iStartingXP + g_aUnitList[g_iPlayer][iLoop1].XP
+								end
+							end
+							
+						else
+							
+							local bHasXP = false
+							
+							-- Check which squad has summoned the bloodthirster
+							for	iLoop1 in g_aUnitList[g_iPlayer] do
+								
+								local sMorphUnitName = g_aUnitList[g_iPlayer][iLoop1].Name
+								if	g_aUnitList[g_iPlayer][iLoop1].HasLeader then
+									
+									local eSquadID = Squad_GetSquadFromGameID(g_aUnitList[g_iPlayer][iLoop1].ID)
+									if	not Squad_HasLeader(eSquadID) then
+										
+										g_aUnitList[g_iPlayer][iLoop1].HasLeader = false
+										g_aUnitList[g_iPlayer][iLoop1].HasLeaderCheck = false
+										iStartingXP = g_aUnitList[g_iPlayer][iLoop1].XP
+										
+										if	iStartingXP > 8000 then
+											iStartingXP = 8000
+										end
+										
+										bHasXP = true
+										break
+									end
+								end
+							end
+							
+							if	not bHasXP then
+								
+								for	iLoop1 in g_aUnitList[g_iPlayer] do
+									local sMorphUnitName = g_aUnitList[g_iPlayer][iLoop1].Name
+									
+									if	UnitTypes[g_sCurrentPlayerRace][sUnitName].MorphID == UnitTypes[g_sCurrentPlayerRace][sMorphUnitName].MorphID then
+										
+										iStartingXP = iStartingXP + g_aUnitList[g_iPlayer][iLoop1].XP * 2
+										break
+									end
+								end
+							end
+						end
+					end
+				end
+				
+				if	iStartingXP > 0 then
+					bHasXP = true
+				end
+				
+				-- Add unit info struct
+				local tUnitInfo =
+				{
+					Name = sUnitName,
+					ID = iSquadID,
+					XP = iStartingXP,
+					Level = 1,
+					TrainingTime = RequiredTrainingTime,
+					Modifications =	{},
+					AttachedUnitID = 0,
+					IsAttached = false,
+					IsGarrisoned = false,
+					HasLeader = false,
+					HasLeaderCheck = false,
+					HealthModID = "",
+				}
+				table.insert(g_aUnitList[g_iPlayer], tUnitInfo)
+				iUnitIndex = table.getn(g_aUnitList[g_iPlayer])
+				
+				-- Add modifier for validity checks
+				UnitTypes[g_sCurrentPlayerRace][sUnitName].UpgradeFunction(eSquadID, 1, iUnitIndex)
+			end
+			
+		else
+			
+			-- Add training time and return if squad is in transport/hold
+			if	not Squad_CanSeeSquad(eSquadID, eSquadID) then
+				g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime = g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime + iTimeDelta
+				if	Squad_IsAttached(eSquadID) then
+					local iAttachedUnitIndex = FindAttachedSquad(iUnitIndex)
+					g_aUnitList[g_iPlayer][iAttachedUnitIndex].IsGarrisoned = true
+					g_aUnitList[g_iPlayer][iAttachedUnitIndex].TrainingTime = g_aUnitList[g_iPlayer][iAttachedUnitIndex].TrainingTime + iTimeDelta
+				end
+				return
+			end
+			
+			local bInvalidModifier = false
+			-- Check if all unit modifiers are still valid
+			for iLoop1 in g_aUnitList[g_iPlayer][iUnitIndex].Modifications do
+				
+				-- Check if modifier is still active
+				if	not Modifier_Exists(g_aUnitList[g_iPlayer][iUnitIndex].Modifications[iLoop1][1]) then
+					bInvalidModifier = true
+					break
+				end
+			end
+			
+			if	bInvalidModifier then
+				if	Squad_IsAttached(eSquadID) then
+					if	g_aUnitList[g_iPlayer][iUnitIndex].IsAttached then
+						
+						local sAttachedUnitName = Squad_GetAttachedBlueprintName(eSquadID)
+						local iAttachedUnitIndex = FindAttachedSquad(iUnitIndex)
+						if	not g_aUnitList[g_iPlayer][iAttachedUnitIndex].IsGarrisoned then
+							
+							local eAttachedID = Squad_Detach(eSquadID)
+							local iAttachedID = Squad_GetGameID(eAttachedID)
+							
+							g_aUnitList[g_iPlayer][iAttachedUnitIndex].ID = iAttachedID
+							g_aUnitList[g_iPlayer][iUnitIndex].AttachedUnitID = iAttachedID
+							AddToGroup(eSquadID, eAttachedID)
+							
+							local iLevel_1 = g_aUnitList[g_iPlayer][iUnitIndex].Level
+							local iLevel_2 = g_aUnitList[g_iPlayer][iAttachedUnitIndex].Level
+							UnitTypes[g_sCurrentPlayerRace][sUnitName].UpgradeFunction(eSquadID, iLevel_1, iUnitIndex)
+							UnitTypes[g_sCurrentPlayerRace][sAttachedUnitName].UpgradeFunction(eAttachedID, iLevel_2, iAttachedUnitIndex)
+							
+							Cmd_AttachSquads("Squad", "AttachedSquad")
+						end
+					end
+				else
+					local iLevel = g_aUnitList[g_iPlayer][iUnitIndex].Level
+					UnitTypes[g_sCurrentPlayerRace][sUnitName].UpgradeFunction(eSquadID, iLevel, iUnitIndex)
+				end
+			end
+		end
+		
+		-- Check if squad is ready for summoning
+		if	UnitTypes[g_sCurrentPlayerRace][sUnitName].AspiringChampion then
+			
+			if	not g_aUnitList[g_iPlayer][iUnitIndex].HasLeader and
+				Squad_HasLeader(eSquadID) then
+				
+				g_aUnitList[g_iPlayer][iUnitIndex].HasLeader = true
+				
+			elseif	not Squad_HasLeader(eSquadID) and
+				g_aUnitList[g_iPlayer][iUnitIndex].HasLeader then
+				
+				-- Check squad twice, the bloodthirster may have been summoned meanwhile
+				if	not g_aUnitList[g_iPlayer][iUnitIndex].HasLeaderCheck then
+					g_aUnitList[g_iPlayer][iUnitIndex].HasLeaderCheck = true
+				else
+					g_aUnitList[g_iPlayer][iUnitIndex].HasLeader = false
+					g_aUnitList[g_iPlayer][iUnitIndex].HasLeaderCheck = false
+				end
+			end
+		end
+		
+		local sAttachedUnitName, iAttachedUnitIndex = nil, nil
+		
+		if	CheckIfGeneral(sUnitName, iUnitIndex) then
+		
+		-- Check if unit is a Heavy Weapons Team
+		elseif	UnitTypes[g_sCurrentPlayerRace][sUnitName].HeavyWeaponsTeam then
+			
+			if	not g_aUnitList[g_iPlayer][iUnitIndex].IsAttached then
+				
+				if	UnitTypes[g_sCurrentPlayerRace][sUnitName].HWT and
+					(g_aUnitList[g_iPlayer][iUnitIndex].ID == g_iHWTID or
+					g_iHWTID <= 0) then
+					
+					g_iHWTID = g_aUnitList[g_iPlayer][iUnitIndex].ID
+					local eHGroupID = SGroup_CreateIfNotFound("HWT")
+					SGroup_Clear(eHGroupID)
+					SGroup_Add(eHGroupID, eSquadID)
+					
+					Cmd_SquadEntrench("HWT")
+					
+				elseif	UnitTypes[g_sCurrentPlayerRace][sUnitName].HWTE then
+					
+					for	iLoop1 in g_aUnitList[g_iPlayer] do
+						if	g_iHWTID == g_aUnitList[g_iPlayer][iLoop1].ID then
+							
+							g_aUnitList[g_iPlayer][iLoop1].AttachedUnitID = g_aUnitList[g_iPlayer][iUnitIndex].ID
+							g_aUnitList[g_iPlayer][iUnitIndex].AttachedUnitID = g_aUnitList[g_iPlayer][iLoop1].ID
+							g_aUnitList[g_iPlayer][iLoop1].IsAttached = true
+							g_aUnitList[g_iPlayer][iUnitIndex].IsAttached = true
+							g_iHWTID = 0
+							break
+						end
+					end
+				end
+			else
+				-- Find the HWTs alternate form and transfer XP
+				local iAUnitIndex = FindAttachedSquad(iUnitIndex)
+				g_aUnitList[g_iPlayer][iAUnitIndex].XP = g_aUnitList[g_iPlayer][iUnitIndex].XP
+			end
+			
+		-- Check if squad is unattached and reattach
+		elseif	not Squad_IsAttached(eSquadID) and
+			g_aUnitList[g_iPlayer][iUnitIndex].IsAttached and
+			not UnitTypes[g_sCurrentPlayerRace][sUnitName].CanAttach then
+			
+			iAttachedUnitIndex = FindAttachedSquad(iUnitIndex)
+			if	Squad_Exists(g_aUnitList[g_iPlayer][iAttachedUnitIndex].ID) then
+				
+				local eAttachedID = Squad_GetSquadFromGameID(g_aUnitList[g_iPlayer][iAttachedUnitIndex].ID)
+				AddToGroup(eSquadID, eAttachedID)
+				Cmd_AttachSquads("Squad", "AttachedSquad")
+			end
+			
+		-- Store attached unit ID
+		elseif	Squad_IsAttached(eSquadID) then
+			
+			sAttachedUnitName = Squad_GetAttachedBlueprintName(eSquadID)
+			if (not g_aUnitList[g_iPlayer][iUnitIndex].IsAttached) then
+				
+				for	iLoop1 in g_aUnitList[g_iPlayer] do
+					
+					if	not g_aUnitList[g_iPlayer][iLoop1].IsAttached and
+						not Squad_Exists(g_aUnitList[g_iPlayer][iLoop1].ID) and
+						sAttachedUnitName == g_aUnitList[g_iPlayer][iLoop1].Name and
+						Modifier_Exists(g_aUnitList[g_iPlayer][iLoop1].Modifications[g_aUnitList[g_iPlayer][iLoop1].HealthModID][1]) then
+						
+						iAttachedUnitIndex = iLoop1
+						
+						g_aUnitList[g_iPlayer][iUnitIndex].AttachedUnitID = g_aUnitList[g_iPlayer][iAttachedUnitIndex].ID
+						g_aUnitList[g_iPlayer][iAttachedUnitIndex].AttachedUnitID = g_aUnitList[g_iPlayer][iUnitIndex].ID
+						g_aUnitList[g_iPlayer][iUnitIndex].IsAttached = true
+						g_aUnitList[g_iPlayer][iAttachedUnitIndex].IsAttached = true
+						break
+					end
+				end
+				
+				if	iAttachedUnitIndex == nil then
+					Squad_Detach(eSquadID)
+				end
+				
+			else
+				
+				sAttachedUnitName = Squad_GetAttachedBlueprintName(eSquadID)
+				iAttachedUnitIndex = FindAttachedSquad(iUnitIndex)
+				
+				-- Check if unit was garrisoned
+				if	g_aUnitList[g_iPlayer][iAttachedUnitIndex].IsGarrisoned then
+					
+					-- Detach the squad to make it existent for the game
+					local eAttachedID = Squad_Detach(eSquadID)
+					local iAttachedID = Squad_GetGameID(eAttachedID)
+					g_aUnitList[g_iPlayer][iAttachedUnitIndex].ID = iAttachedID
+					g_aUnitList[g_iPlayer][iUnitIndex].AttachedUnitID = iAttachedID
+					AddToGroup(eSquadID, eAttachedID)
+					
+					local iLevel = g_aUnitList[g_iPlayer][iAttachedUnitIndex].Level
+					UnitTypes[g_sCurrentPlayerRace][sAttachedUnitName].UpgradeFunction(eAttachedID, iLevel, iAttachedUnitIndex)
+					
+					g_aUnitList[g_iPlayer][iAttachedUnitIndex].IsGarrisoned = false
+					Cmd_AttachSquads("Squad", "AttachedSquad")
+				end
+				
+				CheckIfGeneral(sAttachedUnitName, iAttachedUnitIndex)
+			end
+		end
+		
+		-- Check if unit is in combat
+		if (Squad_IsUnderAttack(eSquadID)) then
+			
+			-- Add under attack XP and reset training time
+			g_aUnitList[g_iPlayer][iUnitIndex].XP = g_aUnitList[g_iPlayer][iUnitIndex].XP + iTimeDelta * XPPerSecondUnderAttack
+			if	not UnitTypes[g_sCurrentPlayerRace][sUnitName].Daemon then
+				g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime = 0
+			else
+				g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime = g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime + (iTimeDelta*1.0)/(g_aUnitList[g_iPlayer][iUnitIndex].Level+1)
+			end
+			if	iAttachedUnitIndex ~= nil then
+				g_aUnitList[g_iPlayer][iAttachedUnitIndex].XP = g_aUnitList[g_iPlayer][iAttachedUnitIndex].XP + iTimeDelta * XPPerSecondUnderAttack
+				g_aUnitList[g_iPlayer][iAttachedUnitIndex].TrainingTime = 0
+			end
+		else
+			
+			-- Clear current squad group and add current unit
+			SGroup_Clear(g_eCurrentSquadGroupID)
+			SGroup_Add(g_eCurrentSquadGroupID, eSquadID)
+			
+			-- Check if unit is constructing a building
+			if (Cmd_IsConstructingBuilding("CurrentSquadGroup", false)) then
+				
+				-- Add construction XP and reset training time
+				g_aUnitList[g_iPlayer][iUnitIndex].XP = g_aUnitList[g_iPlayer][iUnitIndex].XP + iTimeDelta * XPPerSecondConstruction
+				
+			else
+				
+				-- Check if unit is attacking the forces of an enemy player
+				local bAttacking = false
+				for iLoop1 in aEnemySquads do
+					
+					-- Check if unit is attacking the enemy forces
+					if (SGroup_WasAttacked(aEnemySquads[iLoop1], g_eCurrentSquadGroupID)) then
+						bAttacking = true
+						break
+					end
+				end
+				
+				-- Check if unit is attacking
+				if	bAttacking then
+					
+					-- Add attacking XP and reset training time
+					g_aUnitList[g_iPlayer][iUnitIndex].XP = g_aUnitList[g_iPlayer][iUnitIndex].XP + iTimeDelta * XPPerSecondAttacking
+					if	not UnitTypes[g_sCurrentPlayerRace][sUnitName].Daemon then
+						g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime = 0
+					else
+						g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime = g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime + (iTimeDelta*1.0)/(g_aUnitList[g_iPlayer][iUnitIndex].Level+1)
+					end
+					if	iAttachedUnitIndex ~= nil then
+						g_aUnitList[g_iPlayer][iAttachedUnitIndex].XP = g_aUnitList[g_iPlayer][iAttachedUnitIndex].XP + iTimeDelta * XPPerSecondAttacking
+						g_aUnitList[g_iPlayer][iAttachedUnitIndex].TrainingTime = 0
+					end
+					
+				else
+					
+					-- Add idle XP and training time
+					g_aUnitList[g_iPlayer][iUnitIndex].XP = g_aUnitList[g_iPlayer][iUnitIndex].XP + iTimeDelta * XPPerSecondIdle
+					if	not UnitTypes[g_sCurrentPlayerRace][sUnitName].Daemon then
+						g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime = g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime + iTimeDelta
+					else
+						g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime = g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime - iTimeDelta
+					end
+					if	iAttachedUnitIndex ~= nil then
+						g_aUnitList[g_iPlayer][iAttachedUnitIndex].TrainingTime = g_aUnitList[g_iPlayer][iAttachedUnitIndex].TrainingTime + iTimeDelta
+						g_aUnitList[g_iPlayer][iAttachedUnitIndex].XP = g_aUnitList[g_iPlayer][iAttachedUnitIndex].XP + iTimeDelta * XPPerSecondIdle
+					end
+				end
+			end
+		end
+		
+		local iLevel = CheckUnitLevel(sUnitName, iUnitIndex)
+		
+		-- Check if the unit has reached a higher level and enough training time to upgrade
+		if	iLevel > g_aUnitList[g_iPlayer][iUnitIndex].Level and
+			(g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime >= RequiredTrainingTime or bHasXP) then
+			
+			UpgradeUnit(eSquadID, iLevel, sUnitName, iUnitIndex, bHasXP)
+		end
+		
+		-- Check if there is an attached squad
+		if	Squad_IsAttached(eSquadID) then
+			
+			local iLevel = CheckUnitLevel(sAttachedUnitName, iAttachedUnitIndex)
+			
+			-- Check if the unit has reached a higher level and enough training time to upgrade
+			if	iLevel > g_aUnitList[g_iPlayer][iAttachedUnitIndex].Level and
+				g_aUnitList[g_iPlayer][iAttachedUnitIndex].TrainingTime >= RequiredTrainingTime then
+				
+				local eAttachedID = Squad_Detach(eSquadID)
+				local iAttachedID = Squad_GetGameID(eAttachedID)
+				g_aUnitList[g_iPlayer][iAttachedUnitIndex].ID = iAttachedID
+				g_aUnitList[g_iPlayer][iUnitIndex].AttachedUnitID = iAttachedID
+				AddToGroup(eSquadID, eAttachedID)
+				UpgradeUnit(eAttachedID, iLevel, sAttachedUnitName, iAttachedUnitIndex)
+				Cmd_AttachSquads("Squad", "AttachedSquad")
+			end
+		end
+	end
+	
+	-- Compute squad check functor for all player squads
+	SGroup_ForEachEx(oPlayerSquads, Hero_SquadCheck, true, true)
+	
+	-- Remove invalid player units
+	local iUnitCount = table.getn(g_aUnitList[g_iPlayer])
+	for	iLoop1 = iUnitCount, 1, -1 do
+		
+		-- Check if unit is valid
+		if	not g_aUnitList[g_iPlayer][iLoop1].IsGarrisoned and
+			not Squad_Exists(g_aUnitList[g_iPlayer][iLoop1].ID) then
+			
+			-- Check if modifier exists
+			if	g_aUnitList[g_iPlayer][iLoop1].Modifications[g_aUnitList[g_iPlayer][iLoop1].HealthModID] == nil or
+			 	not Modifier_Exists(g_aUnitList[g_iPlayer][iLoop1].Modifications[g_aUnitList[g_iPlayer][iLoop1].HealthModID][1]) then
+				
+				local sUnitName = g_aUnitList[g_iPlayer][iLoop1].Name
+				if	UnitTypes[g_sCurrentPlayerRace][sUnitName].CanResurrect and
+					g_aUnitList[g_iPlayer][iLoop1].AttachedUnitID <= 0 then
+					
+					g_aUnitList[g_iPlayer][iLoop1].AttachedUnitID = World_GetGameTime() + 10
+					
+				elseif	World_GetGameTime() > g_aUnitList[g_iPlayer][iLoop1].AttachedUnitID and
+					UnitTypes[g_sCurrentPlayerRace][sUnitName].CanResurrect or
+					not UnitTypes[g_sCurrentPlayerRace][sUnitName].CanResurrect then
+					
+					if	UnitTypes[g_sCurrentPlayerRace][sUnitName].HWT and
+						g_aUnitList[g_iPlayer][iLoop1].ID == g_iHWTID then
+						g_iHWTID = 0
+					end
+					
+					if	g_aUnitList[g_iPlayer][iLoop1].IsAttached and
+						UnitTypes[g_sCurrentPlayerRace][sUnitName].CanAttach then
+						
+						local iA, bIsAttached = FindAttachedSquad(iLoop1), false
+						
+						if	Squad_Exists(g_aUnitList[g_iPlayer][iA].ID) then
+							
+							local eB = Squad_GetSquadFromGameID(g_aUnitList[g_iPlayer][iA].ID)
+							if	Squad_IsAttached(eB) then
+								bIsAttached = true
+								
+								local eAttachedID = Squad_Detach(eB)
+								local iAttachedID = Squad_GetGameID(eAttachedID)
+								g_aUnitList[g_iPlayer][iLoop1].ID = iAttachedID
+								g_aUnitList[g_iPlayer][iA].AttachedUnitID = iAttachedID
+							end
+						end
+						
+						if	not bIsAttached then
+							
+							g_aUnitList[g_iPlayer][iA].IsAttached = false
+							table.remove(g_aUnitList[g_iPlayer], iLoop1)
+						end
+						
+					else
+						
+						if	g_aUnitList[g_iPlayer][iLoop1].IsAttached and
+							not UnitTypes[g_sCurrentPlayerRace][sUnitName].HeavyWeaponsTeam then
+							
+							if	Squad_Exists(g_aUnitList[g_iPlayer][iLoop1].AttachedUnitID) then
+								
+								g_aUnitList[g_iPlayer][FindAttachedSquad(iLoop1)].IsAttached = false
+								table.remove(g_aUnitList[g_iPlayer], iLoop1)
+							end
+						else
+							-- Remove unit from unit list
+							table.remove(g_aUnitList[g_iPlayer], iLoop1)
+						end
+					end
+				end
+			end
+		end
+	end
+	
+	-- Show unit rank of currently selected unit
+	ShowCurrentUnitInfo()
+	
+	-- Update FX only every 2 seconds
+	if (iCurrentTime < g_iNextFXUpdate) then
+		return
+	end
+	g_iNextFXUpdate = iCurrentTime + 2
+	
+	-- Update unit aura FX of all players
+	for iLoop1 in g_aUnitList do
+	
+		-- Check if player is alive
+		local ePlayerID = World_GetPlayerAt(iLoop1 - 1)
+		if (Player_IsAlive(ePlayerID)) then
+			
+			-- Get player race
+			local sPlayerRace = Player_GetRaceName(ePlayerID)
+
+			-- Compute all player units
+			for iLoop2 in g_aUnitList[iLoop1] do
+			
+				-- Check if squad exists
+				if (Squad_Exists(g_aUnitList[iLoop1][iLoop2].ID)) then
+			
+					-- Show permanent level aura if available
+					local eSquadID = Squad_GetSquadFromGameID(g_aUnitList[iLoop1][iLoop2].ID)
+					local sUnitName = Squad_GetBlueprintName(eSquadID)
+					local sFXType = UnitTypes[sPlayerRace][sUnitName].FXType
+					local iLevel = g_aUnitList[iLoop1][iLoop2].Level
+					if (UnitRanks[sPlayerRace][iLevel].AuraFX[sFXType] ~= nil) then
+					
+						-- Clear current squad group and add unit
+						SGroup_Clear(g_eCurrentSquadGroupID)
+						SGroup_Add(g_eCurrentSquadGroupID, eSquadID)
+					
+						-- Show aura FX
+						for iLoop3 in UnitRanks[sPlayerRace][iLevel].AuraFX[sFXType] do
+							World_FXEventSquad(UnitRanks[sPlayerRace][iLevel].AuraFX[sFXType][iLoop3], g_eCurrentSquadGroupID)
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+-- Arkhan 01.2007: Show unit rank
+function ShowCurrentUnitInfo()
+
+	-- Get local player
+	local iLocalPlayer = Tut_GetLocalPlayerIndex() + 1
+	local eLocalPlayer = World_GetPlayerAt(iLocalPlayer - 1)
+	if (Player_IsAlive(eLocalPlayer)) then
+	
+		-- Get selected units
+		Misc_GetSelectedSquads(g_eSelectionSquadGroupID)
+		if (SGroup_Count(g_eSelectionSquadGroupID) == 1) then
+			
+			-- Create squad checker
+			local Hero_SelectionCheck = function(eSquadGroupID, iItemIndex, eSquadID)
+				-- Get unit info
+				local iSquadID = Squad_GetGameID(eSquadID)
+				
+				-- Search squad in unit list
+				local iUnitIndex = 0
+				for iLoop1 in g_aUnitList[iLocalPlayer] do
+					
+					-- Check unit ID
+					if (g_aUnitList[iLocalPlayer][iLoop1].ID == iSquadID) then
+						iUnitIndex = iLoop1
+						break
+					end
+				end
+				
+				-- Check if we found the unit
+				if (iUnitIndex > 0) then
+				
+					-- Show unit rank
+					local iLevel = g_aUnitList[iLocalPlayer][iUnitIndex].Level
+					if (g_iCurrentUnitLevel ~= iLevel) then
+						UI_ShowCount("UnitRank", eLocalPlayer, 5800000 + iLevel, 0)
+						g_iCurrentUnitLevel = iLevel
+					end
+				
+				elseif (g_iCurrentUnitLevel > 0) then
+				
+					-- Hide unit rank
+					UI_HideCount("UnitRank")
+					g_iCurrentUnitLevel = 0
+				end
+			end
+			
+			-- Compute selection check functor
+			SGroup_ForEach(g_eSelectionSquadGroupID, Hero_SelectionCheck)
+			
+		elseif (g_iCurrentUnitLevel > 0) then
+			-- Hide unit rank
+			UI_HideCount("UnitRank")
+			g_iCurrentUnitLevel = 0
+		end
+	end
+end
+
+-- Arkhan 01.2007: Show upgrade FX and message
+function ShowUpgradeFX(eSquadID, iLevel, sUnitName, iUnitIndex)
+
+	-- Check for upgrade FX
+	local sFXType = UnitTypes[g_sCurrentPlayerRace][sUnitName].FXType
+	if (UnitRanks[g_sCurrentPlayerRace][iLevel].UpgradeFX[sFXType] ~= nil) then
+
+		-- Show upgrade FX
+		SGroup_Clear(g_eUpgradeSquadGroupID)
+		SGroup_Add(g_eUpgradeSquadGroupID, eSquadID)
+		for iLoop1 in UnitRanks[g_sCurrentPlayerRace][iLevel].UpgradeFX[sFXType] do
+			World_FXEventSquad(UnitRanks[g_sCurrentPlayerRace][iLevel].UpgradeFX[sFXType][iLoop1], g_eUpgradeSquadGroupID)
+		end
+	end
+	
+	-- Check for local player
+	if (Tut_GetLocalPlayerIndex() == g_iPlayer - 1) then
+	
+		-- Show upgrade message
+		local sUnitRank = UnitRanks[g_sCurrentPlayerRace][iLevel].Name
+		local sUnitTitle = UnitTypes[g_sCurrentPlayerRace][sUnitName].Title
+		local sMessage = sUnitTitle.." achieved "..sUnitRank.." status"
+		local sIcon = UnitRanks[g_sCurrentPlayerRace][iLevel].MessageFX.Icon
+		local sSound = UnitRanks[g_sCurrentPlayerRace][iLevel].MessageFX.Sound
+		if (sIcon ~= nil and sSound ~= nil) then
+			EventCue_DoEvent(sIcon, sSound, sMessage, sMessage)
+		end
+	end
+end
+
+-- Arkhan 01.2007: Add a fixed value to a certain unit stat
+function UnitStatAddValue(sModifier, eSquadID, iUnitIndex, fValue)
+	
+	-- Check if modifier exists
+	if (g_aUnitList[g_iPlayer][iUnitIndex].Modifications[sModifier] ~= nil) then
+		
+		-- Remove and release modifier
+		if (Modifier_Exists(g_aUnitList[g_iPlayer][iUnitIndex].Modifications[sModifier][1])) then
+			pcall(Modifier_Remove, g_aUnitList[g_iPlayer][iUnitIndex].Modifications[sModifier][1])
+		end
+		Modifier_Destroy(g_aUnitList[g_iPlayer][iUnitIndex].Modifications[sModifier][2])
+	end
+	
+	-- Create modifier
+	local sType = UnitModifiers[sModifier][1]
+	local sName = UnitModifiers[sModifier][2]
+	local oModifier = nil
+	if	(sType == "MAT_Entity") then
+		oModifier = Modifier_Create(MAT_Entity, sName, MUT_Addition, false, fValue, "")
+	elseif (sType == "MAT_Squad") then
+		oModifier = Modifier_Create(MAT_Squad, sName, MUT_Addition, false, fValue, "")
+	end
+
+	-- Apply modifier
+	local bStatus, iModifierID = pcall(Modifier_ApplyToSquad, oModifier, eSquadID)
+	if	not bStatus then return end
+	
+	-- Get modifier index
+	local iModifierIndex = ModifierUtil_GetSquadApplierIndex(oModifier, eSquadID)
+	
+	-- Store modifier info
+	g_aUnitList[g_iPlayer][iUnitIndex].Modifications[sModifier] = { iModifierID, oModifier, iModifierIndex }
+end
+
+-- Arkhan 01.2007: Add a percentage factor of the base value to a certain unit stat
+function UnitStatAddBaseFactor(sModifier, eSquadID, iUnitIndex, fFactor, sObjectName, iLoop, bHasWeapon)
+	
+	local sType = UnitModifiers[sModifier][1]
+	local sUnitName = Squad_GetBlueprintName(eSquadID)
+	if	bHasWeapon or sType ~= "MAT_Weapon" or not UnitTypes[g_sCurrentPlayerRace][sUnitName].Unique then
+		
+		if	sObjectName == nil then
+			sObjectName = Squad_GetBaseUnitName(eSquadID)
+		end
+		
+		-- Check if modifier exists
+		if	g_aUnitList[g_iPlayer][iUnitIndex].Modifications[sModifier .. sObjectName] ~= nil then
+			
+			-- Remove and release modifier
+			if (Modifier_Exists(g_aUnitList[g_iPlayer][iUnitIndex].Modifications[sModifier .. sObjectName][1])) then
+				pcall(Modifier_Remove, g_aUnitList[g_iPlayer][iUnitIndex].Modifications[sModifier .. sObjectName][1])
+			end
+			Modifier_Destroy(g_aUnitList[g_iPlayer][iUnitIndex].Modifications[sModifier .. sObjectName][2])
+		end
+		
+		-- Create modifier
+		local sName = UnitModifiers[sModifier][2]
+		local oModifier = nil
+		if	sType == "MAT_Entity" and UnitTypes[g_sCurrentPlayerRace][sUnitName].Unique then
+			oModifier = Modifier_Create(MAT_EntityType, sName, MUT_Multiplication, false, fFactor, sObjectName)
+		elseif	sType == "MAT_Squad" and UnitTypes[g_sCurrentPlayerRace][sUnitName].Unique then
+			oModifier = Modifier_Create(MAT_SquadType, sName, MUT_Multiplication, false, fFactor, sUnitName)
+		elseif	sType == "MAT_Weapon" and UnitTypes[g_sCurrentPlayerRace][sUnitName].HasWeapons then
+			oModifier = Modifier_Create(MAT_WeaponType, sName, MUT_Multiplication, false, fFactor, sObjectName)
+		elseif	sType == "MAT_Entity" or sType == "MAT_Weapon" then
+			oModifier = Modifier_Create(MAT_Entity, sName, MUT_Multiplication, false, fFactor, "")
+		elseif	sType == "MAT_Squad" then
+			oModifier = Modifier_Create(MAT_Squad, sName, MUT_Multiplication, false, fFactor, "")
+		end
+		
+		-- Apply modifier
+		local bStatus, iModifierID = pcall(Modifier_ApplyToSquad, oModifier, eSquadID)
+		if	not bStatus then return end
+		
+		-- Get modifier index
+		local iModifierIndex = ModifierUtil_GetSquadApplierIndex(oModifier, eSquadID)
+		
+		if	iLoop == nil then
+			g_aUnitList[g_iPlayer][iUnitIndex].HealthModID = sModifier .. sObjectName
+		end
+		
+		-- Store modifier info
+		g_aUnitList[g_iPlayer][iUnitIndex].Modifications[sModifier .. sObjectName] = { iModifierID, oModifier, iModifierIndex }
+	end
+	
+	if	UnitTypes[g_sCurrentPlayerRace][sUnitName].Unique then
+		
+		if	iLoop == nil then iLoop = 1
+		else iLoop = iLoop + 1 end
+		
+		if	sType ~= "MAT_Weapon" then
+			
+			if	UnitTypes[g_sCurrentPlayerRace][sUnitName].HasLeaders then
+				if	UnitTypes[g_sCurrentPlayerRace][sUnitName].Leaders[iLoop] ~= nil then
+					UnitStatAddBaseFactor(sModifier, eSquadID, iUnitIndex, fFactor, UnitTypes[g_sCurrentPlayerRace][sUnitName].Leaders[iLoop], iLoop)
+				end
+			end
+		else
+			if	UnitTypes[g_sCurrentPlayerRace][sUnitName].HasWeapons then
+				if	UnitTypes[g_sCurrentPlayerRace][sUnitName].Weapons[iLoop] ~= nil then
+					UnitStatAddBaseFactor(sModifier, eSquadID, iUnitIndex, fFactor, UnitTypes[g_sCurrentPlayerRace][sUnitName].Weapons[iLoop], iLoop, true)
+				end
+			end
+		end
+	end
+end
+
+function FindAttachedSquad(iUnitIndex)
+
+	-- Get the unitindex of the attached squad
+	for	iLoop1 in g_aUnitList[g_iPlayer] do
+		if	g_aUnitList[g_iPlayer][iUnitIndex].AttachedUnitID == g_aUnitList[g_iPlayer][iLoop1].ID then
+			return iLoop1
+		end
+	end
+end
+
+function AddToGroup(eSquadID, eAttachedID)
+	
+	local eSGroupID = SGroup_CreateIfNotFound("Squad")
+	local eAGroupID = SGroup_CreateIfNotFound("AttachedSquad")
+	SGroup_Clear(eSGroupID)
+	SGroup_Clear(eAGroupID)
+	SGroup_Add(eSGroupID, eSquadID)
+	SGroup_Add(eAGroupID, eAttachedID)
+end
+
+function CheckUnitLevel(sUnitName, iUnitIndex)
+
+	-- Check level according to the current XP of the unit
+	local iLevelMax = table.getn(UnitRanks[g_sCurrentPlayerRace])
+	local iLevel = 1
+	for	iLoop1 = iLevelMax, 1, -1 do
+		
+		-- Check XP requirements
+		local sUnitType = UnitTypes[g_sCurrentPlayerRace][sUnitName].Type
+		local iXPRequirement = UnitRanks[g_sCurrentPlayerRace][iLoop1].XPRequirements[sUnitType]
+		if	iXPRequirement >= 0 and g_aUnitList[g_iPlayer][iUnitIndex].XP >= iXPRequirement then
+			return iLoop1
+		end
+	end
+end
+
+function UpgradeUnit(eSquadID, iLevel, sUnitName, iUnitIndex, bHasXP)
+
+	-- Show upgrade FX
+	ShowUpgradeFX(eSquadID, iLevel, sUnitName, iUnitIndex)
+	
+	-- Upgrade unit to the new level and reset training time
+	UnitTypes[g_sCurrentPlayerRace][sUnitName].UpgradeFunction(eSquadID, iLevel, iUnitIndex)
+	g_aUnitList[g_iPlayer][iUnitIndex].Level = iLevel
+	g_aUnitList[g_iPlayer][iUnitIndex].TrainingTime = 0
+	
+	if	iLevel > 7 and not bHasXP then
+		Squad_SetHealth(eSquadID, 1.0)
+		Squad_SetMorale(eSquadID, 1.0)
+	end
+end
+
+function CheckIfGeneral(sUnitName, iUnitIndex)
+
+	-- Check if unit is a general
+	if	UnitTypes[g_sCurrentPlayerRace][sUnitName].General ~= nil then
+		
+		-- Update level of the general
+		g_aGenerals[g_iPlayer] = math.max(g_aGenerals[g_iPlayer], g_aUnitList[g_iPlayer][iUnitIndex].Level)
+		return true
+	end
+end

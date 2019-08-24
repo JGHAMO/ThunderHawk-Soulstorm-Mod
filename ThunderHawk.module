@@ -1,0 +1,18 @@
+[global]
+
+UIName = ThunderHawk 1.0 Beta
+Description = ThunderHawk mod based on bugfix 1.56a
+DllName = WXPMod
+Playable = 1
+ModFolder = ThunderHawk
+ModVersion = 1.0
+
+;; //////////////////////////////////////////////////////////////////
+;; List of folders to map for this MOD 
+;; order is important - the first Archives registered will be scanned for files first
+DataFolder.1 = Data
+
+;; //////////////////////////////////////////////////////////////////
+;; List of MODs that this MOD requires to work
+RequiredMod.1 = DXP2
+RequiredMod.2 = W40k

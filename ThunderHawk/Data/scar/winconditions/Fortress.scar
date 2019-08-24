@@ -1,0 +1,409 @@
+-- Set up fortress mod
+-- Created by Arkhan
+
+import("Player.scar");
+import("GroupCallers.scar");
+import("Command.scar");
+import("Groups.scar");
+import("ScarUtil.scar");
+import("WXPGroups.scar");
+
+-- Building data
+BuildingTypes =
+{
+	chaos_marine_race =
+	{
+		Post = "chaos_listening_post",
+		PostAddon1 = "chaos_list_post_addon_1",
+		PostAddon2 = "chaos_list_post_addon_2",
+		PostHealthModifier1 = 1.5,
+		PostDamageModifier1 = 2.0,
+		PostHealthModifier2 = 2.0,
+		PostDamageModifier2 = 3.0,
+		Turret = "chaos_turret_bolter",
+		TurretAddon = "chaos_turret_addon",
+		TurretHealthModifier1 = 2.0,
+		TurretDamageModifier1 = 2.0,
+		TurretHealthModifier2 = 2.5,
+		TurretDamageModifier2 = 2.0,
+		Mine = "chaos_mine_field",
+		MineHealthModifier = 3.0,
+		MineDamageModifier = 3.0
+	},
+	dark_eldar_race =
+	{
+		Post = "dark_eldar_listening_post",
+		PostAddon1 = "addon_dark_eldar_list_post_1",
+		PostAddon2 = "addon_dark_eldar_list_post_2",
+		PostHealthModifier1 = 1.5,
+		PostDamageModifier1 = 2.0,
+		PostHealthModifier2 = 2.0,
+		PostDamageModifier2 = 3.0,
+		Turret = nil,
+		TurretAddon = nil,
+		TurretHealthModifier1 = nil,
+		TurretDamageModifier1 = nil,
+		TurretHealthModifier2 = nil,
+		TurretDamageModifier2 = nil,
+		Mine = nil,
+		MineHealthModifier = nil,
+		MineDamageModifier = nil
+	},
+	eldar_race =
+	{
+		Post = "eldar_listening_post",
+		PostAddon1 = "eldar_list_post_addon_1",
+		PostAddon2 = "eldar_list_post_addon_2",
+		PostHealthModifier1 = 1.5,
+		PostDamageModifier1 = 2.0,
+		PostHealthModifier2 = 2.0,
+		PostDamageModifier2 = 3.0,
+		Turret = "eldar_support_platform_scatterlaser",
+		TurretAddon = "eldar_support_platform_addon",
+		TurretHealthModifier1 = 2.0,
+		TurretDamageModifier1 = 2.0,
+		TurretHealthModifier2 = 2.5,
+		TurretDamageModifier2 = 2.0,
+		Mine = "eldar_mine_field",
+		MineHealthModifier = 3.0,
+		MineDamageModifier = 3.0
+	},
+	guard_race =
+	{
+		Post = "guard_listening_post",
+		PostAddon1 = "addon_guard_list_post_1",
+		PostAddon2 = "addon_guard_list_post_2",
+		PostHealthModifier1 = 1.5,
+		PostDamageModifier1 = 2.0,
+		PostHealthModifier2 = 2.0,
+		PostDamageModifier2 = 3.0,
+		Turret = "guard_turret_heavy_bolter",
+		TurretAddon = "addon_guard_turret",
+		TurretHealthModifier1 = 2.0,
+		TurretDamageModifier1 = 2.0,
+		TurretHealthModifier2 = 2.5,
+		TurretDamageModifier2 = 2.0,
+		Mine = "guard_mines",
+		MineHealthModifier = 3.0,
+		MineDamageModifier = 3.0
+	},
+	necron_race =
+	{
+		Post = "necron_listening_post",
+		PostAddon1 = "addon_necron_list_post_1",
+		PostAddon2 = "addon_necron_list_post_2",
+		PostHealthModifier1 = 1.5,
+		PostDamageModifier1 = 2.0,
+		PostHealthModifier2 = 2.0,
+		PostDamageModifier2 = 3.0,
+		Turret = "necron_turret",
+		TurretAddon = "addon_necron_turret",
+		TurretHealthModifier1 = 2.0,
+		TurretDamageModifier1 = 2.0,
+		TurretHealthModifier2 = 2.5,
+		TurretDamageModifier2 = 2.0,
+		Mine = nil,
+		MineHealthModifier = nil,
+		MineDamageModifier = nil
+	},
+	ork_race =
+	{
+		Post = "ork_gork_totem",
+		PostAddon1 = "ork_gork_totem_addon_1",
+		PostAddon2 = "ork_gork_totem_addon_2",
+		PostHealthModifier1 = 1.5,
+		PostDamageModifier1 = 2.0,
+		PostHealthModifier2 = 2.0,
+		PostDamageModifier2 = 3.0,
+		Turret = "ork_waagh_banner",
+		TurretAddon = "ork_waagh_banner_gunzaddon_2",
+		TurretHealthModifier1 = 1.5,
+		TurretDamageModifier1 = 2.0,
+		TurretHealthModifier2 = 1.5,
+		TurretDamageModifier2 = 2.0,
+		Mine = "ork_mine_field",
+		MineHealthModifier = 3.0,
+		MineDamageModifier = 3.0
+	},
+	sisters_race =
+	{
+		Post = "sisters_listening_post",
+		PostAddon1 = "addon_sisters_list_post_1",
+		PostAddon2 = "addon_sisters_list_post_2",
+		PostHealthModifier1 = 1.5,
+		PostDamageModifier1 = 2.0,
+		PostHealthModifier2 = 2.0,
+		PostDamageModifier2 = 3.0,
+		Turret = "sisters_turret_flamer",
+		TurretAddon = "addon_sisters_turret",
+		TurretHealthModifier1 = 2.0,
+		TurretDamageModifier1 = 2.0,
+		TurretHealthModifier2 = 2.5,
+		TurretDamageModifier2 = 2.0,
+		Mine = "sisters_mines",
+		MineHealthModifier = 3.0,
+		MineDamageModifier = 3.0
+	},
+	space_marine_race =
+	{
+		Post = "space_marine_listening_post",
+		PostAddon1 = "space_marine_list_post_addon_1",
+		PostAddon2 = "space_marine_list_post_addon_2",
+		PostHealthModifier1 = 1.5,
+		PostDamageModifier1 = 2.0,
+		PostHealthModifier2 = 2.0,
+		PostDamageModifier2 = 3.0,
+		Turret = "space_marine_turret_bolter",
+		TurretAddon = "space_marine_turret_addon",
+		TurretHealthModifier1 = 2.0,
+		TurretDamageModifier1 = 2.0,
+		TurretHealthModifier2 = 2.5,
+		TurretDamageModifier2 = 2.0,
+		Mine = "space_marine_mine_field",
+		MineHealthModifier = 3.0,
+		MineDamageModifier = 3.0
+	},
+	tau_race =
+	{
+		Post = "tau_listening_post",
+		PostAddon1 = "addon_tau_list_post_1",
+		PostAddon2 = "addon_tau_list_post_2",
+		PostHealthModifier1 = 1.5,
+		PostDamageModifier1 = 2.0,
+		PostHealthModifier2 = 2.0,
+		PostDamageModifier2 = 3.0,
+		Turret = nil,
+		TurretAddon = nil,
+		TurretHealthModifier1 = nil,
+		TurretDamageModifier1 = nil,
+		TurretHealthModifier2 = nil,
+		TurretDamageModifier2 = nil,
+		Mine = nil,
+		MineHealthModifier = nil,
+		MineDamageModifier = nil
+	}
+}
+
+-- Init globals
+g_iFortressPlayer = 0
+g_eFortressPlayerID = nil
+g_iFortressPlayerCount = 0
+g_sFortressPlayerRace = nil
+g_aFortressBuildingList = {}
+
+
+-- Init the Fortress code
+function Fortress_InitRule()
+
+	-- Init Fortress mod
+	FortressReset()
+	
+	-- Start main rule interval
+	Rule_AddInterval(FortressMainRule, 1.0)
+end
+
+function FortressReset()
+
+	print("Init Fortress Mod...")
+	
+	-- Reset building list
+	g_aFortressBuildingList = {}
+	
+	-- Compute all players
+	g_iFortressPlayerCount = World_GetPlayerCount()
+	for iLoop1 = 0, g_iFortressPlayerCount - 1 do
+	
+		-- Get player ID
+		local ePlayerID = World_GetPlayerAt(iLoop1)
+	
+		-- Set Fortress mode for AI players
+		if (Cpu_IsCpuPlayer(ePlayerID) and Cpu_IsEnabled(ePlayerID)) then
+			pcall(Cpu_SetLippy, ePlayerID, true)
+			Cpu_DoString(ePlayerID, "g_bFortressMode = true")
+		end
+		
+		-- Add building list entry
+		table.insert(g_aFortressBuildingList, {})
+	end
+end
+
+-- Main Fortress rule
+function FortressMainRule()
+
+	-- Validation check
+	if (table.getn(g_aFortressBuildingList) <= 0) then
+		FortressReset()
+	end
+	
+	-- Get player ID and race of the next player alive
+	g_eFortressPlayerID = nil
+	g_sFortressPlayerRace = nil
+	for iLoop1 = 1, g_iFortressPlayerCount do
+	
+		-- Increase current player index
+		g_iFortressPlayer = g_iFortressPlayer + 1
+		if (g_iFortressPlayer > g_iFortressPlayerCount) then
+			g_iFortressPlayer = 1
+		end
+		
+		-- Check if player is alive
+		local ePlayerID = World_GetPlayerAt(g_iFortressPlayer - 1)
+		if (Player_IsAlive(ePlayerID)) then
+		
+			-- Check player race
+			local sPlayerRace = Player_GetRaceName(ePlayerID)
+			if (BuildingTypes[sPlayerRace] ~= nil) then
+				g_eFortressPlayerID = ePlayerID
+				g_sFortressPlayerRace = sPlayerRace
+				break
+			end
+		end
+	end
+	if (g_eFortressPlayerID == nil) then
+		return
+	end
+
+	-- Get player buildings
+	local oPlayerEntities = Player_GetEntities(g_eFortressPlayerID)
+	
+	-- Init building check functor
+	local Fortress_BuildingCheck = function(eEntityGroupID, iItemIndex, eEntityID)
+	
+		-- Check building type
+		local sBuildingName = Entity_GetBlueprintName(eEntityID)
+		local iType = 0
+		if (sBuildingName == BuildingTypes[g_sFortressPlayerRace].Post) then
+		
+			-- Check post addons
+			if (Entity_ContainsAddOn(eEntityID, BuildingTypes[g_sFortressPlayerRace].PostAddon2)) then
+				iType = 2
+			elseif (Entity_ContainsAddOn(eEntityID, BuildingTypes[g_sFortressPlayerRace].PostAddon1)) then
+				iType = 1
+			end
+			
+		elseif (sBuildingName == BuildingTypes[g_sFortressPlayerRace].Turret) then
+		
+			-- Check turret addons
+			if (Entity_ContainsAddOn(eEntityID, BuildingTypes[g_sFortressPlayerRace].TurretAddon)) then
+				iType = 4
+			else
+				iType = 3
+			end
+			
+		elseif (sBuildingName == BuildingTypes[g_sFortressPlayerRace].Mine) then
+			iType = 5
+		end
+		
+		-- Check only fortified posts, turrets and mines
+		if (iType > 0) then
+
+			-- Get building info
+			local iBuildingID = Entity_GetGameID(eEntityID)
+			
+			-- Search building in building list
+			local iBuildingIndex = -1
+			for iLoop1 in g_aFortressBuildingList[g_iFortressPlayer] do
+				
+				-- Check building ID
+				if (g_aFortressBuildingList[g_iFortressPlayer][iLoop1].ID == iBuildingID) then
+					iBuildingIndex = iLoop1
+					g_aFortressBuildingList[g_iFortressPlayer][iLoop1].Valid = true
+					break
+				end
+			end
+		
+			-- Check if we have to modify a new post, turret or mine
+			if (iBuildingIndex < 0 or iType > g_aFortressBuildingList[g_iFortressPlayer][iBuildingIndex].Type) then
+			
+				-- Check if we have to add a new building entry
+				if (iBuildingIndex < 0) then
+				
+					-- Add building info to table
+					local tUnitInfo =
+					{
+						ID = iBuildingID,
+						Type = iType,
+						Modifications =	{},
+						Valid = true
+					}
+					table.insert(g_aFortressBuildingList[g_iFortressPlayer], tUnitInfo)
+					iBuildingIndex = table.getn(g_aFortressBuildingList[g_iFortressPlayer])
+				end
+				
+				-- Set modification factors
+				local fHealthModifier = 1.0
+				local fDamageModifier = 1.0
+				if (iType == 1) then
+					fHealthModifier = BuildingTypes[g_sFortressPlayerRace].PostHealthModifier1
+					fDamageModifier = BuildingTypes[g_sFortressPlayerRace].PostDamageModifier1
+				elseif (iType == 2) then
+					fHealthModifier = BuildingTypes[g_sFortressPlayerRace].PostHealthModifier2
+					fDamageModifier = BuildingTypes[g_sFortressPlayerRace].PostDamageModifier2
+				elseif (iType == 3) then
+					fHealthModifier = BuildingTypes[g_sFortressPlayerRace].TurretHealthModifier1
+					fDamageModifier = BuildingTypes[g_sFortressPlayerRace].TurretDamageModifier1
+				elseif (iType == 4) then
+					fHealthModifier = BuildingTypes[g_sFortressPlayerRace].TurretHealthModifier2
+					fDamageModifier = BuildingTypes[g_sFortressPlayerRace].TurretDamageModifier2
+				elseif (iType == 5) then
+					fHealthModifier = BuildingTypes[g_sFortressPlayerRace].MineHealthModifier
+					fDamageModifier = BuildingTypes[g_sFortressPlayerRace].MineDamageModifier
+				end
+				
+				-- Apply modifiers
+				BuildingStatAddBaseFactor("health_maximum_modifier", eEntityID, iBuildingIndex, fHealthModifier)
+				BuildingStatAddBaseFactor("min_damage_weapon_modifier", eEntityID, iBuildingIndex, fDamageModifier)
+				BuildingStatAddBaseFactor("max_damage_weapon_modifier", eEntityID, iBuildingIndex, fDamageModifier)
+			end
+		end
+	end
+	
+	-- Compute entity check functor for all player squads
+	EGroup_ForEachEx(oPlayerEntities, Fortress_BuildingCheck, true, true)
+	
+	-- Remove invalid player buildings
+	local iBuildingCount = table.getn(g_aFortressBuildingList[g_iFortressPlayer])
+	for iLoop1 = iBuildingCount, 1, -1 do
+	
+		-- Check if building is still valid
+		if (not g_aFortressBuildingList[g_iFortressPlayer][iLoop1].Valid) then
+			table.remove(g_aFortressBuildingList[g_iFortressPlayer], iLoop1)
+		else
+			g_aFortressBuildingList[g_iFortressPlayer][iLoop1].Valid = false
+		end
+	end
+end
+
+-- Arkhan 01.2007: Add a percentage factor of the base value to a certain building stat
+function BuildingStatAddBaseFactor(sModifier, eEntityID, iBuildingIndex, fFactor)
+
+	-- Check if modifier exists
+	if (g_aFortressBuildingList[g_iFortressPlayer][iBuildingIndex].Modifications[sModifier] ~= nil) then
+	
+		-- Remove and release modifier
+		if (Modifier_Exists(g_aFortressBuildingList[g_iFortressPlayer][iBuildingIndex].Modifications[sModifier][1])) then
+			pcall(Modifier_Remove, g_aFortressBuildingList[g_iFortressPlayer][iBuildingIndex].Modifications[sModifier][1])
+		end
+		Modifier_Destroy(g_aFortressBuildingList[g_iFortressPlayer][iBuildingIndex].Modifications[sModifier][2])
+	end
+
+	-- Create modifier
+	local oModifier = Modifier_Create(MAT_Entity, sModifier, MUT_Multiplication, false, fFactor, "")
+
+	-- Apply modifier
+	local bStatus, iModifierID = pcall(Modifier_ApplyToEntity, oModifier, eEntityID)
+	if (not bStatus) then
+		return
+	end
+		
+	-- Store modifier info
+	g_aFortressBuildingList[g_iFortressPlayer][iBuildingIndex].Modifications[sModifier] = { iModifierID, oModifier }
+end
+
+-- Init fortress rule system
+function Fortress_Setup()
+	Rule_AddOneShot(Fortress_InitRule, 1.0)
+end
+
+-- Init SCAR
+Scar_AddInit(Fortress_Setup)

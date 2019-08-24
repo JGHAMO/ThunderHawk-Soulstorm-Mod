@@ -1,0 +1,130 @@
+--####################################################################################################
+--#
+--#     Heroes Special Player Info Document
+--#
+--#     Original Heroes idea and implementation by CutterShane 2006
+--#     Heroes Special rework by Arkhan 2007
+--#		Additional improvements by Cultist 2008
+--#		Testing and support by the rest of the Dawn of Skirmish AI Team
+--#
+--####################################################################################################
+
+
+Introduction:
+==============================
+Heroes Special is a rework of the original Heroes Mod for DOW/WA made by CutterShane. Since CutterShane
+sadly died in summer 2006, he wasn't able to continue his impressive work. At this point I want to speak
+out my condolences to the relatives of CutterShane. Without his innovative ideas and the solid
+implementation, the Heroes Special mod would never have seen the light of the day.
+
+Heroes Special isn't a true successor of the original Heroes mod, since it only focuses on the unit
+experience system. Although that's the very heart of all Heroes revisions, the original mod had a lot
+more features like fallback, ability auto-cast, etc.
+
+Heroes Special offers you a very clean and structured experience system for Dawn of War: Dark Crusade.
+All units gain experience by fighting enemy units and level up if they reach a certain amount of
+experience. Heroes special for DC offers a total of 9 experience levels, with all units starting at
+level 1. The maximum level which normal units can reach during a battle is 7. Level 8 and 9 are restricted
+champion levels which can only be achieved by commanders. Each unit which has gained enough XP for the next
+level, needs a certain amount of training time out of battle before they can upgrade.
+
+You will be informed with a message if a unit upgrades and you will also see a visual upgrade effect on the unit.
+High level troops get a visible aura which will make it easy to separate them from the unexperienced ones. There
+are two aura types, one for elite troops and one for legendary troops.
+
+
+How to gain experience:
+-----------------------
+
+Units gain experience if they are attacked or are attacking other units. They don't gain experience for attacking
+a building except the building has weapons and is shooting at them. Builders get experience for constructing
+buildings.
+
+
+Experience Table:
+-----------------
+
+Not all units gain new levels with the same speed. Space Marines for example are already experienced and skilled
+troops, and therefore it takes longer for them to reach an even higher level. Therefore expect low level troops
+like IG squads and basic Ork squads to level up much faster than elite troops like space marine squads or even
+terminators. Commanders represent exceptional talented individuals and gain levels as fast as basic troops
+although they normally belong already to the experienced and elite units. The following experience table shows
+the experience each unit type requires to gain a new level.
+
+            |			Regular		Special		Commando
+Level       |	Commanders	Forces		Forces		Forces
+------------------------------------------------------------------------
+Regular     |	0		0		0		0
+Experienced |	1000		1000		1500		2000
+Veteran     |	2000		2000		3000		4000
+Expert      |	4000		4000		6000		8000
+Elite       |	6000		6000		9000		12000
+Ultra Elite |	8000		8000		12000		16000
+Legendary   |	11000		11000		16500		22000
+Champion    |	14000		-		-		-
+Hero        |	17000		-		-		-
+
+
+Training Time:
+--------------
+
+Each units which has enough XP to gain a new level must stay a certain time out of battle to be able to upgrade.
+It represents the situation of a unit experienceing a bttle situation and after battle it has time to think about
+and learn from it. The training time is usually 20 seconds.
+
+
+Unit upgrades:
+--------------
+
+A unit upgrade increases certain stats of a unit, but the unit buffs are not the same for every unit. Each
+unit type like builders, commanders, scouts, melee squads, ranged squads, artillery, tanks and walkers follow
+a slightly different upgrade path which suit their purpose. Scouts get special sight range increases, builders
+get a higher construction rate, melee squads special speed boni, etc.
+
+The typical upgrade buffs of a level upgrade are:
+
+HP:			+10% per level
+Morale:			+50 points per level
+Weapon Damage:		+10% per level
+Weapon Accuracy:	+5% per level
+HP Regeneration:	+50% at level 4 and 7 (Not for vehicles)
+
+In addition, all units gain special buffs at level 4 and level 7, while units with levels 4 - 6 count as 'elite' and
+units with level 7 and higher count as legendary. Elite and legendary units have unique auras. Those auras are different
+for big units like vehicles and small units like the basic troops.
+
+The following list shows the unique upgrade behaviours of the different unit types in Heroes Special:
+
+Builders	=> Construction rate boni
+Commanders	=> Higher stat buffs than usual, can reach champion and hero levels
+Scout Squads	=> High sight range increase and weapon range increase
+Melee Squads	=> 15% health increase per level, special speed buffs at level 4 and 7
+Ranged Squads	=> Weapon and sight range increase and a slight speed buff at level 4 and 7
+Walkers		=> 15% health increase per level, special speed buffs at level 4 and 7
+Tanks		=> Weapon and sight range increase and a slight speed buff at level 4 and 7
+Artillery	=> Lesser basic upgrades than normal units, special weapon and sight range increase at level 4 and 7
+
+
+Generals:
+---------
+Generals influence the quality of new recruited troops. Generals with a high command level get access to experienced
+or even veteran troops. Each race has 1 - 2 generals and the general with the highest level is the commanding general.
+The basic command level is 1, which means that there are only basic troops available. An elite general with level 4,
+5 or 6 has command level 2 and all new recruited troops start with unit rank experienced. A legendary general with 7,
+8 or 9 has command level 3 and all new recruited troops start with unit rank veteran. The following list shows the
+generals of each race:
+
+Chaos Marines:	Chaos Lord, Demon Prince
+Space Marines:	Force Commander
+Eldar:		Farseer
+Imperial Guard:	Command Squad
+Necrons:	Necron Lord, Destroyer Lord
+Orcs:		Mek Boy, Warboss
+Tau:		Tau Commander, Ethereal
+
+
+Ingame unit rank information:
+-----------------------------
+
+You can check the unit rank of a unit by selecting it and read the unit rank information which is displayed on the right
+side of the screen.

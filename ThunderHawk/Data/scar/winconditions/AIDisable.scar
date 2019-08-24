@@ -1,0 +1,9 @@
+import("ScarUtil.scar");
+	
+function AIDisable_Init()
+	
+	Cpu_EnableAll(false)
+	
+end
+
+Scar_AddInit( AIDisable_Init )

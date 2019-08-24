@@ -1,0 +1,2329 @@
+IntroMovie = "" 
+IntroMovieText =
+{
+
+}
+
+OutroMovie = "ss_sisters_race_outro"
+OutroMovieText =
+{
+	{
+		Text = "$5200184",
+		Start = 0.0,
+		End = 24.22,
+	},
+	{
+		Text = "$5200185",
+		Start = 30.02,
+		End = 58.09,
+	},
+	{
+		Text = "$5200186",
+		Start = 58.10,
+		End = 92.26,
+	},
+}
+
+NuggetMovie = "sisters_race_nugget"
+
+ForceName = "$3900081"
+TeamColourForceName = "Sacred Rose"
+TeamColour = "default_7"
+CommanderName = "sisters_squad_canoness_advance_sp"
+
+ArmyModel = "Art/UI/3D_Models/MM_Canoness"
+ArmyModelScale = 0.15
+ArmyModelBone = "master"
+
+TerritoryColour = { 255, 255, 0 } --{ 255, 255, 180 }
+
+-- Delays used for army move fx
+TeleportFXLength = 0.5
+SpacePortTeleportFXLength = 0.5
+
+ApplyTeamColours = true
+
+CommanderScreenModel = "Art/UI/3D_Models/Sisters_command_screen"
+CommanderScreenBackgroundImage = "Art/UI/RaceImages/Race_Sisters"
+CommanderScreenAction = "default"
+
+WargearScreenModel = "Art/EBPs/Races/Sisters/Troops/Canoness"
+WargearScreenBackgroundImage = "Art/UI/Wargear/Sisters wargear backdrop"
+WargearScreenAction = "default"
+
+RetractedStartingSquads = {}
+
+-- Territory special ability values
+IndustrialProductionRequisitionBonus = 1000
+IndustrialProductionPowerBonus = 0
+
+IncreasedManpowerStartingSquadCapBonus = 4
+IncreasedManpowerMaximumSquadCapBonus = 4
+IncreasedManpowerStartingVehicleCapBonus = 2
+IncreasedManpowerMaximumVehicleCapBonus = 2
+
+RequisitionReducedCostBonus = 0.85
+
+PopulationGrowthTerritoryRate = 3
+PopulationGrowthTerritoryChance = 0.33
+PopulationGrowthArmyRate = 3
+PopulationGrowthMilitaryStrengthIncrement = 1
+PopulationGrowthAIRankIncrement = 1
+
+RessurectionChancePlayer = 0.33
+RessurectionChanceAI = 0.33
+
+TauGunMinDamageAI = 0
+TauGunMaxDamageAI = 1
+TauGunMinDamagePlayer = 0
+TauGunMaxDamagePlayer = 1
+
+RoadwaySeedsMaxDistance = 3
+
+DisconnectedSupplyModifier = 0.0
+
+RaceSelectionScreen =
+{
+	Model = "Race_Sisters",
+	RaceImage = "Race_Sisters",
+	ExitAnimationLength = 2,
+	AmbientLight = { 128, 128, 128 }
+}
+
+VictoryScreen =
+{
+	ImageVictory = "GuardVictory",
+	ImageDefeat = "GuardDefeat",
+
+	TextVictoryAttacking = "$3000500",
+	TextVictoryDefending = "$3000501",
+
+	TextDefeatAttacking = "$3000502",
+	TextDefeatDefending = "$3000503",
+
+	TextDescription_chaos_marine_race = "$3900464",
+	TextDescription_eldar_race = "$3900465",
+	TextDescription_guard_race = "$3900462",
+	TextDescription_space_marine_race = "$3900463",
+	TextDescription_necron_race = "$3900468",
+	TextDescription_ork_race = "$3900466",
+	TextDescription_tau_race = "$3900467",
+	TextDescription_dark_eldar_race  = "$3900439",
+}
+
+Messages =
+{
+	-- Bonus Units
+	NewBonusUnit = "$3003010",
+	PreservedBonusUnit = "$3003011",
+	FailedToGainBonusUnit = "$3003013",
+	LostBonusUnit = "$3003012",
+
+	-- Abilities
+	NewAbility = "$3003010",
+	PreservedAbility = "$3003011",
+	FailedToGainAbility = "$3003013",
+	LostAbility = "$3003012",
+
+	-- Race elimination
+	DefeatedRace = "$3003014",
+}
+
+BonusSquadCosts =
+{
+	sisters_squad_servitor_hg_dxp3 = 100,
+	sisters_squad_missionary_hg_dxp3 = 200,
+	sisters_squad_battle_sister_hg_dxp3 = 325,
+	--sisters_squad_veteran_superior_hg_dxp3 = 200,
+	sisters_squad_seraphim_hg_dxp3 = 425,
+	sisters_squad_assassin_hg_dxp3 = 400,
+	sisters_squad_celestian_hg_dxp3 = 600,
+	sisters_squad_repentia_mistress_hg_dxp3 = 650,
+	sisters_squad_confessor_hg_dxp3 = 350,
+	sisters_squad_immolator_tank_hg_dxp3 = 825
+}
+
+ReinforcementStructures =
+{
+	{
+		Blueprint = "sisters_plasma_generator",
+		Cost = 50,
+		Markers =
+		{
+			"MM_Reinforcement0", "MM_Reinforcement1", "MM_Reinforcement2", "MM_Reinforcement3"		
+		}
+	},
+	{
+		Blueprint = "sisters_turret_flamer",
+		Cost = 75,
+		Markers =
+		{
+			"MM_Reinforcement6", "MM_Reinforcement7", "MM_Reinforcement8", "MM_Reinforcement9"
+		}
+	},
+	{
+		Blueprint = "sisters_infantry",
+		Cost = 200,
+		Markers =
+		{
+			"MM_Reinforcement10"
+		}
+	},
+	{
+		Blueprint = "sisters_sanctuary",
+		Cost = 150,
+		Markers =
+		{
+			"MM_Reinforcement11"
+		}
+	},
+}
+
+ReinforcementSquads = 
+{
+	{
+		Blueprint = "sisters_squad_servitor",
+		Cost = 25,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},	
+	{
+		Blueprint = "sisters_squad_battle_sister",
+		Cost = 75,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "sisters_squad_seraphim",
+		Cost = 110,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "sisters_squad_immolator_tank",
+		Cost = 235,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+}
+
+DeepStrikeSquads = 
+{
+	{
+		Blueprint = "sisters_squad_servitor",
+		Cost = 125,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12",
+		}
+	},
+	{
+		Blueprint = "sisters_squad_battle_sister",
+		Cost = 350,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "sisters_squad_seraphim",
+		Cost = 450,
+		Markers =
+		{
+			"MM_Reinforcement12", "MM_Reinforcement12", "MM_Reinforcement12"
+		}
+	},
+	{
+		Blueprint = "sisters_squad_immolator_tank",
+		Cost = 900,
+		Markers =
+		{
+			"MM_Reinforcement12"
+		}
+	},
+}
+
+TechLevel2Structures =
+{
+	"addon_sisters_hq_1"
+}
+
+TechLevel3Structures =
+{
+	"addon_sisters_hq_2"
+}
+
+WarGear =
+{
+
+	{
+	Research = "sisters_wargear_upgrade_03",
+	WeaponName = "sisters_wargear_03",
+	WeaponNameDefault = "sisters_bolt_pistol_canoness",
+	ClauseKey = "Weapon_Range_Upgrade_Main",
+	ClauseValueOn = "Sisters_of_Battle_Plasma_Pistol",
+	ClauseValueDefault = "sisters_race",
+	Name = "$4000007",
+	Icon = 03,
+	Description  = "$4000008",
+	Specification  = "$4000009",
+  AIVictoriesRequired = 1,
+	},
+	{
+	Research = "sisters_wargear_upgrade_04",
+	WeaponName = "sisters_wargear_04",
+	WeaponNameDefault = "sisters_bolt_pistol_canoness",
+	ClauseKey = "Weapon_Range_Upgrade_Main",
+	ClauseValueOn = "Sisters_of_Battle_Inferno_Pistol",
+	ClauseValueDefault = "sisters_race",
+	Name = "$4000010",
+	Icon = 04,
+	Description  = "$4000011",
+	Specification  = "$4000012",
+  AIVictoriesRequired = 2,
+	},
+	{
+	Research = "sisters_wargear_upgrade_01",
+	WeaponName = "sisters_wargear_01",
+	WeaponNameDefault = "sisters_chain_sword_canoness",
+	ClauseKey = "Weapon_Melee_Upgrade_Main",
+	ClauseValueOn = "Sisters_of_Battle_Power_Sword",
+	ClauseValueDefault = "Sisters_of_Battle_Chainsword",
+	Name = "$4000001",
+	Icon = 01,
+	Description  = "$4000002",
+	Specification  = "$4000003",
+  AIVictoriesRequired = 3,
+	},
+	{
+	Research = "sisters_wargear_upgrade_02",
+	WeaponName = "sisters_wargear_02",
+	WeaponNameDefault = "sisters_chain_sword_canoness",
+	ClauseKey = "Weapon_Melee_Upgrade_Main",
+	ClauseValueOn = "Sisters_of_Battle_Brazier_of_Holy_Fire",
+	ClauseValueDefault = "Sisters_of_Battle_Chainsword",
+	Name = "$4000004",
+	Icon = 02,
+	Description  = "$4000005",
+	Specification  = "$4000006",
+  AIVictoriesRequired = 4,
+	},
+	{
+	Research = "sisters_wargear_upgrade_05",
+	WeaponName = "sisters_sabbat_pattern_helm",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_05",
+	ClauseValueOn = "Wargear_05",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$4000013",
+	Icon = 05,
+	Description  = "$4000014",
+	Specification  = "$4000015",
+  AIVictoriesRequired = 5,
+	},
+	{
+	Research = "sisters_wargear_upgrade_06",
+	WeaponName = "sisters_wargear_06",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_06",
+	ClauseValueOn = "Wargear_06",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$4000016",
+	Icon = 06,
+	Description  = "$4000017",
+	Specification  = "$4000018",
+  AIVictoriesRequired = 6,
+	},
+	{
+	Research = "sisters_wargear_upgrade_07",
+	WeaponName = "sisters_wargear_07",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_07",
+	ClauseValueOn = "Wargear_07",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$4000019",
+	Icon = 07,
+	Description  = "$4000020",
+	Specification  = "$4000021",
+  AIVictoriesRequired = 7,
+	},
+	{
+	Research = "sisters_wargear_upgrade_08",
+	WeaponName = "sisters_wargear_08",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_08",
+	ClauseValueOn = "Wargear_08",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$4000022",
+	Icon = 08,
+	Description  = "$4000023",
+	Specification  = "$4000024",
+  AIVictoriesRequired = 8,
+	},
+	{
+	Research = "sisters_wargear_upgrade_09",
+	WeaponName = "sisters_wargear_09",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_09",
+	ClauseValueOn = "Wargear_09",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$4000025",
+	Icon = 09,
+	Description  = "$4000026",
+	Specification  = "$4000027",
+  AIVictoriesRequired = 9,
+	},
+	{
+	Research = "sisters_wargear_upgrade_10",
+	WeaponName = "sisters_wargear_10",
+	WeaponNameDefault = nil,
+	ClauseKey = "Wargear_Upgrade_10",
+	ClauseValueOn = "Wargear_10",
+	ClauseValueDefault = "titan_maincannon",
+	Name = "$4000028",
+	Icon = 10,
+	Description  = "$4000029",
+	Specification  = "$4000030",
+  AIVictoriesRequired = 10,
+	},
+	
+}
+
+Promotions =
+{
+	{
+		Name = "$3002000",
+		Description = "$3003001",
+		Conditions = 
+		{
+			ConqueredTerritories = 1
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003002",
+		Conditions = 
+		{
+			ConqueredTerritories = 5
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003003",
+		Conditions = 
+		{
+			ConqueredTerritories = 15
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003004",
+		Conditions = 
+		{
+			UnitKillsLifetime = 2000
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003005",
+		Conditions = 
+		{
+			UnitKillsLifetime = 5000
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003006",
+		Conditions = 
+		{
+			ConqueredStrongholds = 3
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003000",
+		Conditions = 
+		{
+			UnitKillsMission = 200,
+			KillRatioMission = 3
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003007",
+		Conditions = 
+		{
+			DefensiveMissionsWon = 1,
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003008",
+		Conditions = 
+		{
+			DefensiveMissionsWon = 3,
+		}
+	},
+	{
+		Name = "$3002000",
+		Description = "$3003009",
+		Conditions = 
+		{
+			DefensiveMissionsWon = 5,
+		}
+	},
+}
+
+AIStartingStructuresAttacking =
+{
+
+	{
+		MilitaryStrength = 1,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 2,
+		Structures =
+		{
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},	
+	
+	{
+		MilitaryStrength = 3,
+		Structures =
+		{
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},
+	
+	{
+
+		MilitaryStrength = 4,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+
+		},
+	},
+
+	{
+
+		MilitaryStrength = 5,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 6,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 7,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},	
+
+	
+	{
+
+		MilitaryStrength = 8,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 9,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+--[[			{
+				Blueprint = "chaos_sacrificial_circle",
+				Markers =
+				{
+					"start9_",
+				},
+			},]]
+		},
+	},	
+	
+	
+	{
+
+		MilitaryStrength = 10,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start4_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start6_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start7_",
+				},
+			},
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},	
+}
+
+AIStartingStructuresDefending =
+{
+
+	{
+		MilitaryStrength = 1,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+		},
+	},
+
+	{
+		MilitaryStrength = 2,
+		Structures =
+		{
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+		},
+	},
+	
+	{
+
+		MilitaryStrength = 3,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+		},
+	},
+
+	{
+
+		MilitaryStrength = 4,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 5,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 6,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 7,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+		},
+	},	
+
+	
+	{
+
+		MilitaryStrength = 8,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start17_",
+				},
+			},
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 9,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start17_",
+				},
+			},
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+
+		},
+	},	
+	
+	
+	{
+
+		MilitaryStrength = 10,
+		Structures =
+		{
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start1_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_plasma_generator",
+				Markers =
+				{
+					"start2_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_infantry",
+				Markers =
+				{
+					"start3_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start12_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start14_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start13_",
+				},
+			},
+			
+			{
+				Blueprint = "sisters_sanctuary",
+				Markers =
+				{
+					"start5_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start15_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start16_",
+				},
+			},
+
+			{
+				Blueprint = "sisters_turret_flamer",
+				Markers =
+				{
+					"start17_",
+				},
+			},
+			{
+				Blueprint = "sisters_vehicle_building",
+				Markers =
+				{
+					"start8_",
+				},
+			},
+--[[			{
+				Blueprint = "chaos_sacrificial_circle",
+				Markers =
+				{
+					"start9_",
+				},
+			},]]
+		},
+	},	
+}
+
+AIStartingSquadsAttacking =
+{
+	{
+
+		MilitaryStrength = 2,
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 3,
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 4,
+		Squads =
+		{
+	
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 5,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 6,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 7,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 8,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},		
+
+	{
+
+		MilitaryStrength = 9,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 10,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},	
+}
+
+AIStartingSquadsDefending =
+{
+	{
+
+		MilitaryStrength = 4,
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 5,
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+
+	{
+
+		MilitaryStrength = 6,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 7,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 8,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},	
+	
+	{
+
+		MilitaryStrength = 9,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+
+		},
+	},	
+
+	{
+
+		MilitaryStrength = 10,
+		Squads =
+		{
+
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},	
+}
+
+ArmyRanks =
+{
+	-- Rank 1
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_canoness_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 2
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_canoness_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 3
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_canoness_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_missionary",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 4
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_canoness_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_missionary",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 5
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_canoness_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_missionary",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_seraphim",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 6
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_canoness_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_missionary",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_seraphim",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_immolator_tank",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 7
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_canoness_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_missionary",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_seraphim",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_celestian",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_immolator_tank",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 8
+	{
+		Difficulty = "standard",
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_canoness_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_missionary",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_seraphim",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_celestian",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_immolator_tank",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_immolator_tank",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 9
+	{
+		Difficulty = "hard",
+		Squads =
+		{
+			{
+				Blueprint = "sisters_squad_canoness_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_missionary",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_seraphim",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_seraphim",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_celestian",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_immolator_tank",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_immolator_tank",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+	-- Rank 10
+	{
+		Difficulty = "hard",
+		Squads =
+		{
+				{
+				Blueprint = "sisters_squad_canoness_advance_sp",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_missionary",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_battle_sister",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_seraphim",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_seraphim",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_celestian",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_assassin",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_immolator_tank",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+			{
+				Blueprint = "sisters_squad_immolator_tank",
+				Markers =
+				{
+					"start11_",
+				},
+			},
+		},
+	},
+}

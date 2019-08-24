@@ -1,0 +1,142 @@
+----------------------------------------------------------------------------------------------------------------
+-- Destroy HQ Condtition (for all mod factions)
+-- Edited by Thudmeizer  @ 04.06.2008
+--
+--	Players with no HQ's lose.
+--
+-- (c) 2003 Relic Entertainment Inc.
+import("ScarUtil.scar");
+
+function DestroyHQ()
+	-- create global table
+	_HQ = {}
+	
+	InitHQ()
+	
+	-- wait a bit of time before adding this rule so it doesnt get executed on the same frame as the other win
+	-- conditions
+	Rule_AddOneShot( DestroyHQ_AddMainRule, 0.75 )
+	
+	--
+	obj_table_P4 = { title_id = 60006, short_desc_id = 60306, help_tip_id = 60306 }
+	
+	Objective_Add( obj_table_P4, 1 )
+end
+
+function DestroyHQ_AddMainRule()
+	Rule_AddInterval(CheckDestroyHQ, 2);
+end
+
+function InitHQ()
+
+            local j = World_GetPlayerCount();
+
+            -- get the hq for all players
+            for i = 1, j
+
+            do
+                        -- this player
+                        local player = World_GetPlayerAt(i-1);
+                        local playerRace = Player_GetRaceName(player);
+                        local hqBlueprint = "";
+
+			-- what hq are we looking for?
+                        if     playerRace == "chaos_marine_race" then
+				hqBlueprint = "chaos_hq"
+
+			elseif playerRace == "dark_eldar_race" then
+				hqBlueprint = "dark_eldar_hq"
+
+			elseif playerRace == "eldar_race" then
+				hqBlueprint = "eldar_hq"
+
+			elseif playerRace == "guard_race" then
+				hqBlueprint = "guard_hq"
+
+			elseif playerRace == "necron_race" then
+				hqBlueprint = "monolith"
+
+			elseif playerRace == "ork_race" then
+				hqBlueprint = "ork_hq"
+
+			elseif playerRace == "sisters_race" then
+				hqBlueprint = "sisters_hq"
+
+			elseif playerRace == "space_marine_race" then
+				hqBlueprint = "space_marine_hq"
+
+			elseif playerRace == "tau_race" then
+				hqBlueprint = "tau_hq"
+			end
+
+                        -- if we dont have a blueprint we are screwed
+                        if hqBlueprint == "" then  
+                                    print("invalid hq blueprint" );
+                        end
+
+						-- cache race & blueprint id for faster access later
+						_HQ[i] = { }
+						_HQ[i].HQID = Entity_GetBlueprintIDFromName( hqBlueprint );
+            end
+
+end
+
+
+function UpdateHQ()
+
+            local j = World_GetPlayerCount();
+
+            -- get the hq for all players and place them in the commanders table.
+            for i = 1, j
+
+            do
+                        -- this player
+                        local player = World_GetPlayerAt(i-1);
+
+                        --get all players entities, check for hq
+                        playerentities = Player_GetEntities( player );
+
+                        local CheckForHQ = function( egroupid, itemindex, entityID )
+						
+                                    if Entity_GetBlueprintID( entityID ) == _HQ[i].HQID then
+									
+                                                _HQ[i].GroupGorHQ = EGroup_CreateIfNotFound( i )
+												EGroup_Add( _HQ[i].GroupGorHQ, entityID)
+                                                -- give the player grots at their HQ                                               
+                                    end
+                        end
+
+                        -- find the hq
+                        EGroup_ForEach( playerentities, CheckForHQ );
+
+            end
+
+end
+
+function CheckDestroyHQ()
+
+	-- update HQ count
+	UpdateHQ();
+	
+	-- total number of players
+	local count = World_GetPlayerCount();
+	
+	--check for destroyed dudes
+	for i = 1, count
+	do
+		-- check if player has been destroyed
+		local player = World_GetPlayerAt(i-1);
+	
+		--if no hqs, player dies
+		if( Player_IsAlive(player) ) then
+			if( EGroup_Count( _HQ[i].GroupGorHQ ) == 0 ) then
+				Player_Kill(player);
+			end
+		end
+	end
+	
+	-- check if only one team left -- if only one team left, they win and everybody else loses
+	Util_CheckOneTeamLeft("destroyhq");
+end
+
+Scar_AddInit(DestroyHQ)

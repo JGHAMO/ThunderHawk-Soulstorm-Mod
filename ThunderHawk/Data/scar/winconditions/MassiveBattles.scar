@@ -1,0 +1,255 @@
+-- Set up fortress mod
+-- Created by Arkhan
+
+import("Player.scar");
+import("GroupCallers.scar");
+import("Command.scar");
+import("Groups.scar");
+import("ScarUtil.scar");
+import("WXPGroups.scar");
+
+-- Settings
+g_fArmyCapModifier = 1.5
+
+
+-- Init the Massive Battles code
+function MassiveBattles_InitRule()
+
+	print("Init Massive Battles Mod...")
+	
+	-- Create army cap modifiers
+	local oModMaxSquadCap	= Modifier_Create(MAT_Player, "max_squad_cap_player_modifier", MUT_Multiplication, false, g_fArmyCapModifier, "")
+	local oModMaxSupportCap	= Modifier_Create(MAT_Player, "max_support_cap_player_modifier", MUT_Multiplication, false, g_fArmyCapModifier, "")
+	--local oModPopulationCap	= Modifier_Create(MAT_Player, "population_cap_player_modifier", MUT_Multiplication, false, g_fArmyCapModifier, "")
+	local oModSquadCap		= Modifier_Create(MAT_Player, "squad_cap_player_modifier", MUT_Multiplication, false, g_fArmyCapModifier, "")
+	local oModSupportCap	= Modifier_Create(MAT_Player, "support_cap_player_modifier", MUT_Multiplication, false, g_fArmyCapModifier, "")
+	
+	-- Compute all players
+	g_iPlayerCount = World_GetPlayerCount()
+	for iLoop1 = 0, g_iPlayerCount - 1 do
+	
+		-- Get player ID
+		local ePlayerID = World_GetPlayerAt(iLoop1)
+	
+		-- Set Fortress mode for AI players
+		if (Cpu_IsCpuPlayer(ePlayerID) and Cpu_IsEnabled(ePlayerID)) then
+			pcall(Cpu_SetLippy, ePlayerID, true)
+			Cpu_DoString(ePlayerID, "g_fMassiveBattlesModifier = "..g_fArmyCapModifier)
+		end
+		
+		-- Apply army cap modifiers
+		pcall(Modifier_ApplyToPlayer, oModMaxSquadCap, ePlayerID)
+		pcall(Modifier_ApplyToPlayer, oModMaxSupportCap, ePlayerID)
+		--pcall(Modifier_ApplyToPlayer, oModPopulationCap, ePlayerID)
+		pcall(Modifier_ApplyToPlayer, oModSquadCap, ePlayerID)
+		pcall(Modifier_ApplyToPlayer, oModSupportCap, ePlayerID)
+	end
+	
+	-- Destroy army cap modifiers
+	Modifier_Destroy(oModMaxSquadCap)
+	Modifier_Destroy(oModMaxSupportCap)
+	--Modifier_Destroy(oModPopulationCap)
+	Modifier_Destroy(oModSquadCap)
+	Modifier_Destroy(oModSupportCap)
+	
+	-- Apply ForceOrkCap
+	ForceOrkCap.AddAllOrks( 100 * g_fArmyCapModifier )
+	
+end
+
+-- Init Massive Battles rule system
+function MassiveBattles_Setup()
+	Rule_AddOneShot(MassiveBattles_InitRule, 1.0)
+end
+
+-- Init SCAR
+Scar_AddInit(MassiveBattles_Setup)
+
+
+
+-- ================================================================ 
+--
+-- Code to force ork cap higher than 100
+--
+-- ================================================================ 
+
+-- check if the table is not already there ( in case of loading )
+if ForceOrkCap == nil then
+	ForceOrkCap = {
+		PlayerList = {}
+	}
+end
+
+-- rule to force ork caps
+-- do not call - used internally
+function ForceOrkCap_Rule()
+
+	local HideCap=true
+
+	for PlayerGameID, PlayerData in pairs( ForceOrkCap.PlayerList ) do
+		
+		-- if dead = > remove from list
+		-- if player is alive = > force cap
+		if not Player_IsAlive( PlayerData.PlayerID ) then
+			ForceOrkCap.PlayerList[ PlayerGameID ] = nil
+		elseif PlayerGameID==Misc_GetLocalPlayerID() then
+			HideCap=false
+			if not WinWarning_Exists("ui_ForceOrkCap") then 
+				WinWarning_Add( "ui_ForceOrkCap", PlayerData.PlayerID, "", "", "" )
+			end
+			ForceOrkCap.UpdateCap( PlayerData, "ui_ForceOrkCap" )
+		else
+			ForceOrkCap.UpdateCap( PlayerData )
+		end
+		
+	end
+	
+	if HideCap and WinWarning_Exists("ui_ForceOrkCap") then
+		WinWarning_Remove("ui_ForceOrkCap")
+	end
+	
+	-- all orks players are dead = > stop rule
+	if next( ForceOrkCap.PlayerList ) == nil then
+		Rule_Remove( ForceOrkCap_Rule )
+	end
+	
+end
+
+-- scans all players and assign all orks to get max cap forced
+function ForceOrkCap.AddAllOrks( MaxCap )
+	
+	for i = 0, World_GetPlayerCount()-1 do
+		local PlayerID = World_GetPlayerAt( i )
+		if Player_GetRaceName( PlayerID ) == "ork_race" then
+			print( "Forcing Cap for Player " .. PlayerID.id .. " Max Cap = " .. MaxCap )
+			ForceOrkCap.AddOrkPlayer( PlayerID, MaxCap )
+		end
+	end
+
+end
+
+-- add a single to player to have his max cap forced
+function ForceOrkCap.AddOrkPlayer( PlayerID, MaxCap )
+	
+	PlayerData = {
+		PlayerID = PlayerID, 
+		MaxCap = MaxCap, 
+		waagh_max = 0, 
+		LastTime=World_GetGameTime(),
+	}
+	
+	ForceOrkCap.PlayerList[ PlayerID.id ] = PlayerData
+
+	if not Rule_Exists( ForceOrkCap_Rule ) then
+		Rule_AddInterval( ForceOrkCap_Rule, 1.0 )
+	end
+	
+end
+
+-- force cap for a player
+function ForceOrkCap.UpdateCap( PlayerData, UIWarningName )
+
+	local PlayerID = PlayerData.PlayerID
+	
+	--
+	-- Computes population on map including reinforcements under construction ( not the queued ones )
+	--
+	local SgroupID = Player_GetSquads( PlayerID ) 	
+	local PopSquad = 0
+	-- check spawned squads ( on map )
+	for i = 1, SGroup_CountSpawned( SgroupID ) do
+		SquadID = SGroup_GetSpawnedSquadAt( SgroupID, i )
+		
+		SquadBP = Squad_GetBlueprintName( SquadID )
+		
+		PopSquad = PopSquad + Squad_GetCost( SquadBP, RT_Pop ) + ( Squad_Count( SquadID )-Squad_GetMinFromName( SquadBP ) )*Squad_GetReinforceCost( SquadBP, RT_Pop )
+		
+		if Squad_IsReinforcing( SquadID ) then
+			PopSquad = PopSquad + Squad_GetReinforceCost( SquadBP, RT_Pop )
+		end
+		
+		if Squad_CountLeaders( SquadID )>0 then
+			PopSquad = PopSquad + Squad_CountLeaders( SquadID )*( Squad_GetReinforceLeaderCost( SquadBP, RT_Pop )-Squad_GetReinforceCost( SquadBP, RT_Pop ) )
+		end
+		
+	end	
+	-- check despawned squads ( in transports/buildings )
+	for i = 1, SGroup_CountDeSpawned( SgroupID ) do
+		SquadID = SGroup_GetDeSpawnedSquadAt( SgroupID, i )
+		
+		SquadBP = Squad_GetBlueprintName( SquadID )
+		
+		PopSquad = PopSquad + Squad_GetCost( SquadBP, RT_Pop ) + ( Squad_Count( SquadID )-Squad_GetMinFromName( SquadBP ) )*Squad_GetReinforceCost( SquadBP, RT_Pop )
+		
+		if Squad_CountLeaders( SquadID )>0 then
+			PopSquad = PopSquad + Squad_CountLeaders( SquadID )*( Squad_GetReinforceLeaderCost( SquadBP, RT_Pop )-Squad_GetReinforceCost( SquadBP, RT_Pop ) )
+		end
+		
+	end
+	
+	--
+	-- Add to population squads that are being constructed or queued for construction 
+	-- Counts the number of HQ and Waagh
+	--
+	local AllBuildingsID = Player_GetEntities( PlayerID )
+	local hq_count = 0
+	local waagh_count = 0
+	for i = 1, EGroup_CountSpawned( AllBuildingsID ) do
+		
+		local EntityID = EGroup_GetSpawnedEntityAt( AllBuildingsID, i )
+		
+		-- Compute population for squads being constructed or queued for construction
+		if Entity_HasProductionQueue( EntityID ) then
+			for j = 0, Entity_GetProductionQueueSize( EntityID )-1 do
+				local ItemBP = Entity_GetProductionQueueItemName( EntityID, j )
+				if SBP_Exists( ItemBP ) then
+					PopSquad = PopSquad + Squad_GetCost( ItemBP, RT_Pop )
+				end
+			end
+		end
+		local EntityBP = Entity_GetBlueprintName( EntityID )
+		
+		-- count the number of operational HQs
+		if EntityBP == "ork_hq" then
+			if Entity_GetBuildingProgress( EntityID ) == 1.0 then
+				hq_count = hq_count+1
+			end
+		-- count the number of operational Waaghs
+		elseif EntityBP == "ork_waagh_banner" then
+			if Entity_GetBuildingProgress( EntityID ) == 1.0 then
+				waagh_count = waagh_count+1
+			end
+		end
+		
+	end
+	
+	-- update max number of waagh ever
+	PlayerData.waagh_max = math.max( PlayerData.waagh_max, waagh_count )
+	
+	-- compute population construction rate / min
+	local PopRate = 12 + hq_count * (1 + math.min( PlayerData.waagh_max, 9 ))
+	
+	-- compute population max cap based on waagh banners number and forced MaxCap
+	local MaxCap = math.min( 15 + waagh_count*10, PlayerData.MaxCap )
+	
+	local PopRes = Player_GetResource( PlayerID, RT_Pop )
+	
+	-- get current time to compute income
+	local NewTime = World_GetGameTime()
+	
+	-- compute new resource but limit it so that MaxCap cannot be crossed
+	local NewPopRes = math.max(0,math.min( PopRes + ( NewTime-PlayerData.LastTime )*PopRate/12, MaxCap - PopSquad ))
+	
+	-- force ork ressource
+	Player_SetResource( PlayerID, RT_Pop, NewPopRes )
+	
+	-- save current time
+	PlayerData.LastTime = NewTime
+
+	--print( "Player ".. PlayerID.id .. " PopRes=" .. NewPopRes .. " Squad = " .. PopSquad .. "/" .. MaxCap .. " +" .. PopRate )
+
+	if UIWarningName~=nil then
+		WinWarning_SetText( UIWarningName, "Sq.Cap. " .. PopSquad .. "/" .. MaxCap)
+	end
+	
+end

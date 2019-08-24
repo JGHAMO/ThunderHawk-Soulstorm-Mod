@@ -1,0 +1,51 @@
+Model = "Broken_Lands"
+Planet = "Kaurava_III"
+
+Name = "$3900027"
+Description = "$3900271"
+TerrainDescription = "$3900272"
+History = 
+{
+"$3900273",
+"$3900274",
+"$3900275",
+"$3900276",
+"$3900277",
+"$3900278",
+"$3900279",
+}
+
+TerrainType = "$2851402"
+
+MissionFileAttacking = "4P_Broken_Lands"
+MissionFileAttackingConquered = "4P_Broken_Lands"
+MissionFileDefending = "4P_Broken_Lands"
+
+CinematicIntro = "cinematic"
+ZoomOutDuration = 1
+
+ArmyModelScaleZoomedIn = 1
+ArmyModelScaleZoomedOut = 1
+
+NeighborTerritories = 
+{
+	"Kier_Harrad",
+	"Upper_Wastes",
+}
+
+VictoryBonusSquads =
+{
+-- /// +10% REQ BONUS ///
+}
+
+Stronghold = false
+WarpGate = false
+ScriptedMission = false
+
+PlanetaryRequisition = 35
+StartingMilitaryStrength = 5
+
+OwnerPrimary = "necron_race"
+OwnerSecondary = "eldar_race"
+
+StartingResourceBonus = 0.1

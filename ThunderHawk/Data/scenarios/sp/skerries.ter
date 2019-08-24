@@ -1,0 +1,102 @@
+Model = "Skerries"
+Planet = "Kaurava_II"
+
+Name = "$3900018"
+Description = "$3900172"
+TerrainDescription = "$3900173"
+History = 
+{
+"$3900174",
+"$3900175",
+"$3900176",
+"$3900177",
+"$3900178",
+"$3900179",
+}
+
+TerrainType = "$2851402"
+
+
+MissionFileAttacking = "4P_Skerries"
+MissionFileAttackingConquered = "4P_Skerries"
+MissionFileDefending = "4P_Skerries"
+
+CinematicIntro = "cinematic"
+ZoomOutDuration = 1
+
+ArmyModelScaleZoomedIn = 1
+ArmyModelScaleZoomedOut = 1.3
+
+NeighborTerritories = 
+{
+	"Cerulea",
+	"Clooth-na-Bare",
+	"Irridene",
+}
+
+VictoryBonusSquads =
+{
+	{
+		Race = "chaos_marine_race",
+		Blueprint = "chaos_squad_raptor_champion_advance_sp",
+		Count = 1,
+	},
+
+	{
+		Race = "space_marine_race",
+		Blueprint = "space_marine_squad_land_speeder_advance_sp",
+		Count = 1,
+	},
+
+	{
+		Race = "ork_race",
+		Blueprint = "ork_squad_shoota_boy_advance_sp",
+		Count = 1,
+	},
+	
+	{
+		Race = "guard_race",
+		Blueprint = "guard_heavy_weapons_team_squad_hg_dxp3",
+		Count = 1,
+	},
+
+	{
+		Race = "eldar_race",
+		Blueprint = "eldar_squad_warp_spider_exarch_council",
+		Count = 1,
+	},
+	
+	{
+		Race = "tau_race",
+		Blueprint = "tau_vespid_elder_squad_advance_sp",
+		Count = 1,
+	},
+	
+	{
+		Race = "necron_race",
+		Blueprint = "necron_destroyer_squad_advance_sp",
+		Count = 1,
+	},
+	{
+		Race = "sisters_race",
+		Blueprint = "sisters_squad_confessor_hg_dxp3",
+		Count = 1,
+	},
+	{
+		Race = "dark_eldar_race",
+		Blueprint = "dark_eldar_squad_reaver_hg_dxp3",
+		Count = 1,
+	},
+}
+
+Stronghold = false
+WarpGate = false
+ScriptedMission = false
+
+PlanetaryRequisition = 50
+StartingMilitaryStrength = 4
+
+OwnerPrimary = "tau_race"
+OwnerSecondary = "space_marine_race"
+
+StartingResourceBonus = 0.0

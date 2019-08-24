@@ -1,0 +1,10 @@
+-- This file is generated automatically by the Relic Audio Tool
+
+version = 9
+
+volumeRand = -1.000000
+pitchRand = 0.000000
+patch = 0
+numChannels = 1
+coneMin = 0.000000
+coneMax = 0.000000
